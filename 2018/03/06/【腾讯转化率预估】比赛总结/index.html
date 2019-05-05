@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第一届腾讯社交广告算法大赛复赛成绩0.101941，排名26名，在此总结一下。  1. 题目简介1.1 移动App广告转化率预估详细赛题见官方网站  计算广告是互联网最重要的商业模式之一，广告投放效果通常通过曝光、点击和转化各环节来衡量，大多数广告系统受广告效果数据回流的限制只能通过曝光或点击作为投放效果的衡量标准开展优化。腾讯社交广告(http://ads.tencent.com)发挥特有的用户">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【腾讯转化率预估】总结">
+<meta property="og:url" content="http://yoursite.com/2018/03/06/【腾讯转化率预估】比赛总结/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="第一届腾讯社交广告算法大赛复赛成绩0.101941，排名26名，在此总结一下。  1. 题目简介1.1 移动App广告转化率预估详细赛题见官方网站  计算广告是互联网最重要的商业模式之一，广告投放效果通常通过曝光、点击和转化各环节来衡量，大多数广告系统受广告效果数据回流的限制只能通过曝光或点击作为投放效果的衡量标准开展优化。腾讯社交广告(http://ads.tencent.com)发挥特有的用户">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/07/11/59646ce45d3e0.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-14-36-51.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-14-30-00.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-14-30-28.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-30-44.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-26-24.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-31-49.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-28-05.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-32-49.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-28-21.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-33-15.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-28-46.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-34-00.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-29-01.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-34-31.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-30-00.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2017-06-07-15-44-01.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-16-37-49.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-21-58-07.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-21-49-00.png">
+<meta property="og:image" content="https://blog-10039692.file.myqcloud.com/1496913643639_4485_1496913644532.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-14-40-32.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-49-53.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-53-21.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-59-59.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-07-17-03-21.png">
+<meta property="og:updated_time" content="2018-03-13T03:26:28.991Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【腾讯转化率预估】总结">
+<meta name="twitter:description" content="第一届腾讯社交广告算法大赛复赛成绩0.101941，排名26名，在此总结一下。  1. 题目简介1.1 移动App广告转化率预估详细赛题见官方网站  计算广告是互联网最重要的商业模式之一，广告投放效果通常通过曝光、点击和转化各环节来衡量，大多数广告系统受广告效果数据回流的限制只能通过曝光或点击作为投放效果的衡量标准开展优化。腾讯社交广告(http://ads.tencent.com)发挥特有的用户">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2017/07/11/59646ce45d3e0.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/06/【腾讯转化率预估】比赛总结/"/>
+
+
+
+
+
+  <title>【腾讯转化率预估】总结 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/【腾讯转化率预估】比赛总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【腾讯转化率预估】总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-06T13:50:10+08:00">
+                2018-03-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  6,808
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  24
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>第一届腾讯社交广告算法大赛复赛成绩0.101941，排名26名，在此总结一下。</p>
+<p><a href="https://ooo.0o0.ooo/2017/07/11/59646ce45d3e0.png" target="_blank" rel="external"><img src="https://ooo.0o0.ooo/2017/07/11/59646ce45d3e0.png" alt="img"></a></p>
+<h1 id="1-题目简介"><a href="#1-题目简介" class="headerlink" title="1. 题目简介"></a>1. 题目简介</h1><h2 id="1-1-移动App广告转化率预估"><a href="#1-1-移动App广告转化率预估" class="headerlink" title="1.1 移动App广告转化率预估"></a>1.1 移动App广告转化率预估</h2><p>详细赛题见<a href="http://algo.tpai.qq.com/home/information/index.html" target="_blank" rel="external">官方网站</a></p>
+<blockquote>
+<p>计算广告是互联网最重要的商业模式之一，广告投放效果通常通过曝光、点击和转化各环节来衡量，大多数广告系统受广告效果数据回流的限制只能通过曝光或点击作为投放效果的衡量标准开展优化。腾讯社交广告(<a href="http://ads.tencent.com/" target="_blank" rel="external">http://ads.tencent.com</a>)发挥特有的用户识别和转化跟踪数据能力，帮助广告主跟踪广告投放后的转化效果，基于广告转化数据训练转化率预估模型(pCVR，Predicted Conversion Rate)，在广告排序中引入pCVR因子优化广告投放效果，提升ROI。</p>
+<p>本题目以移动App广告为研究对象，预测App广告点击后被激活的概率：pCVR=P(conversion=1 | Ad,User,Context)，即给定广告、用户和上下文情况下广告被点击后发生激活的概率。</p>
+</blockquote>
+<p>总结起来就是说，在业界，大多数广告系统是通过点击率来投放广告的，因为转化追踪起来是比较困难的，然而腾讯凭借平台优势很好地追踪了广告投放之后的转化情况，以此训练<strong>转化率预估模型</strong>，用转化率来指导广告投放，进而提升ROI。</p>
+<p><strong>因此赛题就是给我们17-30号两周（15天）的移动APP广告（投放在移动端的APP广告）数据，让我们训练转化率模型做转化率预估，即预测第31号App广告点击后被激活的概率。</strong></p>
+<h2 id="1-2-评估方式："><a href="#1-2-评估方式：" class="headerlink" title="1.2 评估方式："></a>1.2 评估方式：</h2><p>通过Logarithmic Loss评估(越小越好)，公式如下：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-14-36-51.png" alt=""> </p>
+<p>其中，</p>
+<ul>
+<li>N是测试样本总数</li>
+<li><script type="math/tex">y_i</script>是二值变量，取值为0或1，表示第i个样本的label</li>
+<li><script type="math/tex">p_i</script>是模型预测第i个样本label为1的概率</li>
+</ul>
+<h1 id="2-数据"><a href="#2-数据" class="headerlink" title="2. 数据"></a>2. 数据</h1><h2 id="2-1-数据量"><a href="#2-1-数据量" class="headerlink" title="2.1 数据量"></a>2.1 数据量</h2><p><strong>数据量：初赛30w/天；决赛300w/天</strong></p>
+<h2 id="2-2-数据表"><a href="#2-2-数据表" class="headerlink" title="2.2 数据表"></a>2.2 数据表</h2><p>接下来看看给的数据长啥样。</p>
+<p>一共给了8张表：</p>
+<p>test+train+下面这些：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户基础特征文件(<em>user.csv</em>)</td>
+<td>每行代表一个用户，各字段之间由逗号分隔，顺序依次为：“userID，age，gender，education，marriageStatus，haveBaby，hometown，residence”。</td>
+</tr>
+<tr>
+<td>用户App安装列表文件(<em>user_installedapps.csv</em>)</td>
+<td>每行代表一个用户安装的单个App，各字段之间由逗号分隔，顺序依次为：“userID，appID”。特别的，我们提供了截止到第1天0点用户全部的App安装列表。</td>
+</tr>
+<tr>
+<td>用户App安装流水文件(<em>user_app_actions.csv</em>)</td>
+<td>每行代表一个用户的单个App操作流水，各字段之间由逗号分隔，顺序依次为：“userID，installTime，appID”。特别的，我们提供了训练数据开始时间之前16天开始连续30天的操作流水，即第1天0点到第31天0点。</td>
+</tr>
+<tr>
+<td>App特征文件(<em>app_categories.csv</em>)</td>
+<td>每行代表一个App，各字段之间由逗号分隔，顺序依次为：“appID，appCategory”。</td>
+</tr>
+<tr>
+<td>广告特征文件(<em>ad.csv</em>)</td>
+<td>每行描述一条广告素材，各字段之间由逗号分隔，顺序依次为“creativeID，adID，camgaignID，advertiserID，appID，appPlatform”。</td>
+</tr>
+<tr>
+<td>广告位特征文件(<em>position.csv</em>)</td>
+<td>每行描述一个广告位，各字段之间由逗号分隔，顺序依次为：“positionID，sitesetID，positionType”。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><code>train.csv</code> 训练数据集 ：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-14-30-00.png" alt=""> </p>
+<p>17到30号共14天点击数据。</p>
+<p>每一条训练样本即为一条广告<strong>点击日志</strong>(点击时间用clickTime表示)，样本label取值0或1，其中0表示点击后没有发生转化，1表示点击后有发生转化，如果label为1，还会提供转化回流时间。</p>
+<p>每一条数据其中label表示是否转化，经统计<strong>转化率大概1/40</strong></p>
+<p>数据量：初赛30w/天；决赛300w/天</p>
+<p><code>test.csv</code> 线上测试数据</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-14-30-28.png" alt=""> </p>
+<p>31号一天数据，字段和test一致，需要预测lable</p>
+<p><code>ad.csv</code> 广告基本特征</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-30-44.png" alt="">     <img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-26-24.png" alt=""> </p>
+<p>这里广告结构分为四级：广告主——推广计划——广告——素材。<strong>之后会用到这个层级结构做贝叶斯平滑。</strong></p>
+<p><code>user.csv</code> 用户信息表</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-31-49.png" alt=""> </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-28-05.png" alt=""> </p>
+<p>就是用户的一些基本特征啦，性别年龄blabla</p>
+<p><code>app_category.csv</code> appID对应的类别信息</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-32-49.png" alt="">                      <img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-28-21.png" alt=""> </p>
+<p>就是appID和对应的categoryID，其中类目标签有两层，使用3位数字编码，百位数表示一级类目，十位个位数表示二级类目，如“210”表示一级类目编号为2，二级类目编号为10，类目未知或者无法获取时，标记为0。</p>
+<p><code>position.csv</code> 广告位信息</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-33-15.png" alt=""> </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-28-46.png" alt=""> </p>
+<p>没啥说的，就是广告位信息，直接merge就行</p>
+<p><code>user_app_actions.csv</code> 用户安装app流水，1——30天的，包含安装时间</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-34-00.png" alt="">        <img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-29-01.png" alt=""> </p>
+<p>用户近期的app安装行为，这里可以挖掘出用户的偏好类别，时间等等。。。</p>
+<p><code>user_installedapps.csv</code>用户历史安装过的app，第一天0点之前的</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-34-31.png" alt="">         <img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-15-30-00.png" alt=""> </p>
+<p>用户自注册以来安装过的appID，有待挖掘。。。</p>
+<h2 id="2-3-总结"><a href="#2-3-总结" class="headerlink" title="2.3 总结"></a>2.3 总结</h2><p>总结一下，一共有三类特征，用户特征、广告特征、上下文特征，官网也给了个很好的总结表：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>分类</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>广告特征</td>
+<td>账户ID(<em>advertiserID</em>)</td>
+<td>腾讯社交广告的账户结构分为四级：账户——推广计划——广告——素材，账户对应一家特定的广告主。</td>
+</tr>
+<tr>
+<td></td>
+<td>推广计划ID(<em>campaignID</em>)</td>
+<td>推广计划是广告的集合，类似电脑文件夹功能。广告主可以将推广平台、预算限额、是否匀速投放等条件相同的广告放在同一个推广计划中，方便管理。</td>
+</tr>
+<tr>
+<td></td>
+<td>广告ID(<em>adID</em>)</td>
+<td>腾讯社交广告管理平台中的广告是指广告主创建的广告创意(或称广告素材)及广告展示相关设置，包含广告的基本信息(广告名称，投放时间等)，广告的推广目标，投放平台，投放的广告规格，所投放的广告创意，广告的受众(即广告的定向设置)，广告出价等信息。单个推广计划下的广告数不设上限。</td>
+</tr>
+<tr>
+<td></td>
+<td>素材ID(<em>creativeID</em>)</td>
+<td>展示给用户直接看到的广告内容，一条广告下可以有多组素材。</td>
+</tr>
+<tr>
+<td></td>
+<td>AppID(<em>appID</em>)</td>
+<td>广告推广的目标页面链接地址，即点击后想要展示给用户的页面，此处页面特指具体的App。多个推广计划或广告可以同时推广同一个App。</td>
+</tr>
+<tr>
+<td></td>
+<td>App分类(<em>appCategory</em>)</td>
+<td>App开发者设定的App类目标签，类目标签有两层，使用3位数字编码，百位数表示一级类目，十位个位数表示二级类目，如“210”表示一级类目编号为2，二级类目编号为10，类目未知或者无法获取时，标记为0。</td>
+</tr>
+<tr>
+<td></td>
+<td>App平台(<em>appPlatform</em>)</td>
+<td>App所属操作系统平台，取值为Android，iOS，未知。同一个appID只会属于一个平台。</td>
+</tr>
+<tr>
+<td>用户特征</td>
+<td>用户ID(<em>userID</em>)</td>
+<td>唯一标识一个用户</td>
+</tr>
+<tr>
+<td></td>
+<td>年龄(<em>age</em>)</td>
+<td>取值范围[0, 80]，其中0表示未知。</td>
+</tr>
+<tr>
+<td></td>
+<td>性别(<em>gender</em>)</td>
+<td>取值包括男，女，未知。</td>
+</tr>
+<tr>
+<td></td>
+<td>学历(<em>education</em>)</td>
+<td>用户当前最高学历，不区分在读生和毕业生，取值包括小学，初中，高中，专科，本科，硕士，博士，未知</td>
+</tr>
+<tr>
+<td></td>
+<td>婚恋状态(<em>marriageStatus</em>)</td>
+<td>用户当前感情状况，取值包括单身，新婚，已婚，未知。</td>
+</tr>
+<tr>
+<td></td>
+<td>育儿状态(<em>haveBaby</em>)</td>
+<td>用户当前孕育宝宝状态，取值包括孕育中，宝宝0~6个月，宝宝6~12个月，宝宝1~2岁，宝宝2~3岁，育儿但宝宝年龄未知，未知。</td>
+</tr>
+<tr>
+<td></td>
+<td>家乡/籍贯(<em>hometown</em>)</td>
+<td>用户出生地，取值具体到市级城市，使用二级编码，千位百位数表示省份，十位个位数表示省内城市，如1806表示省份编号为18，城市编号是省内的6号，编号0表示未知。</td>
+</tr>
+<tr>
+<td></td>
+<td>常住地(<em>residence</em>)</td>
+<td>最近一段时间用户长期居住的地方，取值具体到市级城市，编码方式与家乡相同。</td>
+</tr>
+<tr>
+<td></td>
+<td>App安装列表(<em>appInstallList</em>)</td>
+<td>截止到某一时间点用户全部的App安装列表(appID)，已过滤高频和低频App。</td>
+</tr>
+<tr>
+<td></td>
+<td>App安装流水</td>
+<td>最近一段时间内用户安装App行为流水，包括appID，行为发生时间(installTime)和app类别(appCategory)，已过滤高频和低频App。</td>
+</tr>
+<tr>
+<td></td>
+<td>注：2~8基于用户个人注册资料和算法自动修正得到，9~10基于用户行为日志统计得到。</td>
+<td></td>
+</tr>
+<tr>
+<td>上下文特征</td>
+<td>广告位ID(<em>positionID</em>)</td>
+<td>广告曝光的具体位置，如QQ空间Feeds广告位。</td>
+</tr>
+<tr>
+<td></td>
+<td>站点集合ID(<em>sitesetID</em>)</td>
+<td>多个广告位的聚合，如QQ空间</td>
+</tr>
+<tr>
+<td></td>
+<td>广告位类型(<em>positionType</em>)</td>
+<td>对于某些站点，人工定义的一套广告位规格分类，如Banner广告位。</td>
+</tr>
+<tr>
+<td></td>
+<td>联网方式(<em>connectionType</em>)</td>
+<td>移动设备当前使用的联网方式，取值包括2G，3G，4G，WIFI，未知</td>
+</tr>
+<tr>
+<td></td>
+<td>运营商(<em>telecomsOperator</em>)</td>
+<td>移动设备当前使用的运营商，取值包括中国移动，中国联通，中国电信，未知</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>接下来的任务就是从这些给的数据里面挖掘有用的信息去训练模型预测转化率啦。</p>
+<h1 id="3-主要流程"><a href="#3-主要流程" class="headerlink" title="3. 主要流程"></a>3. 主要流程</h1><p>这是Kaggle上数据挖掘比赛的黄金流程图：<br><a href="http://om1bxijvl.bkt.clouddn.com/2017-06-07-15-44-01.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2017-06-07-15-44-01.png" alt="img"></a></p>
+<p>我们也是采用这个流程来做的~</p>
+<h1 id="4-数据分析-amp-清洗"><a href="#4-数据分析-amp-清洗" class="headerlink" title="4. 数据分析&amp;清洗"></a>4. 数据分析&amp;清洗</h1><h2 id="4-1-数据分析"><a href="#4-1-数据分析" class="headerlink" title="4.1 数据分析"></a>4.1 数据分析</h2><p>拿到数据第一件事就是要好好分析数据！！！不仅一开始要分析，训练完也要根据结果分析，所以数据分析是要贯穿整个流程的，只有通过不断的分析统计，才能挖掘到数据背后的价值啊~</p>
+<p>上面介绍数据表的时候已经有了一部分简单粗暴的分析了，实际上拿到赛题的时候进行的数据统计和分析远比上面的多，比如还统计了广告主上传回流时间的分布，上传回流时间在5,4,3,2,1天内的百分比，用户转化时间段分布各维度转化率情况（比如各广告主、广告计划、性别、年龄、app的转化率等等)…….</p>
+<p>这些都是数据清洗和特征工程的依据。</p>
+<h2 id="4-2-数据清洗"><a href="#4-2-数据清洗" class="headerlink" title="4.2 数据清洗"></a>4.2 数据清洗</h2><p>按天对训练集<code>train.csv</code>转化率进行了统计</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-16-37-49.png" alt=""> </p>
+<p>其中19号可能由于节日等原因导致转化率有点高，但是考虑到如果去掉这一天的数据就会丢失大一部分信息所以最终没有去掉。</p>
+<p>而由于回流时间的存在，最后四天的数据会不准确，也就是说后五天的数据中有一部分实际上是转化了的，但广告主还没有来得及将这条转化汇报给广告系统，导致数据集中的label被误标记为了0（实际上是1）</p>
+<p>这里我们尝试了两种方法：</p>
+<ol>
+<li>根据经验猜测回流数据是广告主网站反馈回来的，所以我们计算了各广告主在最后五天内的最后一次回流反馈时间，将各广告主最后一次回流返回时间之后的数据删除掉这样就在一定程度上减少了不准确的负样本。这样筛去了大概有3万条。这样的做法带来的问题是有一些真正的负样本也被去除掉了。</li>
+<li>由于最后两天数据的问题比较大，所以干脆直接把最后两天的数据删掉，不用这两天的数据训练模型，这样带来的问题是有一些在这两天新上线的广告就没有得到充分的训练。</li>
+</ol>
+<h1 id="5-特征工程"><a href="#5-特征工程" class="headerlink" title="5. 特征工程"></a>5. 特征工程</h1><p>一开始的时候我们采用了很多基本特征，即各种基础的category型特征（AppID, UserID, creativeID, pisitionID等）的onehot编码，又对单特征进行了一定的统计，比如某广告的转化率，某种联网方式的转化率等。后来看了大神“为情所困的少年”的分享，才反应过来其实无论是onehot还是对ID单维度的统计特征，其实都是对于一个特征的一种表达，从一定意义上是重复的。我个人感觉onehot之后的稀疏特征更适合于线性模型，如LR；而统计量的连续特征更适合于树模型，如GBDT。</p>
+<p>回头来看，其实特征工程需要根据模型预先选择方向。李沐说过，模型是使用离散特征还是连续特征，其实是一个“海量离散特征+简单模型” 同 “少量连续特征+复杂模型”的权衡。既可以离散化用线性模型，也可以用连续特征加深度学习。就看是喜欢折腾特征还是折腾模型了。通常来说，前者容易，而且可以n个人一起并行做，有成功经验；后者目前看很赞，能走多远还须拭目以待。</p>
+<p>后来这两种思路在初赛和决赛中我们的都尝试了：</p>
+<h2 id="5-1-海量离散特征-简单模型"><a href="#5-1-海量离散特征-简单模型" class="headerlink" title="5.1 海量离散特征+简单模型"></a>5.1 海量离散特征+简单模型</h2><p>在初赛的开始阶段，我们将各种基础的category型特征进行onehot编码，然后构造了一些单维度的统计特征，比如某广告的转化率，某种联网方式的转化率等，然后构造了一些组合特征，将这些特征onehot之后输入了LR模型就开始训练和预测了。</p>
+<p>对于LR这种线性模型来说，它更适合于onehot类型的特征，首先它对于稀疏高维特征处理是无压力的，其次离散化后的特征对异常数据有很强的鲁棒性，这些在参考文献2<a href="http://blog.csdn.net/yang090510118/article/details/39478033" target="_blank" rel="external">逻辑回归LR的特征为什么要先离散化</a>中可以看到。</p>
+<p>对于一些onehot之后维度很大的特征，我们通过统计，取高频的一部分，舍弃低频的一部分，进行onehot。但随着构造特征的增多，onehot之后的向量维度剧增，这时就会带来维度灾难问题，见参考文献4<a href="https://zhuanlan.zhihu.com/p/26945814" target="_blank" rel="external">机器学习中的维度灾难</a>。不仅如此，这时基本上也就被设备问题限制死了。</p>
+<p>这很烦。于是我们就换模型了。</p>
+<h2 id="5-2-少量连续特征-复杂模型"><a href="#5-2-少量连续特征-复杂模型" class="headerlink" title="5.2 少量连续特征+复杂模型"></a>5.2 少量连续特征+复杂模型</h2><p>既然要预测的是转化率，我们不如把特征转化为<strong>转化率特征</strong>，这样特征就变成了连续值，同时我们还抽取了一些<strong>统计特征</strong>，比如某广告在一天之内、n天之内的<strong>点击量，转化量</strong>，某用户历史安装次数、APP历史被安装次数，等等，然后输入树模型中训练。感谢“为情所困”大神的分享，树模型比LR快了不少。</p>
+<h2 id="5-3-组合特征构造"><a href="#5-3-组合特征构造" class="headerlink" title="5.3 组合特征构造"></a>5.3 组合特征构造</h2><p>说到特征组合，从统计的角度解释，基本特征仅仅是真实特征分布在低维空间的映射，不足以描述真实分布，加入组合特征是为了在更高维空间拟合真实分布，使得预测更准确。<br>在初赛和决赛阶段，我们共使用过两种组合特征的表达：</p>
+<p><strong>1. 对离散ID进行hash生成新特征</strong></p>
+<p>在初期用LR的时候，我们采用的方式是hash。即对两个ID做hash运算，得到一个新特征。这是一个很巧妙的方法。例如下面这个表，我们做哈希：</p>
+<p>age×10+gendarage×10+gendar</p>
+<p>得到第三列：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>age</th>
+<th>gendar</th>
+<th>hash</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>10</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1</td>
+<td>21</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2</td>
+<td>32</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>第三列的的特征的取值有两位，十位是age,个位是gendar。新特征是一种新的交叉特征的体现。</p>
+<p><strong>2. 对组合进行统计生成新特征</strong></p>
+<p>像之前“为情所困”大神说过的那样，其实无论onehot还是统计特征，其实都是对于一个特征的一种表达。因为后期我们采用了GBDT，因此我们弃用了之前的hash组合方式，而选用统计量（即点击量、转化量和转化率）。这样就在一个维度上表达了这两个特征的组合，而且非常便于计算。</p>
+<p>实现：按字段groupby，获取统计量和转化率特征</p>
+<h2 id="5-4-特征选择"><a href="#5-4-特征选择" class="headerlink" title="5.4 特征选择"></a>5.4 特征选择</h2><p>我们用到了两种特征选择的方法：</p>
+<ol>
+<li>根据方差：方差很小的属性，意味着该属性的识别能力很差。极端情况下，方差为0，意味着该属性在所有样本上都是一个值，所以我们尽量选那些方差比较大，区分度比较好的特征。</li>
+<li>根据模型评分+相关系数矩阵：用GBDT训练会得到一个特征打分，可以作为筛选特征的依据，与此同时，我们发现，有一些特征之间有很强的相互作用，比如加入了某个特征之后会使之前排名很靠前的特征下降，因此我们还计算了特征之间的相关系数，对于相关系数较大的特征，我们就多次试验，反复选择</li>
+</ol>
+<p>特征之间的相关系数：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-21-58-07.png" alt=""> </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-21-49-00.png" alt=""> </p>
+<p>另外，“酱紫”学长对特征筛选还有一种建议就是直接对所有基本特征进行遍历两两组合，然后用卡方检验筛出来一些比较好的特征。这种方式很简单，大多数工作只需要交给模型来完成。<strong>日后学习一下</strong></p>
+<h2 id="5-5-用户-APP特征挖掘"><a href="#5-5-用户-APP特征挖掘" class="headerlink" title="5.5 用户-APP特征挖掘"></a>5.5 用户-APP特征挖掘</h2><p>特征说到这里，还有两个表没有充分利用上，<code>user_app_actions.csv</code> 和</p>
+<p><code>user_installedapps.csv</code> </p>
+<p><code>user_app_actions.csv</code> ：用户安装app流水，1——30天的，包含安装时间，既然包含安装时间，就可以提取出用户的偏好安装时间、类别、app的偏好安装时间、安装量等特征</p>
+<p><code>user_installedapps.csv</code> 用户历史安装app</p>
+<p>两个表都有用户和APP的安装信息，所以是否可以提取出用户和app之间的一些联系呢。思考一个问题，如果用户已经点击了某个APP的广告，那么是否会转化（下载）取决于什么呢？除了一些客观的因素，比如广告位（是否误点），联网方式等，当然是用户到底感不感兴趣！需不需要！</p>
+<p>想到这里就感觉是个推荐系统方面的问题了，所以我们查了一些资料，尝试了用三种方式表达用户和app之间的联系：</p>
+<ol>
+<li><p>tf-idf向量特征</p>
+<ol>
+<li>把用户看成文档，app、app所属的类别看成词</li>
+<li>把app、app所属的类别看成文档，用户看成词</li>
+</ol>
+<p>没什么提高</p>
+</li>
+<li><p>word-embedding特征</p>
+<p><code>user_app_actions.csv</code> 中包含用户的近期下载的app，根据时间可以得到app下载的顺序。</p>
+<p>把word2vec应用在用户app下载序列上，根据用户下载app的顺序，把app看做单词，也是可以形成这样的序列数据，进而训练处每个app对应的向量，看作是app的一个特征。</p>
+</li>
+<li><p>SVD分解</p>
+<p><code>user_installedapps.csv</code> 表中没有时间信息，也就不合适用word2vec来提取特征了，我们想到了用推荐系统中的常用套路：SVD分解</p>
+<p>关于SVD知识的补充日后可以看下面两篇文章：</p>
+<p><a href="http://blog.csdn.net/zhongkejingwang/article/details/43053513" target="_blank" rel="external">奇异值分解SVD原理详解及推导</a></p>
+<p><a href="http://blog.csdn.net/zhongkejingwang/article/details/43083603" target="_blank" rel="external">SVD在推荐系统中的应用详解以及算法推导</a></p>
+</li>
+</ol>
+<h2 id="5-6-贝叶斯平滑"><a href="#5-6-贝叶斯平滑" class="headerlink" title="5.6 贝叶斯平滑"></a>5.6 贝叶斯平滑</h2><p>这里我们参考了@<a href="https://cloud.tencent.com/developer/user/598572" target="_blank" rel="external">王照彬</a> 大神的平滑方式</p>
+<p> 例如对我们数据中存在的 root -&gt; advertiser -&gt; campaign -&gt; ad -&gt; creative 层级关系(root为训练集中全部样本), 这样的层级关系隐喻了在同一个父节点下的子节点, 其来自于同一个Beta分布, 所以我逐层进行了贝叶斯平滑, 且建立层级关系还有一个好处, 即对预测集出现的数据, 若该creativeID 在训练集从未出现过, 则在pandas.merge时该值为空, 则向上寻找其父节点的统计值, 最高一层为root, 是基与全部训练数据的统计, root的值不进行贝叶斯平滑, 且一定存在, 这就保证了当在预测集中遇到了未出现的样本时, 使用最合理的缺省值进行补全.</p>
+<p><img src="https://blog-10039692.file.myqcloud.com/1496913643639_4485_1496913644532.png" alt="img"></p>
+<p>关于贝叶斯平滑，其核心思想就是说，当某些广告投放量比较少时，或者还未投放时，根据历史数据所统计的转化率特征是不准确的，比如有广告A和B，<script type="math/tex">r_A = 5/10</script>,<script type="math/tex">r_B = 50/100</script>,由于广告A的投放量还比较少，通过历史数据计算而得的<script type="math/tex">r_B</script> 就很有可能不准确，在比如如果某一个广告还未投放过，那么根据历史数据计算其转化率为0，放入模型中训练，也是非常不合理的，所以我们该如何解决呢？</p>
+<p>对于贝叶斯平滑参数的估计方法，可以采用矩估计、极大似然估计和EM算法，这里由于速度的限制，我们采用的是矩估计的方式，代码<a href="https://github.com/zsyandjyhouse/TencentAD_contest" target="_blank" rel="external">TencentAD_contest</a></p>
+<p>关于贝叶斯平滑，有待补习，参考文章：</p>
+<p><a href="http://blog.csdn.net/jinping_shi/article/details/53444100" target="_blank" rel="external">贝叶斯参数估计的理解</a></p>
+<p><a href="https://www.bbsmax.com/A/A7zgmjRk54/" target="_blank" rel="external">CTR预估中的贝叶斯平滑方法（二）参数估计和代码实现</a></p>
+<p><a href="http://blog.csdn.net/jinping_shi/article/details/78334362" target="_blank" rel="external">转化率（CTR）预测的贝叶斯平滑</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/21724759" target="_blank" rel="external">计算广告的训练与平滑思想（下）</a></p>
+<h2 id="5-7-多线程抽取特征"><a href="#5-7-多线程抽取特征" class="headerlink" title="5.7 多线程抽取特征"></a>5.7 多线程抽取特征</h2><p>决赛数据集太大，而我们组合特征非常多。因此我们采用了多线程抽特征的方式。</p>
+<p>每个特征一个进程，同时对多个特征进行抽取。</p>
+<p>代码见<a href="https://github.com/zsyandjyhouse/TencentAD_contest" target="_blank" rel="external">TencentAD_contest</a>，extra_rate_thread_0623.py</p>
+<h2 id="5-8-总结"><a href="#5-8-总结" class="headerlink" title="5.8 总结"></a>5.8 总结</h2><p><a href="https://github.com/z564808896/Tencent_Social_Ads" target="_blank" rel="external">竟然有这种操作队分享</a>总结得非常好，我们的特征主要分为以下几类：</p>
+<ul>
+<li><p>Trick特征：</p>
+<ol>
+<li><p><strong>重复点击的数据条目</strong>：通过观察原始数据是不难发现的,有很多只有clickTime和label不一样的重复数据，按时间排序发现重复数据如果转化，label一般标在头或尾，少部分在中间，在训练集上出现的情况在测试集上也会出现，所以把重复点击数据中的第一条和最后一条标记出来，让模型去学习。后来进一步标注，非重复数据0，重复但不是第一条和最后一条1，重复且是第一条2，最后一条3。这里面包含用户的重复点击、creativeID的重复点击等</p>
+</li>
+<li><p>时间差特征：与重复第一条的时间差和重复最后一条的时间差特征，与前一条和后一条的时间差，甚至包括了重复组合特征的时间差特征</p>
+</li>
+<li><p>rank特征：重复数据的rank特征，同样包括重复的用户、广告等</p>
+<p>这里实现方面用到了pandas的 <code>shift()</code>操作，非常酷炫</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>统计特征（单维+组合）：<br>原始特征主要三大类：广告特征、用户特征、位置特征，通过交叉组合算统计构造特征，由于机器限制，统计特征主要使用了转化率，部分特征还统计了点击次数和转化次数。前面已经说过，就不详细列举。</p>
+</li>
+<li><p>用户app行为挖掘特征：</p>
+<p>word-embedding特征、SVD特征</p>
+</li>
+</ul>
+<p><strong>最后附上当时的特征评分表：</strong></p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-14-40-32.png" alt=""> </p>
+<h1 id="6-训练集-测试集构造"><a href="#6-训练集-测试集构造" class="headerlink" title="6. 训练集/测试集构造"></a>6. 训练集/测试集构造</h1><p>尝试过两种方法：</p>
+<ol>
+<li><p><strong>滑动窗口</strong></p>
+<p>用每天的前七天的统计（统计指统计转化量、点击量、转化率，下同）来作为本天的特征。</p>
+<p>这样就得到了24-30号7天的特征数据，再加上31号的特征，然后用24-29做训练，得到模型，30号作为线下验证集合，验证模型的线下loss，然后将31号的特征输入到该模型，得到最终的线上预测结果，提交。</p>
+<p>​<br>如下图所示：<br><a href="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-49-53.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-49-53.png" alt="img"></a><br>经测试我们发现，即使我们去掉了30号的部分负样本，还是有一些问题的，30号的数据还是不够好，线上线下会不一致，因此我们改用28号做验证：<br><a href="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-53-21.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-53-21.png" alt="img"></a><br>这样做出于两种目的：一是尽量做到了线上线下统一，二是不让模型学习30号的样本数据，防止一些错误样本被模型学到。</p>
+</li>
+<li><p>用第一周统计，第二周做交叉验证并训练模型。如下图所示：<br><a href="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-59-59.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2017-06-07-21-59-59.png" alt="img"></a></p>
+</li>
+</ol>
+<p>相信很多人都用的是这两种其中的一种。我是一个对自己极度不自信的人，来来回回换了好几次。最终觉得第2种方式很稳定，线上线下较统一。第1种方式特征更新较快，模型更准确，但带来的问题就是线上线下不太统一。</p>
+<h1 id="7-模型训练-amp-验证-amp-调参"><a href="#7-模型训练-amp-验证-amp-调参" class="headerlink" title="7. 模型训练&amp;验证&amp;调参"></a>7. 模型训练&amp;验证&amp;调参</h1><h2 id="7-1-模型"><a href="#7-1-模型" class="headerlink" title="7.1 模型"></a>7.1 模型</h2><p>操作系统：ubuntu14.04</p>
+<p>机器内存：256G</p>
+<p>语言：python</p>
+<p>用到的模型：</p>
+<ul>
+<li><p>LR：L1\L2</p>
+</li>
+<li><p>gbdt：xgboost,lightGBM</p>
+</li>
+<li><p>gbdt+lr：Facebook论文中提出的一种方法</p>
+</li>
+<li><p>特征离散化+ffm：</p>
+<p>​    可以参考我的两篇文章</p>
+<p>​    <a href="https://siyaozhang.github.io/2017/03/14/Factorization-Machine%EF%BC%88FM%EF%BC%8C%E5%9B%A0%E5%AD%90%E5%88%86%E8%A7%A3%E6%9C%BA%EF%BC%89/" target="_blank" rel="external">Factorization Machine（<strong>FM</strong>，因子分解机）</a></p>
+<p>​    <a href="https://siyaozhang.github.io/2017/03/22/FFM%EF%BC%88field-aware-Factorization-Machine%EF%BC%89%E2%80%94%E2%80%94%E5%8D%87%E7%BA%A7%E7%89%88FM/" target="_blank" rel="external">F<strong>FM</strong>（field-aware Factorization Machine）——升级版<strong>FM</strong></a></p>
+</li>
+</ul>
+<h2 id="7-2-调参："><a href="#7-2-调参：" class="headerlink" title="7.2 调参："></a>7.2 调参：</h2><p>决赛LGB参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">params = &#123; </div><div class="line"> <span class="string">'boosting_type'</span>: <span class="string">'gbdt'</span>, </div><div class="line"> <span class="string">'objective'</span>: <span class="string">'binary'</span>, //目标，二分类</div><div class="line"> <span class="string">'metric'</span>: <span class="string">'binary_logloss'</span>, //损失函数</div><div class="line"> <span class="string">'num_leaves'</span>: <span class="number">280</span>, //叶子节点数目</div><div class="line"> <span class="string">'learning_rate'</span>: <span class="number">0.05</span>, //学习率</div><div class="line"> <span class="string">'feature_fraction'</span>: <span class="number">0.90</span>, //随机抽取特征率</div><div class="line"> <span class="string">'bagging_fraction'</span>: <span class="number">1</span>, </div><div class="line"> <span class="string">'bagging_freq'</span>: <span class="number">5</span>, </div><div class="line"> <span class="string">'verbose'</span>: <span class="number">0</span>, </div><div class="line"> <span class="string">'min_gain_to_split'</span>:<span class="number">1</span>, //最小分裂信息增益</div><div class="line"> <span class="string">'lambda_l1'</span>:<span class="number">1</span> //正则化项系数</div><div class="line"> &#125; </div><div class="line"> num_boost_round = <span class="number">1000</span> //训练轮数，树的数目</div><div class="line"> early_stopping_rounds = <span class="number">20</span>//提前停止轮数</div></pre></td></tr></table></figure>
+<p>初赛XGB参数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line">params = &#123;</div><div class="line">        <span class="string">'task'</span>: <span class="string">'train'</span>,</div><div class="line">        <span class="string">'boosting_type'</span>: <span class="string">'gbdt'</span>,</div><div class="line">        <span class="string">'objective'</span>: <span class="string">'regression'</span>,</div><div class="line">        <span class="string">'metric'</span>: <span class="string">'binary_logloss'</span>,</div><div class="line">        <span class="string">'num_leaves'</span>: <span class="number">31</span>,</div><div class="line">        <span class="string">'learning_rate'</span>: <span class="number">0.1</span>,</div><div class="line">        <span class="string">'feature_fraction'</span>: <span class="number">0.9</span>,</div><div class="line">        <span class="string">'bagging_fraction'</span>: <span class="number">0.8</span>,</div><div class="line">        <span class="string">'bagging_freq'</span>: <span class="number">5</span>,</div><div class="line">        <span class="string">'verbose'</span>: <span class="number">0</span></div><div class="line">    &#125;</div><div class="line">    num_boost_round = <span class="number">100</span></div></pre></td></tr></table></figure>
+<h1 id="8-项目代码"><a href="#8-项目代码" class="headerlink" title="8. 项目代码"></a>8. 项目代码</h1><p><a href="https://github.com/zsyandjyhouse/TencentAD_contest" target="_blank" rel="external">TencentAD_contest</a></p>
+<h1 id="9-参考资料"><a href="#9-参考资料" class="headerlink" title="9. 参考资料"></a>9. 参考资料</h1><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/26820998" target="_blank" rel="external">Kaggle 数据挖掘比赛经验分享</a></li>
+<li><a href="http://blog.csdn.net/yang090510118/article/details/39478033" target="_blank" rel="external">逻辑回归LR的特征为什么要先离散化</a></li>
+<li><a href="http://breezedeus.github.io/2014/11/20/breezedeus-feature-hashing.html" target="_blank" rel="external">特征哈希（Feature Hashing）</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/26945814" target="_blank" rel="external">机器学习中的维度灾难</a></li>
+<li><a href="http://blog.jasonding.top/2015/11/12/Feature%20Engineering/%E3%80%90%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E3%80%91%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E4%B8%8E%E7%89%B9%E5%BE%81%E5%AD%A6%E4%B9%A0/" target="_blank" rel="external">【特征工程】特征选择与特征学习</a></li>
+<li><a href="http://202.197.191.206:8080/30/text/chapter04/4_8.htm" target="_blank" rel="external">描述量选择及特征的组合优化</a></li>
+<li><a href="http://www.jianshu.com/p/8f6f94f1d275" target="_blank" rel="external">scikit-learn系列之特征选择</a></li>
+<li><a href="http://blog.csdn.net/shine19930820/article/details/71713680" target="_blank" rel="external">GBDT原理及利用GBDT构造新的特征-Python实现</a></li>
+<li><a href="http://www.bigbear2017.com/blog/2016/11/02/facebook-ctr-paper/" target="_blank" rel="external">很好的文献资料Facebook CTR Paper</a></li>
+<li><a href="https://github.com/z564808896/Tencent_Social_Ads" target="_blank" rel="external">竟然有这种操作队分享</a></li>
+<li><a href="https://www.qcloud.com/community/article/895055" target="_blank" rel="external">【SPA大赛】腾讯广告点击大赛：对stacking的一些基本介绍</a></li>
+<li><a href="http://blog.csdn.net/ben3ben/article/details/74838338" target="_blank" rel="external">第七名</a></li>
+</ol>
+<h1 id="10-top3方案"><a href="#10-top3方案" class="headerlink" title="10. top3方案"></a>10. top3方案</h1><h3 id="10-1-top1"><a href="#10-1-top1" class="headerlink" title="10.1 top1"></a>10.1 top1</h3><p>特征工程非常细致，而且有理有据，都是经过仔细的分析统计抽取的特征，效果必然好，而且还做了模型创新，用</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-07-17-03-21.png" alt=""> </p>
+<h3 id="10-2-top2"><a href="#10-2-top2" class="headerlink" title="10.2 top2"></a>10.2 top2</h3><p>也是用了17-30号交叉验证，和我们相同的就不说了，说说不同的：</p>
+<p>回流数据不准处理方法：删掉30号平均回流时间较长的数据</p>
+<p>应该是这里回流的处理方式比较好，特征也比较细致，最后模型也做了stacking，模型大概跟我们差不多，但是我们ffm一直没训练好，最后也没有融合</p>
+<h3 id="10-3-top4"><a href="#10-3-top4" class="headerlink" title="10.3 top4"></a>10.3 top4</h3><p>deepFM</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/05/【九章系统设计】一致性哈希-短网址系统设计/" rel="next" title="【九章系统设计】一致性哈希&短网址系统设计">
+                <i class="fa fa-chevron-left"></i> 【九章系统设计】一致性哈希&短网址系统设计
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/07/【腾讯转化率预估】贝叶斯平滑/" rel="prev" title="【腾讯转化率预估】贝叶斯平滑">
+                【腾讯转化率预估】贝叶斯平滑 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-题目简介"><span class="nav-number">1.</span> <span class="nav-text">1. 题目简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-移动App广告转化率预估"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 移动App广告转化率预估</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-评估方式："><span class="nav-number">1.2.</span> <span class="nav-text">1.2 评估方式：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-数据"><span class="nav-number">2.</span> <span class="nav-text">2. 数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-数据量"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数据量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-数据表"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 数据表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-总结"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-主要流程"><span class="nav-number">3.</span> <span class="nav-text">3. 主要流程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-数据分析-amp-清洗"><span class="nav-number">4.</span> <span class="nav-text">4. 数据分析&清洗</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-数据分析"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-数据清洗"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 数据清洗</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-特征工程"><span class="nav-number">5.</span> <span class="nav-text">5. 特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-海量离散特征-简单模型"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 海量离散特征+简单模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-少量连续特征-复杂模型"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 少量连续特征+复杂模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-组合特征构造"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 组合特征构造</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-特征选择"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 特征选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-5-用户-APP特征挖掘"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 用户-APP特征挖掘</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-6-贝叶斯平滑"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 贝叶斯平滑</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-7-多线程抽取特征"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 多线程抽取特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-8-总结"><span class="nav-number">5.8.</span> <span class="nav-text">5.8 总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-训练集-测试集构造"><span class="nav-number">6.</span> <span class="nav-text">6. 训练集/测试集构造</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-模型训练-amp-验证-amp-调参"><span class="nav-number">7.</span> <span class="nav-text">7. 模型训练&验证&调参</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-模型"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-调参："><span class="nav-number">7.2.</span> <span class="nav-text">7.2 调参：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8-项目代码"><span class="nav-number">8.</span> <span class="nav-text">8. 项目代码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9-参考资料"><span class="nav-number">9.</span> <span class="nav-text">9. 参考资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-top3方案"><span class="nav-number">10.</span> <span class="nav-text">10. top3方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-1-top1"><span class="nav-number">10.0.1.</span> <span class="nav-text">10.1 top1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-top2"><span class="nav-number">10.0.2.</span> <span class="nav-text">10.2 top2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-3-top4"><span class="nav-number">10.0.3.</span> <span class="nav-text">10.3 top4</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

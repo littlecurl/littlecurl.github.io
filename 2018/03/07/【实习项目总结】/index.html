@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 项目简介无线短视频推荐项目，负责无线端用户的短视频推荐，也就是给手机端用户推荐短视频。主要用到了item-based协同过滤的思想，为用户提供候选短视频推荐集合，然后再利用预训练的LR模型返回候选推荐集合的最终排序，推给用户。 2. 推荐系统分类感谢@奔波的梦想 的总结。推荐算法大致可以分为三类：基于内容的推荐算法、协同过滤推荐算法和基于知识的推荐算法。​         基于内容的推荐算法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【实习项目总结】">
+<meta property="og:url" content="http://yoursite.com/2018/03/07/【实习项目总结】/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="1. 项目简介无线短视频推荐项目，负责无线端用户的短视频推荐，也就是给手机端用户推荐短视频。主要用到了item-based协同过滤的思想，为用户提供候选短视频推荐集合，然后再利用预训练的LR模型返回候选推荐集合的最终排序，推给用户。 2. 推荐系统分类感谢@奔波的梦想 的总结。推荐算法大致可以分为三类：基于内容的推荐算法、协同过滤推荐算法和基于知识的推荐算法。​         基于内容的推荐算法">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-08-09-51-55.png">
+<meta property="og:updated_time" content="2018-03-12T12:35:15.729Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【实习项目总结】">
+<meta name="twitter:description" content="1. 项目简介无线短视频推荐项目，负责无线端用户的短视频推荐，也就是给手机端用户推荐短视频。主要用到了item-based协同过滤的思想，为用户提供候选短视频推荐集合，然后再利用预训练的LR模型返回候选推荐集合的最终排序，推给用户。 2. 推荐系统分类感谢@奔波的梦想 的总结。推荐算法大致可以分为三类：基于内容的推荐算法、协同过滤推荐算法和基于知识的推荐算法。​         基于内容的推荐算法">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-08-09-51-55.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/07/【实习项目总结】/"/>
+
+
+
+
+
+  <title>【实习项目总结】 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/07/【实习项目总结】/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【实习项目总结】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T18:35:03+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,521
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h2><p>无线短视频推荐项目，负责无线端用户的短视频推荐，也就是给手机端用户推荐短视频。主要用到了item-based协同过滤的思想，为用户提供候选短视频推荐集合，然后再利用预训练的LR模型返回候选推荐集合的最终排序，推给用户。</p>
+<h2 id="2-推荐系统分类"><a href="#2-推荐系统分类" class="headerlink" title="2. 推荐系统分类"></a>2. 推荐系统分类</h2><p>感谢@<a href="https://www.zhihu.com/question/20326697/answer/58148605" target="_blank" rel="external">奔波的梦想</a> 的总结。推荐算法大致可以分为三类：基于内容的推荐算法、协同过滤推荐算法和基于知识的推荐算法。<br>​         <strong>基于内容的推荐算法</strong>，原理是用户喜欢和自己关注过的Item在内容上类似的Item，比如你看了哈利波特I，基于内容的推荐算法发现哈利波特II-VI，与你以前观看的在内容上面（共有很多关键词）有很大关联性，就把后者推荐给你，这种方法可以避免Item的冷启动问题（冷启动：如果一个Item从没有被关注过，其他推荐算法则很少会去推荐，但是基于内容的推荐算法可以分析Item之间的关系，实现推荐），弊端在于推荐的Item可能会重复，典型的就是新闻推荐，如果你看了一则关于MH370的新闻，很可能推荐的新闻和你浏览过的，内容一致；另外一个弊端则是对于一些多媒体的推荐（比如音乐、电影、图片等)由于很难提内容特征，则很难进行推荐，一种解决方式则是人工给这些Item打标签。<br>​        <strong>协同过滤算法</strong>，原理是用户喜欢那些具有相似兴趣的用户喜欢过的商品，比如你的朋友喜欢电影哈利波特I，那么就会推荐给你，这是最简单的基于用户的协同过滤算法（user-based collaboratIve filtering），还有一种是基于Item的协同过滤算法（item-based collaborative filtering），这两种方法都是将用户的所有数据读入到内存中进行运算的，因此成为Memory-based Collaborative Filtering，另一种则是Model-based collaborative filtering，包括Aspect Model，pLSA，LDA，聚类，SVD，Matrix Factorization等，这种方法训练过程比较长，但是训练完成后，推荐过程比较快。<br>​       最后一种方法是基于知识的推荐算法，也有人将这种方法归为基于内容的推荐，这种方法比较典型的是构建领域本体，或者是建立一定的规则，进行推荐。</p>
+<p><strong>item-based 和 user-based 协同过滤的比较：</strong></p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-08-09-51-55.png" alt=""> </p>
+<p>我们再来回顾一下<strong>item-base CF算法的特点</strong>：</p>
+<ul>
+<li>物品数明显小于用户数的场合，否则物品相似度矩阵计算代价很大</li>
+<li>适合长尾物品丰富，用户个性化需求强的领域</li>
+<li>对新用户友好，对新物品不友好，因为物品相似度矩阵不需要很强的实时性</li>
+<li>利用用户历史行为做推荐解释，比较令用户信服</li>
+</ul>
+<p>所以item-base挺适合做电影的推荐。当用户浏览某个电影的时候，我们可以推荐给他类似的电影，或者根据用户以前的观影记录，推荐他感兴趣的电影。</p>
+<h2 id="3-项目流程"><a href="#3-项目流程" class="headerlink" title="3. 项目流程"></a>3. 项目流程</h2><ol>
+<li>根据集群中7天用户-视频score数据，计算视频两两之间的余弦相似度</li>
+<li>为每个视频选取与之相似度&gt;0.5且最接近的top40个视频</li>
+<li>根据用户7天之内看过的视频，将相似视频merge进来，根据看过视频的score和相似视频的余弦相似度乘积，对看过的所有视频的所有相似视频打分，取top50作为用户的推荐视频候选集（去掉已经看过的视频）</li>
+<li>根据线上抽取的特征和用户、视频15天线下特征输入预训练的LR得到候选集合的点击率排序，作为最终的推荐顺序。</li>
+</ol>
+<h2 id="4-CF核心思路"><a href="#4-CF核心思路" class="headerlink" title="4. CF核心思路"></a>4. CF核心思路</h2><pre><code>* user1     user2
+* item1  score11   score21 (X)
+* item2  score12   score22 (Y)
+* --------------------------------
+* sim(item1,item2) = XY / math.sqrt(XX) * math.sqrt(YY)
+* XY= score11 * score12 + score21 * score22
+* XX = score11 * score11 + score21 * score21
+* YY = score12 * score12 + score22 * score22
+</code></pre><p>已知一周内，用户观看视频的数据，形式为RDD[(uid,(aid,score))]</p>
+<p>按照uid做一次join操作，就可以得到RDD[((aid1,aid2),(score11,score22))]，即用户对以及同时看过两者的用户对其的score</p>
+<p>接下来就可以计算出aid对的余弦相似度了</p>
+<p>然后根据余弦相似度为每个aid选出最相近的top40相似ad</p>
+<h2 id="5-优化方向"><a href="#5-优化方向" class="headerlink" title="5. 优化方向"></a>5. 优化方向</h2><p>暂时就想到了一个：</p>
+<p>将用户对电影的score做时间衰减</p>
+<p>之后继续补充</p>
+<h2 id="6-核心代码"><a href="#6-核心代码" class="headerlink" title="6. 核心代码"></a>6. 核心代码</h2><figure class="highlight scala"><table><tr><td class="code"><pre><div class="line"><span class="keyword">package</span> model</div><div class="line"></div><div class="line"><span class="keyword">import</span> org.apache.spark.broadcast.<span class="type">Broadcast</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></div><div class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.&#123;<span class="type">DataFrame</span>&#125;</div><div class="line"><span class="keyword">import</span> org.apache.spark.sql.hive.<span class="type">HiveContext</span></div><div class="line"><span class="keyword">import</span> util.<span class="type">MqManager</span></div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment">  * Created by dengxing on 2017/7/18.</span></div><div class="line"><span class="comment">  */</span></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">CF</span> </span>&#123;</div><div class="line"></div><div class="line">  <span class="comment">/** 基于dt时间获取原始数据源</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * @param sc    SparkContext</span></div><div class="line"><span class="comment">    * @param table 转换的hive表</span></div><div class="line"><span class="comment">    * @param day   获取当前日期的数据</span></div><div class="line"><span class="comment">    * @return 原始数据的dataFrame</span></div><div class="line"><span class="comment">    */</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getResource</span></span>(sc: <span class="type">SparkContext</span>, table: <span class="type">String</span>, day: <span class="type">String</span>) = &#123;</div><div class="line">    <span class="keyword">val</span> hiveContext = <span class="keyword">new</span> <span class="type">HiveContext</span>(sc)</div><div class="line">    <span class="keyword">import</span> hiveContext.sql</div><div class="line">    <span class="keyword">val</span> resource = sql(<span class="string">"select "</span></div><div class="line">      + <span class="string">"uid,"</span></div><div class="line">      + <span class="string">"aid,"</span></div><div class="line">      + <span class="string">"cnt"</span></div><div class="line">      + <span class="string">" from "</span> + table + <span class="string">" where dt ='"</span> + day + <span class="string">"'"</span>)</div><div class="line">    resource</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">    * 分布式计算余弦相似度</span></div><div class="line"><span class="comment">    * --------------------------------</span></div><div class="line"><span class="comment">    * user1     user2</span></div><div class="line"><span class="comment">    * item1  score11   score21 (X)</span></div><div class="line"><span class="comment">    * item2  score12   score22 (Y)</span></div><div class="line"><span class="comment">    * --------------------------------</span></div><div class="line"><span class="comment">    * sim(item1,item2) = XY / math.sqrt(XX) * math.sqrt(YY)</span></div><div class="line"><span class="comment">    * XY= score11 * score12 + score21 * score22</span></div><div class="line"><span class="comment">    * XX = score11 * score11 + score21 * score21</span></div><div class="line"><span class="comment">    * YY = score12 * score12 + score22 * score22</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * @param resource</span></div><div class="line"><span class="comment">    * @return RDD[(item1,item2,sim)]</span></div><div class="line"><span class="comment">    */</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">getCosineSimilarity</span></span>(resource: <span class="type">DataFrame</span>): <span class="type">RDD</span>[(<span class="type">String</span>, (<span class="type">String</span>, <span class="type">Double</span>))] = &#123;</div><div class="line">    <span class="keyword">val</span> rating = resource.map &#123;</div><div class="line">      row =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> uid = row.getString(<span class="number">0</span>)</div><div class="line">        <span class="keyword">val</span> aid = row.getString(<span class="number">1</span>)</div><div class="line">        <span class="keyword">val</span> score = row.getString(<span class="number">2</span>).toDouble</div><div class="line">        (uid, aid, score)</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//RDD[(uid,(aid,score))]</span></div><div class="line">    <span class="keyword">val</span> user_item_score = rating.map(f =&gt; (f._1, (f._2, f._3)))</div><div class="line">    </div><div class="line">	<span class="comment">/*</span></div><div class="line"><span class="comment">     * 提取每个用户有过行为的item键值对,即</span></div><div class="line"><span class="comment">     * RDD[((aid1,aid2),(score11,score22))]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_score_pair = user_item_score.join(user_item_score)</div><div class="line">      .map(f =&gt; ((f._2._1._1, f._2._2._1), (f._2._1._2, f._2._2._2)))</div><div class="line">    </div><div class="line">	<span class="comment">/*</span></div><div class="line"><span class="comment">     * 提取同一对item，所有的用户评分向量的点积，即XY 及 XX 及 YY</span></div><div class="line"><span class="comment">     * RDD[((aid1,aid2),score11 * score12 + score21 * score22)]</span></div><div class="line"><span class="comment">     * 及 RDD[((aid1,aid1),score11 * score11 + score21 * score21)]</span></div><div class="line"><span class="comment">     * 及 RDD[((aid2,aid2),score12 * score12 + score22 * score22)]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_pair_ALL = item_score_pair.map(f =&gt; (f._1, f._2._1 * f._2._2)).reduceByKey(_ + _)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 提取每个item，所有用户的自向量的点积，即XX或YY</span></div><div class="line"><span class="comment">     * RDD[((aid1,aid1),score11 * score11 + score21 * score21)]</span></div><div class="line"><span class="comment">     * 或 RDD[((aid2,aid2),score12 * score12 + score22 * score22)]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_pair_XX_YY = item_pair_ALL.filter(f =&gt; f._1._1 == f._1._2)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 提取每个item，所有用户的非自向量的点积，即XY</span></div><div class="line"><span class="comment">     * RDD[((aid1,aid2),score11 * score12 + score21 * score22)]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_pair_XY = item_pair_ALL.filter(f =&gt; f._1._1 != f._1._2)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 提取item_pair_XX_YY中的item及XX或YY</span></div><div class="line"><span class="comment">     * RDD[(aid1,score11 * score11 + score21 * score21)]</span></div><div class="line"><span class="comment">     * 或 RDD[(aid2,score12 * score12 + score22 * score22)]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_XX_YY = item_pair_XX_YY.map(f =&gt; (f._1._1, f._2))</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     *  转化item_pair_XY为(aid1,((aid1,aid2,XY),XX)))</span></div><div class="line"><span class="comment">     *  RDD[(aid1,((aid1,aid2,score11 * score12 + score21 * score22),score11 * score11 + score21 * score21)))]</span></div><div class="line"><span class="comment">     */</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> item_XY_XX = item_pair_XY.map(f =&gt; (f._1._1, (f._1._1, f._1._2, f._2))).join(item_XX_YY)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     *  转为item_XY_XX为(aid2,((aid1,aid2,XY,XX),YY))</span></div><div class="line"><span class="comment">     *  RDD[(aid2,((aid1,aid2,score11 * score12 + score21 * score22,score11 * score11 + score21 * score21),score12 * score12 + score22 * score22))]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_XY_XX_YY = item_XY_XX.map(f =&gt; (f._2._1._2, (f._2._1._1, f._2._1._2, f._2._1._3, f._2._2))).join(item_XX_YY)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     *  提取item_XY_XX_YY中的(aid1,aid2,XY,XX,YY))</span></div><div class="line"><span class="comment">     *  RDD[(aid1,aid2,score11 * score12 + score21 * score22,score11 * score11 + score21 * score21,score12 * score12 + score22 * score22)]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_pair_XY_XX_YY = item_XY_XX_YY.map(f =&gt; (f._2._1._1, f._2._1._2, f._2._1._3, f._2._1._4, f._2._2))</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     *  转化item_pair_XY_XX_YY为(aid1,aid2,XY / math.sqrt(XX * YY))</span></div><div class="line"><span class="comment">     *  RDD[(aid1,aid2,score11 * score12 + score21 * score22 / math.sqrt((score11 * score11 + score21 * score21)*(score12 * score12 + score22 * score22))]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> item_pair_sim = item_pair_XY_XX_YY.map(f =&gt; (f._1, (f._2, f._3 / math.sqrt(f._4 * f._5))))</div><div class="line">    item_pair_sim</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  </div><div class="line">  </div><div class="line">  </div><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">    * 基于item相似度矩阵为user生成topN推荐列表</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * @param resource</span></div><div class="line"><span class="comment">    * @param item_sim_bd</span></div><div class="line"><span class="comment">    * @param topN</span></div><div class="line"><span class="comment">    * @return RDD[(user,List[(item,score)])]</span></div><div class="line"><span class="comment">    */</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">recommend</span></span>(resource: <span class="type">DataFrame</span>, item_sim_bd: <span class="type">Broadcast</span>[scala.collection.<span class="type">Map</span>[<span class="type">String</span>, <span class="type">List</span>[(<span class="type">String</span>, <span class="type">Double</span>)]]], topN: <span class="type">Int</span> = <span class="number">50</span>) = &#123;</div><div class="line">    <span class="keyword">val</span> user_item_score = resource.map(</div><div class="line">      row =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> uid = row.getString(<span class="number">0</span>)</div><div class="line">        <span class="keyword">val</span> aid = row.getString(<span class="number">1</span>)</div><div class="line">        <span class="keyword">val</span> score = row.getString(<span class="number">2</span>).toDouble</div><div class="line">        ((uid, aid), score)</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 提取item_sim_user_score为((user,item2),sim * score)</span></div><div class="line"><span class="comment">     * RDD[(user,item2),sim * score]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> user_item_simscore = user_item_score.flatMap(</div><div class="line">      f =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> items_sim = item_sim_bd.value.getOrElse(f._1._2, <span class="type">List</span>((<span class="string">"0"</span>, <span class="number">0.0</span>)))</div><div class="line">        <span class="keyword">for</span> (w &lt;- items_sim) <span class="keyword">yield</span> ((f._1._1, w._1), w._2 * f._2)</div><div class="line">      &#125;).filter(_._2 &gt; <span class="number">0.03</span>)</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 聚合user_item_simscore为 (user,（item2,sim1 * score1 + sim2 * score2）)</span></div><div class="line"><span class="comment">     * 假设user观看过两个item,评分分别为score1和score2，item2是与user观看过的两个item相似的item,相似度分别为sim1，sim2</span></div><div class="line"><span class="comment">     * RDD[(user,item2),sim1 * score1 + sim2 * score2）)]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> user_item_rank = user_item_simscore.reduceByKey(_ + _, <span class="number">1000</span>)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 过滤用户已看过的item,并对user_item_rank基于user聚合</span></div><div class="line"><span class="comment">     * RDD[(user,CompactBuffer((item2,rank2）,(item3,rank3)...))]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> user_items_ranks = user_item_rank.subtractByKey(user_item_score).map(f =&gt; (f._1._1, (f._1._2, f._2))).groupByKey(<span class="number">1000</span>)</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * 对user_items_ranks基于rank降序排序，并提取topN,其中包括用户已观看过的item</span></div><div class="line"><span class="comment">     * RDD[(user,ArrayBuffer((item2,rank2）,...,(itemN,rankN)))]</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    <span class="keyword">val</span> user_items_ranks_desc = user_items_ranks.map(f =&gt; &#123;</div><div class="line">      <span class="keyword">val</span> item_rank_list = f._2.toList</div><div class="line">      <span class="keyword">val</span> item_rank_desc = item_rank_list.sortWith((x, y) =&gt; x._2 &gt; y._2)</div><div class="line">      (f._1, item_rank_desc.take(topN))</div><div class="line">    &#125;)</div><div class="line">    user_items_ranks_desc</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">    * json 编码格式1：用于CF离线推荐结果</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * @param recTopN 离线推荐结果</span></div><div class="line"><span class="comment">    */</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">encodeToJson1</span></span>(recTopN: (<span class="type">String</span>, <span class="type">List</span>[(<span class="type">String</span>, <span class="type">Double</span>)])) = &#123;</div><div class="line">    <span class="keyword">val</span> mtype = <span class="string">"lxfs"</span></div><div class="line">    <span class="keyword">val</span> mtype_ = <span class="string">"\""</span> + <span class="string">"mtype"</span> + <span class="string">"\""</span> + <span class="string">":"</span> + <span class="string">"\""</span> + mtype + <span class="string">"\""</span></div><div class="line">    <span class="keyword">val</span> uid = recTopN._1</div><div class="line">    <span class="keyword">val</span> uid_ = <span class="string">"\""</span> + <span class="string">"uid"</span> + <span class="string">"\""</span> + <span class="string">":"</span> + <span class="string">"\""</span> + uid + <span class="string">"\""</span></div><div class="line">    <span class="keyword">val</span> aid_score = recTopN._2</div><div class="line">    <span class="keyword">val</span> aids_ = <span class="keyword">new</span> <span class="type">StringBuilder</span>().append(<span class="string">"\""</span> + <span class="string">"list"</span> + <span class="string">"\""</span> + <span class="string">":["</span>)</div><div class="line">    <span class="keyword">for</span> (v &lt;- aid_score) &#123;</div><div class="line">      <span class="keyword">val</span> aid = v._1.split(<span class="string">"_"</span>)(<span class="number">0</span>)</div><div class="line">      <span class="keyword">val</span> type_ = v._1.split(<span class="string">"_"</span>)(<span class="number">1</span>)</div><div class="line">      <span class="keyword">val</span> score = v._2</div><div class="line">      aids_.append(<span class="string">"&#123;"</span> + <span class="string">"\"aid\""</span> + <span class="string">":"</span> + aid + <span class="string">","</span>)</div><div class="line">      aids_.append(<span class="string">"\"type\""</span> + <span class="string">":"</span> + type_ + <span class="string">","</span>)</div><div class="line">      aids_.append(<span class="string">"\"score\""</span> + <span class="string">":"</span> + score + <span class="string">"&#125;,"</span>)</div><div class="line">    &#125;</div><div class="line">    aids_.deleteCharAt(aids_.length - <span class="number">1</span>).append(<span class="string">"]"</span>)</div><div class="line">    <span class="keyword">val</span> result = <span class="string">"&#123;"</span> + mtype_ + <span class="string">","</span> + uid_ + <span class="string">","</span> + aids_.toString() + <span class="string">"&#125;"</span></div><div class="line">    result</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">/**</span></div><div class="line"><span class="comment">    * json 编码格式2：用于CF相似度矩阵</span></div><div class="line"><span class="comment">    *</span></div><div class="line"><span class="comment">    * @param cf_sim CF截断的相似度矩阵</span></div><div class="line"><span class="comment">    */</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">encodeToJson2</span></span>(cf_sim: (<span class="type">String</span>, <span class="type">List</span>[(<span class="type">String</span>, <span class="type">Double</span>)])) = &#123;</div><div class="line">    <span class="keyword">val</span> mtype = <span class="string">"cf"</span></div><div class="line">    <span class="keyword">val</span> mtype_ = <span class="string">"\""</span> + <span class="string">"mtype"</span> + <span class="string">"\""</span> + <span class="string">":"</span> + <span class="string">"\""</span> + mtype + <span class="string">"\""</span></div><div class="line">    <span class="keyword">val</span> aid1 = cf_sim._1.split(<span class="string">"_"</span>)(<span class="number">0</span>)</div><div class="line">    <span class="keyword">val</span> aid_ = <span class="string">"\""</span> + <span class="string">"aid"</span> + <span class="string">"\""</span> + <span class="string">":"</span> + <span class="string">"\""</span> + aid1 + <span class="string">"\""</span></div><div class="line">    <span class="keyword">val</span> aid_score = cf_sim._2</div><div class="line">    <span class="keyword">val</span> aids_ = <span class="keyword">new</span> <span class="type">StringBuilder</span>().append(<span class="string">"\""</span> + <span class="string">"similar"</span> + <span class="string">"\""</span> + <span class="string">":["</span>)</div><div class="line">    <span class="keyword">for</span> (v &lt;- aid_score) &#123;</div><div class="line">      <span class="keyword">val</span> aid2 = v._1.split(<span class="string">"_"</span>)(<span class="number">0</span>)</div><div class="line">      <span class="keyword">val</span> type_ = v._1.split(<span class="string">"_"</span>)(<span class="number">1</span>)</div><div class="line">      <span class="keyword">val</span> score = v._2</div><div class="line">      aids_.append(<span class="string">"&#123;"</span> + <span class="string">"\"aid\""</span> + <span class="string">":"</span> + aid2 + <span class="string">","</span>)</div><div class="line">      aids_.append(<span class="string">"\"type\""</span> + <span class="string">":"</span> + type_ + <span class="string">","</span>)</div><div class="line">      aids_.append(<span class="string">"\"score\""</span> + <span class="string">":"</span> + score + <span class="string">"&#125;,"</span>)</div><div class="line">    &#125;</div><div class="line">    aids_.deleteCharAt(aids_.length - <span class="number">1</span>).append(<span class="string">"]"</span>)</div><div class="line">    <span class="keyword">val</span> result = <span class="string">"&#123;"</span> + mtype_ + <span class="string">","</span> + aid_ + <span class="string">","</span> + aids_.toString() + <span class="string">"&#125;"</span></div><div class="line">    result</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</div><div class="line">    <span class="keyword">val</span> table = args(<span class="number">0</span>) <span class="comment">//要处理的表</span></div><div class="line">    <span class="keyword">val</span> day = args(<span class="number">1</span>) <span class="comment">//当前日期</span></div><div class="line"></div><div class="line">    <span class="keyword">val</span> sparkConf = <span class="keyword">new</span> <span class="type">SparkConf</span>().setAppName(<span class="string">"Wireless ItemBased Collaborative Filtering"</span>)</div><div class="line">    <span class="keyword">val</span> sc = <span class="keyword">new</span> <span class="type">SparkContext</span>(sparkConf)</div><div class="line"></div><div class="line">    <span class="keyword">val</span> resource = getResource(sc, table, day).repartition(<span class="number">1000</span>)</div><div class="line">    resource.cache()</div><div class="line"></div><div class="line">    <span class="comment">// 1.计算item相似度矩阵</span></div><div class="line">    <span class="keyword">val</span> item_sim: <span class="type">RDD</span>[(<span class="type">String</span>, (<span class="type">String</span>, <span class="type">Double</span>))] = getCosineSimilarity(resource)</div><div class="line">    item_sim.cache()</div><div class="line"></div><div class="line">    <span class="comment">// 2.每个item提取最相近的40个item</span></div><div class="line">    <span class="keyword">val</span> item_sim_rdd = item_sim.filter(f =&gt; f._2._2 &gt; <span class="number">0.05</span>).groupByKey().map(</div><div class="line">      f =&gt; &#123;</div><div class="line">        <span class="keyword">val</span> item = f._1</div><div class="line">        <span class="keyword">val</span> items_score = f._2.toList</div><div class="line">        <span class="keyword">val</span> items_score_desc = items_score.sortWith((x, y) =&gt; x._2 &gt; y._2)</div><div class="line">        (item, items_score_desc.take(<span class="number">40</span>))</div><div class="line">      &#125;).cache()</div><div class="line"></div><div class="line">    <span class="comment">// 3.保存cf相似度矩阵到HDFS</span></div><div class="line">    item_sim_rdd.map(encodeToJson2(_)).foreachPartition(</div><div class="line">      f =&gt; &#123;</div><div class="line">        <span class="keyword">for</span> (m &lt;- f) <span class="type">MqManager</span>.sendMessage(m)</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="comment">// 4.广播相似度矩阵</span></div><div class="line">    <span class="keyword">val</span> item_sim_map = item_sim_rdd.collectAsMap()</div><div class="line">    <span class="keyword">val</span> item_sim_bd: <span class="type">Broadcast</span>[scala.collection.<span class="type">Map</span>[<span class="type">String</span>, <span class="type">List</span>[(<span class="type">String</span>, <span class="type">Double</span>)]]] = sc.broadcast(item_sim_map)</div><div class="line"></div><div class="line">    <span class="comment">// 5.为用户生成推荐列表</span></div><div class="line">    <span class="keyword">val</span> recTopN = recommend(resource, item_sim_bd, <span class="number">50</span>)</div><div class="line"></div><div class="line">    <span class="comment">/* 6.发送RabbitMQ</span></div><div class="line"><span class="comment">     * 1&gt; CF相似度矩阵Json 编码并发送</span></div><div class="line"><span class="comment">     * 2&gt; 用户推荐列表Json 编码并发送</span></div><div class="line"><span class="comment">     */</span></div><div class="line">    recTopN.map(encodeToJson1(_)).foreachPartition(</div><div class="line">      f =&gt; &#123;</div><div class="line">        <span class="keyword">for</span> (m &lt;- f) <span class="type">MqManager</span>.sendMessage(m)</div><div class="line">      &#125;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/【腾讯转化率预估】贝叶斯平滑/" rel="next" title="【腾讯转化率预估】贝叶斯平滑">
+                <i class="fa fa-chevron-left"></i> 【腾讯转化率预估】贝叶斯平滑
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/07/【面经】算法相关/" rel="prev" title="【面经】算法相关">
+                【面经】算法相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-项目简介"><span class="nav-number">1.</span> <span class="nav-text">1. 项目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-推荐系统分类"><span class="nav-number">2.</span> <span class="nav-text">2. 推荐系统分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-项目流程"><span class="nav-number">3.</span> <span class="nav-text">3. 项目流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-CF核心思路"><span class="nav-number">4.</span> <span class="nav-text">4. CF核心思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-优化方向"><span class="nav-number">5.</span> <span class="nav-text">5. 优化方向</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-核心代码"><span class="nav-number">6.</span> <span class="nav-text">6. 核心代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

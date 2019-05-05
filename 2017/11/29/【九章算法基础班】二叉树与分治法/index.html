@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="二叉树," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="数组：内存空间连续，支持下标访问，访问时间复杂度O(1) 链表：内存空间不联系，不支持下表访问，访问时间复杂度O(n) 1. 树形分析法求解时间复杂度：T(n) = T(n/2)+O(1)   -&amp;gt;  O(logn)T(n) = T(n/2)+O(n) -&amp;gt; O(n)T(n) = 2T(n/2) + O(1) -&amp;gt; O(n)T(n) = 2T(n/2) + O(1) -&amp;gt; O(n)O(1)：">
+<meta name="keywords" content="二叉树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法基础班】二叉树与分治法">
+<meta property="og:url" content="http://yoursite.com/2017/11/29/【九章算法基础班】二叉树与分治法/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="数组：内存空间连续，支持下标访问，访问时间复杂度O(1) 链表：内存空间不联系，不支持下表访问，访问时间复杂度O(n) 1. 树形分析法求解时间复杂度：T(n) = T(n/2)+O(1)   -&amp;gt;  O(logn)T(n) = T(n/2)+O(n) -&amp;gt; O(n)T(n) = 2T(n/2) + O(1) -&amp;gt; O(n)T(n) = 2T(n/2) + O(1) -&amp;gt; O(n)O(1)：">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-20-21-52-42.png">
+<meta property="og:updated_time" content="2018-03-31T08:32:19.036Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法基础班】二叉树与分治法">
+<meta name="twitter:description" content="数组：内存空间连续，支持下标访问，访问时间复杂度O(1) 链表：内存空间不联系，不支持下表访问，访问时间复杂度O(n) 1. 树形分析法求解时间复杂度：T(n) = T(n/2)+O(1)   -&amp;gt;  O(logn)T(n) = T(n/2)+O(n) -&amp;gt; O(n)T(n) = 2T(n/2) + O(1) -&amp;gt; O(n)T(n) = 2T(n/2) + O(1) -&amp;gt; O(n)O(1)：">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-20-21-52-42.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/29/【九章算法基础班】二叉树与分治法/"/>
+
+
+
+
+
+  <title>【九章算法基础班】二叉树与分治法 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/29/【九章算法基础班】二叉树与分治法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法基础班】二叉树与分治法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T23:54:50+08:00">
+                2017-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  11,065
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  53
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>数组：内存空间连续，支持下标访问，访问时间复杂度<script type="math/tex">O(1)</script></p>
+<p>链表：内存空间不联系，不支持下表访问，访问时间复杂度<script type="math/tex">O(n)</script></p>
+<h2 id="1-树形分析法求解时间复杂度："><a href="#1-树形分析法求解时间复杂度：" class="headerlink" title="1. 树形分析法求解时间复杂度："></a>1. 树形分析法求解时间复杂度：</h2><script type="math/tex; mode=display">T(n) = T(n/2)+O(1)   ->  O(logn)</script><script type="math/tex; mode=display">T(n) = T(n/2)+O(n) -> O(n)</script><script type="math/tex; mode=display">T(n) = 2T(n/2) + O(1) -> O(n)</script><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">T(n) = <span class="number">2</span>T(n/<span class="number">2</span>) + O(<span class="number">1</span>) -&gt; O(n)</div><div class="line">O(<span class="number">1</span>)：一次拆分所需时间</div><div class="line"> --	 			        n</div><div class="line">  |               ↙             ↘       ················O(<span class="number">1</span>)拆分所需时间</div><div class="line">  |            n/<span class="number">2</span>                n/<span class="number">2</span></div><div class="line">log(n)      ↙       ↘          ↙       ↘	················O(<span class="number">2</span>)</div><div class="line">  |       n/<span class="number">4</span>       n/<span class="number">4</span>       n/<span class="number">4</span>       n/<span class="number">4</span></div><div class="line">  |      ↙  ↘      ↙  ↘     ↙  ↘      ↙  ↘	················O(<span class="number">4</span>)</div><div class="line">  |    n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>   n/<span class="number">8</span>  n/<span class="number">8</span>   			</div><div class="line">  |			················				················O(n)</div><div class="line">  | n/n	n/n	n/n		·············	n/n	n/n	n/n</div><div class="line"> --</div><div class="line"> O(<span class="number">1</span>+<span class="number">2</span>+<span class="number">4</span>+....+n) = O(<span class="number">2</span>n-<span class="number">1</span>) = O(n)</div><div class="line"> 由此如果T(n) = <span class="number">2</span>T(n/<span class="number">2</span>) + O(<span class="number">1</span>)，则时间复杂度为O(n)</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<script type="math/tex; mode=display">T(n) = 2T(n/2) + O(n) -> O(n*logn)</script><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">T(n) = <span class="number">2</span>T(n/<span class="number">2</span>) + O(n) -&gt; O(n)</div><div class="line">O(n)：一次拆分所需时间</div><div class="line"> --	 			        n</div><div class="line">  |               ↙             ↘       ··············O(n)拆分所需时间</div><div class="line">  |            n/<span class="number">2</span>                n/<span class="number">2</span></div><div class="line">log(n)      ↙       ↘          ↙       ↘	··············O(n/<span class="number">2</span>)*<span class="number">2</span>=O(n)</div><div class="line">  |       n/<span class="number">4</span>       n/<span class="number">4</span>       n/<span class="number">4</span>       n/<span class="number">4</span></div><div class="line">  |      ↙  ↘      ↙  ↘     ↙  ↘      ↙  ↘	·············O(n/<span class="number">4</span>)*<span class="number">4</span>=O(n)</div><div class="line">  |    n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>  n/<span class="number">8</span>   n/<span class="number">8</span>  n/<span class="number">8</span>   			</div><div class="line">  |			················				·············O(n/n)*n=O(n)</div><div class="line">  | n/n	n/n	n/n		·············	n/n	n/n	n/n</div><div class="line"> --</div><div class="line"> O(n+n+...+n)*logn = O(nlogn)</div><div class="line"> 由此如果T(n) = <span class="number">2</span>T(n/<span class="number">2</span>) + O(n)，则时间复杂度为O(nlogn)</div></pre></td></tr></table></figure>
+<h2 id="2-二叉树的遍历"><a href="#2-二叉树的遍历" class="headerlink" title="2. 二叉树的遍历"></a>2. 二叉树的遍历</h2><p>树的遍历三种方式：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">     <span class="number">1</span></div><div class="line">    ↙ ↘</div><div class="line">  <span class="number">2</span>     <span class="number">3</span></div><div class="line"> ↙ ↘</div><div class="line"><span class="number">4</span>   <span class="number">5</span></div><div class="line">- 前序遍历（根左右）: <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">4</span>-&gt;<span class="number">5</span>-&gt;<span class="number">3</span></div><div class="line">- 中序遍历（左根右）: <span class="number">4</span>-&gt;<span class="number">2</span>-&gt;<span class="number">5</span>-&gt;<span class="number">1</span>-&gt;<span class="number">3</span></div><div class="line">- 后序遍历（左右根）: <span class="number">4</span>-&gt;<span class="number">5</span>-&gt;<span class="number">3</span>-&gt;<span class="number">2</span>-&gt;<span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="2-1-前序遍历Binary-Tree-Preorder-Traversal"><a href="#2-1-前序遍历Binary-Tree-Preorder-Traversal" class="headerlink" title="2.1.前序遍历Binary Tree Preorder Traversal"></a>2.1.前序遍历<a href="https://leetcode.com/problems/binary-tree-preorder-traversal" target="_blank" rel="external">Binary Tree Preorder Traversal</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree, return the <em>preorder</em> traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree <code>[1,null,2,3]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    1</div><div class="line">&gt;     \</div><div class="line">&gt;      2</div><div class="line">&gt;     /</div><div class="line">&gt;    3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return <code>[1,2,3]</code>.</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><ol>
+<li><p>递归法</p>
+<p>首先遍历根节点，然后对其左节点做前序遍历，对其右节点做前序遍历。</p>
+<p><strong>递归三要素</strong>：</p>
+<ul>
+<li>定义：要做什么事情，这道题就是先遍历父亲节点，然后左节点、右节点</li>
+<li>拆分：差分成同样的问题，但规模变小，本题就是拆成左子树和右子树，对左子树和右字数分别做前序遍历</li>
+<li>结束条件：遇到空节点停止。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">  ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList();</div><div class="line">  traverse(root,result);</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">traverse</span><span class="params">(TreeNode root,ArrayList&lt;Integer&gt; result)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(root==<span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    result.add(root.val);</div><div class="line">    traverse(root.left,result);</div><div class="line">    traverse(root.right,result);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>分治法</p>
+<p>分而治之，先分开求结果，再合并</p>
+<p>先得到左子树的结果，再得到右子树的结果，然后将左子、右子树、root结果合并得到最终结果。</p>
+<p>通常来说，分治法的函数是有返回值的。</p>
+<p><strong>分治法三要素：</strong></p>
+<ul>
+<li>定义：要做什么事情</li>
+<li>拆分与合并问题：</li>
+<li>结束条件。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">divide</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">  <span class="comment">//结束条件</span></div><div class="line">  <span class="keyword">if</span>(root==<span class="keyword">null</span>)&#123;</div><div class="line">    ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//拆分问题，获取子问题结果</span></div><div class="line">  ArrayList&lt;Integer&gt; leftres = divide(root.left);</div><div class="line">  ArrayList&lt;Integer&gt; righttres = divide(root.right);</div><div class="line"></div><div class="line">  <span class="comment">//合并子问题</span></div><div class="line">  ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  result.add(root.val);</div><div class="line">  result.addAll(leftres);</div><div class="line">  result.addAll(righttres);</div><div class="line"></div><div class="line">  <span class="comment">//返回结果</span></div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>非递归方法</p>
+<p><strong>阅读理解并背诵</strong></p>
+<p>利用stack实现树的前序遍历，每次弹出栈顶元素，先后压入其右孩子和左孩子。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">preorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        List&lt;Integer&gt; preorder = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        </div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> preorder;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//根节点入栈</span></div><div class="line">        stack.push(root);</div><div class="line">        <span class="keyword">while</span> (!stack.empty()) &#123;</div><div class="line">            TreeNode node = stack.pop();</div><div class="line">            preorder.add(node.val);</div><div class="line">            <span class="comment">//右孩子入栈</span></div><div class="line">            <span class="keyword">if</span> (node.right != <span class="keyword">null</span>) &#123;</div><div class="line">                stack.push(node.right);</div><div class="line">            &#125;</div><div class="line">          <span class="comment">//左孩子入栈</span></div><div class="line">            <span class="keyword">if</span> (node.left != <span class="keyword">null</span>) &#123;</div><div class="line">                stack.push(node.left);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> preorder;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="2-2-中序遍历Binary-Tree-Inorder-Traversal"><a href="#2-2-中序遍历Binary-Tree-Inorder-Traversal" class="headerlink" title="2.2. 中序遍历Binary Tree Inorder Traversal"></a>2.2. 中序遍历<a href="https://leetcode.com/problems/binary-tree-inorder-traversal" target="_blank" rel="external">Binary Tree Inorder Traversal</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree, return the <em>inorder</em> traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree <code>[1,null,2,3]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    1</div><div class="line">&gt;     \</div><div class="line">&gt;      2</div><div class="line">&gt;     /</div><div class="line">&gt;    3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return <code>[1,3,2]</code>.</p>
+</blockquote>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//递归法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(TreeNode root,ArrayList&lt;Integer&gt; result)</span></span>&#123;</div><div class="line">        <span class="comment">//终止条件</span></div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//拆分问题</span></div><div class="line">        helper(root.left,result);</div><div class="line">        result.add(root.val);</div><div class="line">        helper(root.right,result);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList();</div><div class="line">        helper(root,result);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//分治法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="comment">//终止条件</span></div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        &#125;</div><div class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="comment">//拆分</span></div><div class="line">        ArrayList&lt;Integer&gt; leftRes = inorderTraversal(root.left);</div><div class="line">        ArrayList&lt;Integer&gt; rightRes = inorderTraversal(root.right);</div><div class="line"></div><div class="line">        <span class="comment">//合并</span></div><div class="line">        result.addAll(leftRes);</div><div class="line">        result.add(root.val);</div><div class="line">        result.addAll(rightRes);</div><div class="line"></div><div class="line">        <span class="comment">//返回结果</span></div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//非递归方法，很重要！！！！！！！！！！！！！！！</span></div><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">inorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;TreeNode&gt;();</div><div class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        TreeNode curt = root;</div><div class="line">        <span class="keyword">while</span> (curt != <span class="keyword">null</span> || !stack.empty()) &#123;</div><div class="line">            <span class="keyword">while</span> (curt != <span class="keyword">null</span>) &#123;</div><div class="line">                stack.add(curt);</div><div class="line">                curt = curt.left;</div><div class="line">            &#125;</div><div class="line">            curt = stack.pop();</div><div class="line">            result.add(curt.val);</div><div class="line">            curt = curt.right;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="2-3-后序遍历Binary-Tree-Postorder-Traversal"><a href="#2-3-后序遍历Binary-Tree-Postorder-Traversal" class="headerlink" title="2.3.后序遍历Binary Tree Postorder Traversal"></a>2.3.后序遍历<a href="https://leetcode.com/problems/binary-tree-postorder-traversal" target="_blank" rel="external">Binary Tree Postorder Traversal</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree, return the <em>postorder</em> traversal of its nodes’ values.</p>
+<p>For example:<br>Given binary tree <code>{1,#,2,3}</code>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    1</div><div class="line">&gt;     \</div><div class="line">&gt;      2</div><div class="line">&gt;     /</div><div class="line">&gt;    3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return <code>[3,2,1]</code>.</p>
+</blockquote>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//递归法</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(TreeNode root,ArrayList&lt;Integer&gt; result)</span></span>&#123;</div><div class="line">  <span class="comment">//终止条件</span></div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//拆分问题</span></div><div class="line">  helper(root.left,result);</div><div class="line">  helper(root.right,result);</div><div class="line">  result.add(root.val);</div><div class="line"></div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">  ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList();</div><div class="line">  helper(root,result);</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//分治法</span></div><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  <span class="comment">//拆分</span></div><div class="line">  ArrayList&lt;Integer&gt; leftRes = postorderTraversal(root.left);</div><div class="line">  ArrayList&lt;Integer&gt; rightRes = postorderTraversal(root.right);</div><div class="line">  <span class="comment">//合并</span></div><div class="line">  result.addAll(leftRes);</div><div class="line">  result.addAll(rightRes);</div><div class="line">  result.add(root.val);</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-4-分治法相比于遍历法的优点："><a href="#2-4-分治法相比于遍历法的优点：" class="headerlink" title="2.4.分治法相比于遍历法的优点："></a>2.4.分治法相比于遍历法的优点：</h3><ol>
+<li>无需全局变量存储结果，无需helper函数</li>
+<li>可并行</li>
+</ol>
+<h3 id="2-5-二叉树三种遍历的非递归实现"><a href="#2-5-二叉树三种遍历的非递归实现" class="headerlink" title="2.5.二叉树三种遍历的非递归实现"></a>2.5.二叉树三种遍历的非递归实现</h3><h4 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h4><p>三种遍历的非递归解决思路核心思想是一致的：</p>
+<ol>
+<li>将二叉树分为“左”（包括一路向左，经过的所有实际左+根）、“右”（包括实际的右）两种节点</li>
+<li>使用同样的顺序将“左”节点入栈</li>
+<li>在合适的时机转向（转向后，“右”节点即成为“左”节点）、访问节点、或出栈</li>
+</ol>
+<p>比如{1,2,3}，当cur位于节点1时，1、2属于“左”节点，3属于“右”节点。DFS的非递归实现本质上是在协调入栈、出栈和访问，三种操作的顺序。上述统一使得我们不再需要关注入栈顺序，仅需要关注出栈和访问（第3点），随着更详细的分析，你将更加体会到这种简化带来的好处。</p>
+<p>将对节点的访问定义为<code>results.add(node.val);</code>，分析如下：</p>
+<h4 id="前序遍历"><a href="#前序遍历" class="headerlink" title="前序遍历"></a>前序遍历</h4><p>前序遍历的顺序是：根-&gt;左-&gt;右，按照上面提到的思路，可以简化为左-&gt;右</p>
+<p>从root节点开始访问，依次向下访问左节点(cur指向当前节点)，此时立即将这些“左”节点输出到结果中，同时把他们压入栈，便于后续访问其右节点：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</div><div class="line">    results.add(cur.val);</div><div class="line">    stack.push(cur);</div><div class="line">    cur = cur.left;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面循环结束意味着我们已经访问过所有的“左”节点，现在需要将这些节点出栈，转到其“右”节点，此时右节点也变成了“左”节点，需要对其进行上面的处理。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">if</span> (!stack.empty()) &#123;</div><div class="line">    cur = stack.pop();</div><div class="line">    <span class="comment">// 转向</span></div><div class="line">    cur = cur.right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完整代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">nonRecursion</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        TreeNode cur = root;</div><div class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        ArrayList&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">while</span>(cur != <span class="keyword">null</span> || !stack.empty())&#123;<span class="comment">//停止条件：栈和cur都为空</span></div><div class="line">            <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</div><div class="line">                results.add(cur.val);<span class="comment">//左节点加入结果集</span></div><div class="line">                stack.push(cur);<span class="comment">//左节点入栈</span></div><div class="line">                cur = cur.left;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">                cur = stack.pop();</div><div class="line">                cur = cur.right;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="中序遍历"><a href="#中序遍历" class="headerlink" title="中序遍历"></a>中序遍历</h4><p>先序与中序的区别只在于对“左”节点的处理上，前序遍历是先访问实际根，再访问左节点，而中序是先访问实际左节点，再访问实际根节点，所以需要将中序改为出栈时才访问这个节点的值。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</div><div class="line">  stack.push(cur);<span class="comment">//左节点入栈</span></div><div class="line">  cur = cur.left;</div><div class="line">&#125;</div><div class="line"><span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">  cur = stack.pop();</div><div class="line">  results.add(cur.val);<span class="comment">//左节点加入结果集</span></div><div class="line">  cur = cur.right;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完整代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">nonRecursion</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        TreeNode cur = root;</div><div class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        ArrayList&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">while</span>(cur != <span class="keyword">null</span> || !stack.empty())&#123;<span class="comment">//停止条件：栈和cur都为空</span></div><div class="line">            <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</div><div class="line">                stack.push(cur);<span class="comment">//左节点入栈</span></div><div class="line">                cur = cur.left;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">                cur = stack.pop();</div><div class="line">              	results.add(cur.val);<span class="comment">//左节点加入结果集</span></div><div class="line">                cur = cur.right;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h4 id="后序遍历"><a href="#后序遍历" class="headerlink" title="后序遍历"></a>后序遍历</h4><p>后序遍历的实际访问顺序是：左右根</p>
+<p>入栈顺序不变，需考虑转向和出栈时机。</p>
+<p>对于实际的根，需要保证先后访问了左子树、右子树之后，才能访问根。实际的右节点、左节点、根节点都会成为“左”节点入栈，所以我们只需要<strong>在出栈之前，将该节点视作实际的根节点，并检查其右子树是否已被访问</strong>即可。如果不存在右子树，或右子树已被访问了，那么可以访问根节点，出栈，并不需要转向；如果还没有访问，就转向，使其“右”节点成为“左”节点，等着它先被访问之后，再来访问根节点。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTreePostorderTraversal</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left;</div><div class="line">        TreeNode right;</div><div class="line">        TreeNode(<span class="keyword">int</span> x) &#123; val = x; &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TreeNodeWithFlag</span> </span>&#123;</div><div class="line">        TreeNode node;</div><div class="line">        <span class="keyword">boolean</span> flag;</div><div class="line">        TreeNodeWithFlag(TreeNode node,<span class="keyword">boolean</span> flag) &#123;</div><div class="line">            <span class="keyword">this</span>.flag = flag;</div><div class="line">            <span class="keyword">this</span>.node = node;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        TreeNode cur = root;</div><div class="line">        Stack&lt;TreeNodeWithFlag&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        ArrayList&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="keyword">while</span>(cur != <span class="keyword">null</span> || !stack.empty())&#123;<span class="comment">//停止条件：栈空或cur空</span></div><div class="line">            <span class="keyword">while</span> (cur != <span class="keyword">null</span>) &#123;</div><div class="line">                stack.push(<span class="keyword">new</span> TreeNodeWithFlag(cur,<span class="keyword">false</span>));<span class="comment">//左节点入栈，标记为右子树未访问</span></div><div class="line">                cur = cur.left;<span class="comment">//继续访问左子树</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">                <span class="keyword">if</span>(stack.peek().flag)&#123;<span class="comment">//右子树已经处理过</span></div><div class="line">                    results.add(stack.peek().node.val);<span class="comment">//左节点加入结果集</span></div><div class="line">                    stack.pop();<span class="comment">//弹出</span></div><div class="line">                    cur = <span class="keyword">null</span>;<span class="comment">//左右根节点都已处理过，不转向，继续弹栈</span></div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;<span class="comment">//右子树没有处理过</span></div><div class="line">                    stack.peek().flag = <span class="keyword">true</span>;<span class="comment">//标记为已处理</span></div><div class="line">                    cur = stack.peek().node.right;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">  <span class="comment">//自己写的一个版本</span></div><div class="line">      <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        Stack&lt;TreeNodeWithL&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        TreeNode node = root;</div><div class="line">        <span class="keyword">while</span>(!stack.isEmpty() || node != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">while</span>(node != <span class="keyword">null</span>)&#123;</div><div class="line">                stack.push(<span class="keyword">new</span> TreeNodeWithL(node,<span class="keyword">false</span>));</div><div class="line">                node = node.left;</div><div class="line">            &#125;<span class="comment">//跳出時node==null</span></div><div class="line">            TreeNodeWithL temp = stack.pop();</div><div class="line">            <span class="keyword">if</span>(temp.flag)&#123;</div><div class="line">                res.add(temp.node.val);</div><div class="line">                node = <span class="keyword">null</span>;<span class="comment">//左右根节点都已处理过，不转向，继续弹栈</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                temp.flag = <span class="keyword">true</span>;</div><div class="line">                stack.push(temp);</div><div class="line">                node = temp.node.right;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="3-相关习题"><a href="#3-相关习题" class="headerlink" title="3.相关习题"></a>3.相关习题</h2><h3 id="Maximum-Depth-of-Binary-Tree"><a href="#Maximum-Depth-of-Binary-Tree" class="headerlink" title="Maximum Depth of Binary Tree"></a><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree" target="_blank" rel="external">Maximum Depth of Binary Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, find its maximum depth.</p>
+<p>The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.</p>
+</blockquote>
+<p>给定一个数，求出树的最大深度</p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">  <span class="comment">//终止条件</span></div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//拆分成求解左子树和右子树的最大深度</span></div><div class="line">  <span class="keyword">int</span> leftDepth = maxDepth(root.left);</div><div class="line">  <span class="keyword">int</span> rihtDepth = maxDepth(root.right);</div><div class="line"></div><div class="line">  <span class="comment">//合并，根节点的最大深度=max(左子树最大深度，右子树最大深度)+1</span></div><div class="line">  <span class="keyword">int</span> res = Math.max(leftDepth,rihtDepth)+<span class="number">1</span>;</div><div class="line">  <span class="comment">//返回结果</span></div><div class="line">  <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Balanced-Binary-Tree"><a href="#Balanced-Binary-Tree" class="headerlink" title="Balanced Binary Tree"></a><a href="https://leetcode.com/problems/balanced-binary-tree" target="_blank" rel="external">Balanced Binary Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, determine if it is height-balanced.</p>
+<p>For this problem, a height-balanced binary tree is defined as a binary tree in which the depth of the two subtrees of <em>every</em> node never differ by more than 1.</p>
+</blockquote>
+<p>判断二叉树是否是平衡二叉树：</p>
+<ol>
+<li>左右子树平衡</li>
+<li>左子树和右子树的高度差不超过1</li>
+</ol>
+<p>分析</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">考虑某一个时间成立或者不成立需要考虑多个因素的时候，需要定义一个<span class="class"><span class="keyword">class</span> <span class="title">ResultType</span>把这两个值包进去，存储中间结果。</span></div><div class="line"><span class="class">	//定义<span class="title">resultType</span></span></div><div class="line"><span class="class">	<span class="title">class</span> <span class="title">ResultType</span></span>&#123;</div><div class="line">        <span class="keyword">boolean</span> isBalanced;<span class="comment">//是否平衡</span></div><div class="line">        <span class="keyword">int</span> maxDepth;<span class="comment">//最大深度</span></div><div class="line">        ResultType(<span class="keyword">boolean</span> isBalanced,<span class="keyword">int</span> maxDepth)&#123;</div><div class="line">            <span class="keyword">this</span>.isBalanced = isBalanced;</div><div class="line">            <span class="keyword">this</span>.maxDepth = maxDepth;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ResultType <span class="title">helper</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="comment">//结束条件</span></div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">true</span>,<span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//拆分成分别计算左子树的右子树信息</span></div><div class="line">        ResultType leftRes = helper(root.left);</div><div class="line">        ResultType rightRes = helper(root.right);</div><div class="line">        </div><div class="line">        <span class="comment">//如果左右有一个不是平衡树</span></div><div class="line">        <span class="keyword">if</span>(!leftRes.isBalanced || !rightRes.isBalanced)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">false</span>,-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//都是平衡树，但深度差&gt;1</span></div><div class="line">        <span class="keyword">if</span>(Math.abs(leftRes.maxDepth-rightRes.maxDepth) &gt;<span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">false</span>,-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//都是平衡树，深度差&lt;=1，node节点最大深度=max(左、右子树深度)+1</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">true</span>,Math.max(rightRes.maxDepth,leftRes.maxDepth)+<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBalanced</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> helper(root).isBalanced;<span class="comment">//返回根节点是否是平衡。</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>方法二：不引入额外的结构，利用高度判断，当不平衡时，置高度为-1</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">height</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">     <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">         <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">int</span> leftH = height(root.left);</div><div class="line">     <span class="keyword">int</span> rightH = height(root.right);</div><div class="line">     <span class="keyword">if</span>(leftH == -<span class="number">1</span> || rightH == -<span class="number">1</span> || Math.abs(leftH - rightH) &gt; <span class="number">1</span>)&#123;</div><div class="line">         <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">else</span>&#123;</div><div class="line">         <span class="keyword">return</span> Math.max(leftH,rightH)+<span class="number">1</span>;</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBalanced</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">     <span class="keyword">return</span> height(root)!=-<span class="number">1</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="Lowest-Common-Ancestor-of-a-Binary-Tree"><a href="#Lowest-Common-Ancestor-of-a-Binary-Tree" class="headerlink" title="Lowest Common Ancestor of a Binary Tree"></a><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree" target="_blank" rel="external">Lowest Common Ancestor of a Binary Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.</p>
+<p>According to the <a href="https://en.wikipedia.org/wiki/Lowest_common_ancestor" target="_blank" rel="external">definition of LCA on Wikipedia</a>: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow <strong>a node to be a descendant of itself</strong>).”</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;         _______3______</div><div class="line">&gt;        /              \</div><div class="line">&gt;     ___5__          ___1__</div><div class="line">&gt;    /      \        /      \</div><div class="line">&gt;    6      _2       0       8</div><div class="line">&gt;          /  \</div><div class="line">&gt;          7   4</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>For example, the lowest common ancestor (LCA) of nodes <code>5</code> and <code>1</code> is <code>3</code>. Another example is LCA of nodes <code>5</code> and <code>4</code> is <code>5</code>, since a node can be a descendant of itself according to the LCA definition.</p>
+</blockquote>
+<p>给一棵二叉树和二叉树上的两个点，返回其最近公共祖先</p>
+<p>分析</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">如果二叉树中存储了父亲节点，则可以从两个点出发往上寻找至root:</div><div class="line">比如<span class="number">5</span>和<span class="number">1</span>：</div><div class="line"><span class="number">5</span>:[<span class="number">5</span>,<span class="number">3</span>]</div><div class="line"><span class="number">1</span>:[<span class="number">1</span>,<span class="number">3</span>]</div><div class="line">得到路径之后从后向前遍历，<span class="number">3</span>,<span class="number">3</span>一样，<span class="number">5</span>,<span class="number">1</span>不一样了，所以最近公共祖先是<span class="number">3</span></div><div class="line"></div><div class="line">再比如<span class="number">5</span>和<span class="number">4</span>：</div><div class="line"><span class="number">5</span>:[<span class="number">5</span>,<span class="number">3</span>]</div><div class="line"><span class="number">4</span>:[<span class="number">4</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">3</span>]</div><div class="line">从后向前遍历，发现<span class="number">3</span>,<span class="number">5</span>之后不一样了，所以公共祖先是<span class="number">5</span></div><div class="line"></div><div class="line">如果没有存储父亲节的信息，给定root节点和两个点n1,n2:</div><div class="line">        _______3______</div><div class="line">       /              \</div><div class="line">    ___5__          ___1__</div><div class="line">   /      \        /      \</div><div class="line">   <span class="number">6</span>      _2       <span class="number">0</span>       <span class="number">8</span></div><div class="line">         /  \</div><div class="line">         <span class="number">7</span>   <span class="number">4</span></div><div class="line">n1和n2的分布情况有以下几种：</div><div class="line"><span class="number">1</span>.其中有一个是root -&gt; 返回root</div><div class="line"><span class="number">2</span>.全在左子树 -&gt; 返回左子树root</div><div class="line"><span class="number">3</span>.全在右子树 -&gt; 返回右子树root</div><div class="line"><span class="number">4</span>.一个在左子树、一个在右子树 -&gt; 返回root</div><div class="line"><span class="number">5</span>.这两个点不在这棵树里 -&gt; 返回<span class="keyword">null</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">lowestCommonAncestor</span><span class="params">(TreeNode root, TreeNode p, TreeNode q)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root == p || root == q)&#123;<span class="comment">//其中有一个是根节点</span></div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//拆分,分别在左、右子树中寻找LCA</span></div><div class="line">        TreeNode left = lowestCommonAncestor(root.left,p,q);</div><div class="line">        TreeNode right = lowestCommonAncestor(root.right,p,q);</div><div class="line"></div><div class="line">        <span class="comment">//合并</span></div><div class="line">        <span class="keyword">if</span>(left != <span class="keyword">null</span> &amp;&amp; right != <span class="keyword">null</span>)&#123;<span class="comment">//一个在左子树，一个在右子树，则LCA为root</span></div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(left != <span class="keyword">null</span>)&#123;<span class="comment">//两个节点都在左子树</span></div><div class="line">            <span class="keyword">return</span> left;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(right != <span class="keyword">null</span>)&#123;<span class="comment">//两个节点都在右子树</span></div><div class="line">            <span class="keyword">return</span> right;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="comment">//左右子树的LCA都是null,都没有这俩节点</span></div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Binary-Tree-Maximum-Path-Sum-II"><a href="#Binary-Tree-Maximum-Path-Sum-II" class="headerlink" title="Binary Tree Maximum Path Sum II"></a>Binary Tree Maximum Path Sum II</h3><p>题目</p>
+<p>给定一个二叉树，从根节点root出发，求最大路径和，可以在任一点结束</p>
+<p>分析</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">如果是求从root到leaf的最大路径，就用分治法，从上到下，每个节点的最大路径是其左子树和右子树的最大路径的最大值:</div><div class="line">root.val + Math.max(maxleft,maxright)</div><div class="line">如果二叉树上的节点值有负数，那么最大路径就有可能不到leaf就结束了，所以在计算节点最大路径时，如果其左右子树最大路径的最大值为负数，则该节点到leaf的最大路径长度应该为<span class="number">0</span>：</div><div class="line">root.val + Math.max(<span class="number">0</span>,Math.max(maxleft,maxright))</div></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum2</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">int</span> maxleft = maxPathSum2(root.left);</div><div class="line">  <span class="keyword">int</span> maxright = maxPathSum2(root.right);</div><div class="line"></div><div class="line">  <span class="comment">//root-&gt;leaf</span></div><div class="line">  <span class="comment">//return root.val + Math.max(maxleft,maxright);</span></div><div class="line"></div><div class="line">  <span class="comment">//root-&gt;any</span></div><div class="line">  <span class="keyword">return</span> root.val + Math.max(<span class="number">0</span>,Math.max(maxleft,maxright));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>之前的题目复杂度基本都是O(n)，分析：</p>
+<p>一共有多少个点<em>每个点上的时间复杂度 = n </em> O(1) = O(n)</p>
+<h3 id="Binary-Tree-Maximum-Path-Sum"><a href="#Binary-Tree-Maximum-Path-Sum" class="headerlink" title="Binary Tree Maximum Path Sum"></a><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum" target="_blank" rel="external">Binary Tree Maximum Path Sum</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, find the maximum path sum.</p>
+<p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain <strong>at least one node</strong> and does not need to go through the root.</p>
+<p>For example:<br>Given the below binary tree,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;        1</div><div class="line">&gt;       / \</div><div class="line">&gt;      2   3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Return <code>6</code>.</p>
+</blockquote>
+<p>分析</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">跟LCA问题思考方式类似，考虑某一点root的最大路径的位置可能有如下三种情况：</div><div class="line"><span class="number">1</span>.都在左子树中(root.left:any-&gt;any)</div><div class="line"><span class="number">2</span>.都在右子树中(root.right:any-&gt;any)</div><div class="line"><span class="number">3</span>.跨过root节点左右子树中都有(root:any-&gt;any)</div><div class="line">对三种情况取个最大，就是该root节点的最大路径长度</div><div class="line"></div><div class="line">对于第三种情况，可以分为三个子问题：</div><div class="line">A:从左子节点出发的最大路径长度（root.left-&gt;any）</div><div class="line">root</div><div class="line">B:从右子节点出发的最大路径长度（root.right-&gt;any）</div><div class="line">对三个子问题求和，就是跨过此root节点的最大路径长度</div><div class="line"></div><div class="line"></div><div class="line">这里需要同时计算any-&gt;any和root-&gt;any，所以需要定义一个ResultType存储每个节点的any-&gt;any和root-&gt;any</div></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResultType</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> root2any;</div><div class="line">    <span class="keyword">int</span> any2any;</div><div class="line">    ResultType(<span class="keyword">int</span> root2any,<span class="keyword">int</span> any2any)&#123;</div><div class="line">        <span class="keyword">this</span>.any2any = any2any;</div><div class="line">        <span class="keyword">this</span>.root2any = root2any;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> ResultType <span class="title">helper</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">    <span class="comment">//题目要求至少要包含一个node，所以此时不满足条件，应返回负无穷</span></div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ResultType(Integer.MIN_VALUE,Integer.MIN_VALUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//divide</span></div><div class="line">    ResultType leftRes = helper(root.left);</div><div class="line">    ResultType rightRes = helper(root.right);</div><div class="line"></div><div class="line">    <span class="comment">//conquer</span></div><div class="line">    <span class="comment">//root到左边或右边</span></div><div class="line">    <span class="keyword">int</span> root2any = Math.max(<span class="number">0</span>,Math.max(leftRes.root2any,rightRes.root2any)) + root.val;</div><div class="line"></div><div class="line">    <span class="comment">//包含完全在左边、完全在右边和跨过root三种情况</span></div><div class="line">    <span class="comment">//完全在左边和完全在右边的情况</span></div><div class="line">    <span class="keyword">int</span> any2any = Math.max(leftRes.any2any,rightRes.any2any);</div><div class="line">    </div><div class="line">    <span class="comment">//跨过root,分别在两边的情况</span></div><div class="line">    any2any = Math.max(any2any,</div><div class="line">            Math.max(<span class="number">0</span>,leftRes.root2any) </div><div class="line">            + Math.max(<span class="number">0</span>,rightRes.root2any)</div><div class="line">            + root.val</div><div class="line">            );</div><div class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ResultType(root2any,any2any);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">    <span class="keyword">return</span> helper(root).any2any;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法二：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTreeMaximumPathSum</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> maxValue;</div><div class="line"></div><div class="line">    <span class="comment">//从某root向下到任意一个节点的最大值，包括本身</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathDown</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>,maxPathDown(root.left));</div><div class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>,maxPathDown(root.right));</div><div class="line">        maxValue = Math.max(maxValue,left+right+root.val);<span class="comment">//更新最大值</span></div><div class="line">        <span class="keyword">return</span> Math.max(left,right)+root.val;<span class="comment">//从当前节点到任意一个节点的路径和最大值</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        maxValue = Integer.MIN_VALUE;</div><div class="line">        maxPathDown(root);</div><div class="line">        <span class="keyword">return</span> maxValue;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Longest-Univalue-Path"><a href="#Longest-Univalue-Path" class="headerlink" title="Longest Univalue Path"></a><a href="https://leetcode.com/problems/longest-univalue-path/description/" target="_blank" rel="external">Longest Univalue Path</a></h3><blockquote>
+<p>Given a binary tree, find the length of the longest path where each node in the path has the same value. This path may or may not pass through the root.</p>
+<p><strong>Note:</strong> The length of path between two nodes is represented by the number of edges between them.</p>
+<p><strong>Example 1:</strong></p>
+<p>Input:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;               5</div><div class="line">&gt;              / \</div><div class="line">&gt;             4   5</div><div class="line">&gt;            / \   \</div><div class="line">&gt;           1   1   5</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<p>Input:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;               1</div><div class="line">&gt;              / \</div><div class="line">&gt;             4   5</div><div class="line">&gt;            / \   \</div><div class="line">&gt;           4   4   5</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 2</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>求给定二叉树上某一个相同的值的最大路径长度</p>
+<p>针对每一个点：</p>
+<ol>
+<li>计算通过它本身的相同值最大路径长度，更新全局最大长度</li>
+<li>返回以它本身为根节点，向下的最大深度</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> maxLen;</div><div class="line">  <span class="comment">//从root点出发和自己相同值的最长路径长度</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> left = helper(root.left);</div><div class="line">        <span class="keyword">int</span> right = helper(root.right);</div><div class="line">        <span class="keyword">int</span> len = <span class="number">1</span>;<span class="comment">//记录过当前节点的最大路径长度</span></div><div class="line">        <span class="keyword">int</span> res = <span class="number">1</span>;<span class="comment">//记录以当前节点为起点向下的最大路径长度</span></div><div class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span> &amp;&amp; root.val == root.left.val)&#123;</div><div class="line">            len+=left;</div><div class="line">            res = Math.max(res,left+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span> &amp;&amp; root.val == root.right.val)&#123;</div><div class="line">            len+=right;</div><div class="line">            res = Math.max(res,right+<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        maxLen = Math.max(maxLen,len);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestUnivaluePath</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        maxLen = <span class="number">1</span>;</div><div class="line">        helper(root);</div><div class="line">        <span class="keyword">return</span> maxLen-<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Diameter-of-Binary-Tree"><a href="#Diameter-of-Binary-Tree" class="headerlink" title="Diameter of Binary Tree"></a><a href="https://leetcode.com/problems/diameter-of-binary-tree" target="_blank" rel="external">Diameter of Binary Tree</a></h3><blockquote>
+<p>Given a binary tree, you need to compute the length of the diameter of the tree. The diameter of a binary tree is the length of the <strong>longest</strong> path between any two nodes in a tree. This path may or may not pass through the root.</p>
+<p><strong>Example:</strong><br>Given a binary tree </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;           1</div><div class="line">&gt;          / \</div><div class="line">&gt;         2   3</div><div class="line">&gt;        / \     </div><div class="line">&gt;       4   5    </div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Return <strong>3</strong>, which is the length of the path [4,2,1,3] or [5,2,1,3].</p>
+<p><strong>Note:</strong> The length of path between two nodes is represented by the number of edges between them.</p>
+</blockquote>
+<p>求二叉树中的最长路径，不一定过root点</p>
+<p>思路：</p>
+<p>求过每一个点的最长路径，取全局最大值</p>
+<p>过某一个点的最长路径=左子树的最大高度+右子树的最大高度</p>
+<p>因此需要分治法计算左右子树的最大高度，求和</p>
+<p>计算某一个节点的最大高度需要计算其左子树的右子树的最大高度，然后取最大值+1</p>
+<p>两个函数整合成一个，同时更新全局最大路径长度和节点高度，代码如下：</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">    <span class="comment">//计算到bottom最长距离</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longest</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> left = longest(root.left);<span class="comment">//左最长</span></div><div class="line">        <span class="keyword">int</span> right = longest(root.right);<span class="comment">//右最长</span></div><div class="line">        max = Math.max(max,left+right);</div><div class="line">        <span class="keyword">return</span> Math.max(left,right)+<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">diameterOfBinaryTree</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        longest(root);</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Convert-BST-to-Greater-Tree"><a href="#Convert-BST-to-Greater-Tree" class="headerlink" title="Convert BST to Greater Tree"></a><a href="https://leetcode.com/problems/convert-bst-to-greater-tree/" target="_blank" rel="external">Convert BST to Greater Tree</a></h3><blockquote>
+<p>Given a Binary Search Tree (BST), convert it to a Greater Tree such that every key of the original BST is changed to the original key plus sum of all keys greater than the original key in BST.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: The root of a Binary Search Tree like this:</div><div class="line">&gt;               5</div><div class="line">&gt;             /   \</div><div class="line">&gt;            2     13</div><div class="line">&gt;</div><div class="line">&gt; Output: The root of a Greater Tree like this:</div><div class="line">&gt;              18</div><div class="line">&gt;             /   \</div><div class="line">&gt;           20     13</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>思路：</p>
+<p>按照右根左的顺序遍历二叉树，记录遍历过的节点的值的和，依次修改遍历的节点。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">convertBST</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="comment">//右根左遍历求和</span></div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        root.right = convertBST(root.right);</div><div class="line">        sum += root.val;</div><div class="line">        root.val = sum;</div><div class="line">        root.left = convertBST(root.left);</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Subtree-of-Another-Tree"><a href="#Subtree-of-Another-Tree" class="headerlink" title="Subtree of Another Tree"></a><a href="https://leetcode.com/problems/subtree-of-another-tree" target="_blank" rel="external">Subtree of Another Tree</a></h3><blockquote>
+<p>Given two non-empty binary trees <strong>s</strong> and <strong>t</strong>, check whether tree <strong>t</strong> has exactly the same structure and node values with a subtree of <strong>s</strong>. A subtree of <strong>s</strong> is a tree consists of a node in <strong>s</strong> and all of this node’s descendants. The tree <strong>s</strong> could also be considered as a subtree of itself.</p>
+<p><strong>Example 1:</strong><br>Given tree s:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;      3</div><div class="line">&gt;     / \</div><div class="line">&gt;    4   5</div><div class="line">&gt;   / \</div><div class="line">&gt;  1   2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Given tree t:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    4 </div><div class="line">&gt;   / \</div><div class="line">&gt;  1   2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Return </p>
+<p>true</p>
+<p>, because t has the same structure and node values with a subtree of s.</p>
+<p><strong>Example 2:</strong><br>Given tree s:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;      3</div><div class="line">&gt;     / \</div><div class="line">&gt;    4   5</div><div class="line">&gt;   / \</div><div class="line">&gt;  1   2</div><div class="line">&gt;     /</div><div class="line">&gt;    0</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Given tree t:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    4</div><div class="line">&gt;   / \</div><div class="line">&gt;  1   2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Return  false</p>
+</blockquote>
+<p>判断t是否是s的子树</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//从树s的s节点开始的子树，是否和t完全一样</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSame</span><span class="params">(TreeNode s, TreeNode t)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(s == <span class="keyword">null</span> &amp;&amp; t == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(s == <span class="keyword">null</span> || t == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(s.val == t.val)&#123;</div><div class="line">        <span class="keyword">return</span> isSame(s.left,t.left) &amp;&amp; isSame(s.right,t.right);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//遇到不相等的点直接返回false</span></div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSubtree</span><span class="params">(TreeNode s, TreeNode t)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(s == <span class="keyword">null</span>)&#123;<span class="keyword">return</span> <span class="keyword">false</span>;&#125;</div><div class="line">    <span class="comment">//如果从s点开始和t完全一样，返回true</span></div><div class="line">    <span class="keyword">if</span>(isSame(s,t))&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//否则考察左右节点</span></div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> isSubtree(s.left,t) || isSubtree(s.right,t);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Boundary-of-Binary-Tree"><a href="#Boundary-of-Binary-Tree" class="headerlink" title="Boundary of Binary Tree"></a><a href="https://leetcode.com/problems/boundary-of-binary-tree/" target="_blank" rel="external">Boundary of Binary Tree</a></h3><blockquote>
+<p>Given a binary tree, return the values of its boundary in <strong>anti-clockwise</strong> direction starting from root. Boundary includes left boundary, leaves, and right boundary in order without duplicate nodes.</p>
+<p><strong>Left boundary</strong> is defined as the path from root to the <strong>left-most</strong> node. <strong>Right boundary</strong> is defined as the path from root to the <strong>right-most</strong>node. If the root doesn’t have left subtree or right subtree, then the root itself is left boundary or right boundary. Note this definition only applies to the input binary tree, and not applies to any subtrees.</p>
+<p>The <strong>left-most</strong> node is defined as a <strong>leaf</strong> node you could reach when you always firstly travel to the left subtree if exists. If not, travel to the right subtree. Repeat until you reach a leaf node.</p>
+<p>The <strong>right-most</strong> node is also defined by the same way with left and right exchanged.</p>
+<p><strong>Example 1</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input:</div><div class="line">&gt;   1</div><div class="line">&gt;    \</div><div class="line">&gt;     2</div><div class="line">&gt;    / \</div><div class="line">&gt;   3   4</div><div class="line">&gt;</div><div class="line">&gt; Ouput:</div><div class="line">&gt; [1, 3, 4, 2]</div><div class="line">&gt;</div><div class="line">&gt; Explanation:</div><div class="line">&gt; The root doesn&apos;t have left subtree, so the root itself is left boundary.</div><div class="line">&gt; The leaves are node 3 and 4.</div><div class="line">&gt; The right boundary are node 1,2,4. Note the anti-clockwise direction means you should output reversed right boundary.</div><div class="line">&gt; So order them in anti-clockwise without duplicates and we have [1,3,4,2].</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input:</div><div class="line">&gt;     ____1_____</div><div class="line">&gt;    /          \</div><div class="line">&gt;   2            3</div><div class="line">&gt;  / \          / </div><div class="line">&gt; 4   5        6   </div><div class="line">&gt;    / \      / \</div><div class="line">&gt;   7   8    9  10  </div><div class="line">&gt;        </div><div class="line">&gt; Ouput:</div><div class="line">&gt; [1,2,4,7,8,9,10,6,3]</div><div class="line">&gt;</div><div class="line">&gt; Explanation:</div><div class="line">&gt; The left boundary are node 1,2,4. (4 is the left-most node according to definition)</div><div class="line">&gt; The leaves are node 4,7,8,9,10.</div><div class="line">&gt; The right boundary are node 1,3,6,10. (10 is the right-most node).</div><div class="line">&gt; So order them in anti-clockwise without duplicate nodes we have [1,2,4,7,8,9,10,6,3].</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>思路：</p>
+<p>分三部分：</p>
+<ol>
+<li>找到leftmost节点，过程中将左边界节点加入res</li>
+<li>找到叶子节点，加入res</li>
+<li>找到rightmost节点，过程中将左边界节点加入res</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">leftMost</span><span class="params">(TreeNode root,List&lt;Integer&gt; left)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)&#123;<span class="comment">//找到left-most点</span></div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)&#123;</div><div class="line">            left.add(root.left.val);</div><div class="line">            <span class="keyword">return</span> leftMost( root.left,left);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            left.add(root.right.val);</div><div class="line">            <span class="keyword">return</span> leftMost( root.right,left);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">rightMost</span><span class="params">(TreeNode root,List&lt;Integer&gt; right)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)&#123;<span class="comment">//找到right-most点</span></div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;</div><div class="line">            right.add(<span class="number">0</span>,root.right.val);</div><div class="line">            <span class="comment">//System.out.println(root.right.val);</span></div><div class="line">            <span class="keyword">return</span> rightMost( root.right,right);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            right.add(<span class="number">0</span>,root.left.val);</div><div class="line">            <span class="keyword">return</span> rightMost( root.left,right);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">getLeaf</span><span class="params">(TreeNode root,List&lt;Integer&gt; leaf,TreeNode leftmost,TreeNode rightmost)</span></span>&#123;</div><div class="line">        <span class="comment">//叶子节点且不是左右轮廓</span></div><div class="line">        <span class="keyword">if</span>(root.right == <span class="keyword">null</span> &amp;&amp; root.left == <span class="keyword">null</span> &amp;&amp; root != leftmost &amp;&amp; root != rightmost)&#123;</div><div class="line">            leaf.add(root.val);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)&#123;</div><div class="line">            getLeaf(root.left,leaf,leftmost,rightmost);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;</div><div class="line">            getLeaf(root.right,leaf,leftmost,rightmost);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">boundaryOfBinaryTree</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; left = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List&lt;Integer&gt; right = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List&lt;Integer&gt; leaf = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> left;</div><div class="line">        &#125;</div><div class="line">        left.add(root.val);</div><div class="line">        TreeNode leftmost = root;</div><div class="line">        TreeNode rightmost = root;</div><div class="line">        <span class="comment">//如果有左孩子，加入左轮廓</span></div><div class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)&#123;</div><div class="line">            leftmost = leftMost(root,left);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果有右孩子，加入右轮廓</span></div><div class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;</div><div class="line">            rightmost = rightMost(root,right);</div><div class="line">        &#125;</div><div class="line">        getLeaf(root,leaf,leftmost,rightmost);</div><div class="line">        <span class="comment">// System.out.println(left);</span></div><div class="line">        <span class="comment">// System.out.println(leaf);</span></div><div class="line">        <span class="comment">// System.out.println(right);</span></div><div class="line">        left.addAll(leaf);</div><div class="line">        left.addAll(right);</div><div class="line">        <span class="keyword">return</span> left;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="4-二叉搜索树-BST"><a href="#4-二叉搜索树-BST" class="headerlink" title="4.二叉搜索树(BST)"></a>4.二叉搜索树(BST)</h2><h3 id="二叉搜索树的基本性质"><a href="#二叉搜索树的基本性质" class="headerlink" title="二叉搜索树的基本性质"></a>二叉搜索树的基本性质</h3><ol>
+<li><p>从定义出发</p>
+<p>左子树都比跟节点小</p>
+<p>右子树都比根节点大</p>
+<p>遇到重复的元素，可以自行定义放在左子树还是右子树</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">	<span class="number">1</span></div><div class="line">  ↙   ↘ ...... 是BST</div><div class="line"> <span class="number">1</span>     <span class="number">2</span></div><div class="line"></div><div class="line">    <span class="number">1</span></div><div class="line">  ↙   ↘ ......不是BST</div><div class="line"> <span class="number">1</span>     <span class="number">1</span></div><div class="line">因为BST的定义是比根节点小（包括相等）的要么都在左边，要么都在右边</div></pre></td></tr></table></figure>
+</li>
+<li><p>从效果出发</p>
+<p><strong>BST的中序遍历是升序序列</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">例：</div><div class="line">	<span class="number">2</span></div><div class="line">  ↙   ↘ </div><div class="line"> <span class="number">1</span>     <span class="number">4</span>           中序遍历：<span class="number">1</span> -&gt; <span class="number">2</span> -&gt; <span class="number">3</span> -&gt; <span class="number">4</span> -&gt; <span class="number">5</span></div><div class="line">   	 ↙   ↘ </div><div class="line">	<span class="number">3</span>     <span class="number">5</span></div></pre></td></tr></table></figure>
+<p><strong>利用BST的这个性质，可以做排序：</strong><br>比如给定一个无序序列[2,1,4,3,5]<br>可以构造一个BST，然后再中序遍历，输出序列就是有序序列了</p>
+<p>因此，<strong>BST又叫排序二叉树</strong></p>
+<p>相关练习题：</p>
+<p>Binary Search Tree 的insert、remove等</p>
+</li>
+<li><p>性质</p>
+<ul>
+<li><p>如果一棵二叉树的中序遍历不是升序，则一定不是BST</p>
+</li>
+<li><p>如果一棵二叉树的中序遍历是升序，也未必是BST</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">比如：</div><div class="line">    <span class="number">1</span></div><div class="line">  ↙   ↘ </div><div class="line"> <span class="number">1</span>     <span class="number">1</span></div><div class="line">中序遍历得到[<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>]，是升序序列，但是不是BST</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>存在重复元素时，要么都在左子树要么都在右子树，不可以两边都有</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="Validate-Binary-Search-Tree"><a href="#Validate-Binary-Search-Tree" class="headerlink" title="Validate Binary Search Tree"></a><a href="https://leetcode.com/problems/validate-binary-search-tree" target="_blank" rel="external">Validate Binary Search Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, determine if it is a valid binary search tree (BST).</p>
+<p>Assume a BST is defined as follows:</p>
+<ul>
+<li>The left subtree of a node contains only nodes with keys <strong>less than</strong> the node’s key.</li>
+<li>The right subtree of a node contains only nodes with keys <strong>greater than</strong> the node’s key.</li>
+<li>Both the left and right subtrees must also be binary search trees.</li>
+</ul>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     2</div><div class="line">&gt;    / \</div><div class="line">&gt;   1   3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Binary tree </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [2,1,3]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>, return true.</p>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     1</div><div class="line">&gt;    / \</div><div class="line">&gt;   2   3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Binary tree </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [1,2,3]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>, return false.</p>
+</blockquote>
+<p>分析</p>
+<p>给定一个二叉树，判断是否是二叉搜索树，两种思路:</p>
+<ol>
+<li>根据二叉搜索树的性质，中序遍历是升序序列，可以对给定二叉树进行中序遍历，输出序列如果是升序序列则是二叉搜索树，可以利用二叉树的非递归中序遍历，每次弹栈时跟前一个元素进行比较，如果小于等于前一个元素就直接返回false。</li>
+<li>分治法递归判断，需要存储节点以下是否是BST，以及节点以下部分的最大最小值，和root节点进行比较，是否满足左子树所有元素都小于root,右子树所有节点都大于root。</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//分治法</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ResultType</span></span>&#123;</div><div class="line">        <span class="keyword">boolean</span> isValid;</div><div class="line">        <span class="keyword">long</span> min;</div><div class="line">        <span class="keyword">long</span> max;</div><div class="line">        ResultType(<span class="keyword">boolean</span> isValid,<span class="keyword">long</span> min,<span class="keyword">long</span> max)&#123;</div><div class="line">            <span class="keyword">this</span>.isValid = isValid;</div><div class="line">            <span class="keyword">this</span>.max = max;</div><div class="line">            <span class="keyword">this</span>.min = min;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> ResultType <span class="title">helper</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">true</span>,Long.MAX_VALUE,Long.MIN_VALUE);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//拆分</span></div><div class="line">        ResultType leftValid = helper(root.left);</div><div class="line">        ResultType rightValid = helper(root.right);</div><div class="line"></div><div class="line">        <span class="comment">//合并</span></div><div class="line">        <span class="keyword">if</span>(leftValid.isValid &amp;&amp; rightValid.isValid)&#123;<span class="comment">//左右子树都是BST</span></div><div class="line">            <span class="keyword">if</span>(leftValid.max &lt; root.val &amp;&amp; rightValid.min &gt; root.val)&#123;<span class="comment">//左边元素都比root小，右边元素都比root大</span></div><div class="line">                ResultType res = <span class="keyword">new</span> ResultType(<span class="keyword">true</span>,Math.min(leftValid.min,root.val),Math.max(rightValid.max,root.val));</div><div class="line">                <span class="keyword">return</span> res;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">false</span>,Math.min(leftValid.min,root.val),Math.max(rightValid.max,root.val));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ResultType(<span class="keyword">false</span>,Long.MIN_VALUE,Long.MAX_VALUE);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> helper(root).isValid;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"><span class="comment">//非递归中序遍历</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValidBST2</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> last = Integer.MIN_VALUE;</div><div class="line">        TreeNode cur = root;</div><div class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(cur != <span class="keyword">null</span> ||!stack.empty())&#123;</div><div class="line">            <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</div><div class="line">                stack.push(cur);</div><div class="line">                cur = cur.left;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">                cur = stack.pop();</div><div class="line">                <span class="keyword">if</span>(cur.val &lt;= last)&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">                cur = cur.right;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Binary-Search-Tree-Iterator"><a href="#Binary-Search-Tree-Iterator" class="headerlink" title="Binary Search Tree Iterator"></a><a href="https://leetcode.com/problems/binary-search-tree-iterator" target="_blank" rel="external">Binary Search Tree Iterator</a></h3><p>题目</p>
+<blockquote>
+<p>Implement an iterator over a binary search tree (BST). Your iterator will be initialized with the root node of a BST.</p>
+<p>Calling <code>next()</code> will return the next smallest number in the BST.</p>
+<p><strong>Note: </strong><code>next()</code> and <code>hasNext()</code> should run in average O(1) time and uses O(<em>h</em>) memory, where <em>h</em> is the height of the tree.</p>
+</blockquote>
+<p>设计实现一个带有下列属性的二叉查找树的迭代器：</p>
+<ol>
+<li>元素按照递增的顺序被访问（比如中序遍历）</li>
+<li>next()和hasNext()的询问操作要求<strong>均摊</strong>时间复杂度是O(1)</li>
+</ol>
+<p>分析</p>
+<p>对于下列二叉查找树，使用迭代器进行中序遍历的结果为 [3, 6, 7, 8, 9, 10, 11, 12]</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">     10</div><div class="line">   /    \</div><div class="line">  6      11</div><div class="line"> / \       \</div><div class="line">3   9       12</div><div class="line">   /</div><div class="line">  8</div><div class="line"> /</div><div class="line">7</div></pre></td></tr></table></figure>
+<ul>
+<li>本题相当于考察了BST的非递归中序遍历</li>
+<li>需要maintain一个stack，首先从root开始push入栈直到最左节点<br>初始stack为：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">10, 6, 3</div></pre></td></tr></table></figure>
+<ul>
+<li>在遍历过程中，如果某个节点存在右儿子，则继续从右儿子开始push入栈直到其最左节点<br>result = 3, 6<br>因为6有右儿子，所以6被pop出去之后，从6为root开始push入栈直到最左节点，然后stack为：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">10， 9， 8， 7</div></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left;</div><div class="line">        TreeNode right;</div><div class="line"></div><div class="line">        TreeNode(<span class="keyword">int</span> x) &#123;</div><div class="line">            val = x;</div><div class="line">        &#125;</div><div class="line">    &#125; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BSTIterator</span> </span>&#123;</div><div class="line">        TreeNode root;</div><div class="line">        Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">		</div><div class="line">  		<span class="comment">//初始化，将root全部left入栈</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">BSTIterator</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">            <span class="keyword">this</span>.root = root;</div><div class="line">            <span class="keyword">while</span>(root != <span class="keyword">null</span>)&#123;</div><div class="line">                stack.push(root);</div><div class="line">                root = root.left;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/** <span class="doctag">@return</span> whether we have a next smallest number */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> !stack.empty();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/** <span class="doctag">@return</span> the next smallest number */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">            TreeNode temp = stack.pop();</div><div class="line">            <span class="keyword">int</span> val = temp.val;</div><div class="line">            temp = temp.right;</div><div class="line">			<span class="comment">//如果弹出节点有右节点，右节点视作左节点，全部左孩子入栈</span></div><div class="line">            <span class="keyword">while</span>(temp != <span class="keyword">null</span>)&#123;</div><div class="line">                stack.push(temp);</div><div class="line">                temp = temp.left;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> val;<span class="comment">//返回当前节点值</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Inorder-Successor-in-BST"><a href="#Inorder-Successor-in-BST" class="headerlink" title="Inorder Successor in BST"></a><a href="https://leetcode.com/problems/inorder-successor-in-bst" target="_blank" rel="external">Inorder Successor in BST</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary search tree and a node in it, find the in-order successor of that node in the BST.</p>
+<p><strong>Note</strong>: If the given node has no in-order successor in the tree, return <code>null</code>.</p>
+</blockquote>
+<p>给定一个二叉搜索树和一个节点p，返回p的后继节点（中序遍历时和p相邻比p大的节点）</p>
+<p>分析</p>
+<ol>
+<li>BST的stack实现，弹栈遇到p节点时标记下，下一次弹栈的节点即是所求</li>
+<li>递归实现：<ul>
+<li>如果p的值小于root，则在左子树中寻找后继，若没有找到，则root就是p的后继</li>
+<li>如果p的值大于root，则在右子树中寻找后继节点</li>
+</ul>
+</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//非递归</span></div><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">inorderSuccessor</span><span class="params">(TreeNode root, TreeNode p)</span> </span>&#123;</div><div class="line">  Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">  TreeNode cur = root;</div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">while</span>(cur != <span class="keyword">null</span> || !stack.empty())&#123;</div><div class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</div><div class="line">      stack.push(cur);</div><div class="line">      cur = cur.left;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">      cur = stack.pop();</div><div class="line">      <span class="keyword">if</span>(flag == <span class="keyword">true</span>)&#123;</div><div class="line">        <span class="keyword">return</span> cur;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>(cur == p)&#123;</div><div class="line">        flag = <span class="keyword">true</span>;</div><div class="line">      &#125;</div><div class="line">      cur = cur.right;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">//递归</span></div><div class="line"> <span class="function"><span class="keyword">public</span> TreeNode <span class="title">inorderSuccessor2</span><span class="params">(TreeNode root, TreeNode p)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span> || p == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//后级节点在左子树或root节点中</span></div><div class="line">        <span class="keyword">if</span>(p.val &lt; root.val)&#123;</div><div class="line">            <span class="comment">//后继节点在以左孩子为root的子树中的位置</span></div><div class="line">            TreeNode left = inorderSuccessor2(root.left,p);</div><div class="line">            <span class="comment">//没有刚好比p大一个的，则root就是p的后继节点</span></div><div class="line">          	<span class="keyword">if</span>(left == <span class="keyword">null</span>)&#123;</div><div class="line">                <span class="keyword">return</span>  root;</div><div class="line">            &#125;</div><div class="line">          	<span class="comment">//在左子树中找到了p的后继</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> left;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//后继节点在右子树中</span></div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> inorderSuccessor2(root.right,p);</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Search-Range-in-Binary-Search-Tree"><a href="#Search-Range-in-Binary-Search-Tree" class="headerlink" title="Search Range in Binary Search Tree"></a><a href="http://www.lintcode.com/en/problem/search-range-in-binary-search-tree/" target="_blank" rel="external">Search Range in Binary Search Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Given two values k1 and k2 (where k1 &lt; k2) and a root pointer to a Binary Search Tree. Find all the keys of tree in range k1 to k2. i.e. print all x such that k1&lt;=x&lt;=k2 and x is a key of given BST. Return all the keys in ascending order.</p>
+<p>Have you met this question in a real interview?</p>
+<p>Yes</p>
+<p>Example</p>
+<p>If k1 = <code>10</code> and k2 = <code>22</code>, then your function should return <code>[12, 20, 22]</code>.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     20</div><div class="line">&gt;    /  \</div><div class="line">&gt;   8   22</div><div class="line">&gt;  / \</div><div class="line">&gt; 4   12</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定一个二叉搜索树和一个区间，要求升序输出二叉搜索树中在给定区间内的节点</p>
+<p>分析</p>
+<p>中序遍历BST，将符合条件的结果输出即可</p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">searchRange</span><span class="params">(TreeNode root, <span class="keyword">int</span> k1, <span class="keyword">int</span> k2)</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">    TreeNode cur = root;</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(cur != <span class="keyword">null</span> || !stack.empty())&#123;</div><div class="line">        <span class="keyword">while</span>(cur != <span class="keyword">null</span>)&#123;</div><div class="line">            stack.push(cur);</div><div class="line">            cur = cur.left;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(!stack.empty())&#123;</div><div class="line">            cur = stack.pop();</div><div class="line">            <span class="keyword">if</span>(cur.val &lt;= k2 &amp;&amp; cur.val &gt;= k1) &#123;</div><div class="line">                results.add(cur.val);</div><div class="line">            &#125;</div><div class="line">            cur = cur.right;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Insert-Node-in-Binary-Search-Tree"><a href="#Insert-Node-in-Binary-Search-Tree" class="headerlink" title="Insert Node in Binary Search Tree"></a><a href="http://www.lintcode.com/en/problem/insert-node-in-a-binary-search-tree/" target="_blank" rel="external">Insert Node in Binary Search Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary search tree and a new tree node, insert the node into the tree. You should keep the tree still be a valid binary search tree.</p>
+<h5 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h5><p>You can assume there is no duplicate values in this tree + node.</p>
+<p>Example</p>
+<p>Given binary search tree as follow, after Insert node 6, the tree should be:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;   2             2</div><div class="line">&gt;  / \           / \</div><div class="line">&gt; 1   4   --&gt;   1   4</div><div class="line">&gt;    /             / \ </div><div class="line">&gt;   3             3   6</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定一个二叉搜索树和一个新节点，插入新节点，保持二叉树仍然是二叉搜索树</p>
+<p>分析</p>
+<p>递归实现，判断node的值和root节点的大小关系，返回值是当前root节点：</p>
+<pre><code>       1. node小于root，要插在左子树，root.left = insertNode(root.left,node);
+        2. node大于root，要插在右子树，root.right= insertNode(root.right,node);
+</code></pre><p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">insertNode</span><span class="params">(TreeNode root, TreeNode node)</span> </span>&#123;</div><div class="line">        <span class="comment">// 找到插入位置，插入node节点</span></div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> node;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//在左子树</span></div><div class="line">        <span class="keyword">if</span>(node.val &lt; root.val)&#123;</div><div class="line">            root.left = insertNode(root.left,node);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//在右子树</span></div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            root.right = insertNode(root.right,node);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> root;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Delete-Node-in-a-BST"><a href="#Delete-Node-in-a-BST" class="headerlink" title="Delete Node in a BST"></a><a href="https://leetcode.com/problems/delete-node-in-a-bst" target="_blank" rel="external">Delete Node in a BST</a></h3><p>题目</p>
+<blockquote>
+<p>Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST.</p>
+<p>Basically, the deletion can be divided into two stages:</p>
+<ol>
+<li>Search for a node to remove.</li>
+<li>If the node is found, delete the node.</li>
+</ol>
+<p><strong>Note:</strong> Time complexity should be O(height of tree).</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; root = [5,3,6,2,4,null,7]</div><div class="line">&gt; key = 3</div><div class="line">&gt;</div><div class="line">&gt;     5</div><div class="line">&gt;    / \</div><div class="line">&gt;   3   6</div><div class="line">&gt;  / \   \</div><div class="line">&gt; 2   4   7</div><div class="line">&gt;</div><div class="line">&gt; Given key to delete is 3. So we find the node with value 3 and delete it.</div><div class="line">&gt;</div><div class="line">&gt; One valid answer is [5,4,6,2,null,null,7], shown in the following BST.</div><div class="line">&gt;</div><div class="line">&gt;     5</div><div class="line">&gt;    / \</div><div class="line">&gt;   4   6</div><div class="line">&gt;  /     \</div><div class="line">&gt; 2       7</div><div class="line">&gt;</div><div class="line">&gt; Another valid answer is [5,2,6,null,4,null,7].</div><div class="line">&gt;</div><div class="line">&gt;     5</div><div class="line">&gt;    / \</div><div class="line">&gt;   2   6</div><div class="line">&gt;    \   \</div><div class="line">&gt;     4   7</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>分析</p>
+<p>首先要找到要删除的节点，然后用它左子树的最大值（或右子树的最小值）的值取代要删除节点的值，再将左子树的最大值（或右子树的最小值）节点删除。</p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//查找以root为跟的树的最大节点，root非空</span></div><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">findMax</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">  <span class="keyword">while</span>(root.right!=<span class="keyword">null</span>)&#123;</div><div class="line">    root= root.right;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> root;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//查找并删除节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> TreeNode <span class="title">deleteNode</span><span class="params">(TreeNode root, <span class="keyword">int</span> key)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span>  <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//在左子树</span></div><div class="line">  <span class="keyword">if</span>(root.val &gt; key)&#123;</div><div class="line">    root.left = deleteNode(root.left,key);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//在右子树</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(root.val &lt; key)&#123;</div><div class="line">    root.right = deleteNode(root.right,key);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//要删除的就是root</span></div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">if</span>(root.left == <span class="keyword">null</span>)&#123;<span class="comment">//如果左节点是空的</span></div><div class="line">      <span class="keyword">return</span> root.right;<span class="comment">//返回右节点</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (root.right == <span class="keyword">null</span>)&#123;<span class="comment">//左节点非空，右节点为空</span></div><div class="line">      <span class="keyword">return</span> root.left;<span class="comment">//返回左节点</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">//左右节点都非空，用左子树最大节点取代当前节点</span></div><div class="line">    root.val = findMax(root.left).val;</div><div class="line">    <span class="comment">//删除左子树最大值节点</span></div><div class="line">    root.left = deleteNode(root.left,root.val);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> root;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Count-of-Smaller-Numbers-After-Self"><a href="#Count-of-Smaller-Numbers-After-Self" class="headerlink" title="Count of Smaller Numbers After Self"></a><a href="https://leetcode.com/problems/count-of-smaller-numbers-after-self/" target="_blank" rel="external">Count of Smaller Numbers After Self</a></h3><p>题目</p>
+<blockquote>
+<p>You are given an integer array <em>nums</em> and you have to return a new <em>counts</em> array. The <em>counts</em> array has the property where <code>counts[i]</code> is the number of smaller elements to the right of <code>nums[i]</code>.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Given nums = [5, 2, 6, 1]</div><div class="line">&gt;</div><div class="line">&gt; To the right of 5 there are 2 smaller elements (2 and 1).</div><div class="line">&gt; To the right of 2 there is only 1 smaller element (1).</div><div class="line">&gt; To the right of 6 there is 1 smaller element (1).</div><div class="line">&gt; To the right of 1 there is 0 smaller element.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Return the array <code>[2, 1, 1, 0]</code>.</p>
+</blockquote>
+<p>思路</p>
+<ol>
+<li><p>baseline：插入排序+二分优化</p>
+<p>开一个新的数组，从后向前遍历原数组，将数字插入新数组的合适位置，该位置就是原数组中在其右侧小于其的数字个数。插入过程采用二分查找。</p>
+</li>
+<li><p>BST</p>
+<p>构建一个BST，节点记录当前出现的比自己小的元素个数，对于每个节点分三种情况讨论：</p>
+<ol>
+<li>val &lt; root.val，递归向root.left插入节点，同时root的smallerNum++</li>
+<li>val == root.val，递归向root.right插入节点，其smallerNum = root.smallerNum+insert(root.right,val)</li>
+<li>val &gt; root.val，递归向root.right插入节点，其smallerNum = root.smallerNum+1+insert(root.right,val)</li>
+</ol>
+</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        <span class="keyword">int</span> num;<span class="comment">//记录比val小的所有数字数目</span></div><div class="line">        Node left;</div><div class="line">        Node right;</div><div class="line">        Node(<span class="keyword">int</span> val,<span class="keyword">int</span> num)&#123;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">            <span class="keyword">this</span>.num = num;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//构建BST</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">insert</span><span class="params">(Node root,<span class="keyword">int</span> val)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(val == root.val)&#123;</div><div class="line">            <span class="keyword">if</span>(root.right == <span class="keyword">null</span>)&#123;</div><div class="line">                root.right = <span class="keyword">new</span> Node(val,<span class="number">0</span>);</div><div class="line">                <span class="keyword">return</span> root.num;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> insert(root.right,val) + root.num;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(val &gt; root.val)&#123;</div><div class="line">            <span class="keyword">if</span>(root.right == <span class="keyword">null</span>)&#123;</div><div class="line">                root.right = <span class="keyword">new</span> Node(val,<span class="number">0</span>);</div><div class="line">                <span class="keyword">return</span> root.num + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">return</span> insert(root.right,val) + root.num + <span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            root.num++;</div><div class="line">            <span class="keyword">if</span>(root.left == <span class="keyword">null</span>)&#123;</div><div class="line">                root.left = <span class="keyword">new</span> Node(val,<span class="number">0</span>);</div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> insert(root.left,val);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">countSmaller</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">        Node root = <span class="keyword">new</span> Node(nums[nums.length-<span class="number">1</span>],<span class="number">0</span>);</div><div class="line">        res.add(<span class="number">0</span>);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = nums.length-<span class="number">2</span>;i &gt;= <span class="number">0</span>;i--)&#123;</div><div class="line">            res.add(<span class="number">0</span>,insert(root,nums[i]));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有时间可以再写一写这道题，还不是很好</p>
+<h3 id="Unique-Binary-Search-Trees"><a href="#Unique-Binary-Search-Trees" class="headerlink" title="Unique Binary Search Trees"></a><a href="https://leetcode.com/problems/unique-binary-search-trees" target="_blank" rel="external">Unique Binary Search Trees</a></h3><p><strong>题目：</strong></p>
+<blockquote>
+<p>Given <em>n</em>, how many structurally unique <strong>BST’s</strong> (binary search trees) that store values 1…<em>n</em>?</p>
+<p>For example,<br>Given <em>n</em> = 3, there are a total of 5 unique BST’s.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    1         3     3      2      1</div><div class="line">&gt;     \       /     /      / \      \</div><div class="line">&gt;      3     2     1      1   3      2</div><div class="line">&gt;     /     /       \                 \</div><div class="line">&gt;    2     1         2                 3</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定数组n，返回1-n共n个节点一共可以构成多少个独一无二的BST</p>
+<p><strong>分析：</strong></p>
+<p>DP</p>
+<p>遍历1-n个节点，一次选取一个k作为root,则其左边有1…k-1共k-1个节点，右边有k+1…n共n-k个节点，因此数量是两边BST数量的乘积，则这种情况共有dp[k-1]*dp[n-k]种不同的BST</p>
+<p>因此dp[n] = dp[0]dp[n-1] + dp[1]dp[n-2]+…+dp[n-1]dp[0]</p>
+<p><strong>代码：</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n+<span class="number">1</span>];</div><div class="line">        dp[<span class="number">0</span>] = <span class="number">1</span>;</div><div class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>; i &lt;= n;i ++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; i;j++)&#123;</div><div class="line">                dp[i] += dp[j] * dp[i-j-<span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dp[n];</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Unique-Binary-Search-Trees-II"><a href="#Unique-Binary-Search-Trees-II" class="headerlink" title="Unique Binary Search Trees II"></a><a href="https://leetcode.com/problems/unique-binary-search-trees-ii" target="_blank" rel="external">Unique Binary Search Trees II</a></h3><p><strong>题目</strong></p>
+<blockquote>
+<p>Given an integer <em>n</em>, generate all structurally unique <strong>BST’s</strong> (binary search trees) that store values 1…<em>n</em>.</p>
+<p>For example,<br>Given <em>n</em> = 3, your program should return all 5 unique BST’s shown below.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    1         3     3      2      1</div><div class="line">&gt;     \       /     /      / \      \</div><div class="line">&gt;      3     2     1      1   3      2</div><div class="line">&gt;     /     /       \                 \</div><div class="line">&gt;    2     1         2                 3</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定数组n，返回1-n共n个节点构成的所有独一无二的BST</p>
+<p><strong>分析</strong></p>
+<p>遍历每一个节点k，以该节点为root的BST可以由其左、右子树所有可能的情况构成</p>
+<p><strong>代码</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;TreeNode&gt; <span class="title">create</span><span class="params">(<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">    List&lt;TreeNode&gt; results = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">    <span class="keyword">if</span>(start &gt; end)&#123;</div><div class="line">        results.add(<span class="keyword">null</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = start; i &lt;= end;i++)&#123;</div><div class="line">        List&lt;TreeNode&gt; left = create(start,i-<span class="number">1</span>);<span class="comment">//计算左子树所有可能情况</span></div><div class="line">        List&lt;TreeNode&gt; right = create(i+<span class="number">1</span>,end);<span class="comment">//计算右子树所有可能情况</span></div><div class="line">      <span class="comment">//遍历左右子树所有情况，以当前节点为root，构造BST加入当前结果集</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; left.size();j++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; right.size() ; k++)&#123;</div><div class="line">                TreeNode root = <span class="keyword">new</span> TreeNode(i);</div><div class="line">                root.left = left.get(j);</div><div class="line">                root.right = right.get(k);</div><div class="line">                results.add(root);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> results;<span class="comment">//返回当前层所有BST</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> List&lt;TreeNode&gt; <span class="title">generateTrees</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(n==<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> create(<span class="number">1</span>,n);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="5-二叉树的层序遍历"><a href="#5-二叉树的层序遍历" class="headerlink" title="5.二叉树的层序遍历"></a>5.二叉树的层序遍历</h2><h3 id="Binary-Tree-Level-Order-Traversal"><a href="#Binary-Tree-Level-Order-Traversal" class="headerlink" title="Binary Tree Level Order Traversal"></a><a href="https://leetcode.com/problems/binary-tree-level-order-traversal" target="_blank" rel="external">Binary Tree Level Order Traversal</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, return the <em>level order</em> traversal of its nodes’ values. (ie, from left to right, level by level).</p>
+<p>For example:<br>Given binary tree <code>[3,9,20,null,null,15,7]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     3</div><div class="line">&gt;    / \</div><div class="line">&gt;   9  20</div><div class="line">&gt;     /  \</div><div class="line">&gt;    15   7</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return its level order traversal as:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [3],</div><div class="line">&gt;   [9,20],</div><div class="line">&gt;   [15,7]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>分析</p>
+<p><strong>广度优先搜索</strong>，利用<code>Queue</code>，先进先出</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">-----|--------|-------</div><div class="line">&lt;- <span class="number">3</span> | <span class="number">9</span>   <span class="number">20</span> | <span class="number">15</span>   <span class="number">7</span> </div><div class="line">-----|--------|-------</div></pre></td></tr></table></figure>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</div><div class="line">  List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  queue.add(root);</div><div class="line">  <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">    List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="keyword">int</span> size = queue.size();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ;i++)&#123;</div><div class="line">      TreeNode temp = queue.poll();</div><div class="line">      res.add(temp.val);</div><div class="line">      <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">        queue.add(temp.left);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>)&#123;</div><div class="line">        queue.add(temp.right);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    results.add(res);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>宽度优先搜索最常用的数据结构是队列和hash表，但是在二叉树的问题中不会用到hash表，只会用到Queue队列</p>
+<h3 id="Binary-Tree-Level-Order-Traversal-II"><a href="#Binary-Tree-Level-Order-Traversal-II" class="headerlink" title="Binary Tree Level Order Traversal II"></a><a href="https://leetcode.com/problems/binary-tree-level-order-traversal-ii" target="_blank" rel="external">Binary Tree Level Order Traversal II</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, return the <em>bottom-up level order</em> traversal of its nodes’ values. (ie, from left to right, level by level from leaf to root).</p>
+<p>For example:<br>Given binary tree <code>[3,9,20,null,null,15,7]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     3</div><div class="line">&gt;    / \</div><div class="line">&gt;   9  20</div><div class="line">&gt;     /  \</div><div class="line">&gt;    15   7</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return its bottom-up level order traversal as:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [15,7],</div><div class="line">&gt;   [9,20],</div><div class="line">&gt;   [3]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>分析</p>
+<p>跟上一题的差别是层与层之间的顺序是反的，每层元素的顺序不变，所以只需要插入最终的结果集的时候反序插入，所以可以利用LinkedList，每次将每层的结果在前面插入。</p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">LinkedList&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line"></div><div class="line"><span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div><div class="line"></div><div class="line">queue.add(root);</div><div class="line"><span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">  List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  <span class="keyword">int</span> size = queue.size();</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ;i++)&#123;</div><div class="line">    TreeNode temp = queue.poll();</div><div class="line">    res.add(temp.val);</div><div class="line">    <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">      queue.add(temp.left);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>)&#123;</div><div class="line">      queue.add(temp.right);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  results.addFirst(res);</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> results;</div></pre></td></tr></table></figure>
+<h3 id="Binary-Tree-Zigzag-Level-Order-Traversal"><a href="#Binary-Tree-Zigzag-Level-Order-Traversal" class="headerlink" title="Binary Tree Zigzag Level Order Traversal"></a><a href="https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal" target="_blank" rel="external">Binary Tree Zigzag Level Order Traversal</a></h3><p>题目</p>
+<blockquote>
+<p>Given a binary tree, return the <em>zigzag level order</em> traversal of its nodes’ values. (ie, from left to right, then right to left for the next level and alternate between).</p>
+<p>For example:<br>Given binary tree <code>[3,9,20,null,null,15,7]</code>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     3</div><div class="line">&gt;    / \</div><div class="line">&gt;   9  20</div><div class="line">&gt;     /  \</div><div class="line">&gt;    15   7</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return its zigzag level order traversal as:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [3],</div><div class="line">&gt;   [20,9],</div><div class="line">&gt;   [15,7]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>分析</p>
+<p>这道题是每一层交替正反序输出，层与层之间的顺序不变，所以result可以使用ArratList，但是每一层的子res要是用LinkedList，额外立flag取定是从前插入还是从后插入。</p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; zigzagLevelOrder(TreeNode root) &#123;</div><div class="line">  List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  queue.add(root);</div><div class="line">  <span class="keyword">int</span> flag = <span class="number">0</span>;</div><div class="line"></div><div class="line">  <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">    LinkedList&lt;Integer&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">    <span class="keyword">int</span> size = queue.size();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; size ;i++)&#123;</div><div class="line">      TreeNode temp = queue.poll();</div><div class="line">      <span class="keyword">if</span>(flag%<span class="number">2</span> == <span class="number">1</span>)&#123;</div><div class="line">        res.addFirst(temp.val);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span>&#123;</div><div class="line">        res.addLast(temp.val);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">        queue.add(temp.left);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>)&#123;</div><div class="line">        queue.add(temp.right);</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    flag++;</div><div class="line">    results.add(res);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Serialize-and-Deserialize-Binary-Tree"><a href="#Serialize-and-Deserialize-Binary-Tree" class="headerlink" title="Serialize and Deserialize Binary Tree"></a><a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree" target="_blank" rel="external">Serialize and Deserialize Binary Tree</a></h3><p>题目</p>
+<blockquote>
+<p>Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.</p>
+<p>Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.</p>
+<p>For example, you may serialize the following tree</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     1</div><div class="line">&gt;    / \</div><div class="line">&gt;   2   3</div><div class="line">&gt;      / \</div><div class="line">&gt;     4   5</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>as <code>&quot;[1,2,3,null,null,4,5]&quot;</code>, just the same as <a href="https://leetcode.com/faq/#binary-tree" target="_blank" rel="external">how LeetCode OJ serializes a binary tree</a>. You do not necessarily need to follow this format, so please be creative and come up with different approaches yourself.</p>
+</blockquote>
+<p>思路</p>
+<p>序列化so easy，用queue层序遍历即可</p>
+<p><strong>反序列化也要用queue，将root节点放入队列，然后数组中的前两个元素是其左右孩子，依次加入队列。。。。</strong></p>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for a binary tree node.</span></div><div class="line"><span class="comment"> * public class TreeNode &#123;</span></div><div class="line"><span class="comment"> *     int val;</span></div><div class="line"><span class="comment"> *     TreeNode left;</span></div><div class="line"><span class="comment"> *     TreeNode right;</span></div><div class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Codec</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">serialize</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        StringBuilder res = <span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> res.toString();</div><div class="line">        &#125;</div><div class="line">        queue.add(root);</div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">            TreeNode temp = queue.poll();</div><div class="line">            <span class="keyword">if</span>(temp != <span class="keyword">null</span>)&#123;</div><div class="line">                res.append(temp.val+<span class="string">","</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                res.append(<span class="string">"null,"</span>);</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            queue.add(temp.left);</div><div class="line">            queue.add(temp.right);</div><div class="line">        &#125;</div><div class="line">        res.subSequence(<span class="number">0</span>,res.length()-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> res.toString();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Decodes your encoded data to tree.</span></div><div class="line">        <span class="function"><span class="keyword">public</span> TreeNode <span class="title">deserialize</span><span class="params">(String data)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span>(data.length() == <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            String[] nums = data.split(<span class="string">","</span>);</div><div class="line">            Queue&lt;TreeNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">            TreeNode root = <span class="keyword">new</span> TreeNode(Integer.parseInt(nums[<span class="number">0</span>]));</div><div class="line">            queue.add(root);</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length;i++)&#123;</div><div class="line">                TreeNode parent = queue.poll();</div><div class="line">                <span class="keyword">if</span>(!nums[i].equals(<span class="string">"null"</span>))&#123;</div><div class="line">                    parent.left = <span class="keyword">new</span> TreeNode(Integer.parseInt(nums[i]));</div><div class="line">                    queue.add(parent.left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(!nums[++i].equals(<span class="string">"null"</span>))&#123;</div><div class="line">                    parent.right = <span class="keyword">new</span> TreeNode(Integer.parseInt(nums[i]));</div><div class="line">                    queue.add(parent.right);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> root;</div><div class="line">        &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Your Codec object will be instantiated and called as such:</span></div><div class="line"><span class="comment">// Codec codec = new Codec();</span></div><div class="line"><span class="comment">// codec.deserialize(codec.serialize(root));</span></div></pre></td></tr></table></figure>
+<h2 id="6-二叉树的深度优先遍历"><a href="#6-二叉树的深度优先遍历" class="headerlink" title="6.二叉树的深度优先遍历"></a>6.二叉树的深度优先遍历</h2><p>DFS是搜索算法的一种。它沿着树的深度遍历树的节点，尽可能深的搜索树的分支。</p>
+<p>当节点v的所有边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。</p>
+<p>如果还存在未被发现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-01-20-21-52-42.png" alt=""> </p>
+<p>如上图的例子，DFS访问数组为：ABDECFG。</p>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>分析一下，在遍历了根结点后，就开始遍历左子树，最后才是右子树。</p>
+<p>因此可以借助堆栈的数据结构，由于堆栈是后进先出的顺序，由此可以先将右子树压栈，然后再对左子树压栈，</p>
+<p>这样一来，左子树结点就存在了栈顶上，因此某结点的左子树能在它的右子树遍历之前被遍历。</p>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><p>思路比较简单，就是从root开始，先将root值加入结果集，然后先对其做左节点递归调用做DFS，然后是对右节点DFS。当遇到空节点时，返回上层。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTreeDFS</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left;</div><div class="line">        TreeNode right;</div><div class="line"></div><div class="line">        TreeNode(<span class="keyword">int</span> val) &#123;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DFSRecurtionHelper</span><span class="params">(TreeNode root,List&lt;Integer&gt; results)</span></span>&#123;</div><div class="line">        <span class="comment">//遇到空节点，返回</span></div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//root放入results,递归处理左右节点</span></div><div class="line">        results.add(root.val);</div><div class="line">        DFSRecurtion(root.left);</div><div class="line">        DFSRecurtion(root.right);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">DFSRecurtion</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        List&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        DFSRecurtionHelper(root,results);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="非递归（栈）"><a href="#非递归（栈）" class="headerlink" title="非递归（栈）"></a>非递归（栈）</h4><p>因此可以借助堆栈的数据结构，由于堆栈是后进先出的顺序，由此可以先将右子树压栈，然后再对左子树压栈，这样一来，左子树结点就存在了栈顶上，因此某结点的左子树能在它的右子树遍历之前被遍历。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">DFSwithStack</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">    Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">    List&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    stack.push(root);</div><div class="line">    <span class="keyword">while</span> (!stack.empty())&#123;</div><div class="line">        TreeNode temp = stack.pop();</div><div class="line">        results.add(temp.val);</div><div class="line">        <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>)&#123;</div><div class="line">            stack.push(temp.right);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">            stack.push(temp.left);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="7-完全二叉树"><a href="#7-完全二叉树" class="headerlink" title="7.完全二叉树"></a>7.完全二叉树</h2><h3 id="Count-Complete-Tree-Nodes"><a href="#Count-Complete-Tree-Nodes" class="headerlink" title="Count Complete Tree Nodes"></a><a href="https://leetcode.com/problems/count-complete-tree-nodes/" target="_blank" rel="external">Count Complete Tree Nodes</a></h3><p>给定一棵完全二叉树，求树中的节点个数</p>
+<p>完全二叉树只有最后一层的节点可能是不满的，所以对于树中的任意一个节点来说，其左右子节点的高度只有两种情况：</p>
+<ol>
+<li>高度相等，说明该节点左子树是一个满二叉树，其节点个数为<script type="math/tex">2^h-1</script> ，仍需对其右子树递归求解节点个数</li>
+<li>右节点高度比左节点高度小1，说明右节点是满二叉树，节点个数为<script type="math/tex">2^{h-1}-1</script> ,仍需对其左子树递归求解节点个数</li>
+</ol>
+<p>这里的高度计算的是到最左侧叶子节点的高度。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CountCompleteTreeNodes</span> </span>&#123;</div><div class="line">    <span class="comment">//计算树高，root非空</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">height</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> height = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(root.left != <span class="keyword">null</span>)&#123;</div><div class="line">            height++;</div><div class="line">            root = root.left;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> height;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countNodes</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> leftheight = height(root.left);</div><div class="line">        <span class="keyword">int</span> rightheight = height(root.right);</div><div class="line">        <span class="comment">//如果左右节点高度一致</span></div><div class="line">        <span class="keyword">if</span>(leftheight == rightheight)&#123;</div><div class="line">            count = count + (<span class="number">1</span>&lt;&lt;leftheight) - <span class="number">1</span>;</div><div class="line">            count += countNodes(root.right);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            count = count + (<span class="number">1</span>&lt;&lt;rightheight) - <span class="number">1</span>;</div><div class="line">            count += countNodes(root.left);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> count;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>递归是深度优先搜索（DFS）的一种实现形式<ul>
+<li>递归也可以用非递归方式实现</li>
+</ul>
+</li>
+<li>二叉树上的递归<ul>
+<li>遍历法</li>
+<li>分治法</li>
+</ul>
+</li>
+<li>二叉搜索树<ul>
+<li>性质：中序遍历是升序序列</li>
+<li>功能：O(h)的时间复杂度查找、删除、插入，h为BST高度</li>
+</ul>
+</li>
+<li>二叉树上的宽度优先遍历<ul>
+<li>利用队列实现宽度优先搜索</li>
+<li>如何实现分层遍历</li>
+</ul>
+</li>
+<li>必背程序<ul>
+<li>二叉树的前序、中序遍历的非递归实现</li>
+<li>二叉树的层序遍历</li>
+</ul>
+</li>
+<li>二叉树的深度优先遍历DFS<ol>
+<li>递归实现</li>
+<li>非递归实现（stack）</li>
+</ol>
+</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://juejin.im/post/59e3fde451882578c20858a5" target="_blank" rel="external"><a href="https://link.juejin.im/?target=mailto%3Amonkeysayhi7%40gmail.com" target="_blank" rel="external">猴子007的博客</a></a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/二叉树/" rel="tag"># 二叉树</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/27/Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online论文笔记/" rel="next" title="Bid Optimizing and Inventory Scoring in Targeted Online论文笔记">
+                <i class="fa fa-chevron-left"></i> Bid Optimizing and Inventory Scoring in Targeted Online论文笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/07/WAND算法/" rel="prev" title="WAND算法">
+                WAND算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-树形分析法求解时间复杂度："><span class="nav-number">1.</span> <span class="nav-text">1. 树形分析法求解时间复杂度：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-二叉树的遍历"><span class="nav-number">2.</span> <span class="nav-text">2. 二叉树的遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-前序遍历Binary-Tree-Preorder-Traversal"><span class="nav-number">2.1.</span> <span class="nav-text">2.1.前序遍历Binary Tree Preorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">2.1.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-中序遍历Binary-Tree-Inorder-Traversal"><span class="nav-number">2.2.</span> <span class="nav-text">2.2. 中序遍历Binary Tree Inorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">2.2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-后序遍历Binary-Tree-Postorder-Traversal"><span class="nav-number">2.3.</span> <span class="nav-text">2.3.后序遍历Binary Tree Postorder Traversal</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">2.3.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-分治法相比于遍历法的优点："><span class="nav-number">2.4.</span> <span class="nav-text">2.4.分治法相比于遍历法的优点：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-二叉树三种遍历的非递归实现"><span class="nav-number">2.5.</span> <span class="nav-text">2.5.二叉树三种遍历的非递归实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整体思路"><span class="nav-number">2.5.1.</span> <span class="nav-text">整体思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#前序遍历"><span class="nav-number">2.5.2.</span> <span class="nav-text">前序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中序遍历"><span class="nav-number">2.5.3.</span> <span class="nav-text">中序遍历</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#后序遍历"><span class="nav-number">2.5.4.</span> <span class="nav-text">后序遍历</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-相关习题"><span class="nav-number">3.</span> <span class="nav-text">3.相关习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Maximum-Depth-of-Binary-Tree"><span class="nav-number">3.1.</span> <span class="nav-text">Maximum Depth of Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Balanced-Binary-Tree"><span class="nav-number">3.2.</span> <span class="nav-text">Balanced Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Lowest-Common-Ancestor-of-a-Binary-Tree"><span class="nav-number">3.3.</span> <span class="nav-text">Lowest Common Ancestor of a Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Tree-Maximum-Path-Sum-II"><span class="nav-number">3.4.</span> <span class="nav-text">Binary Tree Maximum Path Sum II</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Tree-Maximum-Path-Sum"><span class="nav-number">3.5.</span> <span class="nav-text">Binary Tree Maximum Path Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-Univalue-Path"><span class="nav-number">3.6.</span> <span class="nav-text">Longest Univalue Path</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Diameter-of-Binary-Tree"><span class="nav-number">3.7.</span> <span class="nav-text">Diameter of Binary Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Convert-BST-to-Greater-Tree"><span class="nav-number">3.8.</span> <span class="nav-text">Convert BST to Greater Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subtree-of-Another-Tree"><span class="nav-number">3.9.</span> <span class="nav-text">Subtree of Another Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Boundary-of-Binary-Tree"><span class="nav-number">3.10.</span> <span class="nav-text">Boundary of Binary Tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-二叉搜索树-BST"><span class="nav-number">4.</span> <span class="nav-text">4.二叉搜索树(BST)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉搜索树的基本性质"><span class="nav-number">4.1.</span> <span class="nav-text">二叉搜索树的基本性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Validate-Binary-Search-Tree"><span class="nav-number">4.2.</span> <span class="nav-text">Validate Binary Search Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Search-Tree-Iterator"><span class="nav-number">4.3.</span> <span class="nav-text">Binary Search Tree Iterator</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Inorder-Successor-in-BST"><span class="nav-number">4.4.</span> <span class="nav-text">Inorder Successor in BST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-Range-in-Binary-Search-Tree"><span class="nav-number">4.5.</span> <span class="nav-text">Search Range in Binary Search Tree</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Insert-Node-in-Binary-Search-Tree"><span class="nav-number">4.6.</span> <span class="nav-text">Insert Node in Binary Search Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Notice"><span class="nav-number">4.6.0.1.</span> <span class="nav-text">Notice</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Delete-Node-in-a-BST"><span class="nav-number">4.7.</span> <span class="nav-text">Delete Node in a BST</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Count-of-Smaller-Numbers-After-Self"><span class="nav-number">4.8.</span> <span class="nav-text">Count of Smaller Numbers After Self</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unique-Binary-Search-Trees"><span class="nav-number">4.9.</span> <span class="nav-text">Unique Binary Search Trees</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Unique-Binary-Search-Trees-II"><span class="nav-number">4.10.</span> <span class="nav-text">Unique Binary Search Trees II</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-二叉树的层序遍历"><span class="nav-number">5.</span> <span class="nav-text">5.二叉树的层序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Tree-Level-Order-Traversal"><span class="nav-number">5.1.</span> <span class="nav-text">Binary Tree Level Order Traversal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Tree-Level-Order-Traversal-II"><span class="nav-number">5.2.</span> <span class="nav-text">Binary Tree Level Order Traversal II</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Tree-Zigzag-Level-Order-Traversal"><span class="nav-number">5.3.</span> <span class="nav-text">Binary Tree Zigzag Level Order Traversal</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Serialize-and-Deserialize-Binary-Tree"><span class="nav-number">5.4.</span> <span class="nav-text">Serialize and Deserialize Binary Tree</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-二叉树的深度优先遍历"><span class="nav-number">6.</span> <span class="nav-text">6.二叉树的深度优先遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方式"><span class="nav-number">6.1.</span> <span class="nav-text">实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#递归"><span class="nav-number">6.1.1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非递归（栈）"><span class="nav-number">6.1.2.</span> <span class="nav-text">非递归（栈）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-完全二叉树"><span class="nav-number">7.</span> <span class="nav-text">7.完全二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Count-Complete-Tree-Nodes"><span class="nav-number">7.1.</span> <span class="nav-text">Count Complete Tree Nodes</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

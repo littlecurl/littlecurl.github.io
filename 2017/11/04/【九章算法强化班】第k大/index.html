@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="九章算法,heap," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="求数组/矩阵的第k大元素涉及leetcode题目  278. Kth Smallest Number In Matrix 373. Kth Smallest Sum In Two Sorted Arrays  Kth Largest in N Arrays  278. Kth Smallest Number In Matrix题目 Given a n x n matrix where each o">
+<meta name="keywords" content="九章算法,heap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】第k大">
+<meta property="og:url" content="http://yoursite.com/2017/11/04/【九章算法强化班】第k大/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="求数组/矩阵的第k大元素涉及leetcode题目  278. Kth Smallest Number In Matrix 373. Kth Smallest Sum In Two Sorted Arrays  Kth Largest in N Arrays  278. Kth Smallest Number In Matrix题目 Given a n x n matrix where each o">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-16T09:35:02.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】第k大">
+<meta name="twitter:description" content="求数组/矩阵的第k大元素涉及leetcode题目  278. Kth Smallest Number In Matrix 373. Kth Smallest Sum In Two Sorted Arrays  Kth Largest in N Arrays  278. Kth Smallest Number In Matrix题目 Given a n x n matrix where each o">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/04/【九章算法强化班】第k大/"/>
+
+
+
+
+
+  <title>【九章算法强化班】第k大 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/04/【九章算法强化班】第k大/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】第k大</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T11:05:07+08:00">
+                2017-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,529
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="求数组-矩阵的第k大元素"><a href="#求数组-矩阵的第k大元素" class="headerlink" title="求数组/矩阵的第k大元素"></a>求数组/矩阵的第k大元素</h1><p>涉及leetcode题目</p>
+<ol>
+<li><a href="https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/description/" target="_blank" rel="external">278. Kth Smallest Number In Matrix</a></li>
+<li><a href="https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/" target="_blank" rel="external">373. Kth Smallest Sum In Two Sorted Arrays</a> </li>
+<li>Kth Largest in N Arrays</li>
+</ol>
+<h2 id="278-Kth-Smallest-Number-In-Matrix"><a href="#278-Kth-Smallest-Number-In-Matrix" class="headerlink" title="278. Kth Smallest Number In Matrix"></a>278. Kth Smallest Number In Matrix</h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
+<p>Given a <em>n</em> x <em>n</em> matrix where each of the rows and columns are sorted in ascending order, find the kth smallest element in the matrix.</p>
+</blockquote>
+<p>给定一个<script type="math/tex">n*n</script>的矩阵，满足行递增和列递增，要求返回第k大的元素。</p>
+<p><strong>example</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">matrix = [</div><div class="line">   [ 1,  5,  9],</div><div class="line">   [10, 11, 13],</div><div class="line">   [12, 13, 15]</div><div class="line">],</div><div class="line">k = 8,</div><div class="line"></div><div class="line">return 13.</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><h4 id="方法1：堆"><a href="#方法1：堆" class="headerlink" title="方法1：堆"></a>方法1：堆</h4><p>看到第k大问题，要想到用<strong>堆</strong></p>
+<p>因为矩阵满足行递增和列递增，所以矩阵中的每一个元素的右边和下边元素一定比这个元素大。可以从左上角开始将元素放入一个最小堆中，每次从最小堆中取出一个元素，将其右边和下边的元素放入最小堆，这样就可以保证直到取出第k次的元素就是矩阵中第k大的元素。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span>&#123;</span></div><div class="line">    <span class="keyword">int</span> x;</div><div class="line">    <span class="keyword">int</span> y;</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    Node(<span class="keyword">int</span> a,<span class="keyword">int</span> b,<span class="keyword">int</span> valin):x(a),y(b),val(valin)&#123;&#125;</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cmp</span>&#123;</span></div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">operator</span><span class="params">()</span><span class="params">(<span class="keyword">const</span> Node &amp;a,<span class="keyword">const</span> Node &amp;b)</span></span></div><div class="line"><span class="function">    </span>&#123;</div><div class="line">         <span class="keyword">return</span> a.val&gt;b.val;</div><div class="line">    &#125;</div><div class="line">&#125;;</div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> rows = matrix.size();</div><div class="line">    <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].size();</div><div class="line">    <span class="keyword">if</span>(rows*cols&lt;k)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; &gt; isin(rows,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(cols,<span class="number">0</span>));<span class="comment">//用于记录某元素是否已经入过堆</span></div><div class="line">    priority_queue&lt;Node,<span class="built_in">vector</span>&lt;Node&gt;,cmp&gt; minheap;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="function">Node <span class="title">nodetemp</span><span class="params">(i,j,matrix[i][j])</span></span>;</div><div class="line">    minheap.push(nodetemp);</div><div class="line">    isin[i][j]=<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> kkk=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(kkk &lt; k<span class="number">-1</span>)&#123;</div><div class="line">        <span class="keyword">int</span> xtemp = minheap.top().x;</div><div class="line">        <span class="keyword">int</span> ytemp = minheap.top().y;</div><div class="line">        <span class="keyword">int</span> xadd = xtemp+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> yadd = ytemp+<span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(xadd&gt;=matrix.size()||ytemp&gt;=matrix[<span class="number">0</span>].size()||isin[xadd][ytemp])&#123;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            minheap.push(Node(xadd,ytemp,matrix[xadd][ytemp]));</div><div class="line">            isin[xadd][ytemp]=<span class="number">1</span>;</div><div class="line">        &#125;      <span class="keyword">if</span>(yadd&gt;=matrix.size()||xtemp&gt;=matrix[<span class="number">0</span>].size()||isin[xtemp][yadd])&#123;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            minheap.push(Node(xtemp,yadd,matrix[xtemp][yadd]));</div><div class="line">            isin[xtemp][yadd]=<span class="number">1</span>;</div><div class="line">        &#125;        </div><div class="line">        minheap.pop();</div><div class="line">        kkk++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> minheap.top().val;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="方法2：二分查找"><a href="#方法2：二分查找" class="headerlink" title="方法2：二分查找"></a>方法2：二分查找</h4><p>利用堆的方法可以解决上面的问题，但是时间复杂度不是很好。</p>
+<p>看了leetcode题解，有二分查找的方式更快。</p>
+<p>先找到矩阵的最大值max和最小值min，即左上和右下元素，然后以此作为二叉搜索的左右两边，求出其中间值mid，遍历矩阵元素，求出比该中值小的元素的个数count，分一下三种情况讨论：</p>
+<ul>
+<li>count&lt;k，说明比mid小的元素个数不足k个，则要寻找的值比mid大，故mid++;</li>
+<li>count&gt;=k，说明比mid小或和mid值相等的元素个数多于k个，则要寻找的值&lt;=mid，故令max = mid，继续查找;</li>
+<li>直到min和max回合，此时就找到了第k个元素。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> rows = matrix.size();</div><div class="line">    <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].size();</div><div class="line">    <span class="keyword">if</span>(rows*cols&lt;k)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> min = matrix[<span class="number">0</span>][<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span> max = matrix[rows<span class="number">-1</span>][cols<span class="number">-1</span>];</div><div class="line">    <span class="keyword">while</span>(min &lt; max)&#123;</div><div class="line">        <span class="keyword">int</span> mid = (min+max)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//matrix中记录比mid小的元素的个数</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; rows;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(matrix[i][j]&lt;=mid)&#123;</div><div class="line">                    count++;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(count&gt;=k)&#123;</div><div class="line">            max = mid;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            min = mid+<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> min;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="373-Find-K-Pairs-with-Smallest-Sums"><a href="#373-Find-K-Pairs-with-Smallest-Sums" class="headerlink" title="373. Find K Pairs with Smallest Sums"></a>373. Find K Pairs with Smallest Sums</h2><h3 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h3><blockquote>
+<p>You are given two integer arrays <strong>nums1</strong> and <strong>nums2</strong> sorted in ascending order and an integer <strong>k</strong>.</p>
+<p>Define a pair <strong>(u,v)</strong> which consists of one element from the first array and one element from the second array.</p>
+<p>Find the k pairs <strong>(u1,v1),(u2,v2) …(uk,vk)</strong> with the smallest sums.</p>
+</blockquote>
+<p>给定一个整数k和两个数组<script type="math/tex">nums1</script>和<script type="math/tex">nums2</script>，两个数组内部升序排列，分别从两个数组中选择一个元素<script type="math/tex">u</script>和<script type="math/tex">v</script>构成数对<script type="math/tex">(u,v)</script>，返回和最小的前k个数对<script type="math/tex">(u_1,v_1),(u_2,v_2),...,(u_k,v_k)</script></p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line">Given nums1 = [<span class="number">1</span>,<span class="number">7</span>,<span class="number">11</span>], nums2 = [<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>],  k = <span class="number">3</span></div><div class="line">  </div><div class="line">Return: [<span class="number">1</span>,<span class="number">2</span>],[<span class="number">1</span>,<span class="number">4</span>],[<span class="number">1</span>,<span class="number">6</span>]</div><div class="line"></div><div class="line">The first <span class="number">3</span> pairs are returned from the sequence:</div><div class="line">[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">1</span>,<span class="number">4</span>],[<span class="number">1</span>,<span class="number">6</span>],[<span class="number">7</span>,<span class="number">2</span>],[<span class="number">7</span>,<span class="number">4</span>],[<span class="number">11</span>,<span class="number">2</span>],[<span class="number">7</span>,<span class="number">6</span>],[<span class="number">11</span>,<span class="number">4</span>],[<span class="number">11</span>,<span class="number">6</span>]</div></pre></td></tr></table></figure>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><p>这道题就是278的升级版，两个升序数组中各取一个元素做和，求最小的前k个，可以把两个升序数组看成是矩阵的两个维度：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>1</th>
+<th>7</th>
+<th>11</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>2+1=3</td>
+<td>2+7=9</td>
+<td>2+11=13</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4+1=5</td>
+<td>4+7=11</td>
+<td>4+11=15</td>
+</tr>
+<tr>
+<td>6</td>
+<td>6+1=7</td>
+<td>6+7=13</td>
+<td>6+11=17</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>显然，由元素对生成的矩阵和上题中具有相同的性质，同行同列都递增，所以只需要对上面的代码做轻微的调整即可：记录下元素对在原数组中的idx。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;&gt; kSmallestPairs(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums1, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums2, <span class="keyword">int</span> k) &#123;</div><div class="line">    <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; results;</div><div class="line">    <span class="keyword">if</span>(nums1.size()==<span class="number">0</span>||nums2.size()==<span class="number">0</span>)</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    <span class="keyword">int</span> len1 = nums1.size();</div><div class="line">    <span class="keyword">int</span> len2 = nums2.size();</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; &gt; isin(len1,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(len2,<span class="number">0</span>));</div><div class="line">    priority_queue&lt;Node,<span class="built_in">vector</span>&lt;Node&gt;,cmp&gt; minheap;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="function">Node <span class="title">nodetemp</span><span class="params">(i,j,nums1[i]+nums2[j])</span></span>;</div><div class="line">    minheap.push(nodetemp);</div><div class="line">    isin[i][j]=<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> numslen = len1*len2;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> kkk = <span class="number">0</span>; kkk &lt; k&amp;&amp;kkk&lt;numslen;kkk++)&#123;</div><div class="line">        <span class="keyword">int</span> xtemp = minheap.top().x;</div><div class="line">        <span class="keyword">int</span> ytemp = minheap.top().y;</div><div class="line">        results.push_back(make_pair(nums1[xtemp],nums2[ytemp]));</div><div class="line">        <span class="keyword">int</span> xadd = xtemp+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> yadd = ytemp+<span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(xadd&gt;=nums1.size()||ytemp&gt;=nums2.size()||isin[xadd][ytemp])&#123;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            minheap.push(Node(xadd,ytemp,nums1[xadd]+nums2[ytemp]));</div><div class="line">            isin[xadd][ytemp]=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(xtemp&gt;=nums1.size()||yadd&gt;=nums2.size()||isin[xtemp][yadd])&#123;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            minheap.push(Node(xtemp,yadd,nums1[xtemp]+nums2[yadd]));</div><div class="line">            isin[xtemp][yadd]=<span class="number">1</span>;</div><div class="line">        &#125;        </div><div class="line">        minheap.pop();</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Kth-Largest-in-N-Arrays"><a href="#Kth-Largest-in-N-Arrays" class="headerlink" title="Kth Largest in N Arrays"></a>Kth Largest in N Arrays</h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>给定N个无序数组，从中找出第k大的元素</p>
+</blockquote>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>看到数组先排序，然后再想思路。寻找第k大的元素，需要维护一个堆。</p>
+<ol>
+<li>将N个数组中的最大值入堆</li>
+<li>每次出堆一个元素，将该元素所在数组中的下一个入堆</li>
+<li>循环k次，找到第k大的元素</li>
+</ol>
+<p>依旧沿用上面题的思路，这次除元素大小外，需要记录的额外信息为元素所在的数组idx1，以及在该数组中的idx2。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">kthSmallest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; matrix, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> rows = matrix.size();</div><div class="line">  	<span class="keyword">int</span> cols = matrix[<span class="number">0</span>].size();</div><div class="line">    <span class="keyword">if</span>(rows*cols&lt;k)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</div><div class="line">    &#125;</div><div class="line">    priority_queue&lt;Node,<span class="built_in">vector</span>&lt;Node&gt;,cmp&gt; minheap;</div><div class="line">    <span class="comment">//按行排序,每行第一个入堆</span></div><div class="line">    <span class="keyword">for</span>(inti= <span class="number">0</span> ;i&lt;rows;i++)&#123;</div><div class="line">      sort(matrix[i].begin(),matrix[i].end());</div><div class="line">      <span class="function">Node <span class="title">nodetemp</span><span class="params">(i,<span class="number">0</span>,matrix[i][<span class="number">0</span>])</span></span>;</div><div class="line">      minheap.push(nodetemp);</div><div class="line">      isin[i][j]=<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; &gt; isin(rows,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(cols,<span class="number">0</span>));<span class="comment">//用于记录某元素是否已经入过堆  </span></div><div class="line">    <span class="keyword">int</span> kkk=<span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(kkk &lt; k<span class="number">-1</span>)&#123;</div><div class="line">        <span class="keyword">int</span> xtemp = minheap.top().x;</div><div class="line">      	<span class="keyword">int</span> ytemp = minheap.top().y;</div><div class="line">       	<span class="keyword">int</span> yadd = ytemp++;</div><div class="line">        <span class="keyword">if</span>(yadd&gt;=matrix[x].size()||isin[xtemp][yadd])&#123;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            minheap.push(Node(xtemp,yadd,matrix[xtemp][yadd]));</div><div class="line">            isin[xadd][ytemp]=<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        minheap.pop();</div><div class="line">        kkk++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> minheap.top().val;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ul>
+<li>见到需要维护集合的最小/最大值的时候要想到<strong>堆</strong></li>
+<li>见到第k小，想到用堆维护候选集合，出堆k次</li>
+<li>见到数组要往排序上面想，先排序，然后再其他操作</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/九章算法/" rel="tag"># 九章算法</a>
+          
+            <a href="/tags/heap/" rel="tag"># heap</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/02/DSP国内硕士论文总结/" rel="next" title="DSP国内硕士论文总结">
+                <i class="fa fa-chevron-left"></i> DSP国内硕士论文总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/04/c-STL中堆的使用/" rel="prev" title="c++STL中堆的使用">
+                c++STL中堆的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#求数组-矩阵的第k大元素"><span class="nav-number">1.</span> <span class="nav-text">求数组/矩阵的第k大元素</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#278-Kth-Smallest-Number-In-Matrix"><span class="nav-number">1.1.</span> <span class="nav-text">278. Kth Smallest Number In Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#方法1：堆"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">方法1：堆</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法2：二分查找"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">方法2：二分查找</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#373-Find-K-Pairs-with-Smallest-Sums"><span class="nav-number">1.2.</span> <span class="nav-text">373. Find K Pairs with Smallest Sums</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kth-Largest-in-N-Arrays"><span class="nav-number">1.2.3.</span> <span class="nav-text">Kth Largest in N Arrays</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结："><span class="nav-number">1.3.</span> <span class="nav-text">总结：</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

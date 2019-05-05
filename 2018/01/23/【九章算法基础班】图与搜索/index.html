@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="outline graph  Clone Graph Topological Sorting   Search  DFS  BFS:（O(m+n)m为边树，n为点数)  遍历图 树的BFS需要用队列，在图中除了要用队列还需要用到hash表，用来存储节点是否被访问过 BFS还可以用于求深度，最短路径  简单图求最短路径  拓扑排序       BFS例题1. Clone Graph题目 Clone">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法基础班】图与搜索">
+<meta property="og:url" content="http://yoursite.com/2018/01/23/【九章算法基础班】图与搜索/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="outline graph  Clone Graph Topological Sorting   Search  DFS  BFS:（O(m+n)m为边树，n为点数)  遍历图 树的BFS需要用队列，在图中除了要用队列还需要用到hash表，用来存储节点是否被访问过 BFS还可以用于求深度，最短路径  简单图求最短路径  拓扑排序       BFS例题1. Clone Graph题目 Clone">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-01-11-13-57-33.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-01-11-16-43-48.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-01-11-13-57-33.png">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.516Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法基础班】图与搜索">
+<meta name="twitter:description" content="outline graph  Clone Graph Topological Sorting   Search  DFS  BFS:（O(m+n)m为边树，n为点数)  遍历图 树的BFS需要用队列，在图中除了要用队列还需要用到hash表，用来存储节点是否被访问过 BFS还可以用于求深度，最短路径  简单图求最短路径  拓扑排序       BFS例题1. Clone Graph题目 Clone">
+<meta name="twitter:image" content="http://om1bxijvl.bkt.clouddn.com/2018-01-11-13-57-33.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/23/【九章算法基础班】图与搜索/"/>
+
+
+
+
+
+  <title>【九章算法基础班】图与搜索 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/23/【九章算法基础班】图与搜索/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法基础班】图与搜索</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-23T10:52:30+08:00">
+                2018-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,816
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  30
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="outline"><a href="#outline" class="headerlink" title="outline"></a>outline</h2><ul>
+<li><p>graph</p>
+<ul>
+<li>Clone Graph</li>
+<li>Topological Sorting</li>
+</ul>
+</li>
+<li><p>Search</p>
+<ul>
+<li><p>DFS</p>
+</li>
+<li><p>BFS:（O(m+n)m为边树，n为点数)</p>
+<ul>
+<li><p>遍历图</p>
+<p>树的BFS需要用队列，在图中除了要用队列还需要用到hash表，用来存储节点是否被访问过</p>
+<p>BFS还可以用于求深度，最短路径</p>
+</li>
+<li><p>简单图求最短路径</p>
+</li>
+<li><p>拓扑排序</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="BFS例题"><a href="#BFS例题" class="headerlink" title="BFS例题"></a>BFS例题</h2><h3 id="1-Clone-Graph"><a href="#1-Clone-Graph" class="headerlink" title="1. Clone Graph"></a>1. <a href="https://leetcode.com/problems/clone-graph/" target="_blank" rel="external">Clone Graph</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Clone an undirected graph. Each node in the graph contains a <code>label</code> and a list of its <code>neighbors</code>.</p>
+<p>OJ’s undirected graph serialization:</p>
+<p>Nodes are labeled uniquely.</p>
+<p> We use <code>#</code>as a separator for each node, and <code>,</code> as a separator for node label and each neighbor of the node.</p>
+<p>As an example, consider the serialized graph <code>{0,1,2#1,2#2,2}</code>.</p>
+<p>The graph has a total of three nodes, and therefore contains three parts as separated by <code>#</code>.</p>
+<ol>
+<li>First node is labeled as <code>0</code>. Connect node <code>0</code> to both nodes <code>1</code> and <code>2</code>.</li>
+<li>Second node is labeled as <code>1</code>. Connect node <code>1</code> to node <code>2</code>.</li>
+<li>Third node is labeled as <code>2</code>. Connect node <code>2</code> to node <code>2</code> (itself), thus forming a self-cycle.</li>
+</ol>
+<p>Visually, the graph looks like the following:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;        1</div><div class="line">&gt;       / \</div><div class="line">&gt;      /   \</div><div class="line">&gt;     0 --- 2</div><div class="line">&gt;          / \</div><div class="line">&gt;          \_/</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定图中的一个节点，克隆整个图</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>考点：</p>
+<ol>
+<li>从一个点出发，把整张图的所有节点找到（BFS）nodes</li>
+<li>获得nodes之后复制所有的点，将新老节点建立映射关系，存入hashmap中</li>
+<li>根据老节点之间的关系和新老节点的映射关系，复制所有的边</li>
+<li>最后返回给定的node对应的新节点</li>
+</ol>
+<p>还可以用DFS：</p>
+<p>递归调用复制节点和邻居关系。</p>
+<p>DFS的输入是旧结点，返回值是新节点。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><p>BFS:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GraphClone</span> </span>&#123;</div><div class="line">     <span class="class"><span class="keyword">class</span> <span class="title">UndirectedGraphNode</span> </span>&#123;</div><div class="line">         <span class="keyword">int</span> label;</div><div class="line">         List&lt;UndirectedGraphNode&gt; neighbors;</div><div class="line">         UndirectedGraphNode(<span class="keyword">int</span> x) &#123; label = x; neighbors = <span class="keyword">new</span> ArrayList&lt;UndirectedGraphNode&gt;(); &#125;</div><div class="line">     &#125;</div><div class="line">     HashMap&lt;UndirectedGraphNode,UndirectedGraphNode&gt; nodeMap = <span class="keyword">new</span> HashMap&lt;&gt;();<span class="comment">//用于存储新旧节点映射关系</span></div><div class="line">     List&lt;UndirectedGraphNode&gt; oldNodes = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//旧结点</span></div><div class="line">     List&lt;UndirectedGraphNode&gt; newNodes = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//新节点</span></div><div class="line"></div><div class="line">    <span class="comment">//bfs获取图中所有的点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(UndirectedGraphNode node)</span></span>&#123;</div><div class="line">        Queue&lt;UndirectedGraphNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        HashSet&lt;UndirectedGraphNode&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</div><div class="line">        queue.add(node);</div><div class="line">        set.add(node);</div><div class="line">        <span class="comment">//BFS</span></div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">            UndirectedGraphNode temp = queue.poll();</div><div class="line">            UndirectedGraphNode newNode = <span class="keyword">new</span> UndirectedGraphNode(temp.label);</div><div class="line">            oldNodes.add(temp);<span class="comment">//加入旧点集</span></div><div class="line">            newNodes.add(newNode);<span class="comment">//加入新点集</span></div><div class="line">            nodeMap.put(temp,newNode);<span class="comment">//加入mapping</span></div><div class="line"></div><div class="line">            <span class="comment">//遍历当前节点的所有邻居</span></div><div class="line">            <span class="keyword">for</span>(UndirectedGraphNode neighbor : temp.neighbors)&#123;</div><div class="line">                <span class="comment">//如果已经加入结合了，跳过</span></div><div class="line">                <span class="keyword">if</span>(set.contains(neighbor))&#123;</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//如果还未加入</span></div><div class="line">                queue.add(neighbor);</div><div class="line">                set.add(neighbor);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span><span class="params">(UndirectedGraphNode node)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//获取图中所有的节点</span></div><div class="line">        bfs(node);</div><div class="line">        <span class="comment">//复制所有的边</span></div><div class="line">        <span class="keyword">for</span>(UndirectedGraphNode oldNode : oldNodes)&#123;</div><div class="line">            <span class="keyword">for</span>(UndirectedGraphNode neighbor : oldNode.neighbors)&#123;</div><div class="line">                nodeMap.get(oldNode).neighbors.add(nodeMap.get(neighbor));</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//返回node对应的新节点</span></div><div class="line">        <span class="keyword">return</span> nodeMap.get(node);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>DFS：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> UndirectedGraphNode <span class="title">dfs</span><span class="params">(UndirectedGraphNode node,HashMap&lt;UndirectedGraphNode,UndirectedGraphNode&gt; map)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(map.containsKey(node))&#123;</div><div class="line">        <span class="keyword">return</span> map.get(node);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//新建节点</span></div><div class="line">    UndirectedGraphNode newNode = <span class="keyword">new</span> UndirectedGraphNode(node.label);</div><div class="line">    map.put(node,newNode);</div><div class="line">    <span class="comment">//遍历邻居节点</span></div><div class="line">    <span class="keyword">for</span>(UndirectedGraphNode neighbor : node.neighbors)&#123;</div><div class="line">        newNode.neighbors.add(dfs(neighbor,map));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> newNode;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> UndirectedGraphNode <span class="title">cloneGraph</span><span class="params">(UndirectedGraphNode node)</span> </span>&#123;</div><div class="line">    HashMap&lt;UndirectedGraphNode,UndirectedGraphNode&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">if</span>(node == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dfs(node,map);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-拓扑排序"><a href="#2-拓扑排序" class="headerlink" title="2. 拓扑排序"></a>2. 拓扑排序</h3><p>下面这个图假设是一种上课顺序，比如上1之前必须上0。求这个图的任意一个拓扑排序（按照这个顺序上课则可以上完所有课）</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-01-11-13-57-33.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-01-11-13-57-33.png" alt="img"></a></p>
+<p>拓扑排序很好的参考资料：<a href="http://www.stoimen.com/blog/2012/10/01/computer-algorithms-topological-sort-of-a-graph/" target="_blank" rel="external">Topological Sort of a Graph</a></p>
+<p>拓扑排序的思路如下：</p>
+<ol>
+<li>统计当前入度为0的点，加入队列</li>
+<li>将当前所有入度为0的点删掉，并将这些点的下一点的连线删掉，将其下一个节点的入度减1</li>
+<li>重复1和2，直到所有的点都被删掉</li>
+<li>如果不能拓扑排序说明图中一定有环</li>
+</ol>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-01-11-16-43-48.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-01-11-16-43-48.png" alt="img"></a></p>
+<h3 id="Topological-Sorting"><a href="#Topological-Sorting" class="headerlink" title="Topological Sorting"></a><a href="http://www.lintcode.com/en/problem/topological-sorting/" target="_blank" rel="external">Topological Sorting</a></h3><blockquote>
+<p>Given an directed graph, a topological order of the graph nodes is defined as follow:</p>
+<ul>
+<li>For each directed edge <code>A -&gt; B</code> in graph, A must before B in the order list.</li>
+<li>The first node in the order can be any node in the graph with no nodes direct to it.</li>
+</ul>
+<p>Find any topological order for the given graph.</p>
+<p>Example</p>
+<p>For graph as follow:</p>
+</blockquote>
+<p><img src="http://om1bxijvl.bkt.clouddn.com/2018-01-11-13-57-33.png" alt="img"></p>
+<blockquote>
+<p>The topological order can be:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [0, 1, 2, 3, 4, 5]</div><div class="line">&gt; [0, 2, 3, 1, 5, 4]</div><div class="line">&gt; ...</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>核心就是根据拓扑排序给出一条合理的路径，能够遍历图中所有的点，且不违背箭头顺序</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;DirectedGraphNode&gt; <span class="title">topSort</span><span class="params">(ArrayList&lt;DirectedGraphNode&gt; graph)</span> </span>&#123;</div><div class="line">    <span class="comment">// write your code here</span></div><div class="line">    HashMap&lt;DirectedGraphNode,Integer&gt; degreeIn = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    Queue&lt;DirectedGraphNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">    ArrayList&lt;DirectedGraphNode&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">//计算入度出度</span></div><div class="line">    <span class="keyword">for</span>(DirectedGraphNode nodeFrom : graph) &#123;</div><div class="line">        <span class="keyword">for</span> (DirectedGraphNode nodeEnd : nodeFrom.neighbors) &#123;</div><div class="line">            <span class="comment">//计算NodeEnd入度</span></div><div class="line">            <span class="keyword">if</span> (!degreeIn.containsKey(nodeEnd)) &#123;</div><div class="line">                degreeIn.put(nodeFrom, <span class="number">1</span>);</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                degreeIn.put(nodeEnd, degreeIn.get(nodeEnd) + <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//bfs</span></div><div class="line">    <span class="comment">//queue.add(graph.get(0));</span></div><div class="line">    <span class="keyword">for</span>(DirectedGraphNode node : graph)&#123;</div><div class="line">        <span class="keyword">if</span>(!degreeIn.containsKey(node))&#123;</div><div class="line">            queue.offer(node);</div><div class="line">            results.add(node);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">        DirectedGraphNode node = queue.poll();</div><div class="line">        <span class="comment">//results.add(node);</span></div><div class="line">        <span class="keyword">for</span>(DirectedGraphNode neighbor : node.neighbors)&#123;</div><div class="line">            degreeIn.put(neighbor,degreeIn.get(neighbor)-<span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(degreeIn.get(neighbor) == <span class="number">0</span>)&#123;</div><div class="line">                queue.add(neighbor);</div><div class="line">                results.add(neighbor);</div><div class="line">                <span class="comment">//numNodes--;</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="Course-Schedule"><a href="#Course-Schedule" class="headerlink" title="Course Schedule"></a><a href="https://leetcode.com/problems/course-schedule" target="_blank" rel="external">Course Schedule</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>There are a total of <em>n</em> courses you have to take, labeled from <code>0</code> to <code>n - 1</code>.</p>
+<p>Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: <code>[0,1]</code></p>
+<p>Given the total number of courses and a list of prerequisite <strong>pairs</strong>, is it possible for you to finish all courses?</p>
+<p>For example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 2, [[1,0]]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>There are a total of 2 courses to take. To take course 1 you should have finished course 0. So it is possible.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 2, [[1,0],[0,1]]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>There are a total of 2 courses to take. To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.</p>
+</blockquote>
+<p>给定课程门数，和课程之间的依赖关系，判断是否可以无冲突完成课程。</p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>BFS和DFS都可以做</p>
+<p>BFS：</p>
+<p>拓扑排序的思想，如果最后所有的点都被访问到了，就是可以的，反之不可以。</p>
+<p>DFS：</p>
+<p>用DFS的核心思想就是遇到某条路径上有环就可以返回false，不用继续判断了。所以需要用一个visited数组来保存节点的访问状态。当沿着某一条路径前进时遇到之前已经访问过的节点，就返回false，如果一直没有出现环则在最后返回true。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><p>BFS:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CourseSchedule</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canFinish</span><span class="params">(<span class="keyword">int</span> numCourses, <span class="keyword">int</span>[][] prerequisites)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] classDegreeIn = <span class="keyword">new</span> <span class="keyword">int</span>[numCourses];<span class="comment">//记录入度</span></div><div class="line">        <span class="keyword">int</span>[] classDegreeOut = <span class="keyword">new</span> <span class="keyword">int</span>[numCourses];<span class="comment">//记录出度</span></div><div class="line">        HashMap&lt;Integer,List&lt;Integer&gt;&gt; edges = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> counter = <span class="number">0</span>;</div><div class="line">        <span class="comment">//遍历所有的点记录入度和出度,加入边集和</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prerequisites.length;i++)&#123;</div><div class="line">            <span class="keyword">int</span> edgeFrom = prerequisites[i][<span class="number">0</span>];</div><div class="line">            <span class="keyword">int</span> edgeEnd = prerequisites[i][<span class="number">1</span>];</div><div class="line">            classDegreeIn[edgeEnd]++;</div><div class="line">            classDegreeOut[edgeFrom]++;</div><div class="line">            List&lt;Integer&gt; listTemp = edges.getOrDefault(edgeFrom,<span class="keyword">new</span> ArrayList&lt;&gt;());</div><div class="line">            listTemp.add(edgeEnd);</div><div class="line">            edges.put(edgeFrom,listTemp);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//寻找入度为0的点入栈</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; numCourses;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(classDegreeIn[i] == <span class="number">0</span>)&#123;</div><div class="line">                queue.add(i);</div><div class="line">                counter++;</div><div class="line">                <span class="keyword">boolean</span>[] hasVisited = <span class="keyword">new</span> <span class="keyword">boolean</span>[numCourses];</div><div class="line">                hasVisited[i] = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//bfs</span></div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span> classID = queue.poll();</div><div class="line">            <span class="keyword">if</span>(edges.getOrDefault(classID,<span class="keyword">new</span> ArrayList&lt;&gt;()).size() == <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//遍历classID的所有邻居，将其入度-1</span></div><div class="line">            <span class="keyword">for</span>(Integer neighbor : edges.get(classID))&#123;</div><div class="line">                classDegreeIn[neighbor]--;</div><div class="line">                <span class="comment">//如果入度为0,入栈</span></div><div class="line">                <span class="keyword">if</span>(classDegreeIn[neighbor] == <span class="number">0</span>)&#123;</div><div class="line">                    queue.add(neighbor);</div><div class="line">                    counter++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> counter == numCourses;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>DFS：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span>[] used;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dfs</span><span class="params">(<span class="keyword">boolean</span>[] used,HashMap&lt;Integer, List&lt;Integer&gt;&gt; edges,Integer node)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(used[node])&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(edges.containsKey(node)) &#123;</div><div class="line">            used[node] = <span class="keyword">true</span>;</div><div class="line">            <span class="keyword">for</span>(Integer next: edges.get(node))&#123;</div><div class="line">                <span class="keyword">if</span>(!dfs(used,edges,next))&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            used[node] = <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canFinish</span><span class="params">(<span class="keyword">int</span> numCourses, <span class="keyword">int</span>[][] prerequisites)</span> </span>&#123;</div><div class="line">        HashMap&lt;Integer, List&lt;Integer&gt;&gt; edges = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        used = <span class="keyword">new</span> <span class="keyword">boolean</span>[numCourses];</div><div class="line"></div><div class="line">        <span class="comment">//遍历所有的点记录入度和出度,加入边集和</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prerequisites.length; i++) &#123;</div><div class="line">            <span class="keyword">int</span> edgeFrom = prerequisites[i][<span class="number">0</span>];</div><div class="line">            <span class="keyword">int</span> edgeEnd = prerequisites[i][<span class="number">1</span>];</div><div class="line">            List&lt;Integer&gt; listTemp = edges.getOrDefault(edgeFrom, <span class="keyword">new</span> ArrayList&lt;&gt;());</div><div class="line">            listTemp.add(edgeEnd);</div><div class="line">            edges.put(edgeFrom, listTemp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(Integer node : edges.keySet())&#123;</div><div class="line">            <span class="keyword">if</span>(!dfs(used,edges,node))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Word-Ladder"><a href="#Word-Ladder" class="headerlink" title="Word Ladder"></a><a href="https://leetcode.com/problems/word-ladder" target="_blank" rel="external">Word Ladder</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given two words (<em>beginWord</em> and <em>endWord</em>), and a dictionary’s word list, find the length of shortest transformation sequence from <em>beginWord</em> to <em>endWord</em>, such that:</p>
+<ol>
+<li>Only one letter can be changed at a time.</li>
+<li>Each transformed word must exist in the word list. Note that <em>beginWord</em> is <em>not</em> a transformed word.</li>
+</ol>
+<p>For example,</p>
+<p>Given:<br><em>beginWord</em> = <code>&quot;hit&quot;</code><br><em>endWord</em> = <code>&quot;cog&quot;</code><br><em>wordList</em> = <code>[&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]</code></p>
+<p>As one shortest transformation is <code>&quot;hit&quot; -&gt; &quot;hot&quot; -&gt; &quot;dot&quot; -&gt; &quot;dog&quot; -&gt; &quot;cog&quot;</code>,<br>return its length <code>5</code>.</p>
+</blockquote>
+<p>求从起点到终点的最短路径长度</p>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>求路径长度一般用BFS，从起点开始把相差一个字母的单词一次入队列，知道遇到结束词时， 此时bfs的深度就是最短路径长度。</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span>[] isUsed;</div><div class="line"></div><div class="line">    <span class="comment">//判断两个单词是否只相差一个字母</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String word1, String word2)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> diffSum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word1.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(word1.charAt(i) != word2.charAt(i))&#123;</div><div class="line">                diffSum++;</div><div class="line">                <span class="keyword">if</span>(diffSum &gt; <span class="number">1</span>)&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solve</span><span class="params">(String beginWord, String endWord, List&lt;String&gt; wordList)</span></span>&#123;</div><div class="line">        Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        queue.add(beginWord);</div><div class="line">        <span class="keyword">int</span> step = <span class="number">2</span>;</div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span> queueSize = queue.size();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; queueSize;i++)&#123;</div><div class="line">                String temp  = queue.peek();</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt;wordList.size();j++)&#123;</div><div class="line">                    <span class="keyword">if</span>(!isUsed[j] &amp;&amp; isValid(temp,wordList.get(j)))&#123;</div><div class="line">                        <span class="keyword">if</span>(wordList.get(j).equals(endWord))&#123;</div><div class="line">                            <span class="keyword">return</span> step;</div><div class="line">                        &#125;</div><div class="line">                        queue.add(wordList.get(j));</div><div class="line">                        isUsed[j] = <span class="keyword">true</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                queue.poll();</div><div class="line">            &#125;</div><div class="line">            step++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">ladderLength</span><span class="params">(String beginWord, String endWord, List&lt;String&gt; wordList)</span> </span>&#123;</div><div class="line">        isUsed = <span class="keyword">new</span> <span class="keyword">boolean</span>[wordList.size()];</div><div class="line">        <span class="keyword">return</span> solve(beginWord,endWord,wordList);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Word-Ladder-II"><a href="#Word-Ladder-II" class="headerlink" title="Word Ladder II"></a><a href="https://leetcode.com/problems/word-ladder-ii" target="_blank" rel="external">Word Ladder II</a></h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given two words (<em>beginWord</em> and <em>endWord</em>), and a dictionary’s word list, find all shortest transformation sequence(s) from <em>beginWord</em> to <em>endWord</em>, such that:</p>
+<ol>
+<li>Only one letter can be changed at a time</li>
+<li>Each transformed word must exist in the word list. Note that <em>beginWord</em> is <em>not</em> a transformed word.</li>
+</ol>
+<p>For example,</p>
+<p>Given:<br><em>beginWord</em> = <code>&quot;hit&quot;</code><br><em>endWord</em> = <code>&quot;cog&quot;</code><br><em>wordList</em> = <code>[&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]</code></p>
+<p>Return</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;   [</div><div class="line">&gt;     [&quot;hit&quot;,&quot;hot&quot;,&quot;dot&quot;,&quot;dog&quot;,&quot;cog&quot;],</div><div class="line">&gt;     [&quot;hit&quot;,&quot;hot&quot;,&quot;lot&quot;,&quot;log&quot;,&quot;cog&quot;]</div><div class="line">&gt;   ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>返回所有的路径长度最短的合法路径。</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>找到合法路径，考虑用BFS，找到所有合法的路径，考虑用DFS，这道题目要求找到路径最短的所有合法路径，所以是一道BFS和DFS的综合题目。</p>
+<p>如果只用DFS找的话，要遍历所有的路径，势必会超时（我试了，真的超时）</p>
+<p>所以采用dfs和bfs结合的办法：</p>
+<p>先从endWord到beginWord用BFS找到最短的路径是多少，同时标记经过的点到endWord的最短距离是多少</p>
+<p>然后再用DFS从beginWord到endWord找到确定的路径，此时只需要遍历之前遍历过的点，其余的没有经过的点无需遍历，而且可以按距离顺序来遍历，将所有合法的路径加入的结果结合中。</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    List&lt;List&lt;String&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="keyword">int</span>[] disToBegin;<span class="comment">//记录距离起点的距离</span></div><div class="line"></div><div class="line">    <span class="comment">//判断两个单词是否只相差一个字母</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(String word1, String word2)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(word1.length() != word2.length())&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> diffSum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word1.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(word1.charAt(i) != word2.charAt(i))&#123;</div><div class="line">                diffSum++;</div><div class="line">                <span class="keyword">if</span>(diffSum &gt; <span class="number">1</span>)&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//bfs从后向前寻找最短路径长度,标记点到终点的距离</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">bfs</span><span class="params">(String beginWord, String endWord, List&lt;String&gt; wordList)</span></span>&#123;</div><div class="line">        Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        queue.add(endWord);</div><div class="line">        <span class="keyword">int</span> depth = <span class="number">0</span>;<span class="comment">//endword深度为0</span></div><div class="line">        <span class="comment">//bfs</span></div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</div><div class="line">            depth++;</div><div class="line">            <span class="keyword">int</span> size = queue.size();</div><div class="line">            <span class="keyword">while</span>(size &gt; <span class="number">0</span>)&#123;</div><div class="line">                String temp = queue.poll();</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;wordList.size();i++)&#123;</div><div class="line">                    String word = wordList.get(i);</div><div class="line">                    <span class="comment">//如果单词已经加入过队列了，或者和当前节点相差不为1，跳过</span></div><div class="line">                    <span class="keyword">if</span>(word.equals(endWord) || disToBegin[i] &gt; <span class="number">0</span> || !isValid(temp,word))&#123;</div><div class="line">                        <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span>(word.equals(beginWord))&#123;</div><div class="line">                        <span class="keyword">return</span> depth;<span class="comment">//begin节点深度</span></div><div class="line">                    &#125;</div><div class="line">                    queue.add(word);</div><div class="line">                    disToBegin[i] = depth;</div><div class="line">                &#125;</div><div class="line">                size--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//从前向后dfs确定具体路径</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(String tempWord, String endWord,List&lt;String&gt; wordList,<span class="keyword">int</span> depth)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(depth == <span class="number">0</span>)&#123;</div><div class="line">            List&lt;String&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            temp.add(endWord);</div><div class="line">            results.add(temp);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; disToBegin.length;i++)&#123;</div><div class="line">            String wordNext = wordList.get(i);</div><div class="line">            <span class="comment">//寻找深度和字母都符合的单词</span></div><div class="line">            <span class="keyword">if</span>(disToBegin[i] != depth || !isValid(tempWord,wordNext))&#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            result.add(wordNext);</div><div class="line">            dfs(wordNext,endWord,wordList,depth-<span class="number">1</span>);</div><div class="line">            result.remove(result.size()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; findLadders(String beginWord, String endWord, List&lt;String&gt; wordList) &#123;</div><div class="line">        <span class="keyword">if</span>(!wordList.contains(endWord))&#123;</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//List&lt;String&gt; words = new ArrayList&lt;&gt;(wordList);</span></div><div class="line">        wordList.add(beginWord);</div><div class="line">        disToBegin = <span class="keyword">new</span> <span class="keyword">int</span>[wordList.size()];</div><div class="line">        <span class="keyword">int</span> depth = bfs(beginWord,endWord,wordList);</div><div class="line">        result.add(beginWord);</div><div class="line">        dfs(beginWord,endWord,wordList,depth-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="DFS排列组合"><a href="#DFS排列组合" class="headerlink" title="DFS排列组合"></a>DFS排列组合</h2><p>排列：</p>
+<p><a href="https://leetcode.com/problems/permutations" target="_blank" rel="external">Permutations</a>   </p>
+<p><a href="https://leetcode.com/problems/permutations-ii" target="_blank" rel="external">Permutations II</a>   </p>
+<p>组合：</p>
+<h3 id="Palindrome-Partitioning"><a href="#Palindrome-Partitioning" class="headerlink" title="Palindrome Partitioning"></a><a href="https://leetcode.com/problems/palindrome-partitioning" target="_blank" rel="external">Palindrome Partitioning</a></h3><h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><p>Given a string <em>s</em>, partition <em>s</em> such that every substring of the partition is a palindrome.</p>
+<p>Return all possible palindrome partitioning of <em>s</em>.</p>
+<p>For example, given <em>s</em> = <code>&quot;aab&quot;</code>,<br>Return</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[</div><div class="line">  [&quot;aa&quot;,&quot;b&quot;],</div><div class="line">  [&quot;a&quot;,&quot;a&quot;,&quot;b&quot;]</div><div class="line">]</div></pre></td></tr></table></figure>
+<h4 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>DFS，对字符串进行分割</p>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PalindromePartitioning</span> </span>&#123;</div><div class="line">    List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    List&lt;List&lt;String&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">Palindrome</span><span class="params">(String s)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(s.length() == <span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j = s.length()-<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span> (i &lt; j)&#123;</div><div class="line">            <span class="keyword">if</span> (s.charAt(i) != s.charAt(j))&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            i++;j--;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(String s,<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(start &gt; end)&#123;</div><div class="line">            List&lt;String&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//规定左段包含i,右段不包含i</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start; i &lt;= end;i++)&#123;</div><div class="line">            String left = s.substring(start,i+<span class="number">1</span>);</div><div class="line">            <span class="keyword">if</span>(!Palindrome(left))&#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            result.add(left);</div><div class="line">            helper(s,i+<span class="number">1</span>,end);</div><div class="line">            result.remove(result.size()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; partition(String s) &#123;</div><div class="line">        helper(s,<span class="number">0</span>,s.length()-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><a href="https://leetcode.com/problems/combination-sum" target="_blank" rel="external">Combination Sum</a> </p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>找所有方案的问题一般都是DFS，90%的DFS是排列或者组合。</p>
+<h2 id="其他例题"><a href="#其他例题" class="headerlink" title="其他例题"></a>其他例题</h2><h3 id="01-Matrix"><a href="#01-Matrix" class="headerlink" title="01 Matrix"></a>01 <a href="https://leetcode.com/problems/01-matrix/" target="_blank" rel="external">Matrix</a></h3><h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.</p>
+<p>The distance between two adjacent cells is 1.</p>
+<p><strong>Example 1: </strong><br>Input:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 0 0 0</div><div class="line">&gt; 0 1 0</div><div class="line">&gt; 0 0 0</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 0 0 0</div><div class="line">&gt; 0 1 0</div><div class="line">&gt; 0 0 0</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2: </strong><br>Input:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 0 0 0</div><div class="line">&gt; 0 1 0</div><div class="line">&gt; 1 1 1</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 0 0 0</div><div class="line">&gt; 0 1 0</div><div class="line">&gt; 1 2 1</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>计算每个点距离最近的0的距离</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>方法一:</p>
+<p>用BFS，先将所有0的位置放入队列，然后出队列，将其周围点置位1，如队列，然后出队，将其周围点置为2，以此类推。</p>
+<p>方法二：</p>
+<p>动态规划，先从左上到右下计算每个点离最近的0的距离</p>
+<p>然后从右下到左上再来一遍</p>
+<h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><p>BFS:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] updateMatrix(<span class="keyword">int</span>[][] matrix) &#123;</div><div class="line">  <span class="keyword">int</span> rows = matrix.length;</div><div class="line">  <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">  <span class="keyword">int</span>[][] dist = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">  Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) &#123;</div><div class="line">      <span class="keyword">if</span> (matrix[i][j] == <span class="number">0</span>)&#123;</div><div class="line">        dist[i][j] = <span class="number">0</span>;</div><div class="line">        queue.add(i*cols+j);</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span> &#123;</div><div class="line">        dist[i][j] = -<span class="number">1</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">int</span> depth = <span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">    depth++;</div><div class="line">    <span class="keyword">int</span> size = queue.size();</div><div class="line">    <span class="keyword">while</span> (size&gt;<span class="number">0</span>)&#123;</div><div class="line">      <span class="keyword">int</span> location = queue.poll();</div><div class="line">      <span class="keyword">int</span> row = location/cols;</div><div class="line">      <span class="keyword">int</span> col = location%cols;</div><div class="line">      <span class="keyword">int</span>[] rdelta = &#123;-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>&#125;;</div><div class="line">      <span class="keyword">int</span>[] cdelta = &#123;<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">4</span>;i++)&#123;</div><div class="line">        <span class="keyword">int</span> new_row = row+rdelta[i];</div><div class="line">        <span class="keyword">int</span> new_col = col+cdelta[i];</div><div class="line">        <span class="keyword">if</span>(new_row &gt;=<span class="number">0</span> &amp;&amp; new_row &lt; rows &amp;&amp; new_col &gt;= <span class="number">0</span> &amp;&amp; new_col &lt; cols &amp;&amp; dist[new_row][new_col] == -<span class="number">1</span>)&#123;</div><div class="line">          dist[new_row][new_col] = depth;</div><div class="line">          queue.add(new_row * cols + new_col);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      size--;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> dist;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>动态规划</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span>[][] dist;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[][] updateMatrix(<span class="keyword">int</span>[][] matrix) &#123;</div><div class="line">        <span class="keyword">int</span> rows = matrix.length;</div><div class="line">        <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">        dist = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">        <span class="comment">//First pass: check for left and top</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) &#123;</div><div class="line">                <span class="keyword">if</span> (matrix[i][j] == <span class="number">0</span>)</div><div class="line">                    dist[i][j] = <span class="number">0</span>;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    dist[i][j] = rows+cols;</div><div class="line">                    <span class="keyword">if</span> (i &gt; <span class="number">0</span>)</div><div class="line">                        dist[i][j] = Math.min(dist[i][j], dist[i - <span class="number">1</span>][j] + <span class="number">1</span>);</div><div class="line">                    <span class="keyword">if</span> (j &gt; <span class="number">0</span>)</div><div class="line">                        dist[i][j] = Math.min(dist[i][j], dist[i][j - <span class="number">1</span>] + <span class="number">1</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//Second pass: check for bottom and right</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = rows - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = cols - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--) &#123;</div><div class="line">                <span class="keyword">if</span> (i &lt; rows - <span class="number">1</span>)</div><div class="line">                    dist[i][j] = Math.min(dist[i][j], dist[i + <span class="number">1</span>][j] + <span class="number">1</span>);</div><div class="line">                <span class="keyword">if</span> (j &lt; cols - <span class="number">1</span>)</div><div class="line">                    dist[i][j] = Math.min(dist[i][j], dist[i][j + <span class="number">1</span>] + <span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dist;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Pacific-Atlantic-Water-Flow"><a href="#Pacific-Atlantic-Water-Flow" class="headerlink" title="Pacific Atlantic Water Flow"></a><a href="https://leetcode.com/problems/pacific-atlantic-water-flow/" target="_blank" rel="external">Pacific Atlantic Water Flow</a></h3><h4 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an <code>m x n</code> matrix of non-negative integers representing the height of each unit cell in a continent, the “Pacific ocean” touches the left and top edges of the matrix and the “Atlantic ocean” touches the right and bottom edges.</p>
+<p>Water can only flow in four directions (up, down, left, or right) from a cell to another one with height equal or lower.</p>
+<p>Find the list of grid coordinates where water can flow to both the Pacific and Atlantic ocean.</p>
+<p><strong>Note:</strong></p>
+<ol>
+<li>The order of returned grid coordinates does not matter.</li>
+<li>Both <em>m</em> and <em>n</em> are less than 150.</li>
+</ol>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Given the following 5x5 matrix:</div><div class="line">&gt;</div><div class="line">&gt;   Pacific ~   ~   ~   ~   ~ </div><div class="line">&gt;        ~  1   2   2   3  (5) *</div><div class="line">&gt;        ~  3   2   3  (4) (4) *</div><div class="line">&gt;        ~  2   4  (5)  3   1  *</div><div class="line">&gt;        ~ (6) (7)  1   4   5  *</div><div class="line">&gt;        ~ (5)  1   1   2   4  *</div><div class="line">&gt;           *   *   *   *   * Atlantic</div><div class="line">&gt; Return:</div><div class="line">&gt; [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]] (positions with parentheses in above matrix).</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>矩阵左上是pacific 右下是atlantic,找出所有水能够同时流向两个ocean的位置</p>
+<h4 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>用dfs，对pacific ocean从边缘的每一个点向内dfs搜索可以到达的点，就是考虑每一个点的上下左右四个邻居是否比自己高，如果比自己高而且之前还没有遍历过，就继续dfs。对atlantic做同样的操作。两边都可以到达的加入结果集。</p>
+<h4 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span>[][] matrix,<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">boolean</span>[][] pacific,<span class="keyword">boolean</span>[][] used)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = matrix.length;</div><div class="line">        <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">if</span>(i &lt; <span class="number">0</span> || j &lt; <span class="number">0</span> || i &gt; rows || j &gt; cols)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        pacific[i][j] = <span class="keyword">true</span>;</div><div class="line">        used[i][j] = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">int</span>[] r_delta = &#123;-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] c_delta = &#123;<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> id = <span class="number">0</span> ; id  &lt; <span class="number">4</span>; id++)&#123;</div><div class="line">            <span class="keyword">int</span> new_row = i + r_delta[id];</div><div class="line">            <span class="keyword">int</span> new_col = j + c_delta[id];</div><div class="line">            <span class="keyword">if</span>(new_row &gt;= <span class="number">0</span> &amp;&amp; new_col &gt;= <span class="number">0</span> &amp;&amp; new_row &lt; rows &amp;&amp; new_col &lt; cols &amp;&amp; !used[new_row][new_col] &amp;&amp;matrix[new_row][new_col] &gt;= matrix[i][j])&#123;</div><div class="line">                <span class="comment">//pacific[new_row][new_col] = true;</span></div><div class="line">                dfs(matrix,new_row,new_col,pacific,used);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;<span class="keyword">int</span>[]&gt; pacificAtlantic(<span class="keyword">int</span>[][] matrix) &#123;</div><div class="line">        List&lt;<span class="keyword">int</span>[]&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> rows = matrix.length;</div><div class="line">        <span class="keyword">if</span>(rows == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">boolean</span>[][] pacific = n，ew <span class="keyword">boolean</span>[rows][cols];</div><div class="line">        <span class="keyword">boolean</span>[][] atlantic = <span class="keyword">new</span> <span class="keyword">boolean</span>[rows][cols];</div><div class="line">        <span class="keyword">boolean</span>[][] used = <span class="keyword">new</span> <span class="keyword">boolean</span>[rows][cols];</div><div class="line">        <span class="comment">//处理pacific</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cols;i++)&#123;</div><div class="line">            <span class="comment">//pacific[0][i] = true;</span></div><div class="line">            dfs(matrix,<span class="number">0</span>,i,pacific,used);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; rows;i++)&#123;</div><div class="line">            <span class="comment">//pacific[i][0] = true;</span></div><div class="line">            dfs(matrix,i,<span class="number">0</span>,pacific,used);</div><div class="line">        &#125;</div><div class="line">        used = <span class="keyword">new</span> <span class="keyword">boolean</span>[rows][cols];</div><div class="line">        <span class="comment">//处理atlantic</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cols;i++)&#123;</div><div class="line">            <span class="comment">//pacific[rows-1][i] = true;</span></div><div class="line">            dfs(matrix,rows-<span class="number">1</span>,i,atlantic,used);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; rows;i++)&#123;</div><div class="line">            <span class="comment">//pacific[i][cols-1] = true;</span></div><div class="line">            dfs(matrix,i,cols-<span class="number">1</span>,atlantic,used);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//两个都是true的位置</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows; i++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols; j++) &#123;</div><div class="line">                <span class="keyword">if</span> (pacific[i][j] &amp;&amp; atlantic[i][j])&#123;</div><div class="line">                    results.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;i,j&#125;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Minesweeper"><a href="#Minesweeper" class="headerlink" title="Minesweeper"></a><a href="https://leetcode.com/problems/minesweeper/" target="_blank" rel="external">Minesweeper</a></h3><h4 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h4><p>给定棋盘和点击的点，返回点击之后的棋盘</p>
+<h4 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h4><p>分两种情况讨论，如果点到的地雷，就显示地雷即可；</p>
+<p>如果没有点到地雷，则要从这个点开始dfs计算其周围的每个点周围的8个点处有多少个地雷，如果没有就改成B，如果有的话显示数字。对于显示数字的点就无需继续dfs其周围的点了。</p>
+<h4 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Minesweeper</span> </span>&#123;</div><div class="line">    <span class="comment">//计算某个位置周围有多少个地雷</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">calSweeper</span><span class="params">(<span class="keyword">char</span>[][] board,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = board.length;</div><div class="line">        <span class="keyword">int</span> cols = board[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">int</span>[] x_delta = &#123;-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] y_delta = &#123;-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> ii = <span class="number">0</span>; ii &lt; <span class="number">8</span>;ii++)&#123;</div><div class="line">            <span class="keyword">if</span>(i+x_delta[ii] &lt; <span class="number">0</span> || j+y_delta[ii] &lt; <span class="number">0</span> || i+x_delta[ii] &gt;= rows || j+y_delta[ii] &gt;= cols)&#123;</div><div class="line">                <span class="keyword">continue</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(board[i+x_delta[ii]][j+y_delta[ii]] == <span class="string">'M'</span>)&#123;</div><div class="line">                sum ++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">char</span>[][] board,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = board.length;</div><div class="line">        <span class="keyword">int</span> cols = board[<span class="number">0</span>].length;</div><div class="line">        <span class="comment">//如果出界了，返回</span></div><div class="line">        <span class="keyword">if</span>(i &lt; <span class="number">0</span> || j &lt; <span class="number">0</span> || i &gt;= rows || j &gt;= cols || board[i][j] == <span class="string">'B'</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(board[i][j] == <span class="string">'E'</span>)&#123;</div><div class="line">            <span class="keyword">int</span> sum = calSweeper(board,i,j);</div><div class="line">            <span class="keyword">if</span>(sum == <span class="number">0</span>)&#123;</div><div class="line">                board[i][j] = <span class="string">'B'</span>;</div><div class="line">                <span class="keyword">int</span>[] x_delta = &#123;-<span class="number">1</span>,-<span class="number">1</span>,-<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">                <span class="keyword">int</span>[] y_delta = &#123;-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>&#125;;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> ii = <span class="number">0</span>; ii &lt; <span class="number">8</span>;ii++)&#123;</div><div class="line">                    <span class="comment">//如果还没点过，计算它周围有多少个地雷</span></div><div class="line">                    dfs(board,i+x_delta[ii],j+y_delta[ii]);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                board[i][j] = Integer.toString(sum).charAt(<span class="number">0</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">char</span>[][] updateBoard(<span class="keyword">char</span>[][] board, <span class="keyword">int</span>[] click) &#123;</div><div class="line">        <span class="comment">//如果点到地雷</span></div><div class="line">        <span class="keyword">if</span>(board[click[<span class="number">0</span>]][click[<span class="number">1</span>]] == <span class="string">'M'</span>)&#123;</div><div class="line">            board[click[<span class="number">0</span>]][click[<span class="number">1</span>]] = <span class="string">'X'</span>;</div><div class="line">            <span class="keyword">return</span> board;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//没点到地雷</span></div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            dfs(board,click[<span class="number">0</span>],click[<span class="number">1</span>]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> board;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        Minesweeper test = <span class="keyword">new</span> Minesweeper();</div><div class="line">        <span class="keyword">char</span>[][] board = &#123;&#123;<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>&#125;,&#123;<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'M'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>&#125;,&#123;<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>&#125;,&#123;<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>,<span class="string">'E'</span>&#125;&#125;;</div><div class="line">        <span class="keyword">char</span>[][] result = test.updateBoard(board,<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">3</span>,<span class="number">0</span>&#125;);</div><div class="line">        System.out.print(result);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Minimum-Height-Trees"><a href="#Minimum-Height-Trees" class="headerlink" title="Minimum Height Trees"></a><a href="https://leetcode.com/problems/minimum-height-trees/" target="_blank" rel="external">Minimum Height Trees</a></h3><h4 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>For a undirected graph with tree characteristics, we can choose any node as the root. The result graph is then a rooted tree. Among all possible rooted trees, those with minimum height are called minimum height trees (MHTs). Given such a graph, write a function to find all the MHTs and return a list of their root labels.</p>
+<p><strong>Format</strong><br>The graph contains <code>n</code> nodes which are labeled from <code>0</code> to <code>n - 1</code>. You will be given the number <code>n</code> and a list of undirected <code>edges</code> (each edge is a pair of labels).</p>
+<p>You can assume that no duplicate edges will appear in <code>edges</code>. Since all edges are undirected, <code>[0, 1]</code> is the same as <code>[1, 0]</code> and thus will not appear together in <code>edges</code>.</p>
+<p><strong>Example 1:</strong></p>
+<p>Given <code>n = 4</code>, <code>edges = [[1, 0], [1, 2], [1, 3]]</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;         0</div><div class="line">&gt;         |</div><div class="line">&gt;         1</div><div class="line">&gt;        / \</div><div class="line">&gt;       2   3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return <code>[1]</code></p>
+<p><strong>Example 2:</strong></p>
+<p>Given <code>n = 6</code>, <code>edges = [[0, 3], [1, 3], [2, 3], [4, 3], [5, 4]]</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;      0  1  2</div><div class="line">&gt;       \ | /</div><div class="line">&gt;         3</div><div class="line">&gt;         |</div><div class="line">&gt;         4</div><div class="line">&gt;         |</div><div class="line">&gt;         5</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return <code>[3, 4]</code></p>
+</blockquote>
+<p>选取图中某一点作为root，使得形成的树高度最小，返回所有高度最小的root点。</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>用BFS计算了每一个点作为root的深度，超时了。。。。</p>
+<p>逐层去掉叶子节点，留下的就是作为root树高最小的节点。思路不难，但还是写了好久</p>
+<p>步骤：</p>
+<ol>
+<li>存储图中节点的度数和点边关系</li>
+<li>把度数为1的节点加入叶子节点集合</li>
+<li>遍历叶子节点，将与之相连的节点的度数-1，然后将叶子节点删除，同时，如果有节点的度数为1，说明是下一层的叶子节点，加入新叶子集合</li>
+<li>当新叶子集合的大小&lt;=2时，说明找到了最终的MHT的root</li>
+</ol>
+<h4 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">findMinHeightTrees</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span>[][] edges)</span> </span>&#123;</div><div class="line">        <span class="comment">//边界条件处理</span></div><div class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</div><div class="line">            List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            res.add(<span class="number">0</span>);</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(n == <span class="number">2</span>)&#123;</div><div class="line">            List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            res.add(<span class="number">0</span>);</div><div class="line">            res.add(<span class="number">1</span>);</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//存储点边关系</span></div><div class="line">        List&lt;HashSet&lt;Integer&gt;&gt; map = <span class="keyword">new</span> ArrayList&lt;&gt;(n);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;i++)&#123;</div><div class="line">            map.add(<span class="keyword">new</span> HashSet&lt;&gt;());</div><div class="line">        &#125;</div><div class="line">      </div><div class="line">        <span class="keyword">int</span>[] edgesNum = <span class="keyword">new</span> <span class="keyword">int</span>[n];<span class="comment">//存储节点的度数</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;edges.length;i++)&#123;</div><div class="line">            <span class="keyword">int</span> node1 = edges[i][<span class="number">0</span>];</div><div class="line">            <span class="keyword">int</span> node2 = edges[i][<span class="number">1</span>];</div><div class="line">            edgesNum[node1]++;</div><div class="line">            edgesNum[node2]++;</div><div class="line">            map.get(node1).add(node2);</div><div class="line">            map.get(node2).add(node1);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> counter = n;</div><div class="line">      <span class="comment">//叶子节点加入结合</span></div><div class="line">        List&lt;Integer&gt; leaves = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(edgesNum[i] == <span class="number">1</span>)&#123;</div><div class="line">                leaves.add(i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//遍历叶子节点，将与之相连的点的度数-1，删去叶子节点</span></div><div class="line">        <span class="keyword">while</span> (counter &gt; <span class="number">2</span>)&#123;</div><div class="line">            counter -= leaves.size();</div><div class="line">            List&lt;Integer&gt; newLeaves = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//存储下一轮的新叶子节点</span></div><div class="line">            <span class="keyword">for</span>(Integer leave : leaves)&#123;</div><div class="line">                edgesNum[leave]--;</div><div class="line">                <span class="keyword">for</span>(Integer node : map.get(leave))&#123;</div><div class="line">                    edgesNum[node]--;</div><div class="line">                    <span class="keyword">if</span>(edgesNum[node] == <span class="number">1</span>)&#123;<span class="comment">//遇到度数为1的节点就是下一轮的叶子节点</span></div><div class="line">                        newLeaves.add(node);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            leaves = newLeaves;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> leaves;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="The-Maze"><a href="#The-Maze" class="headerlink" title="The Maze"></a><a href="https://leetcode.com/problems/the-maze/" target="_blank" rel="external">The Maze</a></h3><h4 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h4><blockquote>
+<p>There is a <strong>ball</strong> in a maze with empty spaces and walls. The ball can go through empty spaces by rolling <strong>up</strong>, <strong>down</strong>, <strong>left</strong> or <strong>right</strong>, but it won’t stop rolling until hitting a wall. When the ball stops, it could choose the next direction.</p>
+<p>Given the ball’s <strong>start position</strong>, the <strong>destination</strong> and the <strong>maze</strong>, find the shortest distance for the ball to stop at the destination. The distance is defined by the number of <strong>empty spaces</strong> traveled by the ball from the start position (excluded) to the destination (included). If the ball cannot stop at the destination, return -1.</p>
+<p>The maze is represented by a binary 2D array. 1 means the wall and 0 means the empty space. You may assume that the borders of the maze are all walls. The start and destination coordinates are represented by row and column indexes.</p>
+<p><strong>Example 1</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input 1: a maze represented by a 2D array</div><div class="line">&gt;</div><div class="line">&gt; 0 0 1 0 0</div><div class="line">&gt; 0 0 0 0 0</div><div class="line">&gt; 0 0 0 1 0</div><div class="line">&gt; 1 1 0 1 1</div><div class="line">&gt; 0 0 0 0 0</div><div class="line">&gt;</div><div class="line">&gt; Input 2: start coordinate (rowStart, colStart) = (0, 4)</div><div class="line">&gt; Input 3: destination coordinate (rowDest, colDest) = (4, 4)</div><div class="line">&gt;</div><div class="line">&gt; Output: 12</div><div class="line">&gt; Explanation: One shortest way is : left -&gt; down -&gt; left -&gt; down -&gt; right -&gt; down -&gt; right.</div><div class="line">&gt;              The total distance is 1 + 1 + 3 + 1 + 2 + 2 + 2 = 12.</div><div class="line">&gt;</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input 1: a maze represented by a 2D array</div><div class="line">&gt;</div><div class="line">&gt; 0 0 1 0 0</div><div class="line">&gt; 0 0 0 0 0</div><div class="line">&gt; 0 0 0 1 0</div><div class="line">&gt; 1 1 0 1 1</div><div class="line">&gt; 0 0 0 0 0</div><div class="line">&gt;</div><div class="line">&gt; Input 2: start coordinate (rowStart, colStart) = (0, 4)</div><div class="line">&gt; Input 3: destination coordinate (rowDest, colDest) = (3, 2)</div><div class="line">&gt;</div><div class="line">&gt; Output: -1</div><div class="line">&gt; Explanation: There is no way for the ball to stop at the destination.</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>矩阵中1是障碍，0是通的，小球从start滚到destination，不遇到障碍或者边界小球不会停下来，返回小球是否可以从start滚到end</p>
+<h4 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h4><p>BFS，小球从起点开始可以向上下左右四个方向滚，每次滚到障碍或者边界处，滚到终点就返回true</p>
+<p>另外需要一个数组记录小球是否到过该节点，如果到过，后续就无需再走这里了。</p>
+<h4 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPath</span><span class="params">(<span class="keyword">int</span>[][] maze, <span class="keyword">int</span>[] start, <span class="keyword">int</span>[] destination)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = maze.length;</div><div class="line">        <span class="keyword">if</span>(rows == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> cols = maze[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">boolean</span>[][] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[maze.length][maze[<span class="number">0</span>].length];</div><div class="line">        Queue&lt;<span class="keyword">int</span>[]&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span>[] x_delta = &#123;-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;<span class="comment">//上下左右</span></div><div class="line">        <span class="keyword">int</span>[] y_delta = &#123;<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>&#125;;</div><div class="line">        queue.add(start);</div><div class="line">        visited[start[<span class="number">0</span>]][start[<span class="number">1</span>]] = <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span>[] node = queue.poll();</div><div class="line">            <span class="keyword">if</span>(node[<span class="number">0</span>] == destination[<span class="number">0</span>] &amp;&amp; node[<span class="number">1</span>] == destination[<span class="number">1</span>])&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> ii = <span class="number">0</span> ; ii &lt; <span class="number">4</span>;ii++)&#123;</div><div class="line">                <span class="keyword">int</span> newStartX = node[<span class="number">0</span>] + x_delta[ii];</div><div class="line">                <span class="keyword">int</span> newStartY = node[<span class="number">1</span>] + y_delta[ii];</div><div class="line">                <span class="comment">//走的通的方向，一直走到尽头</span></div><div class="line">                <span class="keyword">while</span>(newStartX &gt;= <span class="number">0</span> &amp;&amp; newStartY &gt;= <span class="number">0</span> &amp;&amp; newStartX &lt; rows &amp;&amp; newStartY &lt; cols &amp;&amp; maze[newStartX][newStartY] == <span class="number">0</span>)&#123;</div><div class="line">                    newStartX += x_delta[ii];</div><div class="line">                    newStartY += y_delta[ii];</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(!visited[newStartX-x_delta[ii]][newStartY-y_delta[ii]])&#123;</div><div class="line">                    queue.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;newStartX - x_delta[ii],newStartY - y_delta[ii]&#125;);</div><div class="line">                    visited[newStartX-x_delta[ii]][newStartY-y_delta[ii]] = <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="The-Maze-II"><a href="#The-Maze-II" class="headerlink" title="The Maze II"></a><a href="https://leetcode.com/problems/the-maze-ii" target="_blank" rel="external">The Maze II</a></h3><h4 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h4><p>跟上一题一样，这个题要求返回从起点滚到终点的最短路径长度。如果滚不到就返回-1</p>
+<h4 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h4><p>用一个二维数组记录地图中的点到start的距离。BFS更新计算start到能够到达的点的最小距离，最后返回二维数组中的终点的值。</p>
+<h4 id="代码-11"><a href="#代码-11" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">shortestDistance</span><span class="params">(<span class="keyword">int</span>[][] maze, <span class="keyword">int</span>[] start, <span class="keyword">int</span>[] destination)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = maze.length;</div><div class="line">        <span class="keyword">int</span> cols = maze[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">int</span>[][] distance = <span class="keyword">new</span> <span class="keyword">int</span>[maze.length][maze[<span class="number">0</span>].length];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt;distance.length;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; distance[<span class="number">0</span>].length;j++)&#123;</div><div class="line">                distance[i][j] = Integer.MAX_VALUE;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        Queue&lt;<span class="keyword">int</span>[]&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span>[] x_delta = &#123;-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;<span class="comment">//上下左右</span></div><div class="line">        <span class="keyword">int</span>[] y_delta = &#123;<span class="number">0</span>,<span class="number">0</span>,-<span class="number">1</span>,<span class="number">1</span>&#125;;</div><div class="line">        queue.add(start);</div><div class="line">        distance[start[<span class="number">0</span>]][start[<span class="number">1</span>]] = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty()) &#123;</div><div class="line">            <span class="keyword">int</span>[] node = queue.poll();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> ii = <span class="number">0</span>; ii &lt; <span class="number">4</span>; ii++) &#123;</div><div class="line">                <span class="keyword">int</span> newStartX = node[<span class="number">0</span>] + x_delta[ii];</div><div class="line">                <span class="keyword">int</span> newStartY = node[<span class="number">1</span>] + y_delta[ii];</div><div class="line">                <span class="comment">//走的通的方向，一直走到尽头</span></div><div class="line">                <span class="keyword">int</span> count = <span class="number">0</span>;<span class="comment">//记录走了多少步</span></div><div class="line">                <span class="keyword">while</span> (newStartX &gt;= <span class="number">0</span> &amp;&amp; newStartY &gt;= <span class="number">0</span> &amp;&amp; newStartX &lt; rows &amp;&amp; newStartY &lt; cols &amp;&amp; maze[newStartX][newStartY] == <span class="number">0</span>) &#123;</div><div class="line">                    newStartX += x_delta[ii];</div><div class="line">                    newStartY += y_delta[ii];</div><div class="line">                    count++;</div><div class="line">                &#125;</div><div class="line">              <span class="comment">//如果这条路径到达该点比之前的距离短，更新该点的最短距离</span></div><div class="line">                <span class="keyword">if</span> (distance[node[<span class="number">0</span>]][node[<span class="number">1</span>]] + count &lt; distance[newStartX - x_delta[ii]][newStartY - y_delta[ii]]) &#123;</div><div class="line">                    distance[newStartX - x_delta[ii]][newStartY - y_delta[ii]] = distance[node[<span class="number">0</span>]][node[<span class="number">1</span>]] + count;</div><div class="line">                    queue.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;newStartX - x_delta[ii], newStartY - y_delta[ii]&#125;);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> distance[destination[<span class="number">0</span>]][destination[<span class="number">1</span>]] &lt; Integer.MAX_VALUE ? distance[destination[<span class="number">0</span>]][destination[<span class="number">1</span>]] : -<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/20/【leetcode】BFS问题/" rel="next" title="【leetcode】BFS问题">
+                <i class="fa fa-chevron-left"></i> 【leetcode】BFS问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/24/【Java】Java垃圾回收机制/" rel="prev" title="理解Java垃圾回收机制">
+                理解Java垃圾回收机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#outline"><span class="nav-number">1.</span> <span class="nav-text">outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS例题"><span class="nav-number">2.</span> <span class="nav-text">BFS例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Clone-Graph"><span class="nav-number">2.1.</span> <span class="nav-text">1. Clone Graph</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">2.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-拓扑排序"><span class="nav-number">2.2.</span> <span class="nav-text">2. 拓扑排序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Topological-Sorting"><span class="nav-number">2.3.</span> <span class="nav-text">Topological Sorting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Course-Schedule"><span class="nav-number">2.4.</span> <span class="nav-text">Course Schedule</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">2.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">2.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">2.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word-Ladder"><span class="nav-number">2.5.</span> <span class="nav-text">Word Ladder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">2.5.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">2.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">2.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word-Ladder-II"><span class="nav-number">2.6.</span> <span class="nav-text">Word Ladder II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">2.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">2.6.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">2.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DFS排列组合"><span class="nav-number">3.</span> <span class="nav-text">DFS排列组合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Palindrome-Partitioning"><span class="nav-number">3.1.</span> <span class="nav-text">Palindrome Partitioning</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-4"><span class="nav-number">3.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-4"><span class="nav-number">3.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-4"><span class="nav-number">3.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.2.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他例题"><span class="nav-number">4.</span> <span class="nav-text">其他例题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#01-Matrix"><span class="nav-number">4.1.</span> <span class="nav-text">01 Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-5"><span class="nav-number">4.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">4.1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-5"><span class="nav-number">4.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pacific-Atlantic-Water-Flow"><span class="nav-number">4.2.</span> <span class="nav-text">Pacific Atlantic Water Flow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-6"><span class="nav-number">4.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-5"><span class="nav-number">4.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-6"><span class="nav-number">4.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minesweeper"><span class="nav-number">4.3.</span> <span class="nav-text">Minesweeper</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-7"><span class="nav-number">4.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-6"><span class="nav-number">4.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-7"><span class="nav-number">4.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minimum-Height-Trees"><span class="nav-number">4.4.</span> <span class="nav-text">Minimum Height Trees</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-8"><span class="nav-number">4.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">4.4.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-8"><span class="nav-number">4.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Maze"><span class="nav-number">4.5.</span> <span class="nav-text">The Maze</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-9"><span class="nav-number">4.5.1.</span> <span class="nav-text">代码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-7"><span class="nav-number">4.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-10"><span class="nav-number">4.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#The-Maze-II"><span class="nav-number">4.6.</span> <span class="nav-text">The Maze II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-9"><span class="nav-number">4.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-8"><span class="nav-number">4.6.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-11"><span class="nav-number">4.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

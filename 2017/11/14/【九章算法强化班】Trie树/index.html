@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,Trie," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Trie树leetcode相关题目 Add and Search Word - Data structure design Map Sum Pairs Word Search II ​  Trie字典树源自单词：retrieve Trie树，即字典树/前缀树，又称单词查找树或键树，是一种树形结构。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的">
+<meta name="keywords" content="算法,Trie">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】课程笔记2——Trie树">
+<meta property="og:url" content="http://yoursite.com/2017/11/14/【九章算法强化班】Trie树/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="Trie树leetcode相关题目 Add and Search Word - Data structure design Map Sum Pairs Word Search II ​  Trie字典树源自单词：retrieve Trie树，即字典树/前缀树，又称单词查找树或键树，是一种树形结构。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-17-49-17.png">
+<meta property="og:updated_time" content="2017-12-07T11:41:16.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】课程笔记2——Trie树">
+<meta name="twitter:description" content="Trie树leetcode相关题目 Add and Search Word - Data structure design Map Sum Pairs Word Search II ​  Trie字典树源自单词：retrieve Trie树，即字典树/前缀树，又称单词查找树或键树，是一种树形结构。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-17-49-17.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/14/【九章算法强化班】Trie树/"/>
+
+
+
+
+
+  <title>【九章算法强化班】课程笔记2——Trie树 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/14/【九章算法强化班】Trie树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】课程笔记2——Trie树</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-14T22:11:55+08:00">
+                2017-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章/" itemprop="url" rel="index">
+                    <span itemprop="name">九章</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,861
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Trie树"><a href="#Trie树" class="headerlink" title="Trie树"></a>Trie树</h1><h2 id="leetcode相关题目"><a href="#leetcode相关题目" class="headerlink" title="leetcode相关题目"></a>leetcode相关题目</h2><ul>
+<li><del><a href="https://leetcode.com/problems/add-and-search-word-data-structure-design/" target="_blank" rel="external">Add and Search Word - Data structure design</a></del></li>
+<li><del><a href="https://leetcode.com/problems/map-sum-pairs/" target="_blank" rel="external">Map Sum Pairs</a></del></li>
+<li><del><a href="https://leetcode.com/problems/word-search-ii/" target="_blank" rel="external">Word Search II</a></del></li>
+<li>​</li>
+</ul>
+<h2 id="Trie字典树"><a href="#Trie字典树" class="headerlink" title="Trie字典树"></a>Trie字典树</h2><p>源自单词：retrieve</p>
+<p>Trie树，即字典树/前缀树，又称单词查找树或键树，是一种树形结构。典型应用是用于统计和排序大量的字符串（但不仅限于字符串），所以经常被搜索引擎系统用于文本词频统计。它的优点是最大限度地减少无谓的字符串比较，查询效率比较高。</p>
+<p>假设有[b，abc，abd，bcd，abcd，efg，hii ]这6个单词 , 查找abc 在不在字典里面</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-17-49-17.png" alt=""> </p>
+<p>将单词插入Trie树，只在跟之前的字符串出现分歧时分裂，对最后一个字母做标记，这样查找的时候，根据最后一个字母的标记，即可判断出该单词是否出现过。</p>
+<p>这里有一个巧妙的操作，可以让插入和查询操作同时完成，所以查询的时间复杂度简化为所要查询的单词的长度，即<script type="math/tex">O(1)</script>。</p>
+<a id="more"></a>
+<p>它有3个基本性质：</p>
+<ol>
+<li>根节点不包含字符，除根节点外每一个节点都只包含一个字符。</li>
+<li>从根节点到某一节点，路径上经过的字符连接起来，为该节点对应的字符串。</li>
+<li>每个节点的所有子节点包含的字符都不相同。</li>
+</ol>
+<h2 id="hash和trie的比较"><a href="#hash和trie的比较" class="headerlink" title="hash和trie的比较"></a>hash和trie的比较</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>hash_table</th>
+<th>TIRE树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查找时间复杂度</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>空间复杂度</td>
+<td></td>
+<td>优于hash_table</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于a,aa,aaa,aaaa的情况</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>hash</th>
+<th>trie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储</td>
+<td>10个a</td>
+<td>5个a节点</td>
+</tr>
+<tr>
+<td>可用操作</td>
+<td>有/无/查询</td>
+<td>有/无/前缀查询</td>
+</tr>
+<tr>
+<td></td>
+<td>1行</td>
+<td>75~100行</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所以选择hash原因是代码量小, 但是涉及到前缀查询的时候, 考虑trie树</p>
+<h2 id="什么时候更适合用trie树"><a href="#什么时候更适合用trie树" class="headerlink" title="什么时候更适合用trie树"></a>什么时候更适合用trie树</h2><p>一个一个字符串遍历的时候。</p>
+<p>需要节约空间</p>
+<p>查找前缀</p>
+<h2 id="Trie模板"><a href="#Trie模板" class="headerlink" title="Trie模板"></a>Trie模板</h2><p>有两种方式来实现Trie树，对于存储char类型的Trie树，因为只有26个字母，故可采用映射的方式将字母映射到长度为26的数组上，而下标就是字母。</p>
+<p>而对于其他类型，比如int数目未知，可以考虑用hashmap的方式来实现。</p>
+<h3 id="1-hashmap实现Trie树"><a href="#1-hashmap实现Trie树" class="headerlink" title="1. hashmap实现Trie树"></a>1. hashmap实现Trie树</h3><p>c++版：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;vector&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_map&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;queue&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;functional&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unordered_set&gt;</span></span></div><div class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> &#123;</span></div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="keyword">char</span> ch;</div><div class="line">	<span class="keyword">bool</span> istail;</div><div class="line">	<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;* childern;</div><div class="line"></div><div class="line">	TrieNode() &#123;</div><div class="line">		childern = <span class="keyword">new</span> <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;();</div><div class="line">		<span class="comment">//childern = NULL;</span></div><div class="line">		istail = <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line">	TrieNode(<span class="keyword">char</span> c) &#123;</div><div class="line">		ch = c;</div><div class="line">		childern = <span class="keyword">new</span> <span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;();</div><div class="line">		<span class="comment">//childern = NULL;</span></div><div class="line">		istail = <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> &#123;</span></div><div class="line"><span class="keyword">private</span>:</div><div class="line">	TrieNode* root;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">	<span class="comment">/** Initialize your data structure here. */</span></div><div class="line">	Trie() &#123;</div><div class="line">		root = <span class="keyword">new</span> TrieNode();</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/** Inserts a word into the trie. */</span></div><div class="line">	<span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</div><div class="line">		TrieNode* node = <span class="keyword">this</span>-&gt;root;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.size(); i++) &#123;</div><div class="line">			<span class="keyword">char</span> chtemp = word[i];</div><div class="line">			<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;* childrenmap = node-&gt;childern;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (!(*childrenmap).empty()) &#123;</div><div class="line">				<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;::iterator iter;</div><div class="line">				iter = (*childrenmap).find(chtemp);</div><div class="line">				<span class="keyword">if</span> (iter != (*childrenmap).end()) &#123;<span class="comment">//包含此字母</span></div><div class="line">					node = iter-&gt;second;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;</div><div class="line">					TrieNode* newnode = <span class="keyword">new</span> TrieNode(chtemp);</div><div class="line">					(*childrenmap).insert(make_pair(chtemp, newnode));</div><div class="line">					node = newnode;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;</div><div class="line">				<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt; newmap;</div><div class="line">				TrieNode *newnode = <span class="keyword">new</span> TrieNode(chtemp);</div><div class="line">				(*childrenmap).insert(make_pair(chtemp, newnode));</div><div class="line">				node = newnode;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		node-&gt;istail = <span class="literal">true</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/** Returns if the word is in the trie. */</span></div><div class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">search</span><span class="params">(<span class="built_in">string</span> word)</span> </span>&#123;</div><div class="line">		<span class="keyword">if</span> (word.size() == <span class="number">0</span>) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">		&#125;</div><div class="line">		TrieNode* node = root;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.size(); i++) &#123;</div><div class="line">			<span class="keyword">char</span> chtemp = word[i];</div><div class="line">			<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;* childrenmap = node-&gt;childern;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (!(*childrenmap).empty()) &#123;</div><div class="line">				<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;::iterator iter;</div><div class="line">				iter = (*childrenmap).find(chtemp);</div><div class="line">				<span class="keyword">if</span> (iter != (*childrenmap).end()) &#123;<span class="comment">//包含此字母</span></div><div class="line">					node = iter-&gt;second;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;<span class="comment">//不包含此字母</span></div><div class="line">					<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;<span class="comment">//children为空</span></div><div class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">if</span> (node-&gt;ch == word[word.size() - <span class="number">1</span>] &amp;&amp; node-&gt;istail) &#123;</div><div class="line">			<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line"></div><div class="line">		&#125;</div><div class="line">		<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">	&#125;</div><div class="line"></div><div class="line">	<span class="comment">/** Returns if there is any word in the trie that starts with the given prefix. */</span></div><div class="line">	<span class="function"><span class="keyword">bool</span> <span class="title">startsWith</span><span class="params">(<span class="built_in">string</span> prefix)</span> </span>&#123;</div><div class="line">		TrieNode* node = root;</div><div class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prefix.size(); i++) &#123;</div><div class="line">			<span class="keyword">char</span> chtemp = prefix[i];</div><div class="line">			<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;* childrenmap = node-&gt;childern;</div><div class="line"></div><div class="line">			<span class="keyword">if</span> (!(*childrenmap).empty()) &#123;</div><div class="line">				<span class="built_in">unordered_map</span>&lt;<span class="keyword">char</span>, TrieNode*&gt;::iterator iter;</div><div class="line">				iter = (*childrenmap).find(chtemp);</div><div class="line">				<span class="keyword">if</span> (iter != (*childrenmap).end()) &#123;<span class="comment">//包含此字母</span></div><div class="line">					node = iter-&gt;second;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">else</span> &#123;<span class="comment">//不包含此字母</span></div><div class="line">					<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">				&#125;</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">else</span> &#123;<span class="comment">//children空</span></div><div class="line">				<span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">	&#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>java版本：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</div><div class="line">        HashMap&lt;Character,TrieNode&gt; children;</div><div class="line">        <span class="keyword">boolean</span> istail;</div><div class="line">        TrieNode()&#123;</div><div class="line">            children = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">            <span class="keyword">this</span>.istail=<span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Trie</span></span>&#123;</div><div class="line">        TrieNode root;</div><div class="line">        Trie()&#123;</div><div class="line">            root = <span class="keyword">new</span> TrieNode();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</div><div class="line">            TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i &lt;word.length();i++) &#123;</div><div class="line">                <span class="keyword">char</span> chtemp = word.charAt(i);</div><div class="line">                <span class="keyword">if</span> (node.children.containsKey(chtemp)) &#123;<span class="comment">//已经包含此字母</span></div><div class="line">                &#125; <span class="keyword">else</span> &#123;<span class="comment">//不包含此字母</span></div><div class="line">                    node.children.put(chtemp, <span class="keyword">new</span> TrieNode());</div><div class="line">                &#125;</div><div class="line">                node = node.children.get(chtemp);</div><div class="line">            &#125;</div><div class="line">            node.istail=<span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span></span>&#123;</div><div class="line">            <span class="keyword">if</span>(word.isEmpty())&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; word.length();i++)&#123;</div><div class="line">                <span class="keyword">char</span> chtemp = word.charAt(i);</div><div class="line">                <span class="keyword">if</span>(node.children.containsKey(chtemp)) &#123;<span class="comment">//包含此字母</span></div><div class="line">                    node = node.children.get(chtemp);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(node.istail)</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            <span class="keyword">else</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span></span>&#123;</div><div class="line">            <span class="keyword">if</span> (prefix.isEmpty())&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; prefix.length();i++)&#123;</div><div class="line">                <span class="keyword">if</span>(node.children.containsKey(prefix.charAt(i)))&#123;</div><div class="line">                    node = node.children.get(prefix.charAt(i));</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div></pre></td></tr></table></figure>
+<h3 id="2-数组实现Trie树"><a href="#2-数组实现Trie树" class="headerlink" title="2. 数组实现Trie树"></a>2. 数组实现Trie树</h3><p>对于char类型的数据，只有26个字母，所以，可以用一个长度为26的数组存储后续的节点，数组index对应的就是字母的顺序：a~z</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</div><div class="line">        TrieNode[] children;</div><div class="line">        <span class="keyword">boolean</span> istail;<span class="comment">//记录是否是某个单词的末尾</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">this</span>.children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</div><div class="line">            <span class="keyword">this</span>.istail=<span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> TrieNode root;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; word.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[word.charAt(i)-<span class="string">'a'</span>] == <span class="keyword">null</span>)&#123;<span class="comment">//如果有这个字母</span></div><div class="line">                node.children[word.charAt(i)-<span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode();</div><div class="line">            &#125;</div><div class="line">            node = node.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        &#125;</div><div class="line">        node.istail=<span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span></span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; word.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[word.charAt(i)-<span class="string">'a'</span>]==<span class="keyword">null</span>)&#123;<span class="comment">//如果没有这个字母</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                node = node.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(node.istail) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">startsWith</span><span class="params">(String prefix)</span></span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; prefix.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[prefix.charAt(i)-<span class="string">'a'</span>]==<span class="keyword">null</span>)&#123;<span class="comment">//如果没有这个字母</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                node = node.children[prefix.charAt(i)-<span class="string">'a'</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="leetcode相关题目-1"><a href="#leetcode相关题目-1" class="headerlink" title="leetcode相关题目"></a>leetcode相关题目</h2><h3 id="Add-and-Search-Word-Data-structure-design"><a href="#Add-and-Search-Word-Data-structure-design" class="headerlink" title="Add and Search Word - Data structure design"></a><a href="https://leetcode.com/problems/add-and-search-word-data-structure-design/" target="_blank" rel="external">Add and Search Word - Data structure design</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Design a data structure that supports the following two operations:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; void addWord(word)</div><div class="line">&gt; bool search(word)</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>search(word) can search a literal word or a regular expression string containing only letters <code>a-z</code> or <code>.</code>. A <code>.</code> means it can represent any one letter.</p>
+<p>For example:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; addWord(&quot;bad&quot;)</div><div class="line">&gt; addWord(&quot;dad&quot;)</div><div class="line">&gt; addWord(&quot;mad&quot;)</div><div class="line">&gt; search(&quot;pad&quot;) -&gt; false</div><div class="line">&gt; search(&quot;bad&quot;) -&gt; true</div><div class="line">&gt; search(&quot;.ad&quot;) -&gt; true</div><div class="line">&gt; search(&quot;b..&quot;) -&gt; true</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>利用Tire树，搜索时遇到”.”对所有节点进行DFS</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">WordDictionary</span> </span>&#123;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</div><div class="line">        TrieNode[] children;</div><div class="line">        <span class="keyword">boolean</span> istail;<span class="comment">//记录是否是某个单词的末尾</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">this</span>.children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</div><div class="line">            <span class="keyword">this</span>.istail=<span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> TrieNode root;</div><div class="line"></div><div class="line">    <span class="comment">/** Initialize your data structure here. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WordDictionary</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">/** Adds a word into the data structure. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addWord</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; word.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[word.charAt(i)-<span class="string">'a'</span>] == <span class="keyword">null</span>)&#123;<span class="comment">//如果有这个字母</span></div><div class="line">                node.children[word.charAt(i)-<span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode();</div><div class="line">            &#125;</div><div class="line">            node = node.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        &#125;</div><div class="line">        node.istail=<span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchHelper</span><span class="params">(String word,<span class="keyword">int</span> startIdx,TrieNode node)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = startIdx ;i &lt; word.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(word.charAt(i) == <span class="string">'.'</span>)&#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">26</span>;j++) &#123;</div><div class="line">                    <span class="keyword">if</span> (node.children[j] != <span class="keyword">null</span>) &#123;</div><div class="line">                        <span class="comment">//TrieNode nodetemp = node.children[j];</span></div><div class="line">                        <span class="keyword">boolean</span> has = searchHelper(word, i + <span class="number">1</span>, node.children[j]);</div><div class="line">                        <span class="keyword">if</span> (has) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">                        <span class="keyword">else</span> <span class="keyword">continue</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(node.children[word.charAt(i)-<span class="string">'a'</span>]==<span class="keyword">null</span>)&#123;<span class="comment">//如果没有这个字母</span></div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                node = node.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(node.istail) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/** Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">search</span><span class="params">(String word)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> searchHelper(word,<span class="number">0</span>,<span class="keyword">this</span>.root);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your WordDictionary object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * WordDictionary obj = new WordDictionary();</span></div><div class="line"><span class="comment"> * obj.addWord(word);</span></div><div class="line"><span class="comment"> * boolean param_2 = obj.search(word);</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure>
+<h3 id="Map-Sum-Pairs"><a href="#Map-Sum-Pairs" class="headerlink" title="Map Sum Pairs"></a><a href="https://leetcode.com/problems/map-sum-pairs/" target="_blank" rel="external">Map Sum Pairs</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Implement a MapSum class with <code>insert</code>, and <code>sum</code> methods.</p>
+<p>For the method <code>insert</code>, you’ll be given a pair of (string, integer). The string represents the key and the integer represents the value. If the key already existed, then the original key-value pair will be overridden to the new one.</p>
+<p>For the method <code>sum</code>, you’ll be given a string representing the prefix, and you need to return the sum of all the pairs’ value whose key starts with the prefix.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: insert(&quot;apple&quot;, 3), Output: Null</div><div class="line">&gt; Input: sum(&quot;ap&quot;), Output: 3</div><div class="line">&gt; Input: insert(&quot;app&quot;, 2), Output: Null</div><div class="line">&gt; Input: sum(&quot;ap&quot;), Output: 5</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>建立Trie树，将原来的标记是否为单词结尾的bool型属性改为int型权重属性，单词结尾的字母值为该单词的权重值，其余字母权重设为0，找到前缀所在分支之后，DFS该前缀词下面的所有节点，累加权重值。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">MapSum</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</div><div class="line">        TrieNode[] children;</div><div class="line">        <span class="keyword">int</span> weight;<span class="comment">//记录是否是某个单词的末尾</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">this</span>.children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</div><div class="line">            <span class="keyword">this</span>.weight = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> TrieNode root;</div><div class="line">    <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">    <span class="comment">/** Initialize your data structure here. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapSum</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.root = <span class="keyword">new</span> TrieNode();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String key, <span class="keyword">int</span> val)</span> </span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; key.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[key.charAt(i)-<span class="string">'a'</span>] == <span class="keyword">null</span>)&#123;<span class="comment">//如果有这个字母</span></div><div class="line">                node.children[key.charAt(i)-<span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode();</div><div class="line">            &#125;</div><div class="line">            node = node.children[key.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        &#125;</div><div class="line">        node.weight=val;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TrieNode node)</span></span>&#123;</div><div class="line">        res = res+node.weight;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">26</span>;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[i]!=<span class="keyword">null</span>)&#123;</div><div class="line">                dfs(node.children[i]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">sum</span><span class="params">(String prefix)</span> </span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; prefix.length();i++) &#123;</div><div class="line">            <span class="keyword">if</span> (node.children[prefix.charAt(i) - <span class="string">'a'</span>] == <span class="keyword">null</span>) &#123;<span class="comment">//如果没有这个字母</span></div><div class="line">                <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                node = node.children[prefix.charAt(i) - <span class="string">'a'</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        res=<span class="number">0</span>;</div><div class="line">        dfs(node);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Your MapSum object will be instantiated and called as such:</span></div><div class="line"><span class="comment"> * MapSum obj = new MapSum();</span></div><div class="line"><span class="comment"> * obj.insert(key,val);</span></div><div class="line"><span class="comment"> * int param_2 = obj.sum(prefix);</span></div><div class="line"><span class="comment"> */</span></div></pre></td></tr></table></figure>
+<h3 id="Word-Search-II"><a href="#Word-Search-II" class="headerlink" title="Word Search II"></a><a href="https://leetcode.com/problems/word-search-ii/" target="_blank" rel="external">Word Search II</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a 2D board and a list of words from the dictionary, find all words in the board.</p>
+<p>Each word must be constructed from letters of sequentially adjacent cell, where “adjacent” cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.</p>
+<p>For example,<br>Given <strong>words</strong> = <code>[&quot;oath&quot;,&quot;pea&quot;,&quot;eat&quot;,&quot;rain&quot;]</code> and <strong>board</strong> =</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [&apos;o&apos;,&apos;a&apos;,&apos;a&apos;,&apos;n&apos;],</div><div class="line">&gt;   [&apos;e&apos;,&apos;t&apos;,&apos;a&apos;,&apos;e&apos;],</div><div class="line">&gt;   [&apos;i&apos;,&apos;h&apos;,&apos;k&apos;,&apos;r&apos;],</div><div class="line">&gt;   [&apos;i&apos;,&apos;f&apos;,&apos;l&apos;,&apos;v&apos;]</div><div class="line">&gt; ]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Return </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [&quot;eat&quot;,&quot;oath&quot;]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>Word Search 1要求我们返回某一个单词是否在矩阵中，Word Search 2作为升级版。给出了一串单词，搜索是否在矩阵中，如果一个一个搜索效率会很低，尤其是在要搜索的单词序列中有大量相同的前缀时，所以，考虑<strong>将搜索的单词序列构建Trie树，然后再在字母矩阵中用DFS的方式搜索</strong>。</p>
+<p>然而想到了思路，要想完整地写出这道题，也十分艰难。</p>
+<p>这里有几个需要注意的点：</p>
+<ol>
+<li><p>要将能够搜索到的单词加入最终的结果表中，可以适当修改Trie的结构，在叶子节点存储该条路径对应的word，方便后续找到路径之后将该单词加入结果表</p>
+</li>
+<li><p>已经用过的字母不能用第二次，所以要对字母矩阵中遍历过的字母做标记，DFS搜索结束后要恢复标记，后面还可以继续使用。这里我一开始用的方法是额外建立一个boolean型矩阵进行存储，看了大神的代码发现可以直接在原字母矩阵中进行标记即可。</p>
+</li>
+<li><p>在矩阵中某点周围寻找下一个字母是否存在时，我一开始采用的方式是：</p>
+<p>在Trie树中遍历下一层node中的字母然后再去字母矩阵中某点周围四个点搜索，这样遍历下一层node判断是否还有字母，每次需要遍历26个字母，看了大神的代码有更好的方式：</p>
+<p>从矩阵当前点周围的四个点入手，获取周围四个点的字母（实际上最多是三个，因为至少已经有一个被访问了），然后再去node中直接获取下层节是否存在该字母即可。</p>
+</li>
+</ol>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span></span>&#123;</div><div class="line">        TrieNode[] children;</div><div class="line">        <span class="comment">//boolean istail;//记录是否是某个单词的末尾</span></div><div class="line">        String word;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="keyword">this</span>.children = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</div><div class="line">            <span class="comment">//this.istail=false;</span></div><div class="line">            <span class="keyword">this</span>.word = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> TrieNode root = <span class="keyword">new</span> TrieNode();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span></span>&#123;</div><div class="line">        TrieNode node = <span class="keyword">this</span>.root;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; word.length();i++)&#123;</div><div class="line">            <span class="keyword">if</span>(node.children[word.charAt(i)-<span class="string">'a'</span>] == <span class="keyword">null</span>)&#123;<span class="comment">//如果有这个字母</span></div><div class="line">                node.children[word.charAt(i)-<span class="string">'a'</span>] = <span class="keyword">new</span> TrieNode();</div><div class="line">            &#125;</div><div class="line">            node = node.children[word.charAt(i)-<span class="string">'a'</span>];</div><div class="line">        &#125;</div><div class="line">        node.word = word;</div><div class="line">        <span class="comment">//node.istail=true;</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">searchBoard</span><span class="params">(<span class="keyword">char</span>[][] board, TrieNode node,<span class="keyword">int</span> x_idx,<span class="keyword">int</span> y_idx,List&lt;String&gt; result)</span></span>&#123;</div><div class="line">        <span class="keyword">char</span> ch = board[x_idx][y_idx];</div><div class="line">        <span class="keyword">if</span>(ch == <span class="string">'#'</span> || node.children[ch-<span class="string">'a'</span>] == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        node = node.children[ch-<span class="string">'a'</span>];</div><div class="line">        <span class="keyword">if</span>(node.word != <span class="keyword">null</span>)&#123;</div><div class="line">            result.add(node.word);</div><div class="line">            node.word = <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        board[x_idx][y_idx] = <span class="string">'#'</span>;</div><div class="line">        <span class="keyword">int</span>[] x_delta = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,-<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] y_delta = &#123;<span class="number">1</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ;i &lt; <span class="number">4</span>;i++)&#123;</div><div class="line">            <span class="keyword">int</span> x = x_idx+x_delta[i];</div><div class="line">            <span class="keyword">int</span> y = y_idx+y_delta[i];</div><div class="line">            <span class="keyword">if</span>(x&gt;=<span class="number">0</span> &amp;&amp; x&lt; board.length &amp;&amp; y &gt;= <span class="number">0</span> &amp;&amp; y &lt; board[<span class="number">0</span>].length)&#123;</div><div class="line">                searchBoard(board,node,x,y,result);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        board[x_idx][y_idx] = ch;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">findWords</span><span class="params">(<span class="keyword">char</span>[][] board, String[] words)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;String&gt;();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; words.length;i++)&#123;</div><div class="line">            insert(words[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; board.length;j++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; board[<span class="number">0</span>].length;k++)&#123;</div><div class="line">                searchBoard(board,root,j,k,result);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/Trie/" rel="tag"># Trie</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/06/Logistic-Regression相关/" rel="next" title="Logistic Regression相关">
+                <i class="fa fa-chevron-left"></i> Logistic Regression相关
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/16/【leetcode】题目摘要/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Trie树"><span class="nav-number">1.</span> <span class="nav-text">Trie树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode相关题目"><span class="nav-number">1.1.</span> <span class="nav-text">leetcode相关题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trie字典树"><span class="nav-number">1.2.</span> <span class="nav-text">Trie字典树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash和trie的比较"><span class="nav-number">1.3.</span> <span class="nav-text">hash和trie的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候更适合用trie树"><span class="nav-number">1.4.</span> <span class="nav-text">什么时候更适合用trie树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trie模板"><span class="nav-number">1.5.</span> <span class="nav-text">Trie模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-hashmap实现Trie树"><span class="nav-number">1.5.1.</span> <span class="nav-text">1. hashmap实现Trie树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-数组实现Trie树"><span class="nav-number">1.5.2.</span> <span class="nav-text">2. 数组实现Trie树</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode相关题目-1"><span class="nav-number">1.6.</span> <span class="nav-text">leetcode相关题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Add-and-Search-Word-Data-structure-design"><span class="nav-number">1.6.1.</span> <span class="nav-text">Add and Search Word - Data structure design</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.6.1.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.6.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Map-Sum-Pairs"><span class="nav-number">1.6.2.</span> <span class="nav-text">Map Sum Pairs</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">1.6.2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.6.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Word-Search-II"><span class="nav-number">1.6.3.</span> <span class="nav-text">Word Search II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.6.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.6.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.6.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

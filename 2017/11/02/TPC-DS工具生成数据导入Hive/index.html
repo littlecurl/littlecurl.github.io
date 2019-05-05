@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="生成步骤 1.在官网上(http://www.tpc.org/tpcds/ )去下载最新的：TPC-DS.  2.解压: 下载的 zip 文件放在 Linux 上解压,并进入他的 tools 目录. 3.编译：make (忽略编译警告，只保证生成过程成功完成). 这里需要Linux安装上了 gcc , gcc c++, expect 等. 4.生成数据：在tools目录下执行：./dsdgen -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TPC_DS工具生成数据导入Hive">
+<meta property="og:url" content="http://yoursite.com/2017/11/02/TPC-DS工具生成数据导入Hive/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="生成步骤 1.在官网上(http://www.tpc.org/tpcds/ )去下载最新的：TPC-DS.  2.解压: 下载的 zip 文件放在 Linux 上解压,并进入他的 tools 目录. 3.编译：make (忽略编译警告，只保证生成过程成功完成). 这里需要Linux安装上了 gcc , gcc c++, expect 等. 4.生成数据：在tools目录下执行：./dsdgen -">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-11-04T08:47:16.411Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TPC_DS工具生成数据导入Hive">
+<meta name="twitter:description" content="生成步骤 1.在官网上(http://www.tpc.org/tpcds/ )去下载最新的：TPC-DS.  2.解压: 下载的 zip 文件放在 Linux 上解压,并进入他的 tools 目录. 3.编译：make (忽略编译警告，只保证生成过程成功完成). 这里需要Linux安装上了 gcc , gcc c++, expect 等. 4.生成数据：在tools目录下执行：./dsdgen -">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/02/TPC-DS工具生成数据导入Hive/"/>
+
+
+
+
+
+  <title>TPC_DS工具生成数据导入Hive | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/02/TPC-DS工具生成数据导入Hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">TPC_DS工具生成数据导入Hive</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-02T09:29:43+08:00">
+                2017-11-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,293
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>生成步骤</p>
+<p>1.在官网上(<a href="http://www.tpc.org/tpcds/" target="_blank" rel="external">http://www.tpc.org/tpcds/</a> )去下载最新的：TPC-DS. </p>
+<p>2.解压: 下载的 zip 文件放在 Linux 上解压,并进入他的 tools 目录.</p>
+<p>3.编译：make (忽略编译警告，只保证生成过程成功完成). 这里需要Linux安装上了 gcc , gcc c++, expect 等.</p>
+<p>4.生成数据：在tools目录下执行：./dsdgen -scale 100 -force (-force:会覆盖原来生成的data,否则不覆盖);生成的25个.dat 的数据文件.</p>
+<p>默认只能生成 100GB, 300GB, 1TB, 3TB, 10TB, 30TB and 100TB大小的数据，如果想要生成一个比较小的数据集，可以使用：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">100M:</div><div class="line">./dsdgen -scale 1000 -dir tmp/ -parallel 1000 -child 1</div></pre></td></tr></table></figure></p>
+<ol>
+<li>hive中创建相应的数据表，导入之前生成的数据<br>运行脚本<code>hive_create_table.sql</code></li>
+</ol>
+<p>“hive -f hive_create_table.sql”<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">use tpc_ds;</div><div class="line"></div><div class="line">create table if not exists dbgen_version</div><div class="line">(</div><div class="line">    dv_version varchar(16),</div><div class="line">    dv_create_date date,</div><div class="line">    dv_create_time string,</div><div class="line">    dv_cmdline_args varchar(200) </div><div class="line">)</div><div class="line">row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/dbgen_version_1_10000.dat&quot; overwrite into table tpc_ds.dbgen_version;</div><div class="line"></div><div class="line">create table if not exists customer_address</div><div class="line">(</div><div class="line">    ca_address_sk int,</div><div class="line">    ca_address_id char(16),</div><div class="line">    ca_street_number char(10),</div><div class="line">    ca_street_name varchar(60),</div><div class="line">    ca_street_type char(15),</div><div class="line">    ca_suite_number char(10),</div><div class="line">    ca_city varchar(60),</div><div class="line">    ca_county varchar(30),</div><div class="line">    ca_state char(2),</div><div class="line">    ca_zip char(10),</div><div class="line">    ca_country varchar(20),</div><div class="line">    ca_gmt_offset decimal(5,2),</div><div class="line">    ca_location_type char(20)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/customer_address_1_10000.dat&quot; overwrite into table tpc_ds.customer_address;</div><div class="line"></div><div class="line">create table if not exists customer_demographics</div><div class="line">(</div><div class="line">    cd_demo_sk int,</div><div class="line">    cd_gender char(1),</div><div class="line">    cd_marital_status char(1),</div><div class="line">    cd_education_status char(20),</div><div class="line">    cd_purchase_estimate int,</div><div class="line">    cd_credit_rating char(10),</div><div class="line">    cd_dep_count int,</div><div class="line">    cd_dep_employed_count int,</div><div class="line">    cd_dep_college_count int</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/customer_demographics_1_10000.dat&quot; overwrite into table tpc_ds.customer_demographics;</div><div class="line"></div><div class="line">create table if not exists date_dim</div><div class="line">(</div><div class="line">    d_date_sk int,</div><div class="line">    d_date_id char(16) ,</div><div class="line">    d_date date ,</div><div class="line">    d_month_seq int,</div><div class="line">    d_week_seq int,</div><div class="line">    d_quarter_seq int,</div><div class="line">    d_year int,</div><div class="line">    d_dow int,</div><div class="line">    d_moy int,</div><div class="line">    d_dom int,</div><div class="line">    d_qoy int,</div><div class="line">    d_fy_year int,</div><div class="line">    d_fy_quarter_seq int,</div><div class="line">    d_fy_week_seq int,</div><div class="line">    d_day_name char(9),</div><div class="line">    d_quarter_name char(6),</div><div class="line">    d_holiday char(1),</div><div class="line">    d_weekend char(1),</div><div class="line">    d_following_holiday char(1),</div><div class="line">    d_first_dom int,</div><div class="line">    d_last_dom int,</div><div class="line">    d_same_day_ly int,</div><div class="line">    d_same_day_lq int,</div><div class="line">    d_current_day char(1),</div><div class="line">    d_current_week char(1),</div><div class="line">    d_current_month char(1),</div><div class="line">    d_current_quarter char(1),</div><div class="line">    d_current_year char(1)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/date_dim_1_10000.dat&quot; overwrite into table tpc_ds.date_dim;</div><div class="line"></div><div class="line">create table if not exists warehouse</div><div class="line">(</div><div class="line">    w_warehouse_sk int,</div><div class="line">    w_warehouse_id char(16),</div><div class="line">    w_warehouse_name varchar(20),</div><div class="line">    w_warehouse_sq_ft int,</div><div class="line">    w_street_number char(10),</div><div class="line">    w_street_name varchar(60),</div><div class="line">    w_street_type char(15),</div><div class="line">    w_suite_number char(10),</div><div class="line">    w_city varchar(60),</div><div class="line">    w_county varchar(30),</div><div class="line">    w_state char(2),</div><div class="line">    w_zip char(10),</div><div class="line">    w_country varchar(20),</div><div class="line">    w_gmt_offset decimal(5,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/warehouse_1_10000.dat&quot; overwrite into table tpc_ds.warehouse;</div><div class="line"></div><div class="line">create table if not exists ship_mode</div><div class="line">(</div><div class="line">    sm_ship_mode_sk int,</div><div class="line">    sm_ship_mode_id char(16),</div><div class="line">    sm_type char(30),</div><div class="line">    sm_code char(10),</div><div class="line">    sm_carrier char(20),</div><div class="line">    sm_contract char(20)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/ship_mode_1_10000.dat&quot; overwrite into table tpc_ds.ship_mode;</div><div class="line"></div><div class="line">create table if not exists time_dim</div><div class="line">(</div><div class="line">    t_time_sk int,</div><div class="line">    t_time_id char(16),</div><div class="line">    t_time int,</div><div class="line">    t_hour int,</div><div class="line">    t_minute int,</div><div class="line">    t_second int,</div><div class="line">    t_am_pm char(2),</div><div class="line">    t_shift char(20),</div><div class="line">    t_sub_shift char(20),</div><div class="line">    t_meal_time char(20)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/time_dim_1_10000.dat&quot; overwrite into table tpc_ds.time_dim;</div><div class="line"></div><div class="line">create table if not exists reason</div><div class="line">(</div><div class="line">    r_reason_sk int,</div><div class="line">    r_reason_id char(16),</div><div class="line">    r_reason_desc char(100)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/reason_1_10000.dat&quot; overwrite into table tpc_ds.reason;</div><div class="line"></div><div class="line">create table if not exists income_band</div><div class="line">(</div><div class="line">    ib_income_band_sk int,</div><div class="line">    ib_lower_bound int,</div><div class="line">    ib_upper_bound int</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/income_band_1_10000.dat&quot; overwrite into table tpc_ds.income_band;</div><div class="line"></div><div class="line">create table if not exists item</div><div class="line">(</div><div class="line">    i_item_sk int,</div><div class="line">    i_item_id char(16),</div><div class="line">    i_rec_start_date date ,</div><div class="line">    i_rec_end_date date ,</div><div class="line">    i_item_desc varchar(200),</div><div class="line">    i_current_price decimal(7,2),</div><div class="line">    i_wholesale_cost decimal(7,2),</div><div class="line">    i_brand_id int,</div><div class="line">    i_brand char(50),</div><div class="line">    i_class_id int,</div><div class="line">    i_class char(50),</div><div class="line">    i_category_id int,</div><div class="line">    i_category char(50),</div><div class="line">    i_manufact_id int,</div><div class="line">    i_manufact char(50),</div><div class="line">    i_size char(20),</div><div class="line">    i_formulation char(20),</div><div class="line">    i_color char(20),</div><div class="line">    i_units char(10),</div><div class="line">    i_container char(10),</div><div class="line">    i_manager_id int,</div><div class="line">    i_product_name char(50)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/item_1_10000.dat&quot; overwrite into table tpc_ds.item;</div><div class="line"></div><div class="line">create table if not exists store</div><div class="line">(</div><div class="line">    s_store_sk int,</div><div class="line">    s_store_id char(16),</div><div class="line">    s_rec_start_date date ,</div><div class="line">    s_rec_end_date date ,</div><div class="line">    s_closed_date_sk int,</div><div class="line">    s_store_name varchar(50),</div><div class="line">    s_number_employees int,</div><div class="line">    s_floor_space int,</div><div class="line">    s_hours char(20),</div><div class="line">    s_manager varchar(40),</div><div class="line">    s_market_id int,</div><div class="line">    s_geography_class varchar(100),</div><div class="line">    s_market_desc varchar(100),</div><div class="line">    s_market_manager varchar(40),</div><div class="line">    s_division_id int,</div><div class="line">    s_division_name varchar(50),</div><div class="line">    s_company_id int,</div><div class="line">    s_company_name varchar(50),</div><div class="line">    s_street_number varchar(10),</div><div class="line">    s_street_name varchar(60),</div><div class="line">    s_street_type char(15),</div><div class="line">    s_suite_number char(10),</div><div class="line">    s_city varchar(60),</div><div class="line">    s_county varchar(30),</div><div class="line">    s_state char(2),</div><div class="line">    s_zip char(10),</div><div class="line">    s_country varchar(20),</div><div class="line">    s_gmt_offset decimal(5,2),</div><div class="line">    s_tax_precentage decimal(5,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/store_1_10000.dat&quot; overwrite into table tpc_ds.store;</div><div class="line"></div><div class="line">create table if not exists call_center</div><div class="line">(</div><div class="line">    cc_call_center_sk int,</div><div class="line">    cc_call_center_id char(16),</div><div class="line">    cc_rec_start_date date ,</div><div class="line">    cc_rec_end_date date ,</div><div class="line">    cc_closed_date_sk int,</div><div class="line">    cc_open_date_sk int,</div><div class="line">    cc_name varchar(50),</div><div class="line">    cc_class varchar(50),</div><div class="line">    cc_employees int,</div><div class="line">    cc_sq_ft int,</div><div class="line">    cc_hours char(20),</div><div class="line">    cc_manager varchar(40),</div><div class="line">    cc_mkt_id int,</div><div class="line">    cc_mkt_class char(50),</div><div class="line">    cc_mkt_desc varchar(100),</div><div class="line">    cc_market_manager varchar(40),</div><div class="line">    cc_division int,</div><div class="line">    cc_division_name varchar(50),</div><div class="line">    cc_company int,</div><div class="line">    cc_company_name char(50),</div><div class="line">    cc_street_number char(10),</div><div class="line">    cc_street_name varchar(60),</div><div class="line">    cc_street_type char(15),</div><div class="line">    cc_suite_number char(10),</div><div class="line">    cc_city varchar(60),</div><div class="line">    cc_county varchar(30),</div><div class="line">    cc_state char(2),</div><div class="line">    cc_zip char(10),</div><div class="line">    cc_country varchar(20),</div><div class="line">    cc_gmt_offset decimal(5,2),</div><div class="line">    cc_tax_percentage decimal(5,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/call_center_1_10000.dat&quot; overwrite into table tpc_ds.call_center;</div><div class="line"></div><div class="line">create table if not exists customer</div><div class="line">(</div><div class="line">    c_customer_sk int,</div><div class="line">    c_customer_id char(16),</div><div class="line">    c_current_cdemo_sk int,</div><div class="line">    c_current_hdemo_sk int,</div><div class="line">    c_current_addr_sk int,</div><div class="line">    c_first_shipto_date_sk int,</div><div class="line">    c_first_sales_date_sk int,</div><div class="line">    c_salutation char(10),</div><div class="line">    c_first_name char(20),</div><div class="line">    c_last_name char(30),</div><div class="line">    c_preferred_cust_flag char(1),</div><div class="line">    c_birth_day int,</div><div class="line">    c_birth_month int,</div><div class="line">    c_birth_year int,</div><div class="line">    c_birth_country varchar(20),</div><div class="line">    c_login char(13),</div><div class="line">    c_email_address char(50),</div><div class="line">    c_last_review_date char(10)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/customer_1_10000.dat&quot; overwrite into table tpc_ds.customer;</div><div class="line"></div><div class="line">create table if not exists web_site</div><div class="line">(</div><div class="line">    web_site_sk int,</div><div class="line">    web_site_id char(16),</div><div class="line">    web_rec_start_date date ,</div><div class="line">    web_rec_end_date date ,</div><div class="line">    web_name varchar(50),</div><div class="line">    web_open_date_sk int,</div><div class="line">    web_close_date_sk int,</div><div class="line">    web_class varchar(50),</div><div class="line">    web_manager varchar(40),</div><div class="line">    web_mkt_id int,</div><div class="line">    web_mkt_class varchar(50),</div><div class="line">    web_mkt_desc varchar(100),</div><div class="line">    web_market_manager varchar(40),</div><div class="line">    web_company_id int,</div><div class="line">    web_company_name char(50),</div><div class="line">    web_street_number char(10),</div><div class="line">    web_street_name varchar(60),</div><div class="line">    web_street_type char(15),</div><div class="line">    web_suite_number char(10),</div><div class="line">    web_city varchar(60),</div><div class="line">    web_county varchar(30),</div><div class="line">    web_state char(2),</div><div class="line">    web_zip char(10),</div><div class="line">    web_country varchar(20),</div><div class="line">    web_gmt_offset decimal(5,2),</div><div class="line">    web_tax_percentage decimal(5,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/web_site_1_10000.dat&quot; overwrite into table tpc_ds.web_site;</div><div class="line"></div><div class="line">create table if not exists store_returns</div><div class="line">(</div><div class="line">    sr_returned_date_sk int,</div><div class="line">    sr_return_time_sk int,</div><div class="line">    sr_item_sk int,</div><div class="line">    sr_customer_sk int,</div><div class="line">    sr_cdemo_sk int,</div><div class="line">    sr_hdemo_sk int,</div><div class="line">    sr_addr_sk int,</div><div class="line">    sr_store_sk int,</div><div class="line">    sr_reason_sk int,</div><div class="line">    sr_ticket_number int,</div><div class="line">    sr_return_quantity int,</div><div class="line">    sr_return_amt decimal(7,2),</div><div class="line">    sr_return_tax decimal(7,2),</div><div class="line">    sr_return_amt_inc_tax decimal(7,2),</div><div class="line">    sr_fee decimal(7,2),</div><div class="line">    sr_return_ship_cost decimal(7,2),</div><div class="line">    sr_refunded_cash decimal(7,2),</div><div class="line">    sr_reversed_charge decimal(7,2),</div><div class="line">    sr_store_credit decimal(7,2),</div><div class="line">    sr_net_loss decimal(7,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/store_returns_1_10000.dat&quot; overwrite into table tpc_ds.store_returns;</div><div class="line"></div><div class="line">create table if not exists household_demographics</div><div class="line">(</div><div class="line">    hd_demo_sk int,</div><div class="line">    hd_income_band_sk int,</div><div class="line">    hd_buy_potential char(15),</div><div class="line">    hd_dep_count int,</div><div class="line">    hd_vehicle_count int</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/household_demographics_1_10000.dat&quot; overwrite into table tpc_ds.household_demographics;</div><div class="line"></div><div class="line">create table if not exists web_page</div><div class="line">(</div><div class="line">    wp_web_page_sk int,</div><div class="line">    wp_web_page_id char(16),</div><div class="line">    wp_rec_start_date date ,</div><div class="line">    wp_rec_end_date date ,</div><div class="line">    wp_creation_date_sk int,</div><div class="line">    wp_access_date_sk int,</div><div class="line">    wp_autogen_flag char(1),</div><div class="line">    wp_customer_sk int,</div><div class="line">    wp_url varchar(100),</div><div class="line">    wp_type char(50),</div><div class="line">    wp_char_count int,</div><div class="line">    wp_link_count int,</div><div class="line">    wp_image_count int,</div><div class="line">    wp_max_ad_count int</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/web_page_1_10000.dat&quot; overwrite into table tpc_ds.web_page;</div><div class="line"></div><div class="line">create table if not exists promotion</div><div class="line">(</div><div class="line">    p_promo_sk int,</div><div class="line">    p_promo_id char(16),</div><div class="line">    p_start_date_sk int,</div><div class="line">    p_end_date_sk int,</div><div class="line">    p_item_sk int,</div><div class="line">    p_cost decimal(15,2),</div><div class="line">    p_response_target int,</div><div class="line">    p_promo_name char(50),</div><div class="line">    p_channel_dmail char(1),</div><div class="line">    p_channel_email char(1),</div><div class="line">    p_channel_catalog char(1),</div><div class="line">    p_channel_tv char(1),</div><div class="line">    p_channel_radio char(1),</div><div class="line">    p_channel_press char(1),</div><div class="line">    p_channel_event char(1),</div><div class="line">    p_channel_demo char(1),</div><div class="line">    p_channel_details varchar(100),</div><div class="line">    p_purpose char(15),</div><div class="line">    p_discount_active char(1)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/promotion_1_10000.dat&quot; overwrite into table tpc_ds.promotion;</div><div class="line"></div><div class="line">create table if not exists catalog_page</div><div class="line">(</div><div class="line">    cp_catalog_page_sk int,</div><div class="line">    cp_catalog_page_id char(16),</div><div class="line">    cp_start_date_sk int,</div><div class="line">    cp_end_date_sk int,</div><div class="line">    cp_department varchar(50),</div><div class="line">    cp_catalog_number int,</div><div class="line">    cp_catalog_page_number int,</div><div class="line">    cp_description varchar(100),</div><div class="line">    cp_type varchar(100)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/catalog_page_1_10000.dat&quot; overwrite into table tpc_ds.catalog_page;</div><div class="line"></div><div class="line">create table if not exists inventory</div><div class="line">(</div><div class="line">    inv_date_sk int,</div><div class="line">    inv_item_sk int,</div><div class="line">    inv_warehouse_sk int,</div><div class="line">    inv_quantity_on_hand int)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/inventory_1_10000.dat&quot; overwrite into table tpc_ds.inventory;</div><div class="line"></div><div class="line">create table if not exists catalog_returns</div><div class="line">(</div><div class="line">    cr_returned_date_sk int,</div><div class="line">    cr_returned_time_sk int,</div><div class="line">    cr_item_sk int,</div><div class="line">    cr_refunded_customer_sk int,</div><div class="line">    cr_refunded_cdemo_sk int,</div><div class="line">    cr_refunded_hdemo_sk int,</div><div class="line">    cr_refunded_addr_sk int,</div><div class="line">    cr_returning_customer_sk int,</div><div class="line">    cr_returning_cdemo_sk int,</div><div class="line">    cr_returning_hdemo_sk int,</div><div class="line">    cr_returning_addr_sk int,</div><div class="line">    cr_call_center_sk int,</div><div class="line">    cr_catalog_page_sk int,</div><div class="line">    cr_ship_mode_sk int,</div><div class="line">    cr_warehouse_sk int,</div><div class="line">    cr_reason_sk int,</div><div class="line">    cr_order_number int,</div><div class="line">    cr_return_quantity int,</div><div class="line">    cr_return_amount decimal(7,2),</div><div class="line">    cr_return_tax decimal(7,2),</div><div class="line">    cr_return_amt_inc_tax decimal(7,2),</div><div class="line">    cr_fee decimal(7,2),</div><div class="line">    cr_return_ship_cost decimal(7,2),</div><div class="line">    cr_refunded_cash decimal(7,2),</div><div class="line">    cr_reversed_charge decimal(7,2),</div><div class="line">    cr_store_credit decimal(7,2),</div><div class="line">    cr_net_loss decimal(7,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/catalog_returns_1_10000.dat&quot; overwrite into table tpc_ds.catalog_returns;</div><div class="line"></div><div class="line">create table if not exists web_returns</div><div class="line">(</div><div class="line">    wr_returned_date_sk int,</div><div class="line">    wr_returned_time_sk int,</div><div class="line">    wr_item_sk int,</div><div class="line">    wr_refunded_customer_sk int,</div><div class="line">    wr_refunded_cdemo_sk int,</div><div class="line">    wr_refunded_hdemo_sk int,</div><div class="line">    wr_refunded_addr_sk int,</div><div class="line">    wr_returning_customer_sk int,</div><div class="line">    wr_returning_cdemo_sk int,</div><div class="line">    wr_returning_hdemo_sk int,</div><div class="line">    wr_returning_addr_sk int,</div><div class="line">    wr_web_page_sk int,</div><div class="line">    wr_reason_sk int,</div><div class="line">    wr_order_number int,</div><div class="line">    wr_return_quantity int,</div><div class="line">    wr_return_amt decimal(7,2),</div><div class="line">    wr_return_tax decimal(7,2),</div><div class="line">    wr_return_amt_inc_tax decimal(7,2),</div><div class="line">    wr_fee decimal(7,2),</div><div class="line">    wr_return_ship_cost decimal(7,2),</div><div class="line">    wr_refunded_cash decimal(7,2),</div><div class="line">    wr_reversed_charge decimal(7,2),</div><div class="line">    wr_account_credit decimal(7,2),</div><div class="line">    wr_net_loss decimal(7,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/web_returns_1_10000.dat&quot; overwrite into table tpc_ds.web_returns;</div><div class="line"></div><div class="line">create table if not exists web_sales</div><div class="line">(</div><div class="line">    ws_sold_date_sk int,</div><div class="line">    ws_sold_time_sk int,</div><div class="line">    ws_ship_date_sk int,</div><div class="line">    ws_item_sk int,</div><div class="line">    ws_bill_customer_sk int,</div><div class="line">    ws_bill_cdemo_sk int,</div><div class="line">    ws_bill_hdemo_sk int,</div><div class="line">    ws_bill_addr_sk int,</div><div class="line">    ws_ship_customer_sk int,</div><div class="line">    ws_ship_cdemo_sk int,</div><div class="line">    ws_ship_hdemo_sk int,</div><div class="line">    ws_ship_addr_sk int,</div><div class="line">    ws_web_page_sk int,</div><div class="line">    ws_web_site_sk int,</div><div class="line">    ws_ship_mode_sk int,</div><div class="line">    ws_warehouse_sk int,</div><div class="line">    ws_promo_sk int,</div><div class="line">    ws_order_number int,</div><div class="line">    ws_quantity int,</div><div class="line">    ws_wholesale_cost decimal(7,2),</div><div class="line">    ws_list_price decimal(7,2),</div><div class="line">    ws_sales_price decimal(7,2),</div><div class="line">    ws_ext_discount_amt decimal(7,2),</div><div class="line">    ws_ext_sales_price decimal(7,2),</div><div class="line">    ws_ext_wholesale_cost decimal(7,2),</div><div class="line">    ws_ext_list_price decimal(7,2),</div><div class="line">    ws_ext_tax decimal(7,2),</div><div class="line">    ws_coupon_amt decimal(7,2),</div><div class="line">    ws_ext_ship_cost decimal(7,2),</div><div class="line">    ws_net_paid decimal(7,2),</div><div class="line">    ws_net_paid_inc_tax decimal(7,2),</div><div class="line">    ws_net_paid_inc_ship decimal(7,2),</div><div class="line">    ws_net_paid_inc_ship_tax decimal(7,2),</div><div class="line">    ws_net_profit decimal(7,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/web_sales_1_10000.dat&quot; overwrite into table tpc_ds.web_sales;</div><div class="line"></div><div class="line">create table if not exists catalog_sales</div><div class="line">(</div><div class="line">    cs_sold_date_sk int,</div><div class="line">    cs_sold_time_sk int,</div><div class="line">    cs_ship_date_sk int,</div><div class="line">    cs_bill_customer_sk int,</div><div class="line">    cs_bill_cdemo_sk int,</div><div class="line">    cs_bill_hdemo_sk int,</div><div class="line">    cs_bill_addr_sk int,</div><div class="line">    cs_ship_customer_sk int,</div><div class="line">    cs_ship_cdemo_sk int,</div><div class="line">    cs_ship_hdemo_sk int,</div><div class="line">    cs_ship_addr_sk int,</div><div class="line">    cs_call_center_sk int,</div><div class="line">    cs_catalog_page_sk int,</div><div class="line">    cs_ship_mode_sk int,</div><div class="line">    cs_warehouse_sk int,</div><div class="line">    cs_item_sk int,</div><div class="line">    cs_promo_sk int,</div><div class="line">    cs_order_number int,</div><div class="line">    cs_quantity int,</div><div class="line">    cs_wholesale_cost decimal(7,2),</div><div class="line">    cs_list_price decimal(7,2),</div><div class="line">    cs_sales_price decimal(7,2),</div><div class="line">    cs_ext_discount_amt decimal(7,2),</div><div class="line">    cs_ext_sales_price decimal(7,2),</div><div class="line">    cs_ext_wholesale_cost decimal(7,2),</div><div class="line">    cs_ext_list_price decimal(7,2),</div><div class="line">    cs_ext_tax decimal(7,2),</div><div class="line">    cs_coupon_amt decimal(7,2),</div><div class="line">    cs_ext_ship_cost decimal(7,2),</div><div class="line">    cs_net_paid decimal(7,2),</div><div class="line">    cs_net_paid_inc_tax decimal(7,2),</div><div class="line">    cs_net_paid_inc_ship decimal(7,2),</div><div class="line">    cs_net_paid_inc_ship_tax decimal(7,2),</div><div class="line">    cs_net_profit decimal(7,2)</div><div class="line">)row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/catalog_sales_1_10000.dat&quot; overwrite into table tpc_ds.catalog_sales;</div><div class="line"></div><div class="line">create table if not exists store_sales</div><div class="line">(</div><div class="line">    ss_sold_date_sk int,</div><div class="line">    ss_sold_time_sk int,</div><div class="line">    ss_item_sk int,</div><div class="line">    ss_customer_sk int,</div><div class="line">    ss_cdemo_sk int,</div><div class="line">    ss_hdemo_sk int,</div><div class="line">    ss_addr_sk int,</div><div class="line">    ss_store_sk int,</div><div class="line">    ss_promo_sk int,</div><div class="line">    ss_ticket_number int,</div><div class="line">    ss_quantity int,</div><div class="line">    ss_wholesale_cost decimal(7,2),</div><div class="line">    ss_list_price decimal(7,2),</div><div class="line">    ss_sales_price decimal(7,2),</div><div class="line">    ss_ext_discount_amt decimal(7,2),</div><div class="line">    ss_ext_sales_price decimal(7,2),</div><div class="line">    ss_ext_wholesale_cost decimal(7,2),</div><div class="line">    ss_ext_list_price decimal(7,2),</div><div class="line">    ss_ext_tax decimal(7,2),</div><div class="line">    ss_coupon_amt decimal(7,2),</div><div class="line">    ss_net_paid decimal(7,2),</div><div class="line">    ss_net_paid_inc_tax decimal(7,2),</div><div class="line">    ss_net_profit decimal(7,2))row format delimited</div><div class="line">fields terminated by &apos;|&apos;</div><div class="line">lines terminated by &apos;\n&apos;</div><div class="line">stored as textfile;</div><div class="line">load data local inpath &quot;/home/spark/zsy/v2.4.0/tools/tmp/store_sales_1_10000.dat&quot; overwrite into table tpc_ds.store_sales;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/01/【算法导论】矩阵链乘法/" rel="next" title="【算法导论】动态规划（二）矩阵链乘法">
+                <i class="fa fa-chevron-left"></i> 【算法导论】动态规划（二）矩阵链乘法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/02/利用Hive中percentile-approx计算等频划分分位点/" rel="prev" title="利用Hive中percentile_approx计算等频划分分位点">
+                利用Hive中percentile_approx计算等频划分分位点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

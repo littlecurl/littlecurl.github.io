@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="outline  consistent hashing 一致性哈性复习：数据量过大，需要将数据拆分，有两种拆分方式：  纵向：不同表存在不同机器，按常用字段和不常用字段将表拆分存在不同机器 横向：将数据横向切分，存在不同的机器上  为什么要做一致性hash？ 一种简单的hash算法：将数据存在第%n个机器上 当增加一台机器时（n -&amp;gt; n+1），需要迁移的数据量非常大 因此这个hash算法称">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章系统设计】一致性哈希&amp;短网址系统设计">
+<meta property="og:url" content="http://yoursite.com/2018/03/05/【九章系统设计】一致性哈希-短网址系统设计/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="outline  consistent hashing 一致性哈性复习：数据量过大，需要将数据拆分，有两种拆分方式：  纵向：不同表存在不同机器，按常用字段和不常用字段将表拆分存在不同机器 横向：将数据横向切分，存在不同的机器上  为什么要做一致性hash？ 一种简单的hash算法：将数据存在第%n个机器上 当增加一台机器时（n -&amp;gt; n+1），需要迁移的数据量非常大 因此这个hash算法称">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-05-16-18-40.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-05-17-24-32.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-39-02.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-40-32.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-42-51.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-44-31.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-51-51.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-52-19.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-24-44.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-35-36.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-36-01.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-49-19.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-03-23-00-12.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-20-55-32.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-00-54.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-20-58-03.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-05-21-36-40.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-02-19.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-22-22.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-31-37.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-02-10-22-18-36.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-11-17-32.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-06-12-05-53.png">
+<meta property="og:updated_time" content="2018-03-12T12:35:15.628Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章系统设计】一致性哈希&amp;短网址系统设计">
+<meta name="twitter:description" content="outline  consistent hashing 一致性哈性复习：数据量过大，需要将数据拆分，有两种拆分方式：  纵向：不同表存在不同机器，按常用字段和不常用字段将表拆分存在不同机器 横向：将数据横向切分，存在不同的机器上  为什么要做一致性hash？ 一种简单的hash算法：将数据存在第%n个机器上 当增加一台机器时（n -&amp;gt; n+1），需要迁移的数据量非常大 因此这个hash算法称">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-05-16-18-40.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/05/【九章系统设计】一致性哈希-短网址系统设计/"/>
+
+
+
+
+
+  <title>【九章系统设计】一致性哈希&短网址系统设计 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/05/【九章系统设计】一致性哈希-短网址系统设计/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章系统设计】一致性哈希&短网址系统设计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-05T15:20:56+08:00">
+                2018-03-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统设计/" itemprop="url" rel="index">
+                    <span itemprop="name">系统设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,136
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  15
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="outline"><a href="#outline" class="headerlink" title="outline"></a>outline</h1><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-05-16-18-40.png" alt=""> </p>
+<h1 id="consistent-hashing-一致性哈性"><a href="#consistent-hashing-一致性哈性" class="headerlink" title="consistent hashing 一致性哈性"></a>consistent hashing 一致性哈性</h1><h2 id="复习："><a href="#复习：" class="headerlink" title="复习："></a>复习：</h2><p>数据量过大，需要将数据拆分，有两种拆分方式：</p>
+<ol>
+<li>纵向：不同表存在不同机器，按常用字段和不常用字段将表拆分存在不同机器</li>
+<li>横向：将数据横向切分，存在不同的机器上</li>
+</ol>
+<h2 id="为什么要做一致性hash？"><a href="#为什么要做一致性hash？" class="headerlink" title="为什么要做一致性hash？"></a>为什么要做一致性hash？</h2><ul>
+<li>一种简单的hash算法：将数据存在第%n个机器上</li>
+<li>当增加一台机器时（n -&gt; n+1），需要迁移的数据量非常大</li>
+<li>因此这个hash算法称为<strong>不一致hash</strong></li>
+</ul>
+<h2 id="一个简单的一致性hash算法："><a href="#一个简单的一致性hash算法：" class="headerlink" title="一个简单的一致性hash算法："></a>一个简单的一致性hash算法：</h2><ul>
+<li><p>将key模一个很大的数，比如360</p>
+</li>
+<li><p>将360分配给n台机器，每个机器负责一段区间</p>
+</li>
+<li><p>区间分配信息记录在一张表上，存在web server上</p>
+</li>
+<li><p>新加一台机器的时候，在表中选择一个位置插入，匀走<strong>相邻</strong>两台机器的一部分数据</p>
+</li>
+<li><p>比如n从3变化到4：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-05-17-24-32.png" alt=""> </p>
+</li>
+</ul>
+<p>缺陷：</p>
+<ol>
+<li>数据分布不均匀：分摊数据后，各机器数据分布不均匀</li>
+<li>迁移压力大：新机器只能从与之相邻的两台机器上迁移数据，导致这两台老机器负载过大</li>
+</ol>
+<h2 id="一个更实用的一致性hashing"><a href="#一个更实用的一致性hashing" class="headerlink" title="一个更实用的一致性hashing"></a>一个更实用的一致性hashing</h2><p>将机器（IP或者名字）与数据，都看做环上的一个点！！</p>
+<ol>
+<li>将机器映射到环上，如下图所示的ABCD是四个机器<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-39-02.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-39-02.png" alt="img"></a></li>
+<li>比如有个数据，蓝色的点，散在了蓝色点出。那么就顺时针去找一个机器，把这个数据放在这个机器上，即B<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-40-32.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-40-32.png" alt="img"></a></li>
+<li>那么如何让点更均匀呢？<br>四个点可能不会均匀，但是4000个点相对来说一定会更均匀。那就引入Micro shards / Virtual nodes 的概念——一台机器对应了1000个代表。例如将A机器撒在环上（下图红色），将B机器撒在环上（下图蓝色）<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-42-51.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-42-51.png" alt="img"></a><br>来了一个数据时， 例如图中的黑色点Data，那么就找到了机器B<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-44-31.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-44-31.png" alt="img"></a></li>
+<li>也就是意味着，每个机器负责了很多个离散的区间。</li>
+<li>当需要加入一台新机器时？加入我们现在机器分布是这样：<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-51-51.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-51-51.png" alt="img"></a><br>新来了一个E的机器，丢到环里之后<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-52-19.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-01-22-52-19.png" alt="img"></a><br>[D,E]之间的数据必须从A迁移到E上！！！！[A,E]之间的数据必须从B迁移到E上</li>
+</ol>
+<p>总结：</p>
+<ul>
+<li><p>将整个hash区间看成一个环，大小从359变成<script type="math/tex">2^{64}-1</script></p>
+</li>
+<li><p>将机器和数据都看成是环上的点</p>
+</li>
+<li><p>引入Micro shards/Virtual nodes的概念，每台机器对应1000个Micro shards/Virtual nodes</p>
+</li>
+<li><p>把每台机器看成1000台机器均匀撒在环上</p>
+</li>
+<li><p>每加入一条数据</p>
+<ul>
+<li>计算其id对应的hash值，得到0~<script type="math/tex">2^{64}-1</script> 区间上的一个点，找到环上对应的点</li>
+<li>从这个点出发顺时针找到第一个机器的virtual node</li>
+<li>该virtual node对应的机器就是本条数据应该存储的数据库服务器</li>
+</ul>
+</li>
+<li><p>每加入一台新机器</p>
+<ul>
+<li>在环上随机撒1000个点</li>
+<li>这1000个virtual node 各自想顺时针相邻的第一个virtual node 索要数据</li>
+<li>例子：<a href="http://www.jiuzhang.com/qa/2067/" target="_blank" rel="external">http://www.jiuzhang.com/qa/2067/</a></li>
+</ul>
+</li>
+<li><p>实现用TreeMap 红黑树</p>
+<p>​</p>
+</li>
+</ul>
+<p>问题：</p>
+<p>问题1：需要存储数据在环的哪里吗？<br>不需要。因为这个数据在哪里与其它数据在哪里没有关系。只需要在环上计算数据所在的点的下一个位置的机器是哪个即可。</p>
+<p>问题：那这个1000能变成100万吗？<br>太多也不行。查询效率会变低。就是在比较均匀的情况下选一个比较快的就行。</p>
+<p>思考：哪种数据结构能够支持这种“顺时针”寻找下一个机器的功能呢？——链表是不行的，因为链表长度太大，查找很慢。用TreeMap!! 就是一个红黑树，能在LogN的时间内寻找比n大的最小值。</p>
+<h1 id="数据备份-Replica"><a href="#数据备份-Replica" class="headerlink" title="数据备份 Replica"></a>数据备份 Replica</h1><h2 id="问题：Backup和Replica有什么区别？"><a href="#问题：Backup和Replica有什么区别？" class="headerlink" title="问题：Backup和Replica有什么区别？"></a>问题：Backup和Replica有什么区别？</h2><p>Backup</p>
+<ul>
+<li>一般是周期性的，比如每天晚上进行一次备份</li>
+<li>当数据丢失的时候，通常只能恢复到之前的某个时间点</li>
+<li>Backup 的数据是死数据，是离线的。不用作在线的数据服务，不分摊读</li>
+</ul>
+<p>Replica</p>
+<ul>
+<li>是实时的， 在数据写入的时候，就会以复制品的形式存为多份</li>
+<li>当数据丢失的时候，可以马上通过其他的复制品恢复</li>
+<li>Replica是实时的。 用作在线的数据服务，分摊读</li>
+</ul>
+<p>思考：既然 Replica 更牛，那么还需要 Backup么？</p>
+<p>backup便宜哇~</p>
+<h2 id="MySQL类型数据库的Replica"><a href="#MySQL类型数据库的Replica" class="headerlink" title="MySQL类型数据库的Replica"></a>MySQL类型数据库的Replica</h2><p>以MySQL为代表的的SQL型数据库，通常自带Master Slave模式的Replica方法。Master负责写，Slave负责读。Slave从Master中同步对数据的操作。</p>
+<p><strong>Master - slave原理</strong>：Write Ahead Log</p>
+<p>SQL数据库的任何操作，都会以Log的形式做一份记录。</p>
+<p>比如Master上的数据A在B时刻从C改成了D，那么Master会通知Slave来读Log（不是同步值，而是同步操作！）。Slave被激活后，告诉master我可以更新了，之后Master有任何操作就会通知slave来读log然后slave会同步操作</p>
+<p>因此Slave上的数据是有延迟的。</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-24-44.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-24-44.png" alt="img"></a></p>
+<p>问题：万一Master挂了怎么办？</p>
+<ul>
+<li>将一台slave升级为master, 接受读 + 写</li>
+<li>可能会造成一定程度的数据丢失和不一致</li>
+</ul>
+<h2 id="NoSQL类型数据库的Replica"><a href="#NoSQL类型数据库的Replica" class="headerlink" title="NoSQL类型数据库的Replica"></a>NoSQL类型数据库的Replica</h2><p>以Cassandra为代表的的NoSQL数据库，通常将数据“顺时针”存储在Consistent hashing环上的三个vitual nodes中。</p>
+<h2 id="MySQL和NoSQL型数据库的Replica比较"><a href="#MySQL和NoSQL型数据库的Replica比较" class="headerlink" title="MySQL和NoSQL型数据库的Replica比较"></a>MySQL和NoSQL型数据库的Replica比较</h2><p><strong>SQL</strong></p>
+<ul>
+<li>“自带” 的 Replica 方式是 Master Slave</li>
+<li>“手动” 的 Replica 方式也可以在 Consistent Hashing 环上顺时针存三份</li>
+</ul>
+<p><strong>NoSQL</strong></p>
+<ul>
+<li>“自带” 的 Replica 方式就是 Consistent Hashing 环上顺时针存三份</li>
+<li>“手动” 的 Replica 方式：就不需要手动了，NoSQL就是在 Sharding 和 Replica 上帮你偷懒用的！</li>
+</ul>
+<h1 id="设计短网址系统-Design-Tiny-URL"><a href="#设计短网址系统-Design-Tiny-URL" class="headerlink" title="设计短网址系统 Design Tiny URL"></a>设计短网址系统 Design Tiny URL</h1><p>短网址生成网站：</p>
+<p><a href="https://bitly.com/" target="_blank" rel="external">https://bitly.com/</a><br><a href="https://goo.gl/" target="_blank" rel="external">https://goo.gl/</a></p>
+<h2 id="系统设计的常见误区："><a href="#系统设计的常见误区：" class="headerlink" title="系统设计的常见误区："></a>系统设计的常见误区：</h2><p><strong>以下几个是误区</strong></p>
+<ul>
+<li>系统一定巨大无比 —— ×</li>
+<li>必须用NoSQL —— ×</li>
+<li>必须是分布式 —— ×</li>
+</ul>
+<p>不可以扔关键词，必须一步步分析。</p>
+<p><strong>正确打开方式——4S分析法</strong></p>
+<ol>
+<li>提问：分析功能/需求/QPS/存储容量——Scenario</li>
+<li>画图：根据分析结果设计“可行解”—— Service+Storage</li>
+<li>进化：研究可能遇到的问题，优化系统 —— Scale</li>
+</ol>
+<h2 id="1-Scenario-场景-需求分析"><a href="#1-Scenario-场景-需求分析" class="headerlink" title="1. Scenario 场景 需求分析"></a>1. Scenario 场景 需求分析</h2><h4 id="我要设计啥"><a href="#我要设计啥" class="headerlink" title="我要设计啥"></a>我要设计啥</h4><ul>
+<li>根据长URL生成短URL<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-35-36.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-35-36.png" alt="img"></a></li>
+<li>根据短URL还原长URL<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-36-01.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-36-01.png" alt="img"></a></li>
+</ul>
+<h4 id="QPS-Storage"><a href="#QPS-Storage" class="headerlink" title="QPS + Storage"></a>QPS + Storage</h4><p>假设这个是用来给微博做短网址的跳转。那么QPS能有多少？</p>
+<ol>
+<li>询问微博日活用户 —— 约100M</li>
+<li>推算产生一条Tiny URL的QPS<ul>
+<li>假设每个用户平均每天发0.1条微博，</li>
+<li>平均写QPS = 100M * 0.1 / 86400 ~ 100</li>
+<li>峰值QPS = 100 * 2 = 200</li>
+</ul>
+</li>
+<li>推算点击一条Tiny URL的QPS<ul>
+<li>假设每个用户平均点1个Tiny URL</li>
+<li>平均读QPS = 100M * 1 / 86400 ~ 1k</li>
+<li>峰值QPS = 2k</li>
+</ul>
+</li>
+<li>推算每天产生的新的 URL 所占存储<ul>
+<li>100M * 0.1 ~ 10M 条</li>
+<li>每一条 URL 长度平均 100 算，一共1G</li>
+<li>1T 的硬盘可以用 3 年</li>
+</ul>
+</li>
+</ol>
+<p>前3点：2k QPS ，一台SSD支持的MySQL完全可以搞定！</p>
+<h2 id="2-Service-服务"><a href="#2-Service-服务" class="headerlink" title="2. Service 服务"></a>2. Service 服务</h2><h4 id="逻辑块聚类与接口设计"><a href="#逻辑块聚类与接口设计" class="headerlink" title="逻辑块聚类与接口设计"></a>逻辑块聚类与接口设计</h4><ol>
+<li><p>TinyUrl只有一个UrlService</p>
+<ul>
+<li>本身就是一个小Application</li>
+<li>无需关心其他的</li>
+</ul>
+</li>
+<li><p>函数设计</p>
+<ul>
+<li><code>UrlService.encode(long_url)</code></li>
+<li><code>`UrlService.decode(short_url)</code></li>
+</ul>
+</li>
+<li><p>访问端口设计</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">GET /&lt;short_url&gt;</div><div class="line">	<span class="keyword">return</span> a Http redirect response</div><div class="line"></div><div class="line">POST /data/shorten/</div><div class="line">	Data = &#123;url: http:<span class="comment">//xxxx &#125;</span></div><div class="line">	Return <span class="keyword">short</span> url</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-49-19.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-03-22-49-19.png" alt="img"></a></p>
+<h2 id="3-Storage-数据存储"><a href="#3-Storage-数据存储" class="headerlink" title="3. Storage 数据存储"></a>3. Storage 数据存储</h2><p>两个步骤：</p>
+<ol>
+<li>选择存储结构</li>
+<li>细化数据表</li>
+</ol>
+<h4 id="选择存储结构-SQL-vs-NoSQL"><a href="#选择存储结构-SQL-vs-NoSQL" class="headerlink" title="选择存储结构 SQL vs NoSQL"></a>选择存储结构 SQL vs NoSQL</h4><ul>
+<li>是否需要支持 Transaction（事务）？<ul>
+<li>NoSQL不支持Transaction</li>
+<li>是否需要丰富的 SQL Query？</li>
+</ul>
+</li>
+<li>NoSQL的SQL Query不是太丰富<ul>
+<li>也有一些NoSQL的数据库提供简单的SQL Query支持</li>
+</ul>
+</li>
+<li>是否想偷懒？<ul>
+<li>大多数 Web Framework 与 SQL 数据库兼容得很好</li>
+<li>用SQL比用NoSQL少写很多代码</li>
+</ul>
+</li>
+<li>是否需要Sequential ID？<ul>
+<li>SQL 为你提供了 auto-increment 的 Sequential ID。也就是1,2,3,4,5 …</li>
+<li>NoSQL的ID并不是 Sequential 的</li>
+</ul>
+</li>
+<li>对QPS的要求有多高？<ul>
+<li>NoSQL 的性能更高</li>
+</ul>
+</li>
+<li>对Scalability的要求有多高？<ul>
+<li>SQL 需要码农自己写代码来 Scale</li>
+<li>还记得Db那节课中怎么做 Sharding，Replica 的么？</li>
+</ul>
+</li>
+<li>NoSQL 这些都帮你做了</li>
+</ul>
+<p><strong>选择</strong></p>
+<ul>
+<li>是否需要支持 Transaction？——不需要。NoSQL +1</li>
+<li>是否需要丰富的 SQL Query？——不需要。NoSQL +1</li>
+<li>是否想偷懒？——Tiny URL 需要写的代码并不复杂。NoSQL+1</li>
+<li>对QPS的要求有多高？—— 经计算，2k QPS并不高，而且2k读可以用Cache，写很少。SQL +1</li>
+<li>对Scalability的要求有多高？—— 存储和QPS要求都不高，单机都可以搞定。SQL+1</li>
+<li>是否需要Sequential ID？—— 取决于你的算法是什么 : 如何将Long URL 转化为 Short URL</li>
+</ul>
+<h2 id="4-算法：-如何将Long-URL-转化为-Short-URL"><a href="#4-算法：-如何将Long-URL-转化为-Short-URL" class="headerlink" title="4. 算法： 如何将Long URL 转化为 Short URL"></a>4. 算法： 如何将Long URL 转化为 Short URL</h2><h3 id="4-1-算法1-使用哈希函数-Hash-Function（不可行）"><a href="#4-1-算法1-使用哈希函数-Hash-Function（不可行）" class="headerlink" title="4.1 算法1 使用哈希函数 Hash Function（不可行）"></a>4.1 算法1 使用哈希函数 Hash Function（不可行）</h3><p>比如取 Long Url 的 MD5 的最后 6 位——这个方法肯定是有问题的</p>
+<ul>
+<li>优点：快</li>
+<li>缺点：难以设计一个没有冲突的哈希算法</li>
+</ul>
+<h3 id="4-2-算法2：随机生成-数据库去重"><a href="#4-2-算法2：随机生成-数据库去重" class="headerlink" title="4.2 算法2：随机生成 + 数据库去重"></a>4.2 算法2：随机生成 + 数据库去重</h3><p>随机一个 6 位的 ShortURL，如果没有被用过，就绑定到该 LongURL</p>
+<p>伪代码如下：<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-03-23-00-12.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-03-23-00-12.png" alt="img"></a></p>
+<ul>
+<li>优点：实现简单</li>
+<li>缺点：生成短网址的长度随着短网址越来越多变得越来越慢</li>
+<li>可行性：其实能凑合用。在生活中有很多随机编码的，例如机票码、酒店码，是不可重复的，就是用这种方法弄的。</li>
+</ul>
+<h3 id="4-3-算法3：进制转换-Base62"><a href="#4-3-算法3：进制转换-Base62" class="headerlink" title="4.3 算法3：进制转换 Base62"></a>4.3 算法3：进制转换 Base62</h3><p><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-20-55-32.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-20-55-32.png" alt="img"></a></p>
+<ul>
+<li>Base62<ul>
+<li>将6位的short url看成一个62进制的数（0-9,a-z,A-Z）</li>
+<li>每个short url对应到一个整数</li>
+<li>该整数对应数据库表的主键——Sequential ID</li>
+</ul>
+</li>
+<li>6位可以表示不同的URL有多少？<ul>
+<li>5位 = 625625 = 9亿</li>
+<li>6位 = 626626 = 570亿</li>
+<li>7位 = 627627 = 35000亿</li>
+</ul>
+</li>
+<li>优缺点<ul>
+<li>优点：效率高</li>
+<li>缺点：依赖于全局的自增ID</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-4-算法2与3的比较"><a href="#4-4-算法2与3的比较" class="headerlink" title="4.4 算法2与3的比较"></a>4.4 算法2与3的比较</h3><ul>
+<li><p><strong>基于随机生成的方法</strong><br>需要根据 Long 查询 Short，也需要根据 Short 查询 Long。基本上work solution如下图所示：<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-00-54.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-00-54.png" alt="img"></a><br>如果选择用 SQL 型数据库，表结构如下：<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-20-58-03.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-20-58-03.png" alt="img"></a><br>并且需要对shortKey和longURL分别建索引<br>• <a href="https://zh.wikipedia.org/wiki/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95" target="_blank" rel="external">什么是索引？</a><br>• <a href="http://www.cnblogs.com/morvenhuang/archive/2009/03/30/1425534.html" target="_blank" rel="external">索引的原理？</a><br>也可以选用 NoSQL 数据库，但是需要建立两张表（大多数NoSQL数据库不支持二级索引）。以 Cassandra 为例子<br>第一张表：根据 Long 查询 Short<br>row_key=longURL, column_key=ShortURL, value=null or timestamp<br>第二张表：根据 Short 查询 Long<br>row_key=shortURL, column_key=LongURL, value=null or timestamp</p>
+</li>
+<li><p><strong>基于进制转换的方法</strong><br>因为需要用到自增ID（Sequential ID），因此只能选择使用 SQL 型数据库。表单结构如下，shortURL 可以不存储在表单里，因为可以根据 id 来进行换算</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-05-21-36-40.png" alt=""> </p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-02-19.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-02-19.png" alt="img"></a></p>
+</li>
+</ul>
+<h2 id="5-Scale-优化"><a href="#5-Scale-优化" class="headerlink" title="5. Scale 优化"></a>5. Scale 优化</h2><h3 id="5-1-如何提高响应速度？"><a href="#5-1-如何提高响应速度？" class="headerlink" title="5.1 如何提高响应速度？"></a>5.1 如何提高响应速度？</h3><p><strong>读操作的优化</strong></p>
+<p>既然读操作比较多，那么可以用cache的方式去提速。</p>
+<ul>
+<li>cache里存什么？<ul>
+<li>long to short(生成新short url时需要)</li>
+<li>short to long(查询short url时需要)</li>
+</ul>
+</li>
+<li>查询的流程图：<br><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-22-22.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-22-22.png" alt="img"></a></li>
+</ul>
+<h3 id="5-2-如何提速？"><a href="#5-2-如何提速？" class="headerlink" title="5.2 如何提速？"></a>5.2 如何提速？</h3><ul>
+<li><p>利用地理位置信息加速</p>
+</li>
+<li><p>优化服务器速度</p>
+<ul>
+<li>不同地区，使用不同Web服务器</li>
+<li>通过DNS解析不同地区的用户到不同的服务器</li>
+</ul>
+</li>
+<li><p>优化数据访问速度</p>
+<ul>
+<li><p>使用Centralized MySQL + Distributed Memcached</p>
+</li>
+<li><p>数据库共享一个，不同地区设置多个缓存</p>
+</li>
+<li><p>一个MySQL配多个Memcached, Memcached跨地区分布</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-31-37.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-21-31-37.png" alt="img"></a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-3-数据量扩展"><a href="#5-3-数据量扩展" class="headerlink" title="5.3 数据量扩展"></a>5.3 数据量扩展</h3><p>如果数据量很大，一台MySQL搞不定了</p>
+<ul>
+<li>什么时候需要扩展多台服务器？<ul>
+<li>Cache资源不够</li>
+<li>写操作越来越多</li>
+<li>请求太多，无法通过Cache满足</li>
+</ul>
+</li>
+<li>增加多台数据库可以优化什么？<ul>
+<li>解决存不下的问题——Storage角度（TinyURL一般遇不到这种问题）</li>
+<li>解决忙不过来的问题——QPS角度</li>
+<li>TinyURL主要是什么问题？？——忙不过来的问题</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>如何解决忙不过来的问题？拆分 </p>
+<ul>
+<li><p>纵向切分？不同列放不同数据库？不可行！</p>
+</li>
+<li><p>横向拆分？</p>
+<ul>
+<li><p>用什么做sharding key?</p>
+</li>
+<li><p>如果用longURL做为sharding key，如何查询ID(short URL) ?</p>
+<ul>
+<li>已知shortURL查询longURL时，只能广播给N台数据库查询</li>
+<li>不能降低每台机器QPS</li>
+</ul>
+</li>
+<li><p>如果用ID(short URL)做为sharding key，如何查询 longURL?</p>
+<ul>
+<li><p>假设按照ID%N来分配存储</p>
+</li>
+<li><p>short2long</p>
+<ul>
+<li>将shortURL转化为ID</li>
+<li>根据ID计算找到数据库</li>
+<li>在该数据库中查询longURL即可</li>
+</ul>
+</li>
+<li><p>long2short</p>
+<ul>
+<li>先查询：广播给N台数据库，查询是否存在，似乎有点耗时，但是也是可行的，因为数据库服务器不会太多</li>
+<li>再插入如果不存在的话，获得下一个自增ID值，插入对应数据库</li>
+<li><strong>其实也不可以不查询直接插入</strong>，因为long2short没有必要意义对应，<strong>一个long可以对应多个short</strong>，也就是说可以把长网址转成多个短网址，但是一旦用户获得一个短网址，相同的短网址只能对应一个长网址。</li>
+</ul>
+</li>
+<li><p>这种方法还有一个问题，如何在多台数据库服务器上获取全局递增的ID？（因为每台机器上都有一个数据表，需要获取所有数据的递增ID就是个问题），解决办法：</p>
+<ol>
+<li>专门用一台服务器负责自增ID服务，不存储数据，也不负责查询</li>
+<li>用Zookeeper</li>
+</ol>
+<p>但用全局递增ID不是解决TinyURL的好办法</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>下面是一种更好的sharding办法，不需要全局递增ID：</strong></p>
+</li>
+<li><p>如果最开始shortkey为6位，那就增加一位前置位：</p>
+<ul>
+<li>AB1234 –&gt; 0AB1234（该前置位由hash(long_url)%62得到（可以用consistent hash算法），因此是唯一的。这个前置位可以作为机器的ID等）</li>
+<li>另一种做法，把第一位单独留出来做sharding key，总共还是6位</li>
+</ul>
+</li>
+<li><p>该前置位为sharding key</p>
+</li>
+<li><p>这样我们就可以同时通过shortURL和longURL得到sharding key</p>
+<ul>
+<li>无需广播</li>
+<li>无论short2long还是long2short都可直接定位数据所在服务器</li>
+</ul>
+</li>
+<li><p>当新加入一个longURL时，先通过hash(long_url)%62得到机器ID，然后在该机器上，通过该台机器的自增ID通过进制转换得到6位shortkey</p>
+</li>
+<li><p>用户已知shortURL时，先按第一位获取到机器ID，然后在此机器上查询longURL</p>
+<p>那么当前的架构就变成了：</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-02-10-22-18-36.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-02-10-22-18-36.png" alt="img"></a></p>
+<h3 id="5-4-Multi-region-的进一步优化"><a href="#5-4-Multi-region-的进一步优化" class="headerlink" title="5.4 Multi region 的进一步优化"></a>5.4 Multi region 的进一步优化</h3><p>上面的架构图还有优化的空间：</p>
+<ul>
+<li>网站服务器与数据库服务器之间的通信</li>
+<li>中心化服务器集群与跨地域的web server之间的通信较慢，比如如果中心数据库放在美国，那么中国的服务器需要访问美国的数据库，通信较慢</li>
+</ul>
+<p>解决方法1：重写数据库到中国，中国用户访问中国数据库</p>
+<p>问题：重写数据库，一致性问题如何解决？很难解决</p>
+<p>正确打开方式：</p>
+<p>想一想用户习惯：</p>
+<ol>
+<li>中国的用户一般访问的网站是中国的，美国的用户一般访问的网站是美国的</li>
+<li>中国用户访问时，会被DNS分配中国的服务器</li>
+</ol>
+<p>因此我们可以用<strong>地域信息</strong>进行sharding，也就是说按照网站的地域信息将其数据分开存储在不同地方的数据库中</p>
+<p>​    如何获得网站的地域信息？做一张用户经常访问的网站数据表</p>
+<p>这样中国用户要访问的网站大多在位于中国的数据库中，响应速度就会比较快，当然也有少量中国用户需要访问美国网站的情况，就直接去访问美国数据库就好，反正不会慢对少，毕竟中国访问中国是主流需求，优化系统就是要优化主要需求。</p>
+<p>最终架构图</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-11-17-32.png" alt=""> </p>
+<h3 id="5-5-自定义短链接"><a href="#5-5-自定义短链接" class="headerlink" title="5.5 自定义短链接"></a>5.5 自定义短链接</h3><p>用户自定义短网址 -&gt; 长网址映射</p>
+<p><a href="http://tiny.url/google/" target="_blank" rel="external">http://tiny.url/google/</a> =&gt; <a href="http://www.google.com" target="_blank" rel="external">http://www.google.com</a><br><a href="http://tiny.url/systemdesign/" target="_blank" rel="external">http://tiny.url/systemdesign/</a> =&gt; <a href="http://www.jiuzhang.com/course/2/" target="_blank" rel="external">http://www.jiuzhang.com/course/2/</a></p>
+<p><strong>一个错误的想法是：</strong></p>
+<p>在URLtable中增加一个column，存放自定义的URL，因为这一列大部分会是空的，浪费空间。</p>
+<p>正确打开方式：</p>
+<ul>
+<li>新建一张表存储自定义URL<ul>
+<li>CustomURL Table</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-06-12-05-53.png" alt=""> </p>
+<ul>
+<li>已知长链接查询短链接的时候：<ul>
+<li>先查询customURL table</li>
+<li>再查询URL table</li>
+</ul>
+</li>
+<li>用户想要由长链接自定一个新的短链接的时候<ul>
+<li>查询是否已经在URLtable中存在了</li>
+<li>再在CustomURL table 中查询和插入</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/26/【九章算法强化班】follow-up/" rel="next" title="【九章算法强化班】follow up">
+                <i class="fa fa-chevron-left"></i> 【九章算法强化班】follow up
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/06/【腾讯转化率预估】比赛总结/" rel="prev" title="【腾讯转化率预估】总结">
+                【腾讯转化率预估】总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#outline"><span class="nav-number">1.</span> <span class="nav-text">outline</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#consistent-hashing-一致性哈性"><span class="nav-number">2.</span> <span class="nav-text">consistent hashing 一致性哈性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#复习："><span class="nav-number">2.1.</span> <span class="nav-text">复习：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要做一致性hash？"><span class="nav-number">2.2.</span> <span class="nav-text">为什么要做一致性hash？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的一致性hash算法："><span class="nav-number">2.3.</span> <span class="nav-text">一个简单的一致性hash算法：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个更实用的一致性hashing"><span class="nav-number">2.4.</span> <span class="nav-text">一个更实用的一致性hashing</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据备份-Replica"><span class="nav-number">3.</span> <span class="nav-text">数据备份 Replica</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题：Backup和Replica有什么区别？"><span class="nav-number">3.1.</span> <span class="nav-text">问题：Backup和Replica有什么区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL类型数据库的Replica"><span class="nav-number">3.2.</span> <span class="nav-text">MySQL类型数据库的Replica</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NoSQL类型数据库的Replica"><span class="nav-number">3.3.</span> <span class="nav-text">NoSQL类型数据库的Replica</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MySQL和NoSQL型数据库的Replica比较"><span class="nav-number">3.4.</span> <span class="nav-text">MySQL和NoSQL型数据库的Replica比较</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计短网址系统-Design-Tiny-URL"><span class="nav-number">4.</span> <span class="nav-text">设计短网址系统 Design Tiny URL</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统设计的常见误区："><span class="nav-number">4.1.</span> <span class="nav-text">系统设计的常见误区：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Scenario-场景-需求分析"><span class="nav-number">4.2.</span> <span class="nav-text">1. Scenario 场景 需求分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#我要设计啥"><span class="nav-number">4.2.0.1.</span> <span class="nav-text">我要设计啥</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QPS-Storage"><span class="nav-number">4.2.0.2.</span> <span class="nav-text">QPS + Storage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Service-服务"><span class="nav-number">4.3.</span> <span class="nav-text">2. Service 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑块聚类与接口设计"><span class="nav-number">4.3.0.1.</span> <span class="nav-text">逻辑块聚类与接口设计</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Storage-数据存储"><span class="nav-number">4.4.</span> <span class="nav-text">3. Storage 数据存储</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#选择存储结构-SQL-vs-NoSQL"><span class="nav-number">4.4.0.1.</span> <span class="nav-text">选择存储结构 SQL vs NoSQL</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-算法：-如何将Long-URL-转化为-Short-URL"><span class="nav-number">4.5.</span> <span class="nav-text">4. 算法： 如何将Long URL 转化为 Short URL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-算法1-使用哈希函数-Hash-Function（不可行）"><span class="nav-number">4.5.1.</span> <span class="nav-text">4.1 算法1 使用哈希函数 Hash Function（不可行）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-算法2：随机生成-数据库去重"><span class="nav-number">4.5.2.</span> <span class="nav-text">4.2 算法2：随机生成 + 数据库去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-算法3：进制转换-Base62"><span class="nav-number">4.5.3.</span> <span class="nav-text">4.3 算法3：进制转换 Base62</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-算法2与3的比较"><span class="nav-number">4.5.4.</span> <span class="nav-text">4.4 算法2与3的比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Scale-优化"><span class="nav-number">4.6.</span> <span class="nav-text">5. Scale 优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-如何提高响应速度？"><span class="nav-number">4.6.1.</span> <span class="nav-text">5.1 如何提高响应速度？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-如何提速？"><span class="nav-number">4.6.2.</span> <span class="nav-text">5.2 如何提速？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-数据量扩展"><span class="nav-number">4.6.3.</span> <span class="nav-text">5.3 数据量扩展</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-Multi-region-的进一步优化"><span class="nav-number">4.6.4.</span> <span class="nav-text">5.4 Multi region 的进一步优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-自定义短链接"><span class="nav-number">4.6.5.</span> <span class="nav-text">5.5 自定义短链接</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

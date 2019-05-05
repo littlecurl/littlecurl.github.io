@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="系统涉及面试的两种形式及常见问题设计某某系统设计微博、滴滴、微信、短网址系统、nosql数据库 找问题 网站挂了怎么办 网站太慢怎么办 流量增长怎么  面试官：请设计Twitter系统设计问题的4S分析法 Scenario场景 需要设计哪些功能，设计的多牛 向面试官提问：features/QPS/DAU(日活跃用户)/inerfaces   Servece服务 将大系统拆分成小服务 Split/A">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章系统设计】新鲜事系统">
+<meta property="og:url" content="http://yoursite.com/2018/01/27/【九章系统设计】新鲜事系统/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="系统涉及面试的两种形式及常见问题设计某某系统设计微博、滴滴、微信、短网址系统、nosql数据库 找问题 网站挂了怎么办 网站太慢怎么办 流量增长怎么  面试官：请设计Twitter系统设计问题的4S分析法 Scenario场景 需要设计哪些功能，设计的多牛 向面试官提问：features/QPS/DAU(日活跃用户)/inerfaces   Servece服务 将大系统拆分成小服务 Split/A">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://i.loli.net/2018/01/17/5a5ec793139ea.png">
+<meta property="og:image" content="https://i.loli.net/2018/01/17/5a5ec9773713d.png">
+<meta property="og:image" content="https://i.loli.net/2018/01/17/5a5eca2f1b538.png">
+<meta property="og:image" content="https://i.loli.net/2018/01/18/5a5f76ad915ab.png">
+<meta property="og:image" content="https://i.loli.net/2018/01/18/5a5f76056f895.png">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.572Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章系统设计】新鲜事系统">
+<meta name="twitter:description" content="系统涉及面试的两种形式及常见问题设计某某系统设计微博、滴滴、微信、短网址系统、nosql数据库 找问题 网站挂了怎么办 网站太慢怎么办 流量增长怎么  面试官：请设计Twitter系统设计问题的4S分析法 Scenario场景 需要设计哪些功能，设计的多牛 向面试官提问：features/QPS/DAU(日活跃用户)/inerfaces   Servece服务 将大系统拆分成小服务 Split/A">
+<meta name="twitter:image" content="https://i.loli.net/2018/01/17/5a5ec793139ea.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/27/【九章系统设计】新鲜事系统/"/>
+
+
+
+
+
+  <title>【九章系统设计】新鲜事系统 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/27/【九章系统设计】新鲜事系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章系统设计】新鲜事系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T21:14:27+08:00">
+                2018-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统设计/" itemprop="url" rel="index">
+                    <span itemprop="name">系统设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,805
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="系统涉及面试的两种形式及常见问题"><a href="#系统涉及面试的两种形式及常见问题" class="headerlink" title="系统涉及面试的两种形式及常见问题"></a>系统涉及面试的两种形式及常见问题</h2><h3 id="设计某某系统"><a href="#设计某某系统" class="headerlink" title="设计某某系统"></a>设计某某系统</h3><p>设计微博、滴滴、微信、短网址系统、nosql数据库</p>
+<h3 id="找问题"><a href="#找问题" class="headerlink" title="找问题"></a>找问题</h3><ul>
+<li>网站挂了怎么办</li>
+<li>网站太慢怎么办</li>
+<li>流量增长怎么</li>
+</ul>
+<h3 id="面试官：请设计Twitter"><a href="#面试官：请设计Twitter" class="headerlink" title="面试官：请设计Twitter"></a>面试官：请设计Twitter</h3><h3 id="系统设计问题的4S分析法"><a href="#系统设计问题的4S分析法" class="headerlink" title="系统设计问题的4S分析法"></a>系统设计问题的4S分析法</h3><ul>
+<li>Scenario场景<ul>
+<li>需要设计哪些功能，设计的多牛</li>
+<li>向面试官提问：features/QPS/DAU(日活跃用户)/inerfaces</li>
+</ul>
+</li>
+<li>Servece服务<ul>
+<li>将大系统拆分成小服务</li>
+<li>Split/Application/Module</li>
+</ul>
+</li>
+<li>Storage存储<ul>
+<li>数据如何存储与访问</li>
+<li>Schema(表头字段)/data/sql/nosql/File System</li>
+</ul>
+</li>
+<li>Scale升级<ul>
+<li>解决缺陷，处理可能遇到的问题</li>
+<li>Sharding/optimize/soecial case</li>
+</ul>
+</li>
+</ul>
+<h3 id="Twitter"><a href="#Twitter" class="headerlink" title="Twitter"></a>Twitter</h3><h4 id="Scenario场景-Ask"><a href="#Scenario场景-Ask" class="headerlink" title="Scenario场景-Ask"></a>Scenario场景-Ask</h4><p>询问面试官：</p>
+<ol>
+<li>需要设计哪些功能</li>
+<li>需要承受多大的访问量？<ol>
+<li>日活跃用户DAU</li>
+<li>Twitter:MAU ：313M+ DAU：150M+（一般MAU是DAU的2倍）</li>
+</ol>
+</li>
+</ol>
+<h4 id="Scenario场景-Analyze-amp-predict"><a href="#Scenario场景-Analyze-amp-predict" class="headerlink" title="Scenario场景-Analyze&amp;predict"></a>Scenario场景-Analyze&amp;predict</h4><ul>
+<li>根据DAU计算并发用户数：<ul>
+<li><code>日活跃*每个用户平均请求次数/一天多少秒 = 150M*60/86400 ~100k</code></li>
+<li>峰值peak = 3*QPS ~300k</li>
+<li>快速增长的产品：<ul>
+<li>max peak users in 3 months = peak users*2</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>读频率Read QPS(Queries per second)<ul>
+<li>300k</li>
+</ul>
+</li>
+<li>写频率Write QPS<ul>
+<li>5k</li>
+</ul>
+</li>
+</ul>
+<h4 id="QPS有什么用"><a href="#QPS有什么用" class="headerlink" title="QPS有什么用"></a>QPS有什么用</h4><ul>
+<li>QPS = 100<ul>
+<li>用笔记本做web服务器就可以</li>
+</ul>
+</li>
+<li>QPS = 1k<ul>
+<li>用一台好一点的web服务器就差不多</li>
+<li>需要考虑Single Point Failure</li>
+</ul>
+</li>
+<li>QPS = 1m<ul>
+<li>需要假设一个1000台web服务器的集群</li>
+<li>需要考虑如何Maintanance(某一台挂了怎么办)</li>
+</ul>
+</li>
+<li>QPS和web server/database之间的关系<ul>
+<li>一台web service 承受量是1k QPS</li>
+<li>一台SQL Database 承受量是1k QPS</li>
+<li>一台 no SQL Database 承受量是10k QPS</li>
+</ul>
+</li>
+</ul>
+<h4 id="Scenario场景-需要设计哪些功能"><a href="#Scenario场景-需要设计哪些功能" class="headerlink" title="Scenario场景-需要设计哪些功能"></a>Scenario场景-需要设计哪些功能</h4><ul>
+<li><p>step1:列举需要的功能</p>
+<ul>
+<li>注册、登录</li>
+<li>用户信息展示、编辑</li>
+<li>上传照片、视频</li>
+<li>搜索</li>
+<li>发送、分享推文</li>
+<li>时间轴</li>
+<li>关注、取关用户</li>
+</ul>
+</li>
+<li><p>step2:sort按功能优先级排序</p>
+<p>​</p>
+</li>
+</ul>
+<h3 id="Service服务"><a href="#Service服务" class="headerlink" title="Service服务"></a>Service服务</h3><p>将大的系统拆分为小服务</p>
+<ol>
+<li>replay重放需求</li>
+<li>merge归并需求</li>
+</ol>
+<p><img src="https://i.loli.net/2018/01/17/5a5ec793139ea.png" alt=""> </p>
+<h3 id="storage存储——数据如何存储与访问（最重点占50-）"><a href="#storage存储——数据如何存储与访问（最重点占50-）" class="headerlink" title="storage存储——数据如何存储与访问（最重点占50%）"></a>storage存储——数据如何存储与访问（最重点占50%）</h3><ul>
+<li>关系型数据库SQL Database（结构化数据）MySQL<ul>
+<li>用户信息</li>
+</ul>
+</li>
+<li>非关系型数据库（非结构化数据）MangoDB<ul>
+<li>推文</li>
+<li>社交图谱</li>
+</ul>
+</li>
+<li>文件系统<ul>
+<li>图片、视频（Media files）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2018/01/17/5a5ec9773713d.png" alt=""> </p>
+<p>Step1：为每个service选择合适的存储结构</p>
+<p>Step2：选好合适的存储结构之后，设计数据表的结果，需要存储哪些字段</p>
+<p><img src="https://i.loli.net/2018/01/17/5a5eca2f1b538.png" alt=""> </p>
+<h3 id="新鲜事系统News-Feed"><a href="#新鲜事系统News-Feed" class="headerlink" title="新鲜事系统News Feed"></a>新鲜事系统News Feed</h3><ul>
+<li>什么是新鲜事News Feed?<ul>
+<li>登录Faebook/Twitter/朋友圈之后看到的信息流</li>
+<li>你的所有朋友发的信息的集合</li>
+</ul>
+</li>
+<li>典型新鲜事系统<ul>
+<li>Facebook</li>
+<li>Twitter</li>
+<li>朋友圈</li>
+<li>RSS Reader（头条）</li>
+</ul>
+</li>
+<li>新鲜事系统的核心因素<ul>
+<li>关注与被关注</li>
+<li>每个人看到的新鲜事是不同的</li>
+</ul>
+</li>
+</ul>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ul>
+<li><p>Pull模型：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">用merge K sorted arrays的思想</div><div class="line">用户的时间线：		-&gt;		整合成		-&gt;		feed流</div><div class="line">A：An1,An2,...			↘</div><div class="line">B: Bn1,Bn2,...		  	  →			An1,n2,Bn1,Cn1,Cnw,Bn2.....</div><div class="line">C：Cn1,Cn2,... 			↗</div><div class="line">...</div></pre></td></tr></table></figure>
+<ul>
+<li>当用户查看News Feed时，获取其每一个好友的最近100条推文，merge这些推文，按时间排序展示给用户</li>
+<li>复杂度分析：<ul>
+<li>News Feed:加入用户关注了N个对象，则时间为N此DB read的时间（读取数据库）+ N路归并的时间（在内存中计算的O(logK)，时间忽略）读取数据库耗时很长</li>
+<li>Post a tweet:一次DB write（写入数据库）时间</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Push模型：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">用户的News Feed List：				用户D\E\F发了tweet，推送到其好友的List中</div><div class="line">A：D,E...			↘</div><div class="line">B: F,...		  	  →			An1,n2,Bn1,Cn1,Cnw,Bn2.....</div><div class="line">C：E,F,... 			↗</div><div class="line">...</div></pre></td></tr></table></figure>
+<ul>
+<li><p>为每个用户建立一个List存储池存储其好友的News Feed信息，当用户发送一个tweet之后，将该推文推送到每一个关注了他的用户的News Feed中.用户需要查看News Feed时只需要从他的News Feed中读取最近的100条即可</p>
+<p><strong>关键词：Fanout</strong></p>
+</li>
+<li><p>复杂度分析</p>
+<ul>
+<li>News Feed：1次DB read(相比push模型快很多)</li>
+<li>post a tweet：N个粉丝需要N次DB writes<ul>
+<li>如果粉丝数量N巨大，写入粉丝News Feed List耗时大</li>
+<li>但好处是可以用异步任务在后台执行，无需用户等待</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://i.loli.net/2018/01/18/5a5f76ad915ab.png" alt=""> </p>
+<p>所有的用户公用一个表格，当一个用户发送推文时，他自己和他的关注着都将看到，所以插入n+1条数经验，owner_id为他自己和他的好友们，然后读取时在数据表中select owner_id为自己的。</p>
+<p><img src="https://i.loli.net/2018/01/18/5a5f76056f895.png" alt=""> </p>
+<p>Web Server 到Asynct是通过消息队列发送，比如RabitMQ，拿到任务后，先去好友关系表中拿到发文用户的关注者们，然后把消息加入News Feed Table</p>
+<p>缺陷：</p>
+<ol>
+<li><p>浪费数据库，但硬盘很便宜，不需要考虑存储数据量大</p>
+</li>
+<li><p>如果粉丝数量很大，异步操作需要时间，有些粉丝不能及时看到大V发送的tweet</p>
+<p>​</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Design-Twitter"><a href="#Design-Twitter" class="headerlink" title="Design Twitter"></a><a href="https://leetcode.com/problems/design-twitter" target="_blank" rel="external">Design Twitter</a></h2><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> javax.jws.soap.SOAPBinding;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DesignTwitter</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Twitter</span> </span>&#123;</div><div class="line">        HashMap&lt;Integer,User&gt; UsersList;</div><div class="line">        <span class="keyword">int</span> tweetTimeStamp = <span class="number">0</span>;</div><div class="line"></div><div class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Tweet</span></span>&#123;</div><div class="line">            <span class="keyword">int</span> id;</div><div class="line">            <span class="keyword">int</span> userId;</div><div class="line">            <span class="keyword">int</span> timeStamp;</div><div class="line">            Tweet(<span class="keyword">int</span> id,<span class="keyword">int</span> useId,<span class="keyword">int</span> timeStamp)&#123;</div><div class="line">                <span class="keyword">this</span>.id = id;</div><div class="line">                <span class="keyword">this</span>.userId = useId;</div><div class="line">                <span class="keyword">this</span>.timeStamp = timeStamp;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="class"><span class="keyword">class</span> <span class="title">User</span></span>&#123;</div><div class="line">            <span class="keyword">int</span> uid;</div><div class="line">            List&lt;Tweet&gt; tweets = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            List&lt;Integer&gt; followers = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//被谁关注</span></div><div class="line">            List&lt;Integer&gt; followees = <span class="keyword">new</span> ArrayList&lt;&gt;();<span class="comment">//关注了谁</span></div><div class="line">            User(<span class="keyword">int</span> uid)&#123;</div><div class="line">                <span class="keyword">this</span>.uid = uid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">/** Initialize your data structure here. */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Twitter</span><span class="params">()</span> </span>&#123;</div><div class="line">            UsersList = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/** Compose a new tweet. */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">postTweet</span><span class="params">(<span class="keyword">int</span> userId, <span class="keyword">int</span> tweetId)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span>(!UsersList.containsKey(userId))&#123;</div><div class="line">                User user = <span class="keyword">new</span> User(userId);</div><div class="line">                UsersList.put(userId,user);</div><div class="line">            &#125;</div><div class="line">            Tweet tweet = <span class="keyword">new</span> Tweet(tweetId,userId,tweetTimeStamp);</div><div class="line">            UsersList.get(userId).tweets.add(tweet);</div><div class="line">            tweetTimeStamp++;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">getNewsFeed</span><span class="params">(<span class="keyword">int</span> userId)</span> </span>&#123;</div><div class="line">            List&lt;Integer&gt; feeds = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">if</span>(!UsersList.containsKey(userId))&#123;</div><div class="line">                User user = <span class="keyword">new</span> User(userId);</div><div class="line">                UsersList.put(userId,user);</div><div class="line">                <span class="keyword">return</span> feeds;</div><div class="line">            &#125;</div><div class="line">            Comparator&lt;Tweet&gt; cmp = <span class="keyword">new</span> Comparator&lt;Tweet&gt;()&#123;</div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Tweet t1,Tweet t2)</span></span>&#123;</div><div class="line">                    <span class="keyword">return</span> t2.timeStamp - t1.timeStamp;</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            Queue&lt;Tweet&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(<span class="number">10</span>,cmp);</div><div class="line">            <span class="comment">//先处理自己的新鲜事</span></div><div class="line">            List&lt;Tweet&gt; ownTweets = UsersList.get(userId).tweets;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = ownTweets.size()-<span class="number">1</span>;i &gt;= ownTweets.size() - <span class="number">10</span> &amp;&amp; i &gt;= <span class="number">0</span>;i--)&#123;</div><div class="line">                heap.add(ownTweets.get(i));</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//处理关注的人的新鲜事</span></div><div class="line">            List&lt;Integer&gt; followees = UsersList.get(userId).followees;</div><div class="line">            <span class="keyword">for</span>(Integer followee : followees)&#123;</div><div class="line">                List&lt;Tweet&gt; tweets = UsersList.get(followee).tweets;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = tweets.size()-<span class="number">1</span>;i &gt;= tweets.size() - <span class="number">10</span> &amp;&amp; i &gt;= <span class="number">0</span>;i--)&#123;</div><div class="line">                    heap.add(tweets.get(i));</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">int</span> k = <span class="number">10</span>;</div><div class="line">            <span class="keyword">while</span> (k &gt; <span class="number">0</span> &amp;&amp; !heap.isEmpty())&#123;</div><div class="line">                feeds.add(heap.poll().id);</div><div class="line">                k--;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> feeds;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/** Follower follows a followee. If the operation is invalid, it should be a no-op. */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">follow</span><span class="params">(<span class="keyword">int</span> followerId, <span class="keyword">int</span> followeeId)</span> </span>&#123;</div><div class="line">            <span class="comment">//如果没有用户，新建用户</span></div><div class="line">            <span class="keyword">if</span>(!UsersList.containsKey(followeeId))&#123;</div><div class="line">                User user = <span class="keyword">new</span> User(followeeId);</div><div class="line">                UsersList.put(followeeId,user);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(!UsersList.containsKey(followerId))&#123;</div><div class="line">                User user = <span class="keyword">new</span> User(followerId);</div><div class="line">                UsersList.put(followerId,user);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(followeeId == followerId || UsersList.get(followerId).followees.contains(followeeId))&#123;<span class="keyword">return</span>;&#125;</div><div class="line">            <span class="comment">//更新用户关注和被关注列表</span></div><div class="line">            UsersList.get(followeeId).followers.add(followerId);</div><div class="line">            UsersList.get(followerId).followees.add(followeeId);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">/** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unfollow</span><span class="params">(<span class="keyword">int</span> followerId, <span class="keyword">int</span> followeeId)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span>(followeeId == followerId || !UsersList.containsKey(followeeId) || !UsersList.containsKey(followerId) ||</div><div class="line">                    !UsersList.get(followerId).followees.contains(followeeId) || !UsersList.get(followeeId).followers.contains(followerId))&#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">            Iterator&lt;Integer&gt; iterator =  UsersList.get(followeeId).followers.iterator();</div><div class="line">            <span class="keyword">while</span>(iterator.hasNext())&#123;</div><div class="line">                <span class="keyword">int</span> i = iterator.next();</div><div class="line">                <span class="keyword">if</span>(i == followerId)&#123;</div><div class="line">                    iterator.remove();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            Iterator&lt;Integer&gt; iterator2 =  UsersList.get(followerId).followees.iterator();</div><div class="line">            <span class="keyword">while</span>(iterator2.hasNext())&#123;</div><div class="line">                <span class="keyword">int</span> i = iterator2.next();</div><div class="line">                <span class="keyword">if</span>(i == followeeId)&#123;</div><div class="line">                    iterator2.remove();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</div><div class="line">        Twitter obj = <span class="keyword">new</span> Twitter();</div><div class="line">        obj.postTweet(<span class="number">1</span>,<span class="number">5</span>);</div><div class="line">        List&lt;Integer&gt; param_2 = obj.getNewsFeed(<span class="number">1</span>);</div><div class="line">        obj.follow(<span class="number">1</span>,<span class="number">2</span>);</div><div class="line">        obj.postTweet(<span class="number">2</span>,<span class="number">6</span>);</div><div class="line">        List&lt;Integer&gt; param_3 = obj.getNewsFeed(<span class="number">1</span>);</div><div class="line">        obj.unfollow(<span class="number">1</span>,<span class="number">2</span>);</div><div class="line">        List&lt;Integer&gt; param_4 = obj.getNewsFeed(<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        DesignTwitter test = <span class="keyword">new</span> DesignTwitter();</div><div class="line">        test.test();</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实这里有个问题，就是follow unfollow post这些都是用户的操作，应该放在用户类里面的，然后再外部调用。有时间重写一下。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/24/【Java】Java垃圾回收机制/" rel="next" title="理解Java垃圾回收机制">
+                <i class="fa fa-chevron-left"></i> 理解Java垃圾回收机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/27/【Java】Java常用笔记/" rel="prev" title="Java常用笔记">
+                Java常用笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统涉及面试的两种形式及常见问题"><span class="nav-number">1.</span> <span class="nav-text">系统涉及面试的两种形式及常见问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设计某某系统"><span class="nav-number">1.1.</span> <span class="nav-text">设计某某系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#找问题"><span class="nav-number">1.2.</span> <span class="nav-text">找问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#面试官：请设计Twitter"><span class="nav-number">1.3.</span> <span class="nav-text">面试官：请设计Twitter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统设计问题的4S分析法"><span class="nav-number">1.4.</span> <span class="nav-text">系统设计问题的4S分析法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Twitter"><span class="nav-number">1.5.</span> <span class="nav-text">Twitter</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Scenario场景-Ask"><span class="nav-number">1.5.1.</span> <span class="nav-text">Scenario场景-Ask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scenario场景-Analyze-amp-predict"><span class="nav-number">1.5.2.</span> <span class="nav-text">Scenario场景-Analyze&predict</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QPS有什么用"><span class="nav-number">1.5.3.</span> <span class="nav-text">QPS有什么用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Scenario场景-需要设计哪些功能"><span class="nav-number">1.5.4.</span> <span class="nav-text">Scenario场景-需要设计哪些功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service服务"><span class="nav-number">1.6.</span> <span class="nav-text">Service服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#storage存储——数据如何存储与访问（最重点占50-）"><span class="nav-number">1.7.</span> <span class="nav-text">storage存储——数据如何存储与访问（最重点占50%）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新鲜事系统News-Feed"><span class="nav-number">1.8.</span> <span class="nav-text">新鲜事系统News Feed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">1.9.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Design-Twitter"><span class="nav-number">2.</span> <span class="nav-text">Design Twitter</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

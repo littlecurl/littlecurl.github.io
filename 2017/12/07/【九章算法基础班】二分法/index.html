@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Binary Search," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="二分查找classical Binary Search定义给定一个排序数组和一个元素n，返回元素n的位置     index 0 1 2 3 4 5 6 7 8     num 2 3 5 8 13 21 34 55 89     查找元素5的位置 方法初始化: ​    start = 0;end = 8;mid = 4  nums[mid] = 13;start = 0;end = 4,mid">
+<meta name="keywords" content="Binary Search">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法基础班】二分法">
+<meta property="og:url" content="http://yoursite.com/2017/12/07/【九章算法基础班】二分法/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="二分查找classical Binary Search定义给定一个排序数组和一个元素n，返回元素n的位置     index 0 1 2 3 4 5 6 7 8     num 2 3 5 8 13 21 34 55 89     查找元素5的位置 方法初始化: ​    start = 0;end = 8;mid = 4  nums[mid] = 13;start = 0;end = 4,mid">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-08-13-20-33.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-08-09-51-55.png">
+<meta property="og:updated_time" content="2018-03-12T12:35:15.615Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法基础班】二分法">
+<meta name="twitter:description" content="二分查找classical Binary Search定义给定一个排序数组和一个元素n，返回元素n的位置     index 0 1 2 3 4 5 6 7 8     num 2 3 5 8 13 21 34 55 89     查找元素5的位置 方法初始化: ​    start = 0;end = 8;mid = 4  nums[mid] = 13;start = 0;end = 4,mid">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-08-13-20-33.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/07/【九章算法基础班】二分法/"/>
+
+
+
+
+
+  <title>【九章算法基础班】二分法 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/07/【九章算法基础班】二分法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法基础班】二分法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-07T21:22:14+08:00">
+                2017-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,543
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  28
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="classical-Binary-Search"><a href="#classical-Binary-Search" class="headerlink" title="classical Binary Search"></a>classical Binary Search</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><p>给定一个排序数组和一个元素n，返回元素n的位置</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>num</td>
+<td>2</td>
+<td>3</td>
+<td>5</td>
+<td>8</td>
+<td>13</td>
+<td>21</td>
+<td>34</td>
+<td>55</td>
+<td>89</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>查找元素5的位置</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>初始化:</p>
+<p>​    start = 0;end = 8;mid = 4</p>
+<ol>
+<li>nums[mid] = 13;start = 0;end = 4,mid = 2</li>
+<li>nums[mid] = 5;find it!</li>
+</ol>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">数据规模为n:</div><div class="line">T(n) = T(n/<span class="number">2</span>)+O(<span class="number">1</span>)</div><div class="line">其中O(<span class="number">1</span>)为比较的时间复杂度，T(n/<span class="number">2</span>)为比较之后</div><div class="line">时间复杂度是:O(logn)</div></pre></td></tr></table></figure>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><ol>
+<li><p>递归：</p>
+<ul>
+<li>优点：代码简洁</li>
+<li>缺点：递归利用栈空间，递归层数过多会导致栈溢出</li>
+</ul>
+</li>
+<li><p>while循环</p>
+<ul>
+<li>优点：占用空间小</li>
+<li>缺点：代码可读性稍差，不够简洁</li>
+</ul>
+<p>面试的时候用什么？</p>
+<p>如果用递归的方式写会好理解很多，就用递归写，不然就不用递归，在工程上，递归很容易导致栈溢出。</p>
+</li>
+</ol>
+<p>这道题用最好用非递归的方式写，因为是很简短的</p>
+<h3 id="通用模板"><a href="#通用模板" class="headerlink" title="通用模板"></a>通用模板</h3><ul>
+<li>start + 1 &lt; end</li>
+<li>mid = start +(end - start)/2;如果用(start + end)/2，如果start和end都很大相加就有可能溢出</li>
+<li>A[mid] = &lt; &gt; 三种情况讨论</li>
+<li>A[start] A[end]?target</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findPosition</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (nums.length &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end) &#123;</div><div class="line">            <span class="comment">//中值</span></div><div class="line">            <span class="keyword">int</span> mid = start + (end - start) / <span class="number">2</span>;</div><div class="line">            <span class="comment">//三种情况讨论</span></div><div class="line">            <span class="keyword">if</span> (nums[mid] == target) &#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (nums[mid] &lt; target) &#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (nums[mid] &gt; target) &#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//结果</span></div><div class="line">        <span class="keyword">if</span> (nums[start] == target) &#123;</div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (nums[end] == target) &#123;</div><div class="line">            <span class="keyword">return</span> end;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="相关题目"><a href="#相关题目" class="headerlink" title="相关题目"></a>相关题目</h2><h3 id="Search-for-a-Range"><a href="#Search-for-a-Range" class="headerlink" title="Search for a Range"></a><a href="https://leetcode.com/problems/search-for-a-range" target="_blank" rel="external">Search for a Range</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an array of integers sorted in ascending order, find the starting and ending position of a given target value.</p>
+<p>Your algorithm’s runtime complexity must be in the order of <em>O</em>(log <em>n</em>).</p>
+<p>If the target is not found in the array, return <code>[-1, -1]</code>.</p>
+<p>For example,<br>Given <code>[5, 7, 7, 8, 8, 10]</code> and target value 8,<br>return <code>[3, 4]</code>.</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>需要分别找到n<strong>第一次出现的位置</strong>和<strong>最后一次出现的位置</strong>，返回即可。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] searchRange(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</div><div class="line">        <span class="keyword">int</span>[] result = &#123;-<span class="number">1</span>,-<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">if</span>(nums.length &lt;=<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> result;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length -<span class="number">1</span>;</div><div class="line">        <span class="comment">//寻找第一次出现的位置</span></div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start +(end-start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(nums[mid] == target)&#123;</div><div class="line">                <span class="comment">//第一次出现的位置，在前半段，end前移</span></div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(nums[start] == target)&#123;</div><div class="line">            result[<span class="number">0</span>] = start;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[end] == target)&#123;</div><div class="line">            result[<span class="number">0</span>] = end;</div><div class="line">        &#125;</div><div class="line">        start = <span class="number">0</span>;</div><div class="line">        end = nums.length -<span class="number">1</span>;</div><div class="line">        <span class="comment">//寻找最后一次出现的位置</span></div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start +(end-start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(nums[mid] == target)&#123;</div><div class="line">                <span class="comment">//第一次出现的位置，在后半段，start后移</span></div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(nums[end] == target)&#123;</div><div class="line">            result[<span class="number">1</span>] = end;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[start] == target)&#123;</div><div class="line">            result[<span class="number">1</span>] = start;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Search-Insert-Position"><a href="#Search-Insert-Position" class="headerlink" title="Search Insert Position"></a><a href="https://leetcode.com/problems/search-insert-position" target="_blank" rel="external">Search Insert Position</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a sorted array and a target value, return the index if the target is found. If not, return the index where it would be if it were inserted in order.</p>
+<p>You may assume no duplicates in the array.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [1,3,5,6], 5</div><div class="line">&gt; Output: 2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [1,3,5,6], 2</div><div class="line">&gt; Output: 1</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 3:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [1,3,5,6], 7</div><div class="line">&gt; Output: 4</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [1,3,5,6], 0</div><div class="line">&gt; Output: 0</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>二分法的问题一般都是找满足条件的firstposition和lastposition.</p>
+<p>这道题是需要找到firstposition &gt;= targrt，第一个&gt;=target的位置。</p>
+<p>while结束后，需要找firstposition的话先判断start，找lastposition的话先判断end。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">           <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">searchInsert</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(nums.length &lt;=<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length -<span class="number">1</span>;</div><div class="line">        <span class="comment">//寻找第一次出现的位置</span></div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start +(end-start)/<span class="number">2</span>;</div><div class="line">            <span class="comment">//找到了</span></div><div class="line">            <span class="keyword">if</span>(nums[mid] == target)&#123;</div><div class="line">                <span class="keyword">return</span> mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[mid] &lt; target)&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(nums[mid] &gt; target)&#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//没找到target,在start和end中找比target大的</span></div><div class="line">        <span class="comment">//start&gt;=tartget</span></div><div class="line">        <span class="keyword">if</span>(nums[start] &gt;= target)&#123;</div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//end&gt;=tartget</span></div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (nums[end] &gt;= target)&#123;</div><div class="line">            <span class="keyword">return</span> end;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums中所有元素都比target小</span></div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> end+<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Search-a-2D-Matrix"><a href="#Search-a-2D-Matrix" class="headerlink" title="Search a 2D Matrix"></a><a href="https://leetcode.com/problems/search-a-2d-matrix" target="_blank" rel="external">Search a 2D Matrix</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Write an efficient algorithm that searches for a value in an <em>m</em> x <em>n</em> matrix. This matrix has the following properties:</p>
+<ul>
+<li>Integers in each row are sorted from left to right.</li>
+<li>The first integer of each row is greater than the last integer of the previous row.</li>
+</ul>
+<p>For example,</p>
+<p>Consider the following matrix:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [1,   3,  5,  7],</div><div class="line">&gt;   [10, 11, 16, 20],</div><div class="line">&gt;   [23, 30, 34, 50]</div><div class="line">&gt; ]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Given <strong>target</strong> = <code>3</code>, return <code>true</code>.</p>
+</blockquote>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>两种做法：</p>
+<ol>
+<li><p>先按每行的首个数字二分确定target所在的行，再在这行里二分。</p>
+</li>
+<li><p>看成一维数组，二分查找，其中看成一维数组的序号n和二维数组中行号、列号对应关系为：</p>
+<p>r = n/columns;</p>
+<p>c = n%columns;</p>
+</li>
+</ol>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchA2DMatrix</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="comment">//空矩阵判断</span></div><div class="line">        <span class="keyword">int</span> rows = matrix.length;</div><div class="line">        <span class="keyword">if</span>(rows &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span>  <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">if</span>(cols &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span>  <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = rows*cols -<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start+<span class="number">1</span> &lt;end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start+(end-start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">int</span> r = mid/cols;</div><div class="line">            <span class="keyword">int</span> c = mid%cols;</div><div class="line">            <span class="keyword">if</span> (matrix[r][c] == target)&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(matrix[r][c] &lt; target)&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(matrix[r][c] &gt; target)&#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(matrix[start/cols][start%cols]==target)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(matrix[end/cols][end%cols]==target)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Search-a-2D-Matrix-II"><a href="#Search-a-2D-Matrix-II" class="headerlink" title="Search a 2D Matrix II"></a><a href="https://leetcode.com/problems/search-a-2d-matrix-ii" target="_blank" rel="external">Search a 2D Matrix II</a></h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Write an efficient algorithm that searches for a value in an <em>m</em> x <em>n</em> matrix. This matrix has the following properties:</p>
+<ul>
+<li>Integers in each row are sorted in ascending from left to right.</li>
+<li>Integers in each column are sorted in ascending from top to bottom.</li>
+</ul>
+<p>For example,</p>
+<p>Consider the following matrix:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [1,   4,  7, 11, 15],</div><div class="line">&gt;   [2,   5,  8, 12, 19],</div><div class="line">&gt;   [3,   6,  9, 16, 22],</div><div class="line">&gt;   [10, 13, 14, 17, 24],</div><div class="line">&gt;   [18, 21, 23, 26, 30]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Given <strong>target</strong> = <code>5</code>, return <code>true</code>.</p>
+<p>Given <strong>target</strong> = <code>20</code>, return <code>false</code>.</p>
+</blockquote>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><ul>
+<li>方法一：</li>
+</ul>
+<p>从对角线开始二分找， 找到第一个&gt;=target的位置，将大矩形分割成4个小矩形，分两种情况讨论：</p>
+<ol>
+<li>元素 = target，返回true</li>
+<li>元素 &gt; target，左上角的矩阵中元素 &lt; target，右下角矩阵中的元素都 &gt; target，都不可能有符合条件的值了，所以只需继续在左下角和右上角的矩阵中继续寻找。</li>
+</ol>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-12-08-13-20-33.png" alt=""> </p>
+<p>​    时间复杂度分析：</p>
+<p><script type="math/tex">T(n) = 2T(n/4)+O(log\sqrt{n})</script>，其中<script type="math/tex">\sqrt{n}</script>为对角线元素个数。</p>
+<ul>
+<li><p>方法二：</p>
+<p>矩阵特点：每一行和每一列递增</p>
+<p>从左下角往右上角找，有如下三种情况：</p>
+</li>
+</ul>
+<ol>
+<li>元素 = target，返回true</li>
+<li>元素 &lt; target，下一步向右走，因为右边的元素都大于当前元素，上方元素小于当前元素</li>
+<li>元素 &gt; target，下一步向上走，因为右边的元素都大于当前元素，上方元素小于当前元素</li>
+</ol>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-12-08-09-51-55.png" alt=""> </p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">searchMatrix</span><span class="params">(<span class="keyword">int</span>[][] matrix, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = matrix.length;</div><div class="line">        <span class="keyword">if</span>(rows &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">if</span>(cols &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> r = rows-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> c = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(r &gt;=<span class="number">0</span> &amp;&amp; c &lt;cols)&#123;</div><div class="line">            <span class="keyword">if</span>(matrix[r][c]==target)&#123;</div><div class="line">                <span class="keyword">return</span>  <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[r][c] &lt; target)&#123;</div><div class="line">                c++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(matrix[r][c] &gt; target)&#123;</div><div class="line">                r--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div></pre></td></tr></table></figure>
+<h3 id="First-Bad-Version"><a href="#First-Bad-Version" class="headerlink" title="First Bad Version"></a><a href="https://leetcode.com/problems/first-bad-version" target="_blank" rel="external">First Bad Version</a></h3><h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>You are a product manager and currently leading a team to develop a new product. Unfortunately, the latest version of your product fails the quality check. Since each version is developed based on the previous version, all the versions after a bad version are also bad.</p>
+<p>Suppose you have <code>n</code> versions <code>[1, 2, ..., n]</code> and you want to find out the first bad one, which causes all the following ones to be bad.</p>
+<p>You are given an API <code>bool isBadVersion(version)</code> which will return whether <code>version</code> is bad. Implement a function to find the first bad version. You should minimize the number of calls to the API.</p>
+</blockquote>
+<h4 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>有1到n个版本，找到第一个错误版本的位置。利用从第一个错误的开始之后后面的都是错的，用二分查找到第一个错误版本。</p>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">firstBadVersion</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> start = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> end = n;</div><div class="line">    <span class="keyword">while</span>(start + <span class="number">1</span> &lt; end)&#123;</div><div class="line">        <span class="keyword">int</span> mid = start+(end=start)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(isBadVersion(mid))&#123;</div><div class="line">            end = mid;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            start = mid;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(isBadVersion(start))&#123;</div><div class="line">        <span class="keyword">return</span> start;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(isBadVersion(end))&#123;</div><div class="line">        <span class="keyword">return</span> end;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Find-Peak-Element"><a href="#Find-Peak-Element" class="headerlink" title="Find Peak Element"></a><a href="https://leetcode.com/problems/find-peak-element" target="_blank" rel="external">Find Peak Element</a></h3><h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>A peak element is an element that is greater than its neighbors.</p>
+<p>Given an input array where <code>num[i] ≠ num[i+1]</code>, find a peak element and return its index.</p>
+<p>The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.</p>
+<p>You may imagine that <code>num[-1] = num[n] = -∞</code>.</p>
+<p>For example, in array <code>[1, 2, 3, 1]</code>, 3 is a peak element and your function should return the index number 2.</p>
+</blockquote>
+<h4 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>给定一个数组，返回peak的元素（左边右边都比自己小），如果有多个返回任意一个即可，要求时间复杂度为O(logn)</p>
+<p>遇到O(logn)要考虑到二分法：</p>
+<p>二分法选取mid元素，其跟左右元素的关系有如下四中情况：</p>
+<ol>
+<li>两边元素都比mid小，mid就是peak,，返回</li>
+<li>两边元素都比mid大，左右都有可能有peak，任选一边二分</li>
+<li>左边小又边大，右边一定有peak，继续对右边二分</li>
+<li>左边大右边小，左边一定有peak，继续对左边二分</li>
+</ol>
+<p>需要注意的地方：</p>
+<p>因为要将元素跟其左边和右边的元素比较，所以为了<strong>避免越界，初始需要将start设为1，end设为length-1</strong>；还需要把两个边界值设为负无穷，确保边界值也可以被选上。</p>
+<h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findPeakElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(nums.length == <span class="number">1</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">long</span>[] nums2 = <span class="keyword">new</span> <span class="keyword">long</span>[nums.length+<span class="number">2</span>];</div><div class="line">    nums2[<span class="number">0</span>] = -Long.MAX_VALUE;</div><div class="line">    nums2[nums.length+<span class="number">1</span>] = -Long.MAX_VALUE;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</div><div class="line">        nums2[i+<span class="number">1</span>] = nums[i];</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//遇到这种需要判断元素左右的将start设为1，end设为len-2,放置越界</span></div><div class="line">    <span class="keyword">int</span> start = <span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> end = nums2.length-<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(start+<span class="number">1</span>&lt;end)&#123;</div><div class="line">        <span class="keyword">int</span> mid = start + (end-start)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>((nums2[mid] &gt; nums2[mid+<span class="number">1</span>]) &amp;&amp; (nums2[mid] &gt; nums2[mid-<span class="number">1</span>]))&#123;</div><div class="line">            <span class="keyword">return</span> mid-<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>((nums2[mid] &lt; nums2[mid+<span class="number">1</span>]) &amp;&amp; (nums2[mid] &lt; nums2[mid-<span class="number">1</span>]))&#123;</div><div class="line">            start = mid;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((nums2[mid] &gt; nums2[mid+<span class="number">1</span>]) &amp;&amp; (nums2[mid] &lt; nums2[mid-<span class="number">1</span>]))&#123;</div><div class="line">            end = mid;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            start = mid;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(nums2[start] &lt; nums2[end])&#123;</div><div class="line">        <span class="keyword">return</span>  end-<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="keyword">return</span> start-<span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Find-Minimum-in-Rotated-Sorted-Array"><a href="#Find-Minimum-in-Rotated-Sorted-Array" class="headerlink" title="Find Minimum in Rotated Sorted Array"></a><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array" target="_blank" rel="external">Find Minimum in Rotated Sorted Array</a></h3><h4 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., <code>0 1 2 4 5 6 7</code> might become <code>4 5 6 7 0 1 2</code>).</p>
+<p>Find the minimum element.</p>
+<p>You may assume no duplicate exists in the array.</p>
+</blockquote>
+<h4 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">递增数组：</div><div class="line">              ↗</div><div class="line">            ↗</div><div class="line">          ↗</div><div class="line">        ↗</div><div class="line">      ↗</div><div class="line">    ↗</div><div class="line">  ↗</div><div class="line">↗</div><div class="line">旋转数组：</div><div class="line">旋转数组，分成两段上升数组：</div><div class="line">              ↗|</div><div class="line">            ↗  |</div><div class="line">          ↗    |</div><div class="line">        ↗      |</div><div class="line">      ↗        |</div><div class="line">---------------|------------------</div><div class="line">               |    ↗</div><div class="line">               |  ↗</div><div class="line">               |↗</div><div class="line">      ↑     ↑        ↑</div><div class="line">    start  mid      end</div><div class="line">用二分法，判断mid与end的大小，确定mid位于两段上升数组的哪一段：</div><div class="line"><span class="number">1</span>. nums[mid] &lt; nums[end]:</div><div class="line">	mid在后段上升数组中，end = mid</div><div class="line"><span class="number">2</span>. nums[mid] &gt; nums[end]:</div><div class="line">	mid在前段上升数组中，start = mid</div></pre></td></tr></table></figure>
+<h4 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">  <span class="keyword">int</span> end = nums.length-<span class="number">1</span>;</div><div class="line">  <span class="keyword">while</span> (start+<span class="number">1</span>&lt;end)&#123;</div><div class="line">    <span class="keyword">int</span> mid = start+(end-start)/<span class="number">2</span>;</div><div class="line">    <span class="keyword">if</span>(nums[mid] &lt; nums[end])&#123;</div><div class="line">      end = mid;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(nums[mid] &gt; nums[end])&#123;</div><div class="line">      start = mid;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(nums[start] &gt; nums[end])&#123;</div><div class="line">    <span class="keyword">return</span> nums[end];</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">return</span> nums[start];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Find-Minimum-in-Rotated-Sorted-Array-II"><a href="#Find-Minimum-in-Rotated-Sorted-Array-II" class="headerlink" title="Find Minimum in Rotated Sorted Array II"></a><a href="https://leetcode.com/problems/find-minimum-in-rotated-sorted-array-ii" target="_blank" rel="external">Find Minimum in Rotated Sorted Array II</a></h3><h4 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<blockquote>
+<p><em>Follow up</em> for “Find Minimum in Rotated Sorted Array”:<br>What if <em>duplicates</em> are allowed?</p>
+<p>Would this affect the run-time complexity? How and why?</p>
+</blockquote>
+<p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., <code>0 1 2 4 5 6 7</code> might become <code>4 5 6 7 0 1 2</code>).</p>
+<p>Find the minimum element.</p>
+<p>The array may contain duplicates.</p>
+</blockquote>
+<p>延续上一题，有重复数字的旋转数组，找到最小的值。</p>
+<h4 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h4><p>如果存在重复元素，无法使用二分查找使得时间复杂度为O(logn)，最坏时间复杂度只能是o(n)。</p>
+<p>证明方法：<strong>黑盒测试</strong></p>
+<p>假设给定的数组中有一个1和n-1个2，此时mid=2，无法判断1在哪边。</p>
+<h4 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findMin</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> min = Integer.MAX_VALUE;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length;i++)&#123;</div><div class="line">    <span class="keyword">if</span>(nums[i] &lt; min)&#123;</div><div class="line">      min = nums[i];</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> min;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Search-in-Rotated-Sorted-Array"><a href="#Search-in-Rotated-Sorted-Array" class="headerlink" title="Search in Rotated Sorted Array"></a><a href="https://leetcode.com/problems/search-in-rotated-sorted-array" target="_blank" rel="external">Search in Rotated Sorted Array</a></h3><h4 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.</p>
+<p>(i.e., <code>0 1 2 4 5 6 7</code> might become <code>4 5 6 7 0 1 2</code>).</p>
+<p>You are given a target value to search. If found in the array return its index, otherwise return -1.</p>
+<p>You may assume no duplicate exists in the array.</p>
+</blockquote>
+<p>给定一个旋转递增数组和一个数，返回数在数组中的位置。</p>
+<h4 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h4><p>二分法</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">递增数组：</div><div class="line">              ↗</div><div class="line">            ↗</div><div class="line">          ↗</div><div class="line">        ↗</div><div class="line">      ↗</div><div class="line">    ↗</div><div class="line">  ↗</div><div class="line">↗</div><div class="line"></div><div class="line">旋转数组，分成两段上升数组：</div><div class="line">              ↗|</div><div class="line">            ↗  |</div><div class="line">          ↗    |</div><div class="line">        ↗      |</div><div class="line">      ↗        |</div><div class="line">---------------|------------------</div><div class="line">               |    ↗</div><div class="line">               |  ↗</div><div class="line">               |↗</div><div class="line">      ↑     ↑        ↑</div><div class="line">    start  mid      end</div><div class="line">二分法，mid和end比较：</div><div class="line"><span class="number">1</span>. nums[mid] &gt; nums[end]：</div><div class="line">	mid在第一段上升区间，跟target比较：</div><div class="line">		<span class="number">1</span>. 如果target在start和mid之间，end= mid</div><div class="line">		<span class="number">2</span>. 否则，start = mid,继续做二分查找，仍然是一个search in rotated sorted array问题</div><div class="line"><span class="number">2</span>. nums[mid] &lt; nums[end]：</div><div class="line">	mid在第二段上升区间，跟target比较：</div><div class="line">		<span class="number">1</span>. 如果target在mid和end之间，end= mid</div><div class="line">		<span class="number">2</span>. 否则，start = mid,继续做二分查找，仍然是一个search in rotated sorted array问题</div></pre></td></tr></table></figure>
+<h4 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SearchInRotatedSortedArray</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(nums.length &lt;= <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start+<span class="number">1</span> &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start+(end-start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(target == nums[mid])&#123;</div><div class="line">                <span class="keyword">return</span> mid;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//mid在第一个上升区间</span></div><div class="line">            <span class="keyword">if</span>(nums[mid] &gt; nums[end])&#123;</div><div class="line">                <span class="keyword">if</span>(target &lt; nums[mid] &amp;&amp; target &gt;= nums[start])&#123;</div><div class="line">                    end = mid;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    start = mid;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">///mid在第二个上升区间</span></div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">if</span>(target &gt; nums[mid] &amp;&amp; target &lt;= nums[end])&#123;</div><div class="line">                    start = mid;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    end = mid;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(nums[start] == target)&#123;</div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(nums[end] == target)&#123;</div><div class="line">            <span class="keyword">return</span> end;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Search-in-Rotated-Sorted-Array-II"><a href="#Search-in-Rotated-Sorted-Array-II" class="headerlink" title="Search in Rotated Sorted Array II"></a><a href="https://leetcode.com/problems/search-in-rotated-sorted-array-ii" target="_blank" rel="external">Search in Rotated Sorted Array II</a></h3><p>有重复元素，无法二分查找，时间复杂度为O(n)，遍历查找即可。</p>
+<h3 id="Merge-Sorted-Array"><a href="#Merge-Sorted-Array" class="headerlink" title="Merge Sorted Array"></a><a href="https://leetcode.com/problems/merge-sorted-array" target="_blank" rel="external">Merge Sorted Array</a></h3><h4 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p> Given two sorted integer arrays <em>nums1</em> and <em>nums2</em>, merge <em>nums2</em> into <em>nums1</em> as one sorted array.</p>
+<p> <strong>Note:</strong><br> You may assume that <em>nums1</em> has enough space (size that is greater or equal to <em>m</em> + <em>n</em>) to hold additional elements from <em>nums2</em>. The number of elements initialized in <em>nums1</em> and <em>nums2</em> are <em>m</em> and <em>n</em> respectively.</p>
+</blockquote>
+<h4 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h4><p>合并连个有序数组，把S2并入S1，假设S1有足够大的空间。</p>
+<p>考点：从后往前合并，因为后面的空间是空的，不会覆盖原有元素。</p>
+<h4 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MergeSortedArray</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span> m, <span class="keyword">int</span>[] nums2, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> end1 = m-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> end2 = n-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> end = m+n-<span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (end1 &gt;=<span class="number">0</span> &amp;&amp; end2&gt;=<span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">if</span>(nums1[end1] &lt; nums2[end2])&#123;</div><div class="line">                nums1[end] = nums2[end2];</div><div class="line">                end2--;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                nums1[end] = nums1[end1];</div><div class="line">                end1--;</div><div class="line">            &#125;</div><div class="line">            end--;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums1元素剩下了</span></div><div class="line">        <span class="keyword">if</span> (end1 &gt;= <span class="number">0</span>) &#123;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums2元素剩下了</span></div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (end2 &gt;=<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">while</span> (end2 &gt;= <span class="number">0</span>)&#123;</div><div class="line">                nums1[end] = nums2[end2];</div><div class="line">                end--;</div><div class="line">                end2--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Median-of-Two-Sorted-Arrays"><a href="#Median-of-Two-Sorted-Arrays" class="headerlink" title="Median of Two Sorted Arrays"></a><a href="https://leetcode.com/problems/median-of-two-sorted-arrays" target="_blank" rel="external">Median of Two Sorted Arrays</a></h3><h4 id="题目-10"><a href="#题目-10" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>There are two sorted arrays <strong>nums1</strong> and <strong>nums2</strong> of size m and n respectively.</p>
+<p>Find the median of the two sorted arrays. The overall run time complexity should be O(log (m+n)).</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; nums1 = [1, 3]</div><div class="line">&gt; nums2 = [2]</div><div class="line">&gt;</div><div class="line">&gt; The median is 2.0</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; nums1 = [1, 2]</div><div class="line">&gt; nums2 = [3, 4]</div><div class="line">&gt;</div><div class="line">&gt; The median is (2 + 3)/2 = 2.5</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h4><p>令nums1.length = m;nums2.length = n;总长度m+n。先确定中位数m是多少:</p>
+<ol>
+<li><p>(m+n)%2 == 0:</p>
+<p>m=(m+n)/2,(m+n)/2+1</p>
+</li>
+<li><p>(m+n)%2 == 1:</p>
+<p> m=(m+n)/2</p>
+</li>
+</ol>
+<p>问题转化为找<strong>两个有序数组的第K大</strong>的问题，如果用merge的方法获得merge之后的排序数组需要O(m+n)的时间复杂度，题目要求使用O(log(m+n))的时间复杂度，所以需要使用二分法：</p>
+<p>如果A[k/2] &lt;= B[k/2]：A的前k/2个数一定都在A、B合并后的前K个数中，去掉A的前k/2个元素，继续寻找A和B的第m-k/2个元素。</p>
+<p>如果A[k/2] &gt; B[k/2]：B的前k/2个数一定都在A、B合并后的前K个数中，去掉B的前k/2个元素，继续寻找A和B的第m-k/2个元素。</p>
+<p>如果A[k/2]越界，A中剩余元素不足k/2个，则B中前k/2个元素一定在前K个中，去掉B的前k/2个元素，继续寻找A和B的第m-k/2个元素。</p>
+<p>如果B[k/2]越界，B中剩余元素不足k/2个，则A中前k/2个元素一定在前K个中，去掉A的前k/2个元素，继续寻找A和B的第m-k/2个元素。</p>
+<p>边界条件判断：</p>
+<ol>
+<li>nums1中没有元素了,直接返回nums2中的第k个</li>
+<li>nums2中没有元素了,直接返回nums1中的第k个</li>
+<li>k == 1，递归出口，直接返回min(nums1[start1],nums2[start2])</li>
+</ol>
+<h4 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MedianOfTwoSortedArrays</span> </span>&#123;</div><div class="line">    <span class="comment">//两个sorted array merge 寻找第k大的元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKth</span><span class="params">(<span class="keyword">int</span>[] nums1,<span class="keyword">int</span>[] nums2,<span class="keyword">int</span> k,<span class="keyword">int</span> start1,<span class="keyword">int</span> start2)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> end1 = nums1.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> end2 = nums2.length - <span class="number">1</span>;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> Math.min(nums1[start1],nums2[start2]);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums1空了，</span></div><div class="line">        <span class="keyword">if</span>(start1 &gt; end1)&#123;</div><div class="line">            <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums2空了</span></div><div class="line">        <span class="keyword">if</span>(start2 &gt; end2)&#123;</div><div class="line">            <span class="keyword">return</span> nums1[start1 + k -<span class="number">1</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums1的前k/2个元素已经超过nums1中剩余的所有元素个数</span></div><div class="line">        <span class="comment">//那么nums2的前k/2个元素都包含在前k个元素中</span></div><div class="line">        <span class="keyword">if</span>(start1 + k/<span class="number">2</span> - <span class="number">1</span> &gt; end1)&#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1,nums2,k-k/<span class="number">2</span>,start1,start2+k/<span class="number">2</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums2的前k/2个元素已经超过nums2中剩余的所有元素个数</span></div><div class="line">        <span class="comment">//那么nums1的前k/2个元素都包含在前k个元素中</span></div><div class="line">        <span class="keyword">if</span>(start2 + k/<span class="number">2</span> - <span class="number">1</span> &gt; end2)&#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1,nums2,k-k/<span class="number">2</span>,start1+k/<span class="number">2</span>,start2);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//nums和nums2的前k/2个元素都没有超过个字的末尾</span></div><div class="line">        <span class="keyword">if</span>(nums1[start1 + k/<span class="number">2</span> - <span class="number">1</span>] &lt;nums2[start2+k/<span class="number">2</span>-<span class="number">1</span>])&#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1,nums2,k-k/<span class="number">2</span>,start1+k/<span class="number">2</span>,start2);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1,nums2,k-k/<span class="number">2</span>,start1,start2+k/<span class="number">2</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> len1 = nums1.length;</div><div class="line">        <span class="keyword">int</span> len2 = nums2.length;</div><div class="line">        <span class="keyword">int</span> k = (len1+len2)/<span class="number">2</span>;<span class="comment">//中位数</span></div><div class="line">        <span class="keyword">if</span>((len1+len2)%<span class="number">2</span> == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">int</span> k1 = findKth(nums1,nums2,k,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">            <span class="keyword">int</span> k2 = findKth(nums1,nums2,k+<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">            <span class="keyword">return</span> (<span class="keyword">double</span>) (k1+k2)/<span class="number">2.0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> findKth(nums1,nums2,k+<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        MedianOfTwoSortedArrays test = <span class="keyword">new</span> MedianOfTwoSortedArrays();</div><div class="line">        <span class="keyword">int</span>[] nums1 = &#123;<span class="number">1</span>,<span class="number">3</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] nums2 = &#123;<span class="number">2</span>&#125;;</div><div class="line">        <span class="keyword">double</span> res = test.findMedianSortedArrays(nums1,nums2);</div><div class="line">        System.out.println(res);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Wood-Cut"><a href="#Wood-Cut" class="headerlink" title="Wood Cut"></a><a href="http://www.lintcode.com/en/problem/wood-cut/" target="_blank" rel="external">Wood Cut</a></h3><h4 id="题目-11"><a href="#题目-11" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given n pieces of wood with length <code>L[i]</code> (integer array). Cut them into small pieces to guarantee you could have equal or more than k pieces with the same length. What is the longest length you can get from the n pieces of wood? Given L &amp; k, return the maximum length of the small pieces.</p>
+<h5 id="Notice"><a href="#Notice" class="headerlink" title="Notice"></a>Notice</h5><p>You couldn’t cut wood into float length.</p>
+<p>If you couldn’t get &gt;= <em>k</em> pieces, return <code>0</code>.</p>
+<p>Example</p>
+<p>For <code>L=[232, 124, 456]</code>, <code>k=7</code>, return <code>114</code>.</p>
+</blockquote>
+<h4 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h4><p>给定一些长度为L[i]的木料，将他们据成k段，返回满足条件的最大长度。</p>
+<p>先找到木料中最长的那块，长度为m然后对m进行二分法，判断这些木料是否可以据成长度为mid，个数&gt;=k个木料：</p>
+<ol>
+<li>如果可以，start = mid，进一步二分看是否可以据成更长的</li>
+<li>如果不可以，end = mid，进一步二分据成更短的小段</li>
+</ol>
+<p>代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="comment">/*</span></div><div class="line"><span class="comment">     * @param L: Given n pieces of wood with length L[i]</span></div><div class="line"><span class="comment">     * @param k: An integer</span></div><div class="line"><span class="comment">     * @return: The maximum length of the small pieces</span></div><div class="line"><span class="comment">     */</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">count</span><span class="params">(<span class="keyword">int</span>[] L,<span class="keyword">int</span> len)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt;L.length;i++)&#123;</div><div class="line">            sum += L[i]/len;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> sum;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">woodCut</span><span class="params">(<span class="keyword">int</span>[] L, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="comment">// 找到最长的wood，</span></div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; L.length;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(L[i] &gt; max)&#123;</div><div class="line">                max = L[i];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//对要切割的wood长度做二分法</span></div><div class="line">        <span class="keyword">int</span> start = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> end = max;</div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start + (end - start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(count(L,mid) &gt;= k)&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(count(L,end) &gt;= k)&#123;</div><div class="line">            <span class="keyword">return</span> end;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(count(L,start) &gt;= k)&#123;</div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Count-of-Smaller-Numbers-After-Self"><a href="#Count-of-Smaller-Numbers-After-Self" class="headerlink" title="Count of Smaller Numbers After Self"></a><a href="https://leetcode.com/problems/count-of-smaller-numbers-after-self/description/" target="_blank" rel="external">Count of Smaller Numbers After Self</a></h3><h3 id="Sqrt-x"><a href="#Sqrt-x" class="headerlink" title=" Sqrt(x)"></a><a href="https://leetcode.com/problems/sqrtx/description/" target="_blank" rel="external"> Sqrt(x)</a></h3><h4 id="题目-12"><a href="#题目-12" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Implement <code>int sqrt(int x)</code>.</p>
+<p>Compute and return the square root of <em>x</em>.</p>
+<p><strong>x</strong> is guaranteed to be a non-negative integer.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: 4</div><div class="line">&gt; Output: 2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: 8</div><div class="line">&gt; Output: 2</div><div class="line">&gt; Explanation: The square root of 8 is 2.82842..., and since we want to return an integer, the decimal part will be truncated.</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h4><p>输入数字x，返回根号x，只保留整数部分</p>
+<p>思路就是找到最后一个number k，满足条件k^2 &lt; x，则k就是结果</p>
+<h4 id="代码-11"><a href="#代码-11" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">mySqrt</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(x==<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> start = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> end = x;</div><div class="line">        <span class="keyword">while</span> (start + <span class="number">1</span> &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start+(end-start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(mid * mid &lt;= x)&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(end*end &lt;= x)&#123;</div><div class="line">            <span class="keyword">return</span> end;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Rotate-Array"><a href="#Rotate-Array" class="headerlink" title="Rotate Array"></a><a href="https://leetcode.com/problems/rotate-array/description/" target="_blank" rel="external">Rotate Array</a></h3><blockquote>
+<p>Rotate an array of <em>n</em> elements to the right by <em>k</em> steps.</p>
+<p>For example, with <em>n</em> = 7 and <em>k</em> = 3, the array <code>[1,2,3,4,5,6,7]</code> is rotated to <code>[5,6,7,1,2,3,4]</code>.</p>
+</blockquote>
+<h4 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h4><p>三步翻转法：</p>
+<ol>
+<li><p>翻转左半段</p>
+<p>4,3,2,1,5,6,7</p>
+</li>
+<li><p>翻转右半段</p>
+<p>4,3,2,1,7,6,5</p>
+</li>
+<li><p>翻转整体</p>
+<p>5,6,7,1,2,3,4</p>
+</li>
+</ol>
+<h4 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        k = k % nums.length;</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length - k - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> temp = nums[start];</div><div class="line">            nums[start] = nums[end];</div><div class="line">            nums[end] = temp;</div><div class="line">            start++;</div><div class="line">            end--;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        start = nums.length - k;</div><div class="line">        end = nums.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> temp = nums[start];</div><div class="line">            nums[start] = nums[end];</div><div class="line">            nums[end] = temp;</div><div class="line">            start++;</div><div class="line">            end--;</div><div class="line">        &#125;</div><div class="line">        start = <span class="number">0</span>;</div><div class="line">        end = nums.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> temp = nums[start];</div><div class="line">            nums[start] = nums[end];</div><div class="line">            nums[end] = temp;</div><div class="line">            start++;</div><div class="line">            end--;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Reverse-Words-in-a-String-II"><a href="#Reverse-Words-in-a-String-II" class="headerlink" title="Reverse Words in a String II"></a><a href="https://leetcode.com/problems/reverse-words-in-a-string-ii/description/" target="_blank" rel="external">Reverse Words in a String II</a></h3><h4 id="题目-13"><a href="#题目-13" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an input string, reverse the string word by word. A word is defined as a sequence of non-space characters.</p>
+<p>The input string does not contain leading or trailing spaces and the words are always separated by a single space.</p>
+<p>For example,<br>Given s = “<code>the sky is blue</code>“,<br>return “<code>blue is sky the</code>“.</p>
+<p>Could you do it <em>in-place</em> without allocating extra space?</p>
+</blockquote>
+<h4 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h4><p>三步翻转法</p>
+<h4 id="代码-13"><a href="#代码-13" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reverseWords</span><span class="params">(<span class="keyword">char</span>[] str)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> end = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(end &lt; str.length)&#123;</div><div class="line">        <span class="keyword">while</span>(end &lt; str.length &amp;&amp; str[end] != <span class="string">' '</span>)&#123;</div><div class="line">            end++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> stop = end-<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start &lt;= stop)&#123;</div><div class="line">            <span class="keyword">char</span> temp = str[start];</div><div class="line">            str[start] = str[stop];</div><div class="line">            str[stop] = temp;</div><div class="line">            start++;</div><div class="line">            stop--;</div><div class="line">        &#125;</div><div class="line">        start = end+<span class="number">1</span>;</div><div class="line">        end = end+<span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    start = <span class="number">0</span>;</div><div class="line">    end = str.length-<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(start &lt;= end)&#123;</div><div class="line">        <span class="keyword">char</span> temp = str[start];</div><div class="line">        str[start] = str[end];</div><div class="line">        str[end] = temp;</div><div class="line">        start++;</div><div class="line">        end--;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Find-the-Duplicate-Number"><a href="#Find-the-Duplicate-Number" class="headerlink" title="Find the Duplicate Number"></a><a href="https://leetcode.com/problems/find-the-duplicate-number/" target="_blank" rel="external">Find the Duplicate Number</a></h3><h4 id="题目-14"><a href="#题目-14" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an array <em>nums</em> containing <em>n</em> + 1 integers where each integer is between 1 and <em>n</em> (inclusive), prove that at least one duplicate number must exist. Assume that there is only one duplicate number, find the duplicate one.</p>
+<p><strong>Note:</strong></p>
+<ol>
+<li>You <strong>must not</strong> modify the array (assume the array is read only).</li>
+<li>You must use only constant, <em>O</em>(1) extra space.</li>
+<li>Your runtime complexity should be less than <code>O(n2)</code>.</li>
+<li>There is only one duplicate number in the array, but it could be repeated more than once.</li>
+</ol>
+</blockquote>
+<h4 id="分析-15"><a href="#分析-15" class="headerlink" title="分析"></a>分析</h4><p>方法一：</p>
+<p>题目说有个n+1长的数组，里面的元素的范围在1~n，所以必定会有重复的元素，要求我们找出重复的元素。</p>
+<ol>
+<li><p>baseline：</p>
+<p>遍历，时间复杂度<script type="math/tex">O(n^2)</script>，超时</p>
+</li>
+<li><p>二分法：</p>
+<p>start = 1;end = n</p>
+<p>mid = (1+n)/2;</p>
+<p>遍历数组，记录值&lt;=mid的元素个数sum，分两种情况讨论：</p>
+<p>​    a. sum &lt;= mid，在1~mid之间的数组少于mid，说明重复数字在mid+1~len-1里，故令left = mid+1</p>
+<p>​    b. sum &gt; mid，在1~mid之间的数组多于mid，说明重复数字在1~mid里，故令right = mid</p>
+</li>
+</ol>
+<p>方法二:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">idx: <span class="number">0</span>	<span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></div><div class="line">val: <span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span>	<span class="number">2</span></div><div class="line">实质：用下标idx的正负表示该数字idx是否出现过，如果出现过idx对应的数字为负数，否则为正数</div><div class="line">从左向右遍历，把遇到的数字在数组中的下标标记为负值，当遇到下标对应的值已经为负数时，返回该下标：</div><div class="line">i = <span class="number">0</span> , val = <span class="number">1</span>,将nums[<span class="number">1</span>]标记为负数</div><div class="line">idx: <span class="number">0</span>	<span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></div><div class="line">val: <span class="number">1</span>	-<span class="number">2</span>	<span class="number">3</span>	<span class="number">2</span></div><div class="line">i = <span class="number">1</span> ，val = abs(-<span class="number">2</span>) = <span class="number">2</span> , 将nums[<span class="number">2</span>]标记为负数</div><div class="line">idx: <span class="number">0</span>	<span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></div><div class="line">val: <span class="number">1</span>	-<span class="number">2</span>	-<span class="number">3</span>	<span class="number">2</span></div><div class="line">i = <span class="number">2</span> ，val = abs(-<span class="number">3</span>) = <span class="number">3</span> , 将nums[<span class="number">3</span>]标记为负数</div><div class="line">idx: <span class="number">0</span>	<span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></div><div class="line">val: <span class="number">1</span>	-<span class="number">2</span>	-<span class="number">3</span>	-<span class="number">2</span></div><div class="line">i = <span class="number">3</span> ，val = abs(-<span class="number">2</span>) = <span class="number">2</span> , 此时nums[<span class="number">2</span>] &lt; <span class="number">0</span>，则返回<span class="number">2</span></div><div class="line">idx: <span class="number">0</span>	<span class="number">1</span>	<span class="number">2</span>	<span class="number">3</span></div><div class="line">val: <span class="number">1</span>	-<span class="number">2</span>	-<span class="number">3</span>	-<span class="number">2</span></div></pre></td></tr></table></figure>
+<h4 id="代码-14"><a href="#代码-14" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> left = <span class="number">1</span>;</div><div class="line">  <span class="keyword">int</span> right = nums.length-<span class="number">1</span>;</div><div class="line">  <span class="keyword">while</span>(left &lt;right)&#123;</div><div class="line">    <span class="keyword">int</span> mid = left+(right-left)/<span class="number">2</span>;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;<span class="comment">//记录在1~mid之间的数字有多少个</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i:nums)&#123;</div><div class="line">      <span class="keyword">if</span>(i &lt;= mid)&#123;</div><div class="line">        sum++;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//在1~mid之间的数组少于mid，说明重复数字在mid+1~len-1里</span></div><div class="line">    <span class="keyword">if</span>(sum &lt;= mid)&#123;</div><div class="line">      left = mid + <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//在1~mid之间的数组多于mid，说明重复数字在1~mid里</span></div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">      right = mid;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> left;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Find-K-Closest-Elements"><a href="#Find-K-Closest-Elements" class="headerlink" title="Find K Closest Elements"></a><a href="https://leetcode.com/problems/find-k-closest-elements" target="_blank" rel="external">Find K Closest Elements</a></h3><blockquote>
+<p>Given a sorted array, two integers <code>k</code> and <code>x</code>, find the <code>k</code> closest elements to <code>x</code> in the array. The result should also be sorted in ascending order. If there is a tie, the smaller elements are always preferred.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [1,2,3,4,5], k=4, x=3</div><div class="line">&gt; Output: [1,2,3,4]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [1,2,3,4,5], k=4, x=-1</div><div class="line">&gt; Output: [1,2,3,4]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定一个递增数组，两个整数k和x，返回数组中里最接近x的k个数</p>
+<p>思路：</p>
+<p>先用二分法找到数组中&gt;=x的第一个数字，然后向左向右寻找，两个指针向左右移动，直至k次结束，此时将两个指针中间的元素加入结果集即是最终答案。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">findClosestElements</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k, <span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = arr.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(start &lt; end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = (start+end)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>(arr[mid] &gt;= x)&#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                start = mid+<span class="number">1</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//end是第一个&gt;=x的数</span></div><div class="line">        <span class="keyword">int</span> left = end-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> right = end;</div><div class="line">        <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(num &lt; k)&#123;</div><div class="line">            <span class="keyword">int</span> l_delta = Integer.MAX_VALUE;</div><div class="line">            <span class="keyword">int</span> r_delta = Integer.MAX_VALUE;</div><div class="line">            <span class="keyword">if</span>(left &gt;= <span class="number">0</span>)&#123;</div><div class="line">                l_delta = Math.abs(x-arr[left]);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(right &lt; arr.length)&#123;</div><div class="line">                r_delta = Math.abs(x-arr[right]);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(l_delta &lt;= r_delta)&#123;</div><div class="line">                left--;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                right++;</div><div class="line">            &#125;</div><div class="line">            num++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = left+<span class="number">1</span>;i &lt; right;i++)&#123;</div><div class="line">            res.add(arr[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Binary-Search/" rel="tag"># Binary Search</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/07/WAND算法/" rel="next" title="WAND算法">
+                <i class="fa fa-chevron-left"></i> WAND算法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/10/DeepFM论文笔记/" rel="prev" title="DeepFM论文笔记">
+                DeepFM论文笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#classical-Binary-Search"><span class="nav-number">1.1.</span> <span class="nav-text">classical Binary Search</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#定义"><span class="nav-number">1.1.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法"><span class="nav-number">1.1.2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number">1.1.3.</span> <span class="nav-text">时间复杂度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方式"><span class="nav-number">1.1.4.</span> <span class="nav-text">实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通用模板"><span class="nav-number">1.1.5.</span> <span class="nav-text">通用模板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关题目"><span class="nav-number">1.2.</span> <span class="nav-text">相关题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-for-a-Range"><span class="nav-number">1.2.1.</span> <span class="nav-text">Search for a Range</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-Insert-Position"><span class="nav-number">1.2.2.</span> <span class="nav-text">Search Insert Position</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-a-2D-Matrix"><span class="nav-number">1.2.3.</span> <span class="nav-text">Search a 2D Matrix</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-a-2D-Matrix-II"><span class="nav-number">1.2.4.</span> <span class="nav-text">Search a 2D Matrix II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#First-Bad-Version"><span class="nav-number">1.2.5.</span> <span class="nav-text">First Bad Version</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-4"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-4"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-4"><span class="nav-number">1.2.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-Peak-Element"><span class="nav-number">1.2.6.</span> <span class="nav-text">Find Peak Element</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-5"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-5"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-5"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-Minimum-in-Rotated-Sorted-Array"><span class="nav-number">1.2.7.</span> <span class="nav-text">Find Minimum in Rotated Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-6"><span class="nav-number">1.2.7.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-6"><span class="nav-number">1.2.7.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-6"><span class="nav-number">1.2.7.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-Minimum-in-Rotated-Sorted-Array-II"><span class="nav-number">1.2.8.</span> <span class="nav-text">Find Minimum in Rotated Sorted Array II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-7"><span class="nav-number">1.2.8.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-7"><span class="nav-number">1.2.8.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-7"><span class="nav-number">1.2.8.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-in-Rotated-Sorted-Array"><span class="nav-number">1.2.9.</span> <span class="nav-text">Search in Rotated Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-8"><span class="nav-number">1.2.9.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-8"><span class="nav-number">1.2.9.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-8"><span class="nav-number">1.2.9.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Search-in-Rotated-Sorted-Array-II"><span class="nav-number">1.2.10.</span> <span class="nav-text">Search in Rotated Sorted Array II</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge-Sorted-Array"><span class="nav-number">1.2.11.</span> <span class="nav-text">Merge Sorted Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-9"><span class="nav-number">1.2.11.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-9"><span class="nav-number">1.2.11.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-9"><span class="nav-number">1.2.11.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Median-of-Two-Sorted-Arrays"><span class="nav-number">1.2.12.</span> <span class="nav-text">Median of Two Sorted Arrays</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-10"><span class="nav-number">1.2.12.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-10"><span class="nav-number">1.2.12.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-10"><span class="nav-number">1.2.12.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wood-Cut"><span class="nav-number">1.2.13.</span> <span class="nav-text">Wood Cut</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-11"><span class="nav-number">1.2.13.1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Notice"><span class="nav-number">1.2.13.1.1.</span> <span class="nav-text">Notice</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-11"><span class="nav-number">1.2.13.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Count-of-Smaller-Numbers-After-Self"><span class="nav-number">1.2.14.</span> <span class="nav-text">Count of Smaller Numbers After Self</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sqrt-x"><span class="nav-number">1.2.15.</span> <span class="nav-text"> Sqrt(x)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-12"><span class="nav-number">1.2.15.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-12"><span class="nav-number">1.2.15.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-11"><span class="nav-number">1.2.15.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Rotate-Array"><span class="nav-number">1.2.16.</span> <span class="nav-text">Rotate Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-13"><span class="nav-number">1.2.16.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-12"><span class="nav-number">1.2.16.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reverse-Words-in-a-String-II"><span class="nav-number">1.2.17.</span> <span class="nav-text">Reverse Words in a String II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-13"><span class="nav-number">1.2.17.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-14"><span class="nav-number">1.2.17.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-13"><span class="nav-number">1.2.17.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-the-Duplicate-Number"><span class="nav-number">1.2.18.</span> <span class="nav-text">Find the Duplicate Number</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-14"><span class="nav-number">1.2.18.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-15"><span class="nav-number">1.2.18.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-14"><span class="nav-number">1.2.18.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-K-Closest-Elements"><span class="nav-number">1.2.19.</span> <span class="nav-text">Find K Closest Elements</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

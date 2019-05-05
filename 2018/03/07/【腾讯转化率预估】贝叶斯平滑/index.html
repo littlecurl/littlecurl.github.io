@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 概述​    电商领域中经常需要计算或预测一些转化率指标，如最典型的CTR（点击率，Click-Through Rate），这些转化率可以是模型的预测值，也可以作为模型的特征（feature）使用。我们在比赛中就以转化率作为特征来使用。 以商品点击率预测为例，CTR的值等于点击量（Click）除以曝光量（Impression或Exposure）。以r表示点击率， r = C/I但在实际应用过">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【腾讯转化率预估】贝叶斯平滑">
+<meta property="og:url" content="http://yoursite.com/2018/03/07/【腾讯转化率预估】贝叶斯平滑/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="1. 概述​    电商领域中经常需要计算或预测一些转化率指标，如最典型的CTR（点击率，Click-Through Rate），这些转化率可以是模型的预测值，也可以作为模型的特征（feature）使用。我们在比赛中就以转化率作为特征来使用。 以商品点击率预测为例，CTR的值等于点击量（Click）除以曝光量（Impression或Exposure）。以r表示点击率， r = C/I但在实际应用过">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-07-14-47-28.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-09-41-16.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-09-34-18.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-10-21-22.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-11-26-55.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-10-53-12.png">
+<meta property="og:updated_time" content="2018-03-12T12:35:15.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【腾讯转化率预估】贝叶斯平滑">
+<meta name="twitter:description" content="1. 概述​    电商领域中经常需要计算或预测一些转化率指标，如最典型的CTR（点击率，Click-Through Rate），这些转化率可以是模型的预测值，也可以作为模型的特征（feature）使用。我们在比赛中就以转化率作为特征来使用。 以商品点击率预测为例，CTR的值等于点击量（Click）除以曝光量（Impression或Exposure）。以r表示点击率， r = C/I但在实际应用过">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-07-14-47-28.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/07/【腾讯转化率预估】贝叶斯平滑/"/>
+
+
+
+
+
+  <title>【腾讯转化率预估】贝叶斯平滑 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/07/【腾讯转化率预估】贝叶斯平滑/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【腾讯转化率预估】贝叶斯平滑</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-07T13:46:12+08:00">
+                2018-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,987
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h1><p>​    电商领域中经常需要计算或预测一些转化率指标，如最典型的CTR（点击率，Click-Through Rate），这些转化率可以是模型的预测值，也可以作为模型的特征（feature）使用。我们在比赛中就以转化率作为特征来使用。</p>
+<p>以商品点击率预测为例，CTR的值等于点击量（Click）除以曝光量（Impression或Exposure）。以r表示点击率，</p>
+<script type="math/tex; mode=display">r = C/I</script><p>但在实际应用过程中会碰到两个问题：</p>
+<ul>
+<li><strong>新商品点击率的预测与计算</strong><br>对于新上线的商品，其曝光为0，点击量也为0，此时这件商品的CTR应该设为0还是赋一个初始值？</li>
+<li><strong>不同商品点击率之间的比较</strong><br>有两件商品A和B，其点击率分别为<script type="math/tex">r_A=5/10</script>和<script type="math/tex">r_B=50/100</script>，<script type="math/tex">r_A=r_B</script>，但商品A的曝光只有10次，商品B的曝光有100次，这样比较是否合理？</li>
+</ul>
+<p>第一个问题，初始值设0是可以的，但不太合理。当CTR作为特征使用时，表示这个商品完全没有点击，不太符合日常推断，通常是赋一个大于0的初始值。第二个问题，不合理。</p>
+<p><strong>解决以上两个问题可以使用平滑的技术解决。</strong>最简单的方法是在计算CTR的公式中分子分母同时加上一个数，加上之后可避免这两个问题。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-07-14-47-28.png" alt=""> </p>
+<p>但(2)式中a和b的值如何确定？若设置得不合理会出现数据被放大的情况。本文介绍如何<strong>使用贝叶斯平滑来确定a和b</strong>的值。</p>
+<h1 id="2-贝叶斯平滑思想"><a href="#2-贝叶斯平滑思想" class="headerlink" title="2. 贝叶斯平滑思想"></a>2. 贝叶斯平滑思想</h1><p>​    贝叶斯平滑的思想是给CTR预设一个<strong>经验初始值</strong>，再<strong>通过当前的点击量和曝光量来修正这个初始值</strong>。如果某商品的点击量和曝光量都是0，那么该商品的CTR就是这个经验初始值；如果商品A和商品B的曝光量差别很大，那么可以通过这个经验初始值来修正，使得曝光量大的商品的权重增大。</p>
+<p>​    贝叶斯平滑就是确定这个经验值的过程。贝叶斯平滑是基于贝叶斯统计推断的，因此经验值计算的过程依赖于数据的分布情况。</p>
+<h1 id="3-点击率贝叶斯平滑的假设"><a href="#3-点击率贝叶斯平滑的假设" class="headerlink" title="3. 点击率贝叶斯平滑的假设"></a>3. 点击率贝叶斯平滑的假设</h1><p>​    对于一件商品或一条广告，对于某次曝光，用户要么点击，要么没点击，这符合二项分布。因此下文中对于点击率类的贝叶斯平滑，都是基于以下假设：<strong>对于某件商品或广告，其是否被点击是一个伯努利分布（Bernoulli）/二项分布</strong>：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-09-41-16.png" alt=""> </p>
+<p>​    其中X表示某个广告是否被点击，点击取1，未被点击取0，<script type="math/tex">r</script>是某件商品被点击的概率，即<strong>点击率</strong>。</p>
+<p>​     </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-09-34-18.png" alt=""> </p>
+<p>在贝叶斯框架下，我们假设点击率<script type="math/tex">r</script>服从某个分布：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-10-21-22.png" alt=""></p>
+<p>因为这是基于经验的，这个分布称为<strong>先验分布</strong>。贝叶斯参数估计可以同时解决最开始提出的两个问题。其过程是<strong>基于经验或历史数据先给出一个r的估计值，然后基于现有的数据在这个估计值上修正，得到最终的点击率估计，</strong>此时的估计值已经是修正过的。更美好的是我们可以分离出修正参数（即(2)式中的a和b）。</p>
+<p>既然有先验分布，就有<strong>后验分布</strong>。<script type="math/tex">r</script>的后验分布记作<script type="math/tex">π(r|x)</script>。其中<script type="math/tex">x</script>表示输入数据或特征，对于点击率预测，<script type="math/tex">x</script> 就是点击次数和曝光量。因为已经看到了数据，才确定<script type="math/tex">r</script>的分布，因此叫做『后验』分布。<strong>贝叶斯估计的实质就是求后验分布。</strong>即基于当前的点击次数和曝光量，求点击率的分布；而未看到数据之前点击率的分布是<script type="math/tex">π(r)</script>。</p>
+<p>总结一下，贝叶斯估计的过程可以简单认为：</p>
+<p><strong>用历史数据根据<script type="math/tex">π(r)</script>估计<script type="math/tex">r</script>，记作<script type="math/tex">r^{history}</script>；用当前数据根据<script type="math/tex">π(r)</script>估计<script type="math/tex">r</script>，记作<script type="math/tex">r^{current}</script>，然后用<script type="math/tex">r^{history}</script>修正<script type="math/tex">r^{current}</script>。</strong></p>
+<p>为什么是beta分布？</p>
+<p><strong>由于是否点击是服从伯努利分布的，伯努利分布的共轭先验分布是Beta分布，因此我们认为点击率是服从Beta分布的。</strong></p>
+<p><strong>共轭先验分布性质：</strong><br><strong>如果找到一个<script type="math/tex">π(r)</script>，它是<script type="math/tex">f(x|r)</script>的共轭先验，那么<script type="math/tex">r</script>的后验分布<script type="math/tex">π(r|x)</script>和先验分布<script type="math/tex">π(r)</script>会有一样的形式。</strong></p>
+<p>也就是说</p>
+<p><strong>点击率的先验分布<script type="math/tex">r = Beta<a,b>  +  后验知识 = Beta<a',b'> = r'</script></strong></p>
+<p>当误差是平方误差的时候，可以解出：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-11-26-55.png" alt=""> </p>
+<p>也就是<script type="math/tex">Beta<a',b'> = Beta<a+I,b+I-C></script> 的均值，也就是相当于针对当前数据I和C的“定制化”Beta分布。然后用Beta分布的期望作为点击率的经验值，因为这样的误差最小。</p>
+<p>上面的内容给出了为什么很多文章会假设点击率服从Beta分布的理由，因为<strong>最终的平滑的因子是Beta分布（先验分布）中的两个参数</strong>。那么如何计算（估计）这两个参数？</p>
+<h1 id="4-贝叶斯平滑因子的计算（矩估计）"><a href="#4-贝叶斯平滑因子的计算（矩估计）" class="headerlink" title="4. 贝叶斯平滑因子的计算（矩估计）"></a>4. 贝叶斯平滑因子的计算（矩估计）</h1><p>综上，贝叶斯平滑的最终落脚点是要估计Beta分布（点击率r服从的分布）中的参数<script type="math/tex">\alpha</script>和<script type="math/tex">\beta</script>。下面给出比较直观的矩估计的方法，我们在比赛中也是采用的这种方法，其优点是计算速度快，但同时也就牺牲了一定的精确程度。</p>
+<p>首先，<strong>矩估计的原理：</strong>样本与总体的<strong>原点矩是近似的</strong> ，可以通过让它们<strong>相等</strong>来计算。</p>
+<p>beta分布的期望（一阶矩）是：</p>
+<script type="math/tex; mode=display">E(x) = \frac{\alpha}{\alpha+\beta}</script><p>beta分布的方差（二阶矩）是：</p>
+<script type="math/tex; mode=display">D(x) = \frac{\alpha\beta}{(\alpha+\beta)^2+(\alpha+\beta+1)}</script><p>因此为了估计两个参数<script type="math/tex">\alpha</script>和<script type="math/tex">\beta</script> ，可以采用<strong>二阶矩估计</strong>的方法，</p>
+<p>我们可以用样本的均值代替期望，样本的方差代替总体的方差，此时就可以解出α和β的值。<script type="math/tex">\bar X</script>是样本均值，<script type="math/tex">S^2</script>是样本方差，则解为：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-10-53-12.png" alt=""> </p>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HyperParam</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, alpha, beta)</span>:</span></div><div class="line">        self.alpha = alpha</div><div class="line">        self.beta = beta</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sample_from_beta</span><span class="params">(self, alpha, beta, num, imp_upperbound)</span>:</span></div><div class="line">        sample = numpy.random.beta(alpha, beta, num)</div><div class="line">        I = []</div><div class="line">        C = []</div><div class="line">        <span class="keyword">for</span> click_ratio <span class="keyword">in</span> sample:</div><div class="line">            imp = random.random() * imp_upperbound</div><div class="line">            <span class="comment">#imp = imp_upperbound</span></div><div class="line">            click = imp * click_ratio</div><div class="line">            I.append(imp)</div><div class="line">            C.append(click)</div><div class="line">        <span class="keyword">return</span> I, C</div><div class="line"></div><div class="line">    <span class="comment"># 矩估计，根据均值和方差</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update_from_data_by_moment</span><span class="params">(self, tries, success)</span>:</span></div><div class="line">        <span class="string">'''estimate alpha, beta using moment estimation'''</span></div><div class="line">        mean, var = self.__compute_moment(tries, success)</div><div class="line">        <span class="comment">#print 'mean and variance: ', mean, var</span></div><div class="line">        <span class="comment">#self.alpha = mean*(mean*(1-mean)/(var+0.000001)-1)</span></div><div class="line">        self.alpha = (mean+<span class="number">0.000001</span>) * ((mean+<span class="number">0.000001</span>) * (<span class="number">1.000001</span> - mean) / (var+<span class="number">0.000001</span>) - <span class="number">1</span>)</div><div class="line">        <span class="comment">#self.beta = (1-mean)*(mean*(1-mean)/(var+0.000001)-1)</span></div><div class="line">        self.beta = (<span class="number">1.000001</span> - mean) * ((mean+<span class="number">0.000001</span>) * (<span class="number">1.000001</span> - mean) / (var+<span class="number">0.000001</span>) - <span class="number">1</span>)</div><div class="line"></div><div class="line">    <span class="comment"># 计算均值和方差，也就是一阶和二阶矩</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__compute_moment</span><span class="params">(self, tries, success)</span>:</span></div><div class="line">        <span class="string">'''moment estimation'''</span></div><div class="line">        ctr_list = []</div><div class="line">        <span class="comment"># var = 0.0</span></div><div class="line">        mean = (success/tries).mean()</div><div class="line">        <span class="keyword">if</span> len(tries)==<span class="number">1</span>:</div><div class="line">            var = <span class="number">0</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            var = (success/tries).var()</div><div class="line">      <span class="keyword">return</span> mean, var</div></pre></td></tr></table></figure>
+<h1 id="5-分层贝叶斯平滑"><a href="#5-分层贝叶斯平滑" class="headerlink" title="5. 分层贝叶斯平滑"></a>5. 分层贝叶斯平滑</h1><p>由于广告数据是分为：广告主 —&gt;广告 —&gt; 推广计划 —&gt;广告创意 四个层级的，因此在做平滑的时候，可以依照层级关系进行平滑。</p>
+<p>核心思想就是认为同一个推广计划的点击率服从一个beta分布，同一个广告的点击率服从一个beta分布，以此类推，同一个广告主也服从一个beta分布。因此我们队不同的推广计划、广告、广告主都求出不同的参数a和b。</p>
+<p>当遇到新出现的广告创意时，就用其所属推广计划的a和b来估计（修正）其点击率，同样当出现一个新的推广计划时，就用其所属的广告的a和b来修正其点击率。</p>
+<p>这样做的效果要比单纯从单一维度来平滑效果要好一些。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="http://blog.csdn.net/jinping_shi/article/details/53444100" target="_blank" rel="external">阿拉丁吃米粉-贝叶斯参数估计的理解</a></p>
+<p><a href="http://blog.csdn.net/jinping_shi/article/details/78334362" target="_blank" rel="external">阿拉丁吃米粉-http://blog.csdn.net/jinping_shi/article/details/78334362</a></p>
+<p><a href="http://www.cnblogs.com/bentuwuying/p/6389222.html" target="_blank" rel="external">笨兔勿应-CTR预估中的贝叶斯平滑方法（一）原理及实验介绍</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/06/【腾讯转化率预估】比赛总结/" rel="next" title="【腾讯转化率预估】总结">
+                <i class="fa fa-chevron-left"></i> 【腾讯转化率预估】总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/07/【实习项目总结】/" rel="prev" title="【实习项目总结】">
+                【实习项目总结】 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-概述"><span class="nav-number">1.</span> <span class="nav-text">1. 概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-贝叶斯平滑思想"><span class="nav-number">2.</span> <span class="nav-text">2. 贝叶斯平滑思想</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-点击率贝叶斯平滑的假设"><span class="nav-number">3.</span> <span class="nav-text">3. 点击率贝叶斯平滑的假设</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-贝叶斯平滑因子的计算（矩估计）"><span class="nav-number">4.</span> <span class="nav-text">4. 贝叶斯平滑因子的计算（矩估计）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-分层贝叶斯平滑"><span class="nav-number">5.</span> <span class="nav-text">5. 分层贝叶斯平滑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

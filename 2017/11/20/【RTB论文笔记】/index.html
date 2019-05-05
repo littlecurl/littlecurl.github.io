@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Bidding Strategies Attribution Modeling Increases Efficiency of Bidding in Display Advertising by Eustache Diemert et al. ADKDD 2017.  Profit Maximization for Online Advertising Demand-Side Platforms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【RTB论文笔记】">
+<meta property="og:url" content="http://yoursite.com/2017/11/20/【RTB论文笔记】/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="Bidding Strategies Attribution Modeling Increases Efficiency of Bidding in Display Advertising by Eustache Diemert et al. ADKDD 2017.  Profit Maximization for Online Advertising Demand-Side Platforms">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-28-17-14-20.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-28-17-15-00.png">
+<meta property="og:updated_time" content="2017-12-07T11:41:16.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【RTB论文笔记】">
+<meta name="twitter:description" content="Bidding Strategies Attribution Modeling Increases Efficiency of Bidding in Display Advertising by Eustache Diemert et al. ADKDD 2017.  Profit Maximization for Online Advertising Demand-Side Platforms">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-28-17-14-20.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/20/【RTB论文笔记】/"/>
+
+
+
+
+
+  <title>【RTB论文笔记】 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/20/【RTB论文笔记】/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【RTB论文笔记】</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-20T14:43:23+08:00">
+                2017-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/广告/" itemprop="url" rel="index">
+                    <span itemprop="name">广告</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/广告/RTB/" itemprop="url" rel="index">
+                    <span itemprop="name">RTB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,328
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Bidding-Strategies"><a href="#Bidding-Strategies" class="headerlink" title="Bidding Strategies"></a>Bidding Strategies</h3><ul>
+<li><p><a href="https://arxiv.org/pdf/1707.06409.pdf" target="_blank" rel="external">Attribution Modeling Increases Efficiency of Bidding in Display Advertising</a> by Eustache Diemert et al. ADKDD 2017.</p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1706.01614.pdf" target="_blank" rel="external">Profit Maximization for Online Advertising Demand-Side Platforms</a> by Paul Grigas et al. ArXiv 2017.</p>
+</li>
+<li><p><a href="http://wnzhang.net/papers/rlb.pdf" target="_blank" rel="external">Real-Time Bidding by Reinforcement Learning in Display Advertising</a> by Han Cai et al. WSDM 2017.</p>
+</li>
+<li><p><a href="http://wnzhang.net/papers/risk-bid.pdf" target="_blank" rel="external">Managing Risk of Bidding in Display Advertising</a> by Haifeng Zhang et al. WSDM 2017.</p>
+</li>
+<li><p><a href="https://arxiv.org/pdf/1703.02091.pdf" target="_blank" rel="external">Optimized Cost per Click in Taobao Display Advertising</a> by Han Zhu et al. ArXiv 2017.</p>
+</li>
+<li><p><a href="http://wnzhang.net/share/rtb-papers/two-pred-bid.pdf" target="_blank" rel="external">Combining Powers of Two Predictors in Optimizing Real-Time Bidding Strategy under Constrained Budget</a> by Chi-Chun Lin et al. CIKM 2016.</p>
+</li>
+<li><p><a href="http://www.kdd.org/kdd2016/papers/files/adp0722-geyikA.pdf" target="_blank" rel="external">Joint Optimization of Multiple Performance Metrics in Online Video Advertising</a> by Sahin Cem Geyik et al. KDD 2016.</p>
+<a id="more"></a>
+</li>
+<li><p><a href="http://discovery.ucl.ac.uk/1496878/1/weinan-zhang-phd-2016.pdf" target="_blank" rel="external">Optimal Real-Time Bidding for Display Advertising</a> by Weinan Zhang. PhD Thesis 2016.</p>
+</li>
+<li><p><a href="http://wnzhang.net/papers/unbias-kdd.pdf" target="_blank" rel="external">Bid-aware Gradient Descent for Unbiased Learning with Censored Data in Display Advertising</a> by Weinan Zhang, Tianxiong Zhou, Jun Wang, Jian Xu. KDD 2016.</p>
+</li>
+<li><p><a href="http://wnzhang.net/share/rtb-papers/lift-bidding.pdf" target="_blank" rel="external">Lift-Based Bidding in Ad Selection</a> by Jian Xu et al. AAAI 2016.</p>
+</li>
+<li><p><a href="http://wnzhang.net/papers/fc-wsdm.pdf" target="_blank" rel="external">Feedback Control of Real-Time Display Advertising</a> by Weinan Zhang et al. WSDM 2016.</p>
+</li>
+<li><p><a href="http://arxiv.org/abs/1511.08409" target="_blank" rel="external">Optimal Real-Time Bidding Strategies</a> by Joaquin Fernandez-Tapia, Olivier Guéant, Jean-Michel Lasry. ArXiv 2015.</p>
+</li>
+<li><p><a href="http://wnzhang.net/share/rtb-papers/bid-drawbridge.pdf" target="_blank" rel="external">Programmatic Buying Bidding Strategies with Win Rate and Winning Price Estimation in Real Time Mobile Advertising</a> by Xiang Li and Devin Guan. PAKDD 2014.</p>
+</li>
+<li><p><a href="https://www.researchgate.net/publication/283579660_Statistical_modeling_of_Vickrey_auctions_and_applications_to_automated_bidding_strategies" target="_blank" rel="external">Statistical modeling of Vickrey auctions and applications to automated bidding strategies</a> by Joaquin Fernandez-Tapia. Working paper.</p>
+</li>
+<li><p><del><a href="http://wnzhang.net/share/rtb-papers/rtb-arbitrage.pdf" target="_blank" rel="external">Statistical Arbitrage Mining for Display Advertising</a> by Weinan Zhang, Jun Wang. KDD 2015.非线性出价函数，优化目标：DSP净利润</del></p>
+</li>
+<li><p><a href="http://wnzhang.net/share/rtb-papers/opt-prog-buy.pdf" target="_blank" rel="external">Real-Time Bidding rules of thumb: analytically optimizing the programmatic buying of ad-inventory</a> by Joaquin Fernandez-Tapia. SSRN 2015.</p>
+</li>
+<li><p><del><a href="http://wnzhang.net/share/rtb-papers/optimal-rtb.pdf" target="_blank" rel="external">Optimal Real-Time Bidding for Display Advertising</a> by Weinan Zhang, Shuai Yuan, Jun Wang. KDD 2014.非线性出价函数，优化目标：点击数</del></p>
+</li>
+<li><p><del><a href="http://wnzhang.net/share/rtb-papers/lin-bid.pdf" target="_blank" rel="external">Bid Optimizing and Inventory Scoring in Targeted Online Advertising</a> by Claudia Perlich et al. KDD 2012.M6d线性出价函数</del></p>
+</li>
+<li><p><a href="http://wnzhang.net/share/rtb-papers/rtb-perf-bid.pdf" target="_blank" rel="external">Real-Time Bidding Algorithms for Performance-Based Display Ad Allocation</a> by Ye Chen et al. KDD 2011</p>
+</li>
+</ul>
+<h3 id="CTR-CVR-Estimation"><a href="#CTR-CVR-Estimation" class="headerlink" title="CTR/CVR Estimation"></a>CTR/CVR Estimation</h3><ul>
+<li><a href="https://arxiv.org/pdf/1708.05123.pdf" target="_blank" rel="external">Deep &amp; Cross Network for Ad Click Predictions</a> by Ruoxi Wang et al. AdKDD &amp; TargetAd 2017.</li>
+<li><a href="https://arxiv.org/pdf/1706.06978.pdf" target="_blank" rel="external">Deep Interest Network for Click-Through Rate Prediction</a> by Guorui Zhou et al. ArXiv 2017.</li>
+<li><a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="external">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a> by Huifeng Guo et al. IJCAI 2017</li>
+<li><a href="https://arxiv.org/pdf/1704.05194.pdf" target="_blank" rel="external">Learning Piece-wise Linear Models from Large Scale Data for Ad Click Prediction</a> by Kun Gai, Xiaoqiang Zhu, Han Li, et al. Arxiv 2017.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/softmax-ensemble.pdf" target="_blank" rel="external">SEM: A Softmax-based Ensemble Model for CTR Estimation in Real-Time Bidding Advertising</a> by Wen-Yuan Zhu et al. BigComp 2017.</li>
+<li><a href="https://arxiv.org/pdf/1702.00855v1.pdf" target="_blank" rel="external">Neural Feature Embedding for User Response Prediction in Real-Time Bidding (RTB)</a> by Enno Shioji, Masayuki Arai. ArXiv 2017.</li>
+<li><a href="https://arxiv.org/pdf/1701.04099.pdf" target="_blank" rel="external">Field-aware Factorization Machines in a Real-world Online Advertising System</a> by Yuchin Juan, Damien Lefortier, Olivier Chapelle. ArXiv 2017.</li>
+<li><a href="https://arxiv.org/pdf/1611.00144.pdf" target="_blank" rel="external">Product-based Neural Networks for User Response Prediction</a> by Yanru Qu et al. ICDM 2016.</li>
+<li><a href="http://staff.ustc.edu.cn/~cheneh/paper_pdf/2016/Zhen-Pan-ICDM.pdf" target="_blank" rel="external">Sparse Factorization Machines for Click-through Rate Prediction</a> by Zhen Pan et al. ICDM 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/deep-ctr-display.pdf" target="_blank" rel="external">Deep CTR Prediction in Display Advertising</a> by Junxuan Chen et al. MM 2016.</li>
+<li><a href="http://wnzhang.net/papers/unbias-kdd.pdf" target="_blank" rel="external">Bid-aware Gradient Descent for Unbiased Learning with Censored Data in Display Advertising</a> by Weinan Zhang, Tianxiong Zhou, Jun Wang, Jian Xu. KDD 2016.</li>
+<li><a href="http://proceedings.mlr.press/v53/yang16.pdf" target="_blank" rel="external">Large Scale CVR Prediction through Dynamic Transfer Learning of Global and Local Features</a> by Hongxia Yang et al. BIGMINE 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fctf.pdf" target="_blank" rel="external">Predicting ad click-through rates via feature-based fully coupled interaction tensor factorization</a> by Lili Shan, Lei Lin, Chengjie Sun, Xiaolong Wang. Electronic Commerce Research and Applications 2016.<ul>
+<li><a href="http://wnzhang.net/share/rtb-papers/ctr-chapelle.pdf" target="_blank" rel="external">Simple and Scalable Response Prediction for Display Advertising</a> by Olivier ChapelleCriteo, Eren Manavoglu, Romer Rosales. ACM TIST 2014.</li>
+</ul>
+</li>
+<li><a href="https://arxiv.org/pdf/1603.03713.pdf" target="_blank" rel="external">Cost-sensitive Learning for Utility Optimization in Online Advertising Auctions</a> by Flavian Vasile, Damien Lefortier, Olivier Chapelle. Extension under-review of the paper presented at the Workshop on E-Commerce, NIPS 2015.</li>
+<li><a href="http://apex.sjtu.edu.cn/public/files/members/20161024/opt-ctr-bid.pdf" target="_blank" rel="external">User Response Learning for Directly Optimizing Campaign Performance in Display Advertising</a> by Kan Ren, Weinan Zhang, Yifei Rong, Haifeng Zhang, Yong Yu, Jun Wang. CIKM 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/cnn-ctr.pdf" target="_blank" rel="external">A Convolutional Click Prediction Model</a> by Qiang Liu, Feng Yu, Shu Wu, Liang Wang. CIKM 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fm-ftrl.pdf" target="_blank" rel="external">Factorization Machines with Follow-The-Regularized-Leader for CTR prediction in Display Advertising</a> by Anh-Phuong Ta. BigData 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/deep-ctr.pdf" target="_blank" rel="external">Deep Learning over Multi-field Categorical Data: A Case Study on User Response Prediction</a> by Weinan Zhang, Tianming Du, Jun Wang. ECIR 2016.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/ctr-bid.pdf" target="_blank" rel="external">Offline Evaluation of Response Prediction in Online Advertising Auctions</a> by Olivier Chapelle. WWW 2015.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fm-ctr.pdf" target="_blank" rel="external">Predicting Response in Mobile Advertising with Hierarchical Importance-Aware Factorization Machine</a> by Richard J. Oentaryo et al. WSDM 2014.</li>
+<li><a href="https://pdfs.semanticscholar.org/fc11/8ce8cf852ccd10cae0fcf031cb5c238f69c0.pdf" target="_blank" rel="external">Scalable Hierarchical Multitask Learning Algorithms for Conversion Optimization in Display Advertising</a> by Amr Ahmed et al. WSDM 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/cvr-est.pdf" target="_blank" rel="external">Estimating Conversion Rate in Display Advertising from Past Performance Data</a> by Kuang-chih Lee et al. KDD 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/transfer-ctr.pdf" target="_blank" rel="external">Scalable Hands-Free Transfer Learning for Online Advertising</a> by Brian Dalessandro et al. KDD 2014.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/forget-click.pdf" target="_blank" rel="external">Evaluating and Optimizing Online Advertising: Forget the click, but there are good proxies</a> by Brian Dalessandro et al. SSRN 2012.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/delayed-feedback.pdf" target="_blank" rel="external">Modeling Delayed Feedback in Display Advertising</a> by Olivier Chapelle. KDD 2014.</li>
+<li><a href="https://www.eecs.tufts.edu/~dsculley/papers/ad-click-prediction.pdf" target="_blank" rel="external">Ad Click Prediction: a View from the Trenches</a> by H. Brendan McMahan. KDD 2013.</li>
+<li><a href="http://wnzhang.net/share/rtb-papers/fb-ad-ctr.pdf" target="_blank" rel="external">Practical Lessons from Predicting Clicks on Ads at Facebook</a> by Xinran He et al. ADKDD 2014.</li>
+</ul>
+<h2 id="2017"><a href="#2017" class="headerlink" title="2017"></a>2017</h2><h3 id="Attribution-Modeling-Increases-Efficiency-of-Bidding-in-Display-Advertising-by-Eustache-Diemert-et-al-ADKDD-2017"><a href="#Attribution-Modeling-Increases-Efficiency-of-Bidding-in-Display-Advertising-by-Eustache-Diemert-et-al-ADKDD-2017" class="headerlink" title="Attribution Modeling Increases Efficiency of Bidding in Display Advertising by Eustache Diemert et al. ADKDD 2017."></a><a href="https://arxiv.org/pdf/1707.06409.pdf" target="_blank" rel="external">Attribution Modeling Increases Efficiency of Bidding in Display Advertising</a> by Eustache Diemert et al. ADKDD 2017.</h3><p>归属模型提高展示广告竞价效率</p>
+<p>数据集：Criteo、Facebook真实场景</p>
+<p>offline数据结：<a href="http://research.criteo.com/criteo-attribution-modeling-bidding-dataset/" target="_blank" rel="external">http://research.criteo.com/criteo-attribution-modeling-bidding-dataset/</a></p>
+<h4 id="Abstra"><a href="#Abstra" class="headerlink" title="Abstra"></a>Abstra</h4><p>ct以往算法将转化率预估和转化行为归因于哪次广告行为（展示或者点击）分开研究，是两个独立的问题，但是作者发现，归因模型有助于提高竞价的效果，因此将转化行为归因于哪次广告活动加入竞价策略中，提高竞价效率。</p>
+<h4 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h4><p>衡量展示广告效果基于广告展示带来的价值，目前主要的两种方式：CPC，CPA（cost per action）,工业界中归因转化的标准是：归因于转化之前30天之内最后一次点击行为。</p>
+<p>对于广告引擎和平台来说，目前最先进的出价策略是：Expected Value Bidder (EVB),也就是根据展示机会的预期价值来出价。预期价值是广告主payment*预测的转化率</p>
+<p>在博弈论和经济学领域，转化归因已有深入研究，已经有一些机制被提出去较好地衡量广告主的payment，尤其是在多个广告点击或者转化行为同时发生或多个渠道同时存在的情况下。</p>
+<p>考虑一个广告行为序列，合理的出价方式是后面的展示行为都应该比第一次展示的价值低，因为第二次点击行为能够导致转化的可能性不高。在之前的EVB策略中，是没有这方面考虑的，因为它既不能跟踪也不能预测归因转化率，所以为了改进实时竞价策略，我们建议利用一个归因模型来修改投标策略。</p>
+<h4 id="Model"><a href="#Model" class="headerlink" title="Model"></a>Model</h4><p>把转化归因于最后一次点击行为适用于CPM结算方式，但不是很适合CPCorCPA方式。</p>
+<p>从数据中学习归因关系，假设广告投放平台可以访问其广告主客户的转化归属标签，（该广告主通过其他广告投放平台的转化归主标签不可访问）</p>
+<p>将归属关系表达成间隔时间的负指数函数，竞价策略为CPA*归属概率。</p>
+<h4 id="Data-description"><a href="#Data-description" class="headerlink" title="Data description"></a>Data description</h4><p>This dataset represents a sample of 30 days of Criteo live traffic data. Each line corresponds to one impression (a banner) that was displayed to a user. For each banner we have detailed information about the context, if it was clicked, if it led to a conversion and if it led to a conversion that was attributed to Criteo or not. Data has been sub-sampled and anonymized so as not to disclose proprietary elements.</p>
+<p>Here is a detailed description of the fields (they are tab-separated in the file):</p>
+<ul>
+<li><strong>timestamp</strong>: timestamp of the impression (starting from 0 for the first impression). The dataset is sorted according to timestamp.</li>
+<li><strong>uid</strong> a unique user identifier</li>
+<li><strong>campaign</strong> a unique identifier for the campaign</li>
+<li><strong>conversion</strong> 1 if there was a conversion in the 30 days after the impression (independently of whether this impression was last click or not)</li>
+<li><strong>conversion_timestamp</strong> the timestamp of the conversion or -1 if no conversion was observed</li>
+<li><strong>conversion_id</strong> a unique identifier for each conversion (so that timelines can be reconstructed if needed). -1 if there was no conversion</li>
+<li><strong>attribution</strong> 1 if the conversion was attributed to Criteo, 0 otherwise</li>
+<li><strong>click</strong> 1 if the impression was clicked, 0 otherwise</li>
+<li><strong>click_pos</strong> the position of the click before a conversion (0 for first-click)</li>
+<li><strong>click_nb</strong> number of clicks. More than 1 if there was several clicks before a conversion</li>
+<li><strong>cost</strong> the price paid by Criteo for this display (<strong>disclaimer:</strong> not the real price, only a transformed version of it)</li>
+<li><strong>cpo</strong> the cost-per-order in case of attributed conversion (<strong>disclaimer:</strong> not the real price, only a transformed version of it)</li>
+<li><strong>time_since_last_click</strong> the time since the last click (in s) for the given impression</li>
+<li><strong>cat[1-9]</strong> contextual features associated to the display. Can be used to learn the click/conversion models. We do not disclose the meaning of these features but it is not relevant for this study. Each column is a categorical variable. In the experiments, they are mapped to a fixed dimensionality space using the Hashing Trick (see paper for reference).</li>
+</ul>
+<h3 id="Criteo-Data"><a href="#Criteo-Data" class="headerlink" title="Criteo Data"></a>Criteo Data</h3><ul>
+<li><strong>timestamp</strong>: 时间戳</li>
+<li><strong>uid</strong> 用户id</li>
+<li><strong>campaign</strong> 推广计划id</li>
+<li><strong>conversion</strong> 转化</li>
+<li><strong>conversion_timestamp </strong>转化时间</li>
+<li><strong>conversion_id</strong> 转化id</li>
+<li><strong>attribution</strong> 转化归属关系</li>
+<li><strong>click</strong> 点击</li>
+<li><strong>click_pos</strong> 点击次序</li>
+<li><strong>click_nb</strong> 点击数量</li>
+<li><strong>cost</strong> 成本价格，Criteo赢得展示所支付的费用</li>
+<li><strong>cpo</strong> the cost-per-order in case of attributed conversion (<strong>disclaimer:</strong> not the real price, only a transformed version of it)</li>
+<li><strong>time_since_last_click</strong> 最后一次点击时间到转化的间隔时间</li>
+<li><strong>cat[1-9]</strong>  上下文特征，hash过。</li>
+</ul>
+<h3 id="Managing-Risk-of-Bidding-in-Display-Advertising-by-Haifeng-Zhang-et-al-WSDM-2017"><a href="#Managing-Risk-of-Bidding-in-Display-Advertising-by-Haifeng-Zhang-et-al-WSDM-2017" class="headerlink" title="Managing Risk of Bidding in Display Advertising by Haifeng Zhang et al. WSDM 2017."></a><a href="http://wnzhang.net/papers/risk-bid.pdf" target="_blank" rel="external">Managing Risk of Bidding in Display Advertising</a> by Haifeng Zhang et al. WSDM 2017.</h3><p>数据集：iPinyou</p>
+<h4 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h4><p>广告主投放广告就像是金融投资一样，也具有风险，本文中我们明确地给出用户点击率估计的模型和竞价竞争模型来控制风险，我们从金融学引入一个idea，形成两个风险感知的竞价策略，惩罚具有风险的广告展示机会，更多地关注高收益、低风险的广告。</p>
+<h4 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h4><p>提到了一些DSP平台：ipinyou,YOYI,Fikisu,广告市场的交易量已经超过了金融市场。</p>
+<p>竞价策略依赖于点击率或者转化率的预估，但是点击率预估的不准确可能会导致价值估计的严重不准确，会带来巨大利润估计风险。本文中我们脱离传统的ctr预估，而是对每一个广告展示机会潜在的风险进行建模。</p>
+<h3 id="Real-Time-Bidding-rules-of-thumb-analytically-optimizing-the-programmatic-buying-of-ad-inventory-by-Joaquin-Fernandez-Tapia-SSRN-2015"><a href="#Real-Time-Bidding-rules-of-thumb-analytically-optimizing-the-programmatic-buying-of-ad-inventory-by-Joaquin-Fernandez-Tapia-SSRN-2015" class="headerlink" title="Real-Time Bidding rules of thumb: analytically optimizing the programmatic buying of ad-inventory by Joaquin Fernandez-Tapia. SSRN 2015."></a><a href="http://wnzhang.net/share/rtb-papers/opt-prog-buy.pdf" target="_blank" rel="external">Real-Time Bidding rules of thumb: analytically optimizing the programmatic buying of ad-inventory</a> by Joaquin Fernandez-Tapia. SSRN 2015.</h3><p>优化目标：一定预算约束下，实现广告位采买最大化</p>
+<p>比较关注的三种技术：</p>
+<ol>
+<li>静态宏观变量对广告活动的运作十分重要</li>
+<li>针对不同广告位的竞价优化</li>
+<li>预算步进优化</li>
+</ol>
+<h4 id="Introduction-2"><a href="#Introduction-2" class="headerlink" title="Introduction"></a>Introduction</h4><ol>
+<li><p>工业背景：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-28-17-14-20.png" alt=""> </p>
+</li>
+<li><p>不同规模的模型：</p>
+<p>一次广告竞价是微观的过程，但是衡量其表现却是宏观过程，比如衡量其一个月、一天的收益</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-28-17-15-00.png" alt=""> </p>
+</li>
+<li><p>假设</p>
+<p>​</p>
+</li>
+<li><p>优化问题</p>
+</li>
+<li><p>本文提纲和贡献</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/18/【九章算法基础班】动态规划/" rel="next" title="【九章算法基础班】动态规划">
+                <i class="fa fa-chevron-left"></i> 【九章算法基础班】动态规划
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/22/搜索引擎Top-k快速检索问题/" rel="prev" title="搜索引擎Top-k快速检索问题">
+                搜索引擎Top-k快速检索问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bidding-Strategies"><span class="nav-number">1.</span> <span class="nav-text">Bidding Strategies</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CTR-CVR-Estimation"><span class="nav-number">2.</span> <span class="nav-text">CTR/CVR Estimation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2017"><span class="nav-number"></span> <span class="nav-text">2017</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Attribution-Modeling-Increases-Efficiency-of-Bidding-in-Display-Advertising-by-Eustache-Diemert-et-al-ADKDD-2017"><span class="nav-number">1.</span> <span class="nav-text">Attribution Modeling Increases Efficiency of Bidding in Display Advertising by Eustache Diemert et al. ADKDD 2017.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Abstra"><span class="nav-number">1.1.</span> <span class="nav-text">Abstra</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction"><span class="nav-number">1.2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Model"><span class="nav-number">1.3.</span> <span class="nav-text">Model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Data-description"><span class="nav-number">1.4.</span> <span class="nav-text">Data description</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Criteo-Data"><span class="nav-number">2.</span> <span class="nav-text">Criteo Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Managing-Risk-of-Bidding-in-Display-Advertising-by-Haifeng-Zhang-et-al-WSDM-2017"><span class="nav-number">3.</span> <span class="nav-text">Managing Risk of Bidding in Display Advertising by Haifeng Zhang et al. WSDM 2017.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Abstract"><span class="nav-number">3.1.</span> <span class="nav-text">Abstract</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction-1"><span class="nav-number">3.2.</span> <span class="nav-text">Introduction</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Real-Time-Bidding-rules-of-thumb-analytically-optimizing-the-programmatic-buying-of-ad-inventory-by-Joaquin-Fernandez-Tapia-SSRN-2015"><span class="nav-number">4.</span> <span class="nav-text">Real-Time Bidding rules of thumb: analytically optimizing the programmatic buying of ad-inventory by Joaquin Fernandez-Tapia. SSRN 2015.</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Introduction-2"><span class="nav-number">4.1.</span> <span class="nav-text">Introduction</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

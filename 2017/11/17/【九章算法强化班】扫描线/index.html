@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,sweep_line," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="扫描线lintcode391. 数飞机题目 给出飞机的起飞和降落时间的列表，用 interval 序列表示. 请计算出天上同时最多有多少架飞机？ 样例 对于每架飞机的起降时间列表：[[1,10],[2,3],[5,8],[4,7]], 返回3。  分析  计算空中的飞机个数，可以看成用一个线从左到右扫描的过程，计算每一时刻空中飞机的数量。 优化：只计算所有线段起始位置时天上的飞机即可，因为只有起始">
+<meta name="keywords" content="算法,sweep_line">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】课程笔记2——扫描线">
+<meta property="og:url" content="http://yoursite.com/2017/11/17/【九章算法强化班】扫描线/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="扫描线lintcode391. 数飞机题目 给出飞机的起飞和降落时间的列表，用 interval 序列表示. 请计算出天上同时最多有多少架飞机？ 样例 对于每架飞机的起降时间列表：[[1,10],[2,3],[5,8],[4,7]], 返回3。  分析  计算空中的飞机个数，可以看成用一个线从左到右扫描的过程，计算每一时刻空中飞机的数量。 优化：只计算所有线段起始位置时天上的飞机即可，因为只有起始">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-17-20-40-58.png">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/skyline1.jpg">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/skyline2.jpg">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】课程笔记2——扫描线">
+<meta name="twitter:description" content="扫描线lintcode391. 数飞机题目 给出飞机的起飞和降落时间的列表，用 interval 序列表示. 请计算出天上同时最多有多少架飞机？ 样例 对于每架飞机的起降时间列表：[[1,10],[2,3],[5,8],[4,7]], 返回3。  分析  计算空中的飞机个数，可以看成用一个线从左到右扫描的过程，计算每一时刻空中飞机的数量。 优化：只计算所有线段起始位置时天上的飞机即可，因为只有起始">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-17-20-40-58.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/17/【九章算法强化班】扫描线/"/>
+
+
+
+
+
+  <title>【九章算法强化班】课程笔记2——扫描线 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/17/【九章算法强化班】扫描线/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】课程笔记2——扫描线</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-17T17:38:49+08:00">
+                2017-11-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,702
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="扫描线"><a href="#扫描线" class="headerlink" title="扫描线"></a>扫描线</h1><h2 id="lintcode391-数飞机"><a href="#lintcode391-数飞机" class="headerlink" title="lintcode391. 数飞机"></a><a href="http://www.lintcode.com/zh-cn/problem/number-of-airplanes-in-the-sky/" target="_blank" rel="external">lintcode391. 数飞机</a></h2><h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><blockquote>
+<p>给出飞机的起飞和降落时间的列表，用 interval 序列表示. 请计算出天上同时最多有多少架飞机？</p>
+<p>样例</p>
+<p>对于每架飞机的起降时间列表：<code>[[1,10],[2,3],[5,8],[4,7]]</code>, 返回<code>3</code>。</p>
+</blockquote>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-17-20-40-58.png" alt=""> </p>
+<p>计算空中的飞机个数，可以看成用一个线从左到右扫描的过程，计算每一时刻空中飞机的数量。</p>
+<p>优化：只计算所有线段起始位置时天上的飞机即可，因为只有起始点是可能发生变化的点。遇到起点，天上的飞机数+1，遇到终点则-1。</p>
+<p>因此，我们先将所有线段的起点、终点排序，并标记是起点还是终点，然后从小到大遍历这些点，遇到起点则+1，遇到终点-1，返回过程中最大的数值即为空中飞机数的最大值。</p>
+<p><strong>需要注意的是</strong>：在同一点上会同时有开始点和结尾点，此时应该把结尾点放在前面，否则会出现多计算的情况。</p>
+<a id="more"></a>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> com.sun.org.apache.xpath.internal.operations.Bool;</div><div class="line"><span class="keyword">import</span> java.util.*;</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">airplane_count</span> </span>&#123;</div><div class="line">    <span class="comment">//Definition of Interval:</span></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Interval</span></span>&#123;</div><div class="line">        Integer start, end;</div><div class="line">        Interval(Integer start, Integer end) &#123;</div><div class="line">            <span class="keyword">this</span>.start = start;</div><div class="line">            <span class="keyword">this</span>.end = end;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//Definition of node:</span></div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Node</span> <span class="keyword">implements</span> <span class="title">Comparable</span>&lt;<span class="title">Node</span>&gt; </span>&#123;</div><div class="line">        Integer val;</div><div class="line">        <span class="keyword">boolean</span> isstart;</div><div class="line">        Node(Integer val, <span class="keyword">boolean</span> isstart) &#123;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">            <span class="keyword">this</span>.isstart = isstart;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//定义排序接口</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compareTo</span><span class="params">(Node Other)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span>(<span class="keyword">this</span>.val == Other.val)&#123;<span class="comment">//如果连个节点位置相同，把结束点排在前面</span></div><div class="line">                <span class="keyword">return</span> Boolean.compare(<span class="keyword">this</span>.isstart,Other.isstart);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">return</span> Integer.compare(<span class="keyword">this</span>.val, Other.val);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countOfAirplanes</span><span class="params">(List&lt;Interval&gt; airplanes)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> size = airplanes.size();</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="comment">//插入元素</span></div><div class="line">        Node[] array = <span class="keyword">new</span> Node[<span class="number">2</span> * size];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; airplanes.size(); i++) &#123;</div><div class="line">            array[<span class="number">2</span> * i] = (<span class="keyword">new</span> Node(airplanes.get(i).start, <span class="keyword">true</span>));</div><div class="line">            array[<span class="number">2</span> * i + <span class="number">1</span>] = (<span class="keyword">new</span> Node(airplanes.get(i).end, <span class="keyword">false</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//排序</span></div><div class="line">        Arrays.sort(array);</div><div class="line">        <span class="comment">//遍历</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (array[i].isstart) &#123;</div><div class="line">                count++;</div><div class="line">                <span class="keyword">if</span> (count &gt; max) &#123;</div><div class="line">                    max = count;</div><div class="line">                &#125;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                count--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="252-Meeting-Rooms"><a href="#252-Meeting-Rooms" class="headerlink" title="252.Meeting Rooms"></a><a href="https://leetcode.com/problems/meeting-rooms/" target="_blank" rel="external">252.Meeting Rooms</a></h2><h3 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h3><blockquote>
+<p>Given an array of meeting time intervals consisting of start and end times <code>[[s1,e1],[s2,e2],...]</code> (si &lt; ei), determine if a person could attend all meetings.</p>
+<p>For example,<br>Given <code>[[0, 30],[5, 10],[15, 20]]</code>,<br>return <code>false</code>.</p>
+</blockquote>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>题目是说判断一个人是否可以参加给出的所有的会议，可以沿用扫描线的思路：同一时刻最多只有一个会议正在召开，就可以参加所有会议。</p>
+<p>还有另外一种更快的思路：</p>
+<p>如果每一个会议的开始都在上一个会议结束之后，那么就不会有时间冲突的会议，就可以都参加了，所以可以将给出的所有会议的开始时间和结束时间分别放入两个数组中，分别排序，然后判断是否所有的时间满足：starts[i]&gt;ends[i-1]。</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for an interval.</span></div><div class="line"><span class="comment"> * public class Interval &#123;</span></div><div class="line"><span class="comment"> *     int start;</span></div><div class="line"><span class="comment"> *     int end;</span></div><div class="line"><span class="comment"> *     Interval() &#123; start = 0; end = 0; &#125;</span></div><div class="line"><span class="comment"> *     Interval(int s, int e) &#123; start = s; end = e; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canAttendMeetings</span><span class="params">(Interval[] airplanes)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">int</span>[] starts = <span class="keyword">new</span> <span class="keyword">int</span>[airplanes.length];</div><div class="line">        <span class="keyword">int</span>[] ends = <span class="keyword">new</span> <span class="keyword">int</span>[airplanes.length];</div><div class="line"></div><div class="line">        <span class="comment">//插入元素</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; airplanes.length; i++) &#123;</div><div class="line">            starts[i] = airplanes[i].start;</div><div class="line">            ends[i] = airplanes[i].end;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//排序</span></div><div class="line">        Arrays.sort(starts);</div><div class="line">        Arrays.sort(ends);</div><div class="line"></div><div class="line">        <span class="comment">//遍历</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; starts.length; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (starts[i]&lt;ends[i-<span class="number">1</span>]) &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="253-Meeting-Rooms-II"><a href="#253-Meeting-Rooms-II" class="headerlink" title="253.Meeting Rooms II"></a><a href="https://leetcode.com/problems/meeting-rooms-ii" target="_blank" rel="external">253.Meeting Rooms II</a></h2><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an array of meeting time intervals consisting of start and end times <code>[[s1,e1],[s2,e2],...]</code> (si &lt; ei), find the minimum number of conference rooms required.</p>
+<p>For example,<br>Given <code>[[0, 30],[5, 10],[15, 20]]</code>,<br>return <code>2</code>.</p>
+</blockquote>
+<p>给定一系列会议的开始和结束时间，返回所需的最大会议室数量</p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>方法一：</p>
+<p>用扫描线模拟扫描过程，计算扫描线最多同时扫描几个区间。</p>
+<p>方法二：</p>
+<p>分别对会议开始和结束的时间排序，两个指针ij分别指向开始数组和结束数组，当start[i] &lt; end[j]时，i++;sum++;</p>
+<p>否则j++,记录最大的sum。</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><p>方法一：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * Definition for an interval.</span></div><div class="line"><span class="comment"> * public class Interval &#123;</span></div><div class="line"><span class="comment"> *     int start;</span></div><div class="line"><span class="comment"> *     int end;</span></div><div class="line"><span class="comment"> *     Interval() &#123; start = 0; end = 0; &#125;</span></div><div class="line"><span class="comment"> *     Interval(int s, int e) &#123; start = s; end = e; &#125;</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> */</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> time;</div><div class="line">        <span class="keyword">boolean</span> isStart;</div><div class="line">        Node(<span class="keyword">int</span> time,<span class="keyword">boolean</span> isStart)&#123;</div><div class="line">            <span class="keyword">this</span>.time = time;</div><div class="line">            <span class="keyword">this</span>.isStart = isStart;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minMeetingRooms</span><span class="params">(Interval[] intervals)</span> </span>&#123;</div><div class="line">        Comparator&lt;Node&gt; tmp = <span class="keyword">new</span> Comparator&lt;Node&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Node o1, Node o2)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span>(o1.time != o2.time) <span class="keyword">return</span> o1.time - o2.time;</div><div class="line">                <span class="keyword">else</span>&#123;</div><div class="line">                    <span class="keyword">if</span>(o1.isStart == <span class="keyword">true</span>)&#123;</div><div class="line">                        <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        PriorityQueue&lt;Node&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(tmp);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; intervals.length;i++)&#123;</div><div class="line">            heap.add(<span class="keyword">new</span> Node(intervals[i].start,<span class="keyword">true</span>));</div><div class="line">            heap.add(<span class="keyword">new</span> Node(intervals[i].end,<span class="keyword">false</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(!heap.isEmpty())&#123;</div><div class="line">            <span class="keyword">if</span>(heap.poll().isStart)&#123;</div><div class="line">                sum++;</div><div class="line">                max = Math.max(max,sum);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;sum--;&#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法二：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.lang.reflect.Array;</div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="keyword">import</span> java.util.Comparator;</div><div class="line"><span class="keyword">import</span> java.util.PriorityQueue;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MeetingRoomsII</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minMeetingRooms</span><span class="params">(Interval[] intervals)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] starts = <span class="keyword">new</span> <span class="keyword">int</span>[intervals.length];</div><div class="line">        <span class="keyword">int</span>[] ends = <span class="keyword">new</span> <span class="keyword">int</span>[intervals.length];</div><div class="line"></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; intervals.length;i++)&#123;</div><div class="line">            starts[i] = intervals[i].start;</div><div class="line">            ends[i] = intervals[i].end;</div><div class="line">        &#125;</div><div class="line">        Arrays.sort(starts);</div><div class="line">        Arrays.sort(ends);</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(i &lt; starts.length &amp;&amp; j &lt; ends.length)&#123;</div><div class="line">            <span class="keyword">if</span>(starts[i] &lt; ends[j])&#123;</div><div class="line">                sum++;</div><div class="line">                i++;</div><div class="line">                max = Math.max(max,sum);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                j++;</div><div class="line">                sum--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="218-The-Skyline-Problem"><a href="#218-The-Skyline-Problem" class="headerlink" title="218.The Skyline Problem"></a><a href="https://leetcode.com/problems/the-skyline-problem" target="_blank" rel="external">218.The Skyline Problem</a></h2><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<hr>
+<p>A city’s skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Now suppose you are <strong>given the locations and height of all the buildings</strong> as shown on a cityscape photo (Figure A), write a program to <strong>output the skyline</strong> formed by these buildings collectively (Figure B).</p>
+<p><img src="https://leetcode.com/static/images/problemset/skyline1.jpg" alt="Buildings"> </p>
+<p><img src="https://leetcode.com/static/images/problemset/skyline2.jpg" alt="Skyline Contour"></p>
+<p>The geometric information of each building is represented by a triplet of integers <code>[Li, Ri, Hi]</code>, where <code>Li</code> and <code>Ri</code> are the x coordinates of the left and right edge of the ith building, respectively, and <code>Hi</code> is its height. It is guaranteed that <code>0 ≤ Li, Ri ≤ INT_MAX</code>, <code>0 &lt; Hi ≤ INT_MAX</code>, and <code>Ri - Li &gt; 0</code>. You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.</p>
+<p>For instance, the dimensions of all buildings in Figure A are recorded as: <code>[ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ]</code>.</p>
+<p>The output is a list of “<strong>key points</strong>“ (red dots in Figure B) in the format of <code>[ [x1,y1], [x2, y2], [x3, y3], ... ]</code> that uniquely defines a skyline. <strong>A key point is the left endpoint of a horizontal line segment</strong>. Note that the last key point, where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.</p>
+<p>For instance, the skyline in Figure B should be represented as:<code>[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ]</code>.</p>
+</blockquote>
+<p>题目给定每一个建筑的起始结束位置和其高度，返回建筑物构成的轮廓的拐点坐标。</p>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>根据观察，可以用扫描线的思路解决。</p>
+<p>首先需要将建筑物的开始和结束节点及其对应的高度加入堆heap中，按照坐标从小到大进行排序，当坐标一致的时候，将结束点排在前面。</p>
+<p>另外，还需要一个堆heightTemp来维护当前扫描线扫过的建筑的高度，以便迅速知道当前的最大高度。</p>
+<p>接下来，将节点依次出堆模拟扫描线扫描的过程，分下面两种情况：</p>
+<ol>
+<li>遇到起始点:<ol>
+<li>该点的高度大于当前最大高度，需要将该点坐标以及高度加入结果集，同时将高度加入heightTemp</li>
+<li>该点的高度不大于当前最大高度，则只需将该点高度加入heightTemp，无需加入结果集。</li>
+</ol>
+</li>
+<li>遇到结束点：<ol>
+<li>该点高度就是当前最大高度，则需要将最大高度从heightTemp中pop出去，然后将该点坐标和pop之后的当前最大高度加入结果集。</li>
+<li>该点高度小于当前最大高度，只需将该点高度从heightTemp中pop出去。</li>
+</ol>
+</li>
+</ol>
+<p>实现上面的算法之后，还不够，因为忽略了在同一个位置有多个点出现的情况，比如某个位置即是A建筑的结束也是B建筑的开始位置，将它们都加入的结果集，显然是重复的，需要筛选掉只剩一个，分如下两种情况：</p>
+<ol>
+<li>在某个点有多个建筑结束  —&gt; 取最后一个结束的，也就是高度最低的</li>
+<li>在某个点有多个建筑开始  —&gt;  取高度最高的</li>
+<li>在某个点既有建筑开始也有建筑结束，但前后高度不一样  —&gt; 取开始高度最高的</li>
+<li>在某个点既有建筑开始也有建筑结束，但前后高度一样  —&gt; 不加入最终结果集</li>
+</ol>
+<p>基于上面的思路，可以开始写代码了</p>
+<p>据说这道题还可以用线段树做，待学习。。。</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.Comparator;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.PriorityQueue;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TheSkylineProblem</span> </span>&#123;</div><div class="line">  <span class="comment">//节点，包含坐标，高度，开始点or结束点</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> loc;</div><div class="line">        <span class="keyword">int</span> height;</div><div class="line">        <span class="keyword">boolean</span> isStart;</div><div class="line">        Node(<span class="keyword">int</span> loc,<span class="keyword">int</span> height,<span class="keyword">boolean</span> isStart) &#123;</div><div class="line">            <span class="keyword">this</span>.loc = loc;</div><div class="line">            <span class="keyword">this</span>.height = height;</div><div class="line">            <span class="keyword">this</span>.isStart = isStart;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;<span class="keyword">int</span>[]&gt; getSkyline(<span class="keyword">int</span>[][] buildings) &#123;</div><div class="line">        List&lt;<span class="keyword">int</span>[]&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">      <span class="comment">//Node堆，排序依据：坐标小的优先，坐标相同的结束点优先，起始和结束相同的高度高的优先。</span></div><div class="line">       Comparator&lt;Node&gt; cmp = <span class="keyword">new</span> Comparator&lt;Node&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Node o1, Node o2)</span> </span>&#123;</div><div class="line">                <span class="keyword">if</span>(o1.loc != o2.loc)<span class="keyword">return</span> o1.loc - o2.loc;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    <span class="keyword">if</span>(o1.isStart == o2.isStart)&#123;</div><div class="line">                        <span class="keyword">return</span> o1.height - o2.height;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="keyword">if</span>(o1.isStart==<span class="keyword">true</span>)&#123;</div><div class="line">                         <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">else</span> <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">	<span class="comment">//最大堆，用于存放扫描线扫过的建筑的高度</span></div><div class="line">        Comparator&lt;Integer&gt; MaxCmp = <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> o2-o1;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">      <span class="comment">//堆声明</span></div><div class="line">        PriorityQueue&lt;Node&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(cmp);</div><div class="line">        PriorityQueue&lt;Integer&gt; heightTemp = <span class="keyword">new</span> PriorityQueue&lt;&gt;(MaxCmp);</div><div class="line">      <span class="comment">//将给定数据点入堆</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; buildings.length;i++)&#123;</div><div class="line">            heap.add(<span class="keyword">new</span> Node(buildings[i][<span class="number">0</span>],buildings[i][<span class="number">2</span>],<span class="keyword">true</span>));</div><div class="line">            heap.add(<span class="keyword">new</span> Node(buildings[i][<span class="number">1</span>],buildings[i][<span class="number">2</span>],<span class="keyword">false</span>));</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//数据点出堆，模拟扫描过程</span></div><div class="line">        <span class="keyword">while</span> (!heap.isEmpty())&#123;</div><div class="line">            Node node = heap.poll();<span class="comment">//出堆</span></div><div class="line">            <span class="comment">//是开始节点</span></div><div class="line">            <span class="keyword">if</span>(node.isStart)&#123;</div><div class="line">                <span class="comment">//如果高于当前最大高度，将坐标和对应高度加入结果集，同时标记为开始节点</span></div><div class="line">                <span class="keyword">if</span>(heightTemp.isEmpty() || node.height &gt; heightTemp.peek())&#123;</div><div class="line">                    result.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;node.loc,node.height,<span class="number">1</span>&#125;);</div><div class="line">                    heightTemp.add(node.height);</div><div class="line">                &#125;</div><div class="line">              <span class="comment">//如果没有高于当前最大高度，仅加入当前高度对，不加入结果集</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    heightTemp.add(node.height);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//是结束节点</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="comment">//如果该节点对应的高度就是当前最大高度</span></div><div class="line">                <span class="keyword">if</span>(!heightTemp.isEmpty() &amp;&amp; node.height == heightTemp.peek())&#123;</div><div class="line">                    <span class="comment">//将最大高度从当前高度堆中弹出</span></div><div class="line">                    heightTemp.poll();</div><div class="line">                    <span class="keyword">if</span>(heightTemp.isEmpty())&#123;</div><div class="line">                        <span class="comment">//结果集中加入当前剩余的最大高度</span></div><div class="line">                        result.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;node.loc,<span class="number">0</span>,<span class="number">0</span>&#125;);</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> &#123;</div><div class="line">                        <span class="comment">//结果集中加入当前剩余的最大高度</span></div><div class="line">                        result.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;node.loc,heightTemp.peek(),<span class="number">0</span>&#125;);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//如果该节点对应的高度小于当前最大高度，则将该高度从当前高度对中移除</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    heightTemp.remove(node.height);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//对结果集中节点进行处理，主要处理两种情况:</span></div><div class="line">      <span class="comment">//1.同一位置有多个点，包括开始点和结束点</span></div><div class="line">      <span class="comment">//2.在某一位置，有结束点和开始点，但前后高度一样</span></div><div class="line">        List&lt;<span class="keyword">int</span>[]&gt; result2 = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;<span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(i &lt; result.size() &amp;&amp; j &lt; result.size())&#123;</div><div class="line">            <span class="keyword">int</span> maxTemp = result.get(i)[<span class="number">1</span>];</div><div class="line">          <span class="comment">//相同位置有多个节点情况</span></div><div class="line">            <span class="keyword">while</span> (j &lt; result.size() &amp;&amp; result.get(i)[<span class="number">0</span>] == result.get(j)[<span class="number">0</span>])&#123;</div><div class="line">                <span class="comment">//在结束节点中选最低的</span></div><div class="line">                <span class="keyword">if</span>(result.get(j)[<span class="number">2</span>] == <span class="number">0</span>)&#123;</div><div class="line">                    maxTemp = Math.min(maxTemp,result.get(j)[<span class="number">1</span>]);</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//在开始节点中选最高的</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    maxTemp = Math.max(maxTemp,result.get(j)[<span class="number">1</span>]);</div><div class="line">                &#125;</div><div class="line">                j++;</div><div class="line">            &#125;</div><div class="line">          <span class="comment">//如果跟前一个高度不一致，才加入最终结果集</span></div><div class="line">            <span class="keyword">if</span>(result2.isEmpty() || result2.get(result2.size()-<span class="number">1</span>)[<span class="number">1</span>] != maxTemp)&#123;</div><div class="line">                result2.add(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;result.get(i)[<span class="number">0</span>],maxTemp&#125;);</div><div class="line">            &#125;</div><div class="line">            i = j;</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//返回最终结果集</span></div><div class="line">        <span class="keyword">return</span> result2;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/sweep-line/" rel="tag"># sweep_line</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/16/【leetcode】题目摘要/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/18/【九章算法强化班】堆Heap/" rel="prev" title="【九章算法强化班】堆Heap&双端队列Dequeue">
+                【九章算法强化班】堆Heap&双端队列Dequeue <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#扫描线"><span class="nav-number">1.</span> <span class="nav-text">扫描线</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#lintcode391-数飞机"><span class="nav-number">1.1.</span> <span class="nav-text">lintcode391. 数飞机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">1.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#252-Meeting-Rooms"><span class="nav-number">1.2.</span> <span class="nav-text">252.Meeting Rooms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#题目-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">1.2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码-1"><span class="nav-number">1.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#253-Meeting-Rooms-II"><span class="nav-number">1.3.</span> <span class="nav-text">253.Meeting Rooms II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#218-The-Skyline-Problem"><span class="nav-number">1.4.</span> <span class="nav-text">218.The Skyline Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

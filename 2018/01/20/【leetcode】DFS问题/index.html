@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="二叉树的深度优先遍历DFS是搜索算法的一种。它沿着树的深度遍历树的节点，尽可能深的搜索树的分支。 当节点v的所有边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。 如果还存在未被发现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。   如上图的例子，DFS访问数组为：ABDECFG。 实现方式分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【leetcode】DFS问题">
+<meta property="og:url" content="http://yoursite.com/2018/01/20/【leetcode】DFS问题/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="二叉树的深度优先遍历DFS是搜索算法的一种。它沿着树的深度遍历树的节点，尽可能深的搜索树的分支。 当节点v的所有边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。 如果还存在未被发现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。   如上图的例子，DFS访问数组为：ABDECFG。 实现方式分析">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-20-21-52-42.png">
+<meta property="og:updated_time" content="2018-03-12T12:35:15.679Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【leetcode】DFS问题">
+<meta name="twitter:description" content="二叉树的深度优先遍历DFS是搜索算法的一种。它沿着树的深度遍历树的节点，尽可能深的搜索树的分支。 当节点v的所有边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。 如果还存在未被发现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。   如上图的例子，DFS访问数组为：ABDECFG。 实现方式分析">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-20-21-52-42.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/20/【leetcode】DFS问题/"/>
+
+
+
+
+
+  <title>【leetcode】DFS问题 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/20/【leetcode】DFS问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【leetcode】DFS问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-20T22:31:36+08:00">
+                2018-01-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,561
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="二叉树的深度优先遍历"><a href="#二叉树的深度优先遍历" class="headerlink" title="二叉树的深度优先遍历"></a>二叉树的深度优先遍历</h2><p>DFS是搜索算法的一种。它沿着树的深度遍历树的节点，尽可能深的搜索树的分支。</p>
+<p>当节点v的所有边都己被探寻过，搜索将回溯到发现节点v的那条边的起始节点。这一过程一直进行到已发现从源节点可达的所有节点为止。</p>
+<p>如果还存在未被发现的节点，则选择其中一个作为源节点并重复以上过程，整个进程反复进行直到所有节点都被访问为止。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-01-20-21-52-42.png" alt=""> </p>
+<p>如上图的例子，DFS访问数组为：ABDECFG。</p>
+<h3 id="实现方式"><a href="#实现方式" class="headerlink" title="实现方式"></a>实现方式</h3><p>分析一下，在遍历了根结点后，就开始遍历左子树，最后才是右子树。</p>
+<p>因此可以借助堆栈的数据结构，由于堆栈是后进先出的顺序，由此可以先将右子树压栈，然后再对左子树压栈，</p>
+<p>这样一来，左子树结点就存在了栈顶上，因此某结点的左子树能在它的右子树遍历之前被遍历。</p>
+<h4 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h4><p>思路比较简单，就是从root开始，先将root值加入结果集，然后先对其做左节点递归调用做DFS，然后是对右节点DFS。当遇到空节点时，返回上层。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryTreeDFS</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left;</div><div class="line">        TreeNode right;</div><div class="line"></div><div class="line">        TreeNode(<span class="keyword">int</span> val) &#123;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">DFSRecurtionHelper</span><span class="params">(TreeNode root,List&lt;Integer&gt; results)</span></span>&#123;</div><div class="line">        <span class="comment">//遇到空节点，返回</span></div><div class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//root放入results,递归处理左右节点</span></div><div class="line">        results.add(root.val);</div><div class="line">        DFSRecurtion(root.left);</div><div class="line">        DFSRecurtion(root.right);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">DFSRecurtion</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        List&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        DFSRecurtionHelper(root,results);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="非递归（栈）"><a href="#非递归（栈）" class="headerlink" title="非递归（栈）"></a>非递归（栈）</h4><p>因此可以借助堆栈的数据结构，由于堆栈是后进先出的顺序，由此可以先将右子树压栈，然后再对左子树压栈，这样一来，左子树结点就存在了栈顶上，因此某结点的左子树能在它的右子树遍历之前被遍历。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">DFSwithStack</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">    Stack&lt;TreeNode&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">    List&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    stack.push(root);</div><div class="line">    <span class="keyword">while</span> (!stack.empty())&#123;</div><div class="line">        TreeNode temp = stack.pop();</div><div class="line">        results.add(temp.val);</div><div class="line">        <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>)&#123;</div><div class="line">            stack.push(temp.right);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">            stack.push(temp.left);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="leetcode-相关习题"><a href="#leetcode-相关习题" class="headerlink" title="leetcode 相关习题"></a>leetcode 相关习题</h2><h3 id="Populating-Next-Right-Pointers-in-Each-Node"><a href="#Populating-Next-Right-Pointers-in-Each-Node" class="headerlink" title="Populating Next Right Pointers in Each Node"></a><a href="https://leetcode.com/problems/populating-next-right-pointers-in-each-node/" target="_blank" rel="external">Populating Next Right Pointers in Each Node</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;     struct TreeLinkNode &#123;</div><div class="line">&gt;       TreeLinkNode *left;</div><div class="line">&gt;       TreeLinkNode *right;</div><div class="line">&gt;       TreeLinkNode *next;</div><div class="line">&gt;     &#125;</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to <code>NULL</code>.</p>
+<p>Initially, all next pointers are set to <code>NULL</code>.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>You may only use constant extra space.</li>
+<li>You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).</li>
+</ul>
+<p>For example,<br>Given the following perfect binary tree,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;          1</div><div class="line">&gt;        /  \</div><div class="line">&gt;       2    3</div><div class="line">&gt;      / \  / \</div><div class="line">&gt;     4  5  6  7</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>After calling your function, the tree should look like:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;          1 -&gt; NULL</div><div class="line">&gt;        /  \</div><div class="line">&gt;       2 -&gt; 3 -&gt; NULL</div><div class="line">&gt;      / \  / \</div><div class="line">&gt;     4-&gt;5-&gt;6-&gt;7 -&gt; NULL</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>就是将同一层上的节点的next指向右边的节点</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>tag是DFS，但我一开始想到的是BFS。</p>
+<ol>
+<li>BFS：</li>
+</ol>
+<p>将每一层节点加入队列，出队列时，左边节点的next指向右边节点。</p>
+<p>但DFS会更快一些</p>
+<ol>
+<li>DFS：</li>
+</ol>
+<p>用DFS的核心思想是对于一个节点来说，将其左孩子的next指向右孩子，其右孩子的next指向其本身next节点的左孩子。</p>
+<p>题目要求不能引入额外的空间，所以更应该用dfs的</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PopulatingNextRightPointersinEachNode</span> </span>&#123;</div><div class="line">     <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeLinkNode</span> </span>&#123;</div><div class="line">         <span class="keyword">int</span> val;</div><div class="line">         TreeLinkNode left, right, next;</div><div class="line">         TreeLinkNode(<span class="keyword">int</span> x) &#123; val = x; &#125;</div><div class="line">     &#125;</div><div class="line">	<span class="comment">//BFS</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">(TreeLinkNode root)</span> </span>&#123;</div><div class="line">         <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">             <span class="keyword">return</span>;</div><div class="line">         &#125;</div><div class="line">        Queue&lt;TreeLinkNode&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        queue.add(root);</div><div class="line">        <span class="keyword">while</span> (!queue.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span> len = queue.size();</div><div class="line">            <span class="keyword">while</span>(len &gt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="comment">//如果是本层最后一个了，其next指向NULL</span></div><div class="line">                TreeLinkNode temp = queue.poll();</div><div class="line">                <span class="keyword">if</span>(len == <span class="number">1</span>)&#123;</div><div class="line">                    temp.next = <span class="keyword">null</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//如果不是本层最后一个，其next指向下一个节点</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    temp.next = queue.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">                    queue.add(temp.left);</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">if</span>(temp.right != <span class="keyword">null</span>)&#123;</div><div class="line">                    queue.add(temp.right);</div><div class="line">                &#125;</div><div class="line">                len--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">  <span class="comment">//DFS</span></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfshelper</span><span class="params">(TreeLinkNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span> &amp;&amp; root.right != <span class="keyword">null</span>)&#123;</div><div class="line">            root.left.next = root.right;</div><div class="line">            <span class="keyword">if</span>(root.next !=<span class="keyword">null</span>)&#123;</div><div class="line">                root.right.next = root.next.left;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                root.right.next = <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            dfshelper(root.left);</div><div class="line">            dfshelper(root.right);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//DFS</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">connectDFS</span><span class="params">(TreeLinkNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">         root.next = <span class="keyword">null</span>;</div><div class="line">         dfshelper(root);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Path-Sum"><a href="#Path-Sum" class="headerlink" title="Path Sum"></a><a href="https://leetcode.com/problems/path-sum/" target="_blank" rel="external">Path Sum</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
+<p>For example:</p>
+<p>Given the below binary tree and </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; sum = 22</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;               5</div><div class="line">&gt;              / \</div><div class="line">&gt;             4   8</div><div class="line">&gt;            /   / \</div><div class="line">&gt;           11  13  4</div><div class="line">&gt;          /  \      \</div><div class="line">&gt;         7    2      1</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return true, as there exist a root-to-leaf path <code>5-&gt;4-&gt;11-&gt;2</code> which sum is 22.</p>
+</blockquote>
+<p>给定二叉树和一个整数sum,返回二叉树中是否存在一条从root到叶子的路径，长度为sum</p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>DFS，分别对节点的左右孩子做DFS，sum需减掉当前节点的值。</p>
+<p>当遇到叶子节点，且该点的值==sum时，即找到了一条合法路径，返回true</p>
+<p>这里需要注意的是测试样例中有负数的情况，所以不能根据剩余的sum值进行剪枝。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">dfshelper</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span></span>&#123;</div><div class="line">  <span class="comment">//sum == root且root是叶子节点</span></div><div class="line">  <span class="keyword">if</span>(sum == root.val &amp;&amp; root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">if</span>(root.left != <span class="keyword">null</span>) &#123;</div><div class="line">      <span class="keyword">if</span>(dfshelper(root.left, sum - root.val))&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;</div><div class="line">      <span class="keyword">if</span>(dfshelper(root.right, sum - root.val))&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasPathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> dfshelper(root,sum);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Path-Sum-II"><a href="#Path-Sum-II" class="headerlink" title="Path Sum II"></a><a href="https://leetcode.com/problems/path-sum-ii/" target="_blank" rel="external">Path Sum II</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree and a sum, find all root-to-leaf paths where each path’s sum equals the given sum.</p>
+<p>For example:</p>
+<p>Given the below binary tree and </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; sum = 22</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;               5</div><div class="line">&gt;              / \</div><div class="line">&gt;             4   8</div><div class="line">&gt;            /   / \</div><div class="line">&gt;           11  13  4</div><div class="line">&gt;          /  \    / \</div><div class="line">&gt;         7    2  5   1</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;    [5,4,11,2],</div><div class="line">&gt;    [5,8,4,5]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>跟上一题一样的，这次要把合法路径全都记录下来返回。</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PathSumII</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left, right;</div><div class="line">        TreeNode(<span class="keyword">int</span> x) &#123; val = x;&#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root.val == sum &amp;&amp; root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)&#123;</div><div class="line">            result.add(root.val);</div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">            result.remove(result.size()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            result.add(root.val);</div><div class="line">            <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)&#123;</div><div class="line">                helper(root.left,sum - root.val);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;</div><div class="line">                helper(root.right,sum - root.val);</div><div class="line">            &#125;</div><div class="line">            result.remove(result.size()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; pathSum(TreeNode root, <span class="keyword">int</span> sum) &#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> results;</div><div class="line">        &#125;</div><div class="line">        helper(root,sum);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Path-Sum-III"><a href="#Path-Sum-III" class="headerlink" title="Path Sum III"></a><a href="https://leetcode.com/problems/path-sum-iii" target="_blank" rel="external">Path Sum III</a></h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>You are given a binary tree in which each node contains an integer value.</p>
+<p>Find the number of paths that sum to a given value.</p>
+<p>The path does not need to start or end at the root or a leaf, but it must go downwards (traveling only from parent nodes to child nodes).</p>
+<p>The tree has no more than 1,000 nodes and the values are in the range -1,000,000 to 1,000,000.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; root = [10,5,-3,3,2,null,11,3,-2,null,1], sum = 8</div><div class="line">&gt;</div><div class="line">&gt;       10</div><div class="line">&gt;      /  \</div><div class="line">&gt;     5   -3</div><div class="line">&gt;    / \    \</div><div class="line">&gt;   3   2   11</div><div class="line">&gt;  / \   \</div><div class="line">&gt; 3  -2   1</div><div class="line">&gt;</div><div class="line">&gt; Return 3. The paths that sum to 8 are:</div><div class="line">&gt;</div><div class="line">&gt; 1.  5 -&gt; 3</div><div class="line">&gt; 2.  5 -&gt; 2 -&gt; 1</div><div class="line">&gt; 3. -3 -&gt; 11</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>跟前面两道的不同是：起止点不一定是root和leaf可以是树中的任意两点</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>方法一：双层递归</p>
+<p>对树中的每一个节点都进行搜索，从该点开始是否有合法路径。</p>
+<p>可以转化为，对根节点搜索sum合法路径，然后对根节点的左右节点分别搜索sum合法路径，其中对其左右节点搜索合法路径时，也需要对其自身和其左右节点分别搜索，这是外层递归</p>
+<p>搜索路径长度本身又是一层递归，每次减掉当前节点val，这是第二层递归</p>
+<p>方法二：前缀长度</p>
+<p>计算从root到每一个节点的路径长度，存储在一个hashmap中，key为root到树种节点的路径长度，value为出现次数。</p>
+<p>当计算到某一个节点时，从root到该节点的路径长度为len，则以该节点为结尾的合法路径的个数为map中key为sum-len的value值。</p>
+<p>注意：每次回退时需要将root到这点的路径长度在hashmap中的value-1。</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><p>方法一：双层递归</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PathSumIII</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left, right;</div><div class="line">        TreeNode(<span class="keyword">int</span> x) &#123; val = x;&#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果到当前点已经是合法路径了，res+1</span></div><div class="line">        <span class="keyword">if</span>(root.val == sum)&#123;</div><div class="line">            res++;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//接续沿着左右节点寻找是否还有合法路径</span></div><div class="line">        res += helper(root.left,sum - root.val);</div><div class="line">        res += helper(root.right,sum - root.val);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//从当前节点开始和为sum 和从左、右节点开始和为sum</span></div><div class="line">        <span class="keyword">return</span> helper(root,sum) + pathSum(root.left,sum) + pathSum(root.right,sum);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法二：前缀搜索</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.HashMap;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PathSumIII</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left, right;</div><div class="line">        TreeNode(<span class="keyword">int</span> x) &#123; val = x;&#125;</div><div class="line">    &#125;</div><div class="line">  </div><div class="line">    HashMap&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum,<span class="keyword">int</span> fromR)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> res;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> temp = fromR + root.val;</div><div class="line">        res += map.getOrDefault(temp - sum,<span class="number">0</span>);</div><div class="line">        map.put(temp,map.getOrDefault(temp,<span class="number">0</span>)+<span class="number">1</span>);</div><div class="line">        res = res + helper(root.left,sum,temp)+helper(root.right,sum,temp);</div><div class="line">        map.put(temp,map.get(temp)-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(TreeNode root, <span class="keyword">int</span> sum)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        map.put(<span class="number">0</span>,<span class="number">1</span>);</div><div class="line">        <span class="comment">//从当前节点开始和为sum 和从左、右节点开始和为sum</span></div><div class="line">        <span class="keyword">return</span> helper(root,sum,<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Path-Sum-IV"><a href="#Path-Sum-IV" class="headerlink" title="Path Sum IV"></a><a href="https://leetcode.com/problems/path-sum-iv" target="_blank" rel="external">Path Sum IV</a></h3><h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>If the depth of a tree is smaller than <code>5</code>, then this tree can be represented by a list of three-digits integers.</p>
+<p>For each integer in this list:</p>
+<ol>
+<li>The hundreds digit represents the depth <code>D</code> of this node, <code>1 &lt;= D &lt;= 4.</code></li>
+<li>The tens digit represents the position <code>P</code> of this node in the level it belongs to, <code>1 &lt;= P &lt;= 8</code>. The position is the same as that in a full binary tree.</li>
+<li>The units digit represents the value <code>V</code> of this node, <code>0 &lt;= V &lt;= 9.</code></li>
+</ol>
+<p>Given a list of <code>ascending</code> three-digits integers representing a binary with the depth smaller than 5. You need to return the sum of all paths from the root towards the leaves.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [113, 215, 221]</div><div class="line">&gt; Output: 12</div><div class="line">&gt; Explanation: </div><div class="line">&gt; The tree that the list represents is:</div><div class="line">&gt;     3</div><div class="line">&gt;    / \</div><div class="line">&gt;   5   1</div><div class="line">&gt;</div><div class="line">&gt; The path sum is (3 + 5) + (3 + 1) = 12.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [113, 221]</div><div class="line">&gt; Output: 4</div><div class="line">&gt; Explanation: </div><div class="line">&gt; The tree that the list represents is: </div><div class="line">&gt;     3</div><div class="line">&gt;      \</div><div class="line">&gt;       1</div><div class="line">&gt;</div><div class="line">&gt; The path sum is (3 + 1) = 4.</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>以数组的形式给定一棵二叉树，用三位数表示节点，其中百位代表层数，十位代表在某一层中从左到右的位置，各位代表节点数值，计算从root到每一个leaf的路径长度之和。</p>
+<h4 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>假设一个几点的百位和十位是xy，则其左孩子和右孩子分别是：</p>
+<p>left：(x+1)(2y-1)</p>
+<p>right：(x+1)(2y)</p>
+<p>可以根据这个性质，将数组中的节点放入hashmap中，key为百位十位，value为节点值。然后在map中寻找左右节点进行DFS，当遍历到叶子节点时，将本条路径长度加入路径长度总和。</p>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> sum;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">dfs</span><span class="params">(HashMap&lt;Integer,Integer&gt; map,<span class="keyword">int</span> root,<span class="keyword">int</span> res)</span></span>&#123;</div><div class="line">  res += map.get(root);</div><div class="line">  <span class="keyword">int</span> left = (root/<span class="number">10</span>+<span class="number">1</span>) * <span class="number">10</span> + (root%<span class="number">10</span>)*<span class="number">2</span>-<span class="number">1</span>;</div><div class="line">  <span class="keyword">int</span> right = (root/<span class="number">10</span>+<span class="number">1</span>) * <span class="number">10</span> + (root%<span class="number">10</span>)*<span class="number">2</span>;</div><div class="line">  <span class="comment">//如果左右都没有了路径了，是叶子节点</span></div><div class="line">  <span class="keyword">if</span>(!map.containsKey(left) &amp;&amp; !map.containsKey(right))&#123;</div><div class="line">    sum += res;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//如果左边有路径</span></div><div class="line">  <span class="keyword">if</span>(map.containsKey(left))&#123;</div><div class="line">    dfs(map,left,res);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//如果右边有路径</span></div><div class="line">  <span class="keyword">if</span>(map.containsKey(right))&#123;</div><div class="line">    dfs(map,right,res);</div><div class="line">  &#125;</div><div class="line">  res -= map.get(root);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pathSum</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">  HashMap&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt;nums.length;i++)&#123;</div><div class="line">    map.put(nums[i]/<span class="number">10</span>,nums[i] % <span class="number">10</span>);</div><div class="line">  &#125;</div><div class="line">  dfs(map,<span class="number">11</span>,<span class="number">0</span>);</div><div class="line">  <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Flatten-Binary-Tree-to-Linked-List"><a href="#Flatten-Binary-Tree-to-Linked-List" class="headerlink" title="Flatten Binary Tree to Linked List"></a><a href="https://leetcode.com/problems/flatten-binary-tree-to-linked-list/" target="_blank" rel="external">Flatten Binary Tree to Linked List</a></h3><h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a binary tree, flatten it to a linked list in-place.</p>
+<p>For example,<br>Given</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;          1</div><div class="line">&gt;         / \</div><div class="line">&gt;        2   5</div><div class="line">&gt;       / \   \</div><div class="line">&gt;      3   4   6</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>The flattened tree should look like:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    1</div><div class="line">&gt;     \</div><div class="line">&gt;      2</div><div class="line">&gt;       \</div><div class="line">&gt;        3</div><div class="line">&gt;         \</div><div class="line">&gt;          4</div><div class="line">&gt;           \</div><div class="line">&gt;            5</div><div class="line">&gt;             \</div><div class="line">&gt;              6</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>将二叉树压到一条右子树上</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>这道题实际上是要将每个节点左子树的前序遍历插入到右子树前面。</p>
+<p>所以我的思路是如果遇到节点root有右子树，就先把右子树存下来，然后dfs处理左子树，当左子树处理完之后，再将右子树插入到左子树。</p>
+<p>DSF的时候，把原来的左子树放到节点的右边，然后节点向下移动，递归处理左子树。</p>
+<h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FlattenBinaryTreetoLinkedList</span> </span>&#123;</div><div class="line">    TreeNode temp;<span class="comment">//记录当前节点</span></div><div class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(TreeNode root)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果右节点不空，先把右边节点存下来</span></div><div class="line">        TreeNode right = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span>) &#123;</div><div class="line">            right = <span class="keyword">new</span> TreeNode(root.right.val);</div><div class="line">            right.left = root.right.left;</div><div class="line">            right.right = root.right.right;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果左子树非空，将左子树挪到右边，左子树置为空，temp下移，继续dfs temp的左子树</span></div><div class="line">        <span class="keyword">if</span>(temp.left != <span class="keyword">null</span>)&#123;</div><div class="line">            temp.right = temp.left;</div><div class="line">            temp.left = <span class="keyword">null</span>;</div><div class="line">            temp = temp.right;</div><div class="line">            dfs(temp);</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//如果右节点非空，将之前记录下来的右子树放到temp右边，然后temp下移，继续dfs</span></div><div class="line">        <span class="keyword">if</span>(right != <span class="keyword">null</span>)&#123;</div><div class="line">            temp.right = right;</div><div class="line">            temp = temp.right;</div><div class="line">            dfs(temp);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">flatten</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        temp = root;</div><div class="line">        dfs(root);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="House-Robber-III"><a href="#House-Robber-III" class="headerlink" title="House Robber III"></a><a href="https://leetcode.com/problems/house-robber-iii/" target="_blank" rel="external">House Robber III</a></h3><h4 id="baseline"><a href="#baseline" class="headerlink" title="baseline"></a>baseline</h4><p>递归调用，相当于暴力遍历所有情况</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="comment">//如果选择root，则需避开其左右孩子</span></div><div class="line">    <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)&#123;<span class="comment">//选择左边孩子的左右孩子</span></div><div class="line">        sum += rob(root.left.left) + rob(root.left.right);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;<span class="comment">//选择右边孩子的左右孩子</span></div><div class="line">        sum += rob(root.right.left) + rob (root.right.right);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//选当前节点和不选当前节点的最大值</span></div><div class="line">    <span class="keyword">return</span> Math.max(root.val + sum,rob(root.left) + rob(root.right));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="dp"><a href="#dp" class="headerlink" title="dp"></a>dp</h4><p>用hashmap将计算过的每一个节点的max值存储下来，后面再用到直接返回</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HouseRobberIII</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TreeNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        TreeNode left;</div><div class="line">        TreeNode right;</div><div class="line">        TreeNode(<span class="keyword">int</span> x) &#123; val = x; &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    HashMap&lt;TreeNode,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果已经计算过了</span></div><div class="line">        <span class="keyword">if</span>(map.containsKey(root))&#123;</div><div class="line">            <span class="keyword">return</span> map.get(root);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="comment">//如果选择root，则需避开其左右孩子</span></div><div class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)&#123;<span class="comment">//选择左边孩子的左右孩子</span></div><div class="line">            sum += rob(root.left.left) + rob(root.left.right);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)&#123;<span class="comment">//选择右边孩子的左右孩子</span></div><div class="line">            sum += rob(root.right.left) + rob (root.right.right);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//选当前节点和不选当前节点的最大值</span></div><div class="line">        <span class="keyword">int</span> maxval =  Math.max(root.val + sum,rob(root.left) + rob(root.right));</div><div class="line">        map.put(root,maxval);</div><div class="line">        <span class="keyword">return</span> maxval;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>递归函数返回一个大小为2的一维数组res，其中res[0]表示不包含当前节点值的最大值，res[1]表示包含当前值的最大值，那么我们在遍历某个节点时，首先对其左右子节点调用递归函数，分别得到包含与不包含左子节点值的最大值，和包含于不包含右子节点值的最大值，那么当前节点的res[0]就是左子节点两种情况的较大值加上右子节点两种情况的较大值，res[1]就是不包含左子节点值的最大值加上不包含右子节点值的最大值，和当前节点值之和，返回即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] solve(TreeNode root)&#123;</div><div class="line">    <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;<span class="comment">//如果是空节点</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span>[] left = solve(root.left);<span class="comment">//左孩子的res</span></div><div class="line">    <span class="keyword">int</span>[] right = solve(root.right);<span class="comment">//右孩子的res</span></div><div class="line">    <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];</div><div class="line">    <span class="comment">//不包含root的情况：左孩子包括和不包括的最大值+右孩子同理</span></div><div class="line">    res[<span class="number">0</span>] = Math.max(left[<span class="number">0</span>],left[<span class="number">1</span>]) + Math.max(right[<span class="number">0</span>],right[<span class="number">1</span>]);</div><div class="line">    <span class="comment">//包含root的情况：不包括左孩子和右孩子，需要加上自身value</span></div><div class="line">    res[<span class="number">1</span>] = left[<span class="number">0</span>] + right[<span class="number">0</span>] + root.val;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span><span class="params">(TreeNode root)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span>[] res = solve(root);</div><div class="line">    <span class="keyword">return</span> Math.max(res[<span class="number">0</span>],res[<span class="number">1</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/19/回文问题/" rel="next" title="回文问题">
+                <i class="fa fa-chevron-left"></i> 回文问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/20/【leetcode】BFS问题/" rel="prev" title="【leetcode】BFS问题">
+                【leetcode】BFS问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树的深度优先遍历"><span class="nav-number">1.</span> <span class="nav-text">二叉树的深度优先遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#实现方式"><span class="nav-number">1.1.</span> <span class="nav-text">实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#递归"><span class="nav-number">1.1.1.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非递归（栈）"><span class="nav-number">1.1.2.</span> <span class="nav-text">非递归（栈）</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-相关习题"><span class="nav-number">2.</span> <span class="nav-text">leetcode 相关习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Populating-Next-Right-Pointers-in-Each-Node"><span class="nav-number">2.1.</span> <span class="nav-text">Populating Next Right Pointers in Each Node</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">2.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Path-Sum"><span class="nav-number">2.2.</span> <span class="nav-text">Path Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Path-Sum-II"><span class="nav-number">2.3.</span> <span class="nav-text">Path Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">2.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Path-Sum-III"><span class="nav-number">2.4.</span> <span class="nav-text">Path Sum III</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">2.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">2.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Path-Sum-IV"><span class="nav-number">2.5.</span> <span class="nav-text">Path Sum IV</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-4"><span class="nav-number">2.5.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-4"><span class="nav-number">2.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-4"><span class="nav-number">2.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flatten-Binary-Tree-to-Linked-List"><span class="nav-number">2.6.</span> <span class="nav-text">Flatten Binary Tree to Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-5"><span class="nav-number">2.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">2.6.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-5"><span class="nav-number">2.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#House-Robber-III"><span class="nav-number">2.7.</span> <span class="nav-text">House Robber III</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#baseline"><span class="nav-number">2.7.1.</span> <span class="nav-text">baseline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dp"><span class="nav-number">2.7.2.</span> <span class="nav-text">dp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化"><span class="nav-number">2.7.3.</span> <span class="nav-text">优化</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

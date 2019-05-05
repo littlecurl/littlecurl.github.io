@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. outline Design a web crawler 爬虫 Design thread-safe producer and  consumer 线程安全的生产者-消费者 Design a Typeahead 搜索建议  2. 爬虫2.1 Scenario思考：搜索引擎是如爬取网页的？我们需要获取什么样的表格？ URL-网页内容   爬到了这些数据怎么用呢？ 用户搜索关键词，google去">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章系统设计】爬虫系统与搜索建议系统">
+<meta property="og:url" content="http://yoursite.com/2018/03/10/【九章系统设计】爬虫系统与搜索建议系统/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="1. outline Design a web crawler 爬虫 Design thread-safe producer and  consumer 线程安全的生产者-消费者 Design a Typeahead 搜索建议  2. 爬虫2.1 Scenario思考：搜索引擎是如爬取网页的？我们需要获取什么样的表格？ URL-网页内容   爬到了这些数据怎么用呢？ 用户搜索关键词，google去">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-08-16.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-09-32.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-11-23.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-25-03.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-11-21-16-37.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-37-28.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-38-56.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-02-00.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-08-58.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-09-49.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-26-40.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-23-51-10.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-23-54-59.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-23-55-53.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-13-00-24-11.png">
+<meta property="og:updated_time" content="2018-03-16T09:35:02.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章系统设计】爬虫系统与搜索建议系统">
+<meta name="twitter:description" content="1. outline Design a web crawler 爬虫 Design thread-safe producer and  consumer 线程安全的生产者-消费者 Design a Typeahead 搜索建议  2. 爬虫2.1 Scenario思考：搜索引擎是如爬取网页的？我们需要获取什么样的表格？ URL-网页内容   爬到了这些数据怎么用呢？ 用户搜索关键词，google去">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-08-16.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/10/【九章系统设计】爬虫系统与搜索建议系统/"/>
+
+
+
+
+
+  <title>【九章系统设计】爬虫系统与搜索建议系统 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/【九章系统设计】爬虫系统与搜索建议系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章系统设计】爬虫系统与搜索建议系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T17:08:29+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,714
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1-outline"><a href="#1-outline" class="headerlink" title="1. outline"></a>1. outline</h1><ul>
+<li>Design a web crawler 爬虫</li>
+<li>Design thread-safe producer and  consumer 线程安全的生产者-消费者</li>
+<li>Design a Typeahead 搜索建议</li>
+</ul>
+<h1 id="2-爬虫"><a href="#2-爬虫" class="headerlink" title="2. 爬虫"></a>2. 爬虫</h1><h2 id="2-1-Scenario"><a href="#2-1-Scenario" class="headerlink" title="2.1 Scenario"></a>2.1 Scenario</h2><p>思考：搜索引擎是如爬取网页的？我们需要获取什么样的表格？</p>
+<p>URL-网页内容</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-08-16.png" alt=""> </p>
+<p>爬到了这些数据怎么用呢？</p>
+<p>用户搜索关键词，google去数据表中的网页内容字段寻找包含用户query的数据，返回对应的url给用户，之后进行排序等优化操作。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-09-32.png" alt=""> </p>
+<p>那么想要用程序完成爬取互联网上所有网页及其内容这个目标，我们首先要知道一个事实，也就是互联网上的内容其实是互相索引的，也就是就像如下的大网一样：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-11-23.png" alt=""> </p>
+<p><strong>总结分析爬虫的工作量：</strong></p>
+<p><strong>假设我们需要在一周内爬取互联网中所有的网页，之后至少一周更新一次。</strong></p>
+<ol>
+<li>互联网上共有1trillion个网页，则每秒需要爬取1.6m个网页</li>
+<li><strong>每个网页大概10K</strong>，那么将这些网页存下来需要<strong>10P</strong>的存储空间</li>
+</ol>
+<p>把互联网上的网页看成是一张图，爬虫相当于遍历这个图，有DFS和BFS两种实现方式，<strong>一般采用BFS进行爬取</strong>，因为DFS不好并行爬取。</p>
+<h3 id="2-1-1单线程爬取"><a href="#2-1-1单线程爬取" class="headerlink" title="2.1.1单线程爬取"></a>2.1.1单线程爬取</h3><p>对于单线程的爬虫来说，就是搞一个队列，用BFS爬取集合：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-25-03.png" alt=""> </p>
+<h3 id="2-1-2-生产者消费者模型"><a href="#2-1-2-生产者消费者模型" class="headerlink" title="2.1.2 生产者消费者模型"></a>2.1.2 生产者消费者模型</h3><p>producer-consumer pattern生产者消费者模型</p>
+<p>由于存取速度不一样，所以二者中间有一个buffer</p>
+<p><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-11-21-16-37.png" alt="img"></p>
+<p>但是单线程有一个问题，就是慢的很。解决——多线程爬虫</p>
+<h3 id="2-1-3-多线程爬取"><a href="#2-1-3-多线程爬取" class="headerlink" title="2.1.3 多线程爬取"></a>2.1.3 多线程爬取</h3><p> 不同线程之间共享同一个队列</p>
+<p>为什么多线程会比单线程快呢？</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-37-28.png" alt=""> </p>
+<p>多线程存在的问题：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-21-38-56.png" alt=""> </p>
+<p>多个线程都会从队列里向外拿URL，相当于对队列的一次写操作，这时候就会发生冲突，也就是互斥</p>
+<p>需要注意的是，争取共享资源，就要<strong>考虑以下三个机制</strong>：</p>
+<ul>
+<li>sleep —— 就是睡一会，设置一定的时间，然后回来看看资源能用了不。但问题是：在道资源可以使用的第一时间知道，效率很低</li>
+<li>condition variable 信号量（实现互斥）—— 相当于所有的线程都在等着，然后信号量通知他们能用的时候，就都立马去抢占用资源，谁抢到算谁的</li>
+<li>semaphore —— 就像门上挂上五把钥匙一样，每次可以进去5个人，出来的时候还钥匙，也就是允许同一时间有多个线程访问用一个资源。</li>
+</ul>
+<p>单线程 –&gt; 多线程：</p>
+<p>思考一个问题，既然多线程这么快，是否可以尽量多的开线程，比如开一万个？</p>
+<p>不行，原因如下：</p>
+<ul>
+<li>线程之间来回切换(context switch)还是有花费（需要保存线程执行状态，还需要切换二级缓存等）的，因此线程不能太多，线程过多效率会很低</li>
+<li>一个CPU在同一时间只能处理一个线程，如果机器只有一个CPU线程依然在排队</li>
+<li>线程端口数目是有限的（TCP/IP协议中，端口只有2个字节，也就是65536个端口，操作系统还会预留一些端口给其他服务）</li>
+<li>网络带宽有限制，线程很多，单台的带宽是不能够满足的</li>
+</ul>
+<p>因此我们可以改进一下：</p>
+<h3 id="2-1-4-分布式爬取"><a href="#2-1-4-分布式爬取" class="headerlink" title="2.1.4 分布式爬取"></a>2.1.4 分布式爬取</h3><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-02-00.png" alt=""> </p>
+<p>分多台机器爬取，就可以突破单台机器的限制了！此时分布式爬虫依然共享一个内存中的URL queue.</p>
+<p>分布式爬虫虽然解决了线程不能太多的问题，但是又带来了一个问题：URL队列在内存中放不下了（假设1trillion，差不多要40T的内存）！这是不行的。那么我们考虑一下把URL queue存在硬盘里，也就是数据库里。</p>
+<p>但是放到数据库里之后，又有一个很要命的限制是：没有办法控制网页抓取的顺序和优先级啊！</p>
+<p>解决：给数据库加入一个优先级的列，再加一个频率的列</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-08-58.png" alt=""> </p>
+<p>每一行是一个任务：</p>
+<ul>
+<li>ID,URL</li>
+<li>state：是否正在运行的状态（即能去重，也能防止重复运算）</li>
+<li>priority：优先级</li>
+<li>available_time：控制抓取频率，也就是这个时刻之后再进行抓取。如果本次有更新，那么就把时间设置地更近一些；如果本次没有更新，那么就把时间设置地更远一些</li>
+</ul>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-09-49.png" alt=""> </p>
+<ul>
+<li>webPage Storage : 分布式存储系统，存储爬取的东西</li>
+<li>分布式爬虫</li>
+<li>Task table : 就是上面的任务表</li>
+</ul>
+<h2 id="2-4-Scale-优化"><a href="#2-4-Scale-优化" class="headerlink" title="2.4 Scale 优化"></a>2.4 Scale 优化</h2><h3 id="2-4-1-Task-Table-拆分"><a href="#2-4-1-Task-Table-拆分" class="headerlink" title="2.4.1 Task Table 拆分"></a>2.4.1 Task Table 拆分</h3><p><strong>task table 最终会非常大！1 trillion 个task，而且会越来越大</strong></p>
+<p>解决——拆表sharding，加速访问</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-22-26-40.png" alt=""> </p>
+<p>那么拆表就有一个细节需要注意，需要一个scheduler，用来安排去哪里要数据。</p>
+<h3 id="2-4-2-抓取频率问题"><a href="#2-4-2-抓取频率问题" class="headerlink" title="2.4.2 抓取频率问题"></a>2.4.2 抓取频率问题</h3><p>如何控制抓取频率呢？有一个暴力的方法：</p>
+<ul>
+<li>如果本次抓了有更新（更新频繁），那就把下次抓取的时间提前一半</li>
+<li>如果本次抓了没更新（更新不频繁），就把下次抓取的时间往后移2倍</li>
+</ul>
+<p>调整合适的抓频率可以优化计算资源</p>
+<h3 id="2-4-3-死循环问题"><a href="#2-4-3-死循环问题" class="headerlink" title="2.4.3 死循环问题"></a>2.4.3 死循环问题</h3><p>比如爬取新浪新闻，基本上连接也都是新浪新闻，</p>
+<p>有些网站是互相指向的，比如sina.com。而且所有的URL都是与sina.com差不多的。这样就会使用大量的资源去抓取这种巨型网站，太耗费资源了。对于那些小博客就不公平。</p>
+<p>解决办法：单位时间对同一个网站，不要分配过多的计算资源给巨型网站就好啦。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-23-51-10.png" alt=""> </p>
+<h3 id="2-4-4-分区域问题"><a href="#2-4-4-分区域问题" class="headerlink" title="2.4.4 分区域问题"></a>2.4.4 分区域问题</h3><p>中国的爬虫爬美国的网站，或者网站在美国爬中国的网站就会很慢</p>
+<p>解决：分区域爬取，分区域简历task table，然后定期和全世界的数据库进行同步</p>
+<h1 id="3-Typeahead-搜索建议"><a href="#3-Typeahead-搜索建议" class="headerlink" title="3. Typeahead 搜索建议"></a>3. Typeahead 搜索建议</h1><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-23-54-59.png" alt=""> </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-12-23-55-53.png" alt=""> </p>
+<h2 id="3-1-scenario-场景分析"><a href="#3-1-scenario-场景分析" class="headerlink" title="3.1 scenario 场景分析"></a>3.1 scenario 场景分析</h2><p>我们以google Suggesion为例分析</p>
+<ul>
+<li>DAU日活跃用户：500m</li>
+<li>搜索量：4 x 6 x 500m = 12b （每人搜索6次，输入4个单词 = 使用了typeahead四次）</li>
+<li>QPS : 12b / 86400 = 138k</li>
+<li>Peak QPS = QPS X 2 = 276k</li>
+</ul>
+<p>typeahead的最关键问题是快！一定要在用户敲字母的同时给出建议</p>
+<h2 id="3-2-service-需求"><a href="#3-2-service-需求" class="headerlink" title="3.2 service 需求"></a>3.2 service 需求</h2><ol>
+<li>query survice 处理检索，在极短的时间内返回以输入为前缀的建议热门词</li>
+<li>data collection service 收集某段时间内用户搜索的热门词</li>
+</ol>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-13-00-24-11.png" alt=""></h3><h2 id="3-3-Storage"><a href="#3-3-Storage" class="headerlink" title="3.3 Storage"></a>3.3 Storage</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/10/【排序】排序算法终极大总结/" rel="next" title="排序算法终极大总结">
+                <i class="fa fa-chevron-left"></i> 排序算法终极大总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/【Java】HashMap原理探究/" rel="prev" title="【Java】HashMap原理探究">
+                【Java】HashMap原理探究 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-outline"><span class="nav-number">1.</span> <span class="nav-text">1. outline</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-爬虫"><span class="nav-number">2.</span> <span class="nav-text">2. 爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Scenario"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Scenario</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1单线程爬取"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1单线程爬取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-生产者消费者模型"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 生产者消费者模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-多线程爬取"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 多线程爬取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-分布式爬取"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.1.4 分布式爬取</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-Scale-优化"><span class="nav-number">2.2.</span> <span class="nav-text">2.4 Scale 优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-1-Task-Table-拆分"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.4.1 Task Table 拆分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-2-抓取频率问题"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.4.2 抓取频率问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-3-死循环问题"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.4.3 死循环问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-4-分区域问题"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.4.4 分区域问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Typeahead-搜索建议"><span class="nav-number">3.</span> <span class="nav-text">3. Typeahead 搜索建议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-scenario-场景分析"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 scenario 场景分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-service-需求"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 service 需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">3.2.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-Storage"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 Storage</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

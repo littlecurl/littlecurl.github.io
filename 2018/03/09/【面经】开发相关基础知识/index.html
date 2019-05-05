@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. JDK和JRE、JVM的区别是什么JRE（Java运行时环境）： Java Runtime Environment JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。 JDK（Java 开发工具包）：Java Development Kit JDK顾名思义是java开发工具包，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【面经】开发相关基础知识">
+<meta property="og:url" content="http://yoursite.com/2018/03/09/【面经】开发相关基础知识/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="1. JDK和JRE、JVM的区别是什么JRE（Java运行时环境）： Java Runtime Environment JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。 JDK（Java 开发工具包）：Java Development Kit JDK顾名思义是java开发工具包，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-11-01-23-00.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-11-01-26-11.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-11-12-21-02.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-11-12-21-13.png">
+<meta property="og:updated_time" content="2018-03-12T12:35:15.831Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【面经】开发相关基础知识">
+<meta name="twitter:description" content="1. JDK和JRE、JVM的区别是什么JRE（Java运行时环境）： Java Runtime Environment JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。 JDK（Java 开发工具包）：Java Development Kit JDK顾名思义是java开发工具包，">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-11-01-23-00.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/09/【面经】开发相关基础知识/"/>
+
+
+
+
+
+  <title>【面经】开发相关基础知识 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/【面经】开发相关基础知识/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【面经】开发相关基础知识</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T23:46:50+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,604
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-JDK和JRE、JVM的区别是什么"><a href="#1-JDK和JRE、JVM的区别是什么" class="headerlink" title="1. JDK和JRE、JVM的区别是什么"></a>1. JDK和JRE、JVM的区别是什么</h2><p><strong>JRE（Java运行时环境）： Java Runtime Environment</strong></p>
+<p>JRE顾名思义是java运行时环境，包含了java虚拟机，java基础类库。是使用java语言编写的程序运行所需要的软件环境，是提供给想运行java程序的用户使用的。</p>
+<p><strong>JDK（Java 开发工具包）：Java Development Kit</strong></p>
+<p>JDK顾名思义是java开发工具包，是程序员使用java语言编写java程序所需的开发工具包，是提供给程序员使用的。JDK包含了JRE，同时还包含了编译java源码的编译器javac，还包含了很多java程序调试和分析的工具：jconsole，jvisualvm等工具软件，还包含了java程序编写所需的文档和demo例子程序。</p>
+<p><strong>JVM（Java 虚拟机）：Java Virtual Machine</strong></p>
+<p>JVM是Java编程语言的核心。当我们运行一个程序时，JVM负责将字节码转换为特定机器代码。JVM也是<strong>平台特定</strong>的，并提供核心的Java方法，例如内存管理、垃圾回收和安全机制等。JVM 是可定制化的，我们可以通过Java 选项(java options)定制它，比如配置JVM 内存的上下界。JVM之所以被称为虚拟的是因为它提供了一个不依赖于底层操作系统和机器硬件的接口。这种独立于硬件和操作系统的特性正是Java程序可以一次编写多处执行的原因。</p>
+<p><strong>JDK, JRE 和JVM的区别</strong></p>
+<ul>
+<li>JDK是用于开发的而JRE是用于运行Java程序的。</li>
+<li>JDK和JRE都包含了JVM，从而使得我们可以运行Java程序。</li>
+<li>JVM是Java编程语言的核心并且具有平台独立性。</li>
+</ul>
+<h2 id="2-进程和线程"><a href="#2-进程和线程" class="headerlink" title="2. 进程和线程"></a>2. 进程和线程</h2><h3 id="2-1-定义"><a href="#2-1-定义" class="headerlink" title="2.1 定义"></a>2.1 定义</h3><p><strong>程序</strong></p>
+<p>​    程序是指令和数据的有序集合，其本身没有任何运动的含义，是一个静态的概念，而进程则是在处理机上的一次执行过程，它是一个动态的概念。进程是包含程序的，进程的执行离不开程序，进程中的文本区域就是代码区，也就是程序。</p>
+<p><strong>进程(process)</strong></p>
+<p>狭义的定义：进程就是一段程序的执行过程。</p>
+<p>广义定义：进程是一个具有一定独立功能的程序关于某次数据集合的一次运行活动，它是操作系统分配资源的基本单元。</p>
+<p>​    简单来讲进程的概念主要有两点：第一，进程是一个实体。<strong>每一个进程都有它自己的地址空间</strong>，一般情况下，包括<strong>文本区域（text region）、数据区域（data region）和堆栈（stack region）</strong>。文本区域存储处理器执行的代码；数据区域存储变量和进程执行期间使用的动态分配的内存；堆栈区域存储着活动过程中调用的指令和本地变量。第二，进程是一个“执行中的程序”。程序是一个没有生命的实体，只有处理器赋予程序生命时，它才能成为一个活动的实体，我们称其为进程。</p>
+<p>​    进程状态：进程有三个状态，就绪，运行和阻塞。就绪状态其实就是获取了除cpu外的所有资源，只要处理器分配资源马上就可以运行。运行态就是获取了处理器分配的资源，程序开始执行，阻塞态，当程序条件不够时，需要等待条件满足时候才能执行，如等待I/O操作的时候，此刻的状态就叫阻塞态。</p>
+<p><strong>线程(thread)</strong></p>
+<p>​    通常在一个进程中可以包含若干个线程，当然一个进程中至少有一个线程，不然没有存在的意义。线程可以利用进程所拥有的资源，在引入线程的操作系统中，通常都是把进程作为分配资源的基本单位，而把线程作为独立运行和独立调度的基本单位，由于线程比进程更小，基本上不拥有系统资源，故对它的调度所付出的开销就会小得多，能更高效的提高系统多个程序间并发执行的程度。</p>
+<h3 id="2-2进程与线程的区别"><a href="#2-2进程与线程的区别" class="headerlink" title="2.2进程与线程的区别"></a>2.2进程与线程的区别</h3><p>​    进程和线程的主要差别在于它们是不同的操作系统资源管理方式。<strong>进程有独立的地址空间</strong>，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。<strong>线程有自己的堆栈和局部变量，但线程之间没有单独的地址空间</strong>，<strong>一个线程死掉就等于整个进程死掉</strong>，<strong>所以多进程的程序要比多线程的程序健壮</strong>，但在进程切换时，耗费资源较大，效率要差一些。但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</p>
+<p>1) 简而言之,一个程序至少有一个进程,一个进程至少有一个线程.</p>
+<p>2) 线程的划分尺度小于进程，使得多线程程序的并发性高。</p>
+<p>3) 另外，<strong>进程在执行过程中拥有独立的内存单元，而多个线程共享内存，从而极大地提高了程序的运行效率</strong>。</p>
+<p>4) 线程在执行过程中与进程还是有区别的。每个独立的线程有一个程序运行的入口、顺序执行序列和程序的出口。但是线程不能够独立执行，必须依存在应用程序中，由应用程序提供多个线程执行控制。</p>
+<p>5) 从逻辑角度来看，多线程的意义在于一个应用程序中，有多个执行部分可以同时执行。但操作系统并没有将多个线程看做多个独立的应用，来实现进程的调度和管理以及资源分配。这就是进程和线程的重要区别。</p>
+<h3 id="2-3-优缺点"><a href="#2-3-优缺点" class="headerlink" title="2.3 优缺点"></a>2.3 优缺点</h3><p>​    线程和进程在使用上各有优缺点：线程执行开销小，但不利于资源的管理和保护；而进程正相反。同时，线程适合于在SMP(多核处理机)机器上运行，而进程则可以跨机器迁移。</p>
+<p><a href="http://www.ruanyifeng.com/blog/2013/04/processes_and_threads.html" target="_blank" rel="external">用一个工厂的形象的解释进程和线程</a></p>
+<p><a href="https://www.jianshu.com/p/7ce30a806c51" target="_blank" rel="external">简书的王布斯</a></p>
+<h2 id="3-如何预防死锁"><a href="#3-如何预防死锁" class="headerlink" title="3. 如何预防死锁"></a>3. 如何预防死锁</h2><h3 id="3-1-死锁"><a href="#3-1-死锁" class="headerlink" title="3.1 死锁"></a>3.1 死锁</h3><p>​    当线程A持有独占锁a，并尝试去获取独占锁b的同时，线程B持有独占锁b，并尝试获取独占锁a的情况下，就会发生AB两个线程由于互相持有对方需要的锁，而发生的阻塞现象，我们称为死锁。</p>
+<h3 id="3-2-造成死锁必须达成的4个条件（原因）"><a href="#3-2-造成死锁必须达成的4个条件（原因）" class="headerlink" title="3.2 造成死锁必须达成的4个条件（原因）"></a>3.2 造成死锁必须达成的4个条件（原因）</h3><ul>
+<li>互斥：指进程对所分配到的资源进行排他性使用，即一段时间内某资源只能由一个进程占用</li>
+<li>请求和保持：一个线程因请求资源而阻塞时，对已获得的资源保持不放。</li>
+<li>不剥夺：指进程已获得的资源在未使用完之前不能被剥夺，只能在使用完时自己释放</li>
+<li>循环等待：若干线程之间形成一种头尾相接的循环等待资源关系。</li>
+</ul>
+<h3 id="3-3死锁的预防"><a href="#3-3死锁的预防" class="headerlink" title="3.3死锁的预防"></a>3.3<strong>死锁的预防</strong></h3><blockquote>
+<p>破坏互斥条件</p>
+</blockquote>
+<ul>
+<li>一般来说在所列的四个条件中，“互斥”条件是无法破坏的</li>
+</ul>
+<blockquote>
+<p>破坏请求和保持条件</p>
+</blockquote>
+<ul>
+<li>一次性分配方案</li>
+<li>要求每个进程提出新的资源申请前，释放它所占有的资源</li>
+</ul>
+<blockquote>
+<p>破坏不剥夺条件</p>
+</blockquote>
+<ul>
+<li>如果占有某些资源的一个进程进行进一步资源请求被拒绝，则该进程必须释放它最初占有的资源</li>
+<li>进程划分优先级，高优先级进程可以剥夺低优先级进程的资源</li>
+</ul>
+<blockquote>
+<p>破坏循环等待条件</p>
+</blockquote>
+<ul>
+<li>将系统中的所有资源统一编号，进程提出的所有资源申请必须按照资源的编号顺序提出</li>
+</ul>
+<h2 id="4-tcp-udp-区别"><a href="#4-tcp-udp-区别" class="headerlink" title="4. tcp udp 区别"></a>4. tcp udp 区别</h2><p><strong>TCP（传输控制协议）是一种面向连接的、可靠的、基于字节流的传输层通信协议。</strong></p>
+<p>1)提供IP环境下的数据可靠传输(一台计算机发出的字节流会无差错的发往网络上的其他计算机，而且计算机A接收数据包的时候，也会向计算机B回发数据包，这也会产生部分通信量)，有效流控，全双工操作(数据在两个方向上能同时传递)，多路复用服务，是面向连接，端到端的传输;</p>
+<p>2)面向连接：正式通信前必须要与对方建立连接。事先为所发送的数据开辟出连接好的通道，然后再进行数据发送，像打电话。</p>
+<p>3)TCP支持的应用协议：Telnet(远程登录)、FTP(文件传输协议)、SMTP(简单邮件传输协议)。TCP用于传输数据量大，可靠性要求高的应用。</p>
+<p><strong>UDP(用户数据报协议）是OSI参考模型中一种无连接的传输层协议，提供面向事务的简单不可靠信息传送服务。</strong></p>
+<p>1)面向非连接的(正式通信前不必与对方建立连接，不管对方状态就直接发送，像短信，QQ)，不能提供可靠性、流控、差错恢复功能。UDP用于一次只传送少量数据，可靠性要求低、传输经济等应用。</p>
+<ol>
+<li>UDP支持的应用协议：NFS(网络文件系统)、SNMP(简单网络管理系统)、DNS(主域名称系统)、TFTP(通用文件传输协议)等。</li>
+</ol>
+<p><strong>总结：</strong></p>
+<p><strong>TCP：面向连接、传输可靠(保证数据正确性,保证数据顺序)、用于传输大量数据(流模式)、速度慢，建立连接需要开销较多(时间，系统资源)。</strong></p>
+<p><strong>UDP：面向非连接、传输不可靠、用于传输少量数据(数据包模式)、速度快。</strong></p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-11-01-23-00.png" alt=""> </p>
+<h3 id="5-TCP-IP-协议族常用协议"><a href="#5-TCP-IP-协议族常用协议" class="headerlink" title="5. TCP/IP 协议族常用协议"></a>5. TCP/IP 协议族常用协议</h3><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-11-01-26-11.png" alt=""> </p>
+<h2 id="6-三次握手四次挥手"><a href="#6-三次握手四次挥手" class="headerlink" title="6. 三次握手四次挥手"></a>6. 三次握手四次挥手</h2><h3 id="6-1-TCP特性"><a href="#6-1-TCP特性" class="headerlink" title="6.1 TCP特性"></a>6.1 TCP特性</h3><ul>
+<li>TCP 提供一种<strong>面向连接的、可靠的</strong>字节流服务</li>
+<li>在一个 TCP 连接中，仅有两方进行彼此通信。广播和多播不能用于 TCP</li>
+<li>TCP 使用校验和，确认和重传机制来保证可靠传输</li>
+<li>TCP 给数据分节进行排序，并使用累积确认保证数据的顺序不变和非重复</li>
+<li>TCP 使用<strong>滑动窗口机制</strong>来实现流量控制，通过动态改变窗口的大小进行拥塞控制</li>
+</ul>
+<p><strong>那为什么需要三次握手呢？</strong>请看如下的过程：</p>
+<ol>
+<li>A向B发起建立连接请求：A——&gt;B；</li>
+<li>B收到A的发送信号，并且向A发送确认信息：B——&gt;A；</li>
+<li>A收到B的确认信号，并向B发送确认信号：A——&gt;B。</li>
+</ol>
+<p>三次握手大概就是这么个过程。<br>通过第一次握手，B知道A能够发送数据。通过第二次握手，A知道B能发送数据。结合第一次握手和第二次握手，A知道B能接收数据。结合第三次握手，B知道A能够接收数据。</p>
+<p>至此，完成了握手过程，A知道B能收能发，B知道A能收能发，通信连接至此建立。三次连接是保证可靠的最小握手次数，再多次握手也不能提高通信成功的概率，反而浪费资源。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-11-12-21-02.png" alt=""> </p>
+<p><strong>那为什么需要四次挥手呢？</strong>请看如下过程：</p>
+<ol>
+<li>A向B发起请求，表示A没有数据要发送了：A——&gt;B；</li>
+<li>B向A发送信号，确认A的断开请求请求：B——&gt;A；</li>
+<li>B向A发送信号，请求断开连接，表示B没有数据要发送了：B——&gt;A；</li>
+<li>A向B发送确认信号，同意断开：A——&gt;B。</li>
+</ol>
+<p>B收到确认信号，断开连接，而A在一段时间内没收到B的信号，表明B已经断开了，于是A也断开了连接。至此，完成挥手过程。</p>
+<p>可能有捧油会问，为什么2、3次挥手不能合在一次挥手中？那是因为此时A虽然不再发送数据了，但是还可以接收数据，B可能还有数据要发送给A，所以两次挥手不能合并为一次。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-11-12-21-13.png" alt=""> </p>
+<p>挥手次数比握手多一次，是因为握手过程，通信只需要处理<strong>连接</strong>。而挥手过程，通信需要处理<strong>数据+连接</strong>。</p>
+<h2 id="7-局部变量和函数参数为什么要放在栈中"><a href="#7-局部变量和函数参数为什么要放在栈中" class="headerlink" title="7.  局部变量和函数参数为什么要放在栈中"></a>7.  局部变量和函数参数为什么要放在栈中</h2><p>​    局部变量，顾名思义其作用域属于局部。全局的变量，意味着谁都随时随地可以访问，所以其放在数据段中。而局部变量只是自己在用，放在数据段中纯属浪费空间，没有必要，<strong>故将其放在自己的栈中，随时可以清理，真正体现了局部的意义</strong>。</p>
+<p>​    函数参数为什么放在栈区呢？第一也是其局限性导致，只有这个函数用这个参数，何必将其放在数据段呢？二是因为函数是在程序执行过程中调用的，属于动态的调用，编译时无法预测何时调用及被调用的次数，函数的参数及返回值都需要内存来存储，如果是递归调用的话，参数及返回值需要的内存空间也就不确定了，这取决于递归的次数。有些体系结构的计算机也把函数参数放到寄存器里面去。</p>
+<p>参考：<a href="https://www.jianshu.com/p/ac325bd601f8" target="_blank" rel="external">无敌大灰狼me链接</a></p>
+<h2 id="2-常见设计原则和设计模式"><a href="#2-常见设计原则和设计模式" class="headerlink" title="2. 常见设计原则和设计模式"></a>2. 常见设计原则和设计模式</h2><p>6大设计原则：</p>
+<ol>
+<li><strong>单一职责原则</strong>：就是开发人员经常说的”高内聚，低耦合”。也就是说，每个类应该只有一个职责，对外只能提供一种功能，而引起类变化的原因应该只有一个。在设计模式中，所有的设计模式都遵循这一原则。</li>
+<li><strong>开闭原则</strong>：一个对象对扩展开放，对修改关闭。也就是说，对类的改动是通过增加代码进行的，而不是修改现有代码。软件开发人员一旦写出了可以运行的代码，就不应该去改动它，而是要保证它能一直运行下去，如何能够做到这一点呢?这就需要借助于抽象和多态，即把可能变化的内容抽象出来，从而使抽象的部分是相对稳定的，而具体的实现则是可以改变和扩展的。</li>
+<li><strong>里氏替换原则</strong>：在任何父类出现的地方都可以用它的子类来替代。也就是说，同一个继承体系中的对象应该有共同的行为特征。</li>
+<li><strong>依赖注入原则</strong>：要依赖于抽象，不要依赖于具体实现。也就是说，在应用程序中，所有的类如果使用或依赖于其他的类，则应该依赖这些其他类的抽象类，而不是这些其他类的具体类。为了实现这一原则，就要求我们在编程的时候针对抽象类或者接口编程，而不是针对具体实现编程。</li>
+<li><strong>接口分离原则</strong>：不应该强迫程序依赖它们不需要使用的方法。也就是说，一个接口不需要提供太多的行为，一个接口应该只提供一种对外的功能，不应该把所有的操作都封装到一个接口中。</li>
+<li><strong>迪米特原则：</strong>一个对象应当对其他对象尽可能少的了解。也就是说，降低各个对象之间的耦合，提高系统的可维护性。在模块之间应该只通过接口编程，而不理会模块的内部工作原理，它可以使各个模块耦合度降到最低，促进软件的复用</li>
+</ol>
+<p>常见设计模式:</p>
+<ol>
+<li><p>简单工厂模式</p>
+<p> · 工厂方法模式中抽象工厂类负责定义创建对象的接口，具体对象的创建工作由继承抽象工厂的具体类实现。</p>
+<p>​        · 优点：客户端不需要在负责对象的创建，从而明确了各个类的职责，如果有新的对象增加，只需要增加一个具体的类和具体的工厂类即可，不影响已有的代码，后期维护容易，增强了系统的扩展性。</p>
+<p>​        · 缺点：需要额外的编写代码，增加了工作量。</p>
+</li>
+<li><p>单例设计模式</p>
+<p> 单例模式就是要确保类在内存中只有一个对象，该实例必须自动创建，并且对外提供。</p>
+<p>​        · 优点：在系统内存中只存在一个对象，因此可以节约系统资源，对于一些需要频繁创建和销毁的对象单例模式无疑可以提高系统的性能。</p>
+<p>​        · 缺点：没有抽象层，因此扩展很难。职责过重，在一定程序上违背了单一职责</p>
+</li>
+<li><p>模板设计模式</p>
+<p>· 模版方法模式就是定义一个算法的骨架，而将具体的算法延迟到子类中来实现</p>
+<p>​        · 优点：使用模版方法模式，在定义算法骨架的同时，可以很灵活的实现具体的算法，满足用户灵活多变的需求</p>
+<p>​        · 缺点：如果算法骨架有修改的话，则需要修改抽象类</p>
+</li>
+</ol>
+<h3 id="2-volatile关键字作用是什么"><a href="#2-volatile关键字作用是什么" class="headerlink" title="2. volatile关键字作用是什么"></a>2. volatile关键字作用是什么</h3><p>英文翻译：不稳定的</p>
+<p>弱同步机制</p>
+<p>在多线程的化境下，Volatile 修饰的成员变量在每次被线程访问时，都强迫从共享内存中重读该成员变量的值。而且，当成员变量发生变化时，强迫线程将变化值回写到共享内存。这样在任何时刻，两个不同的线程总是看到某个成员变量的同一个值。</p>
+<p>数据量过大内存存不下了怎么办</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/09/【本科毕设】pub-sub框架/" rel="next" title="【本科毕设】pub/sub框架">
+                <i class="fa fa-chevron-left"></i> 【本科毕设】pub/sub框架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/10/【排序】排序算法终极大总结/" rel="prev" title="排序算法终极大总结">
+                排序算法终极大总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JDK和JRE、JVM的区别是什么"><span class="nav-number">1.</span> <span class="nav-text">1. JDK和JRE、JVM的区别是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-进程和线程"><span class="nav-number">2.</span> <span class="nav-text">2. 进程和线程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-定义"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2进程与线程的区别"><span class="nav-number">2.2.</span> <span class="nav-text">2.2进程与线程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-优缺点"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 优缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-如何预防死锁"><span class="nav-number">3.</span> <span class="nav-text">3. 如何预防死锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-死锁"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 死锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-造成死锁必须达成的4个条件（原因）"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 造成死锁必须达成的4个条件（原因）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3死锁的预防"><span class="nav-number">3.3.</span> <span class="nav-text">3.3死锁的预防</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-tcp-udp-区别"><span class="nav-number">4.</span> <span class="nav-text">4. tcp udp 区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-TCP-IP-协议族常用协议"><span class="nav-number">4.1.</span> <span class="nav-text">5. TCP/IP 协议族常用协议</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-三次握手四次挥手"><span class="nav-number">5.</span> <span class="nav-text">6. 三次握手四次挥手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-TCP特性"><span class="nav-number">5.1.</span> <span class="nav-text">6.1 TCP特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-局部变量和函数参数为什么要放在栈中"><span class="nav-number">6.</span> <span class="nav-text">7.  局部变量和函数参数为什么要放在栈中</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-常见设计原则和设计模式"><span class="nav-number">7.</span> <span class="nav-text">2. 常见设计原则和设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-volatile关键字作用是什么"><span class="nav-number">7.1.</span> <span class="nav-text">2. volatile关键字作用是什么</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

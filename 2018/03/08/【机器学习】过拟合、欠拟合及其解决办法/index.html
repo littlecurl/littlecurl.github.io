@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 过拟合与欠拟合​    机器学习中一个重要的话题便是模型的泛化能力，泛化能力强的模型才是好模型. ​    对于训练好的模型，若在训练集表现差，不必说在测试集表现同样会很差，这可能是欠拟合导致；若模型在训练集表现非常好，却在测试集上差强人意，则这便是过拟合导致的. ​    过拟合与欠拟合也可以用 Bias 与 Variance （偏差和方差）的角度来解释，欠拟合会导致高 Bias ，过拟合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="过拟合、欠拟合及其解决办法">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/【机器学习】过拟合、欠拟合及其解决办法/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="1. 过拟合与欠拟合​    机器学习中一个重要的话题便是模型的泛化能力，泛化能力强的模型才是好模型. ​    对于训练好的模型，若在训练集表现差，不必说在测试集表现同样会很差，这可能是欠拟合导致；若模型在训练集表现非常好，却在测试集上差强人意，则这便是过拟合导致的. ​    过拟合与欠拟合也可以用 Bias 与 Variance （偏差和方差）的角度来解释，欠拟合会导致高 Bias ，过拟合">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://pic3.zhimg.com/80/v2-7b5523e2f3ef416698cfecaebc73df36_hd.jpg">
+<meta property="og:image" content="http://i.imgur.com/6jbxq15.jpg">
+<meta property="og:image" content="http://i.imgur.com/kju5RTZ.jpg">
+<meta property="og:image" content="http://i.imgur.com/HCkJZYl.jpg">
+<meta property="og:image" content="http://i.imgur.com/9WnBBu1.jpg">
+<meta property="og:image" content="http://i.imgur.com/mebEC90.jpg">
+<meta property="og:image" content="http://i.imgur.com/qM83geg.jpg">
+<meta property="og:image" content="http://i.imgur.com/Xs2p2EN.jpg">
+<meta property="og:image" content="http://i.imgur.com/yDETU7x.jpg">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-08-23-02-04.png">
+<meta property="og:updated_time" content="2018-03-16T09:35:02.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="过拟合、欠拟合及其解决办法">
+<meta name="twitter:description" content="1. 过拟合与欠拟合​    机器学习中一个重要的话题便是模型的泛化能力，泛化能力强的模型才是好模型. ​    对于训练好的模型，若在训练集表现差，不必说在测试集表现同样会很差，这可能是欠拟合导致；若模型在训练集表现非常好，却在测试集上差强人意，则这便是过拟合导致的. ​    过拟合与欠拟合也可以用 Bias 与 Variance （偏差和方差）的角度来解释，欠拟合会导致高 Bias ，过拟合">
+<meta name="twitter:image" content="https://pic3.zhimg.com/80/v2-7b5523e2f3ef416698cfecaebc73df36_hd.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/08/【机器学习】过拟合、欠拟合及其解决办法/"/>
+
+
+
+
+
+  <title>过拟合、欠拟合及其解决办法 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/【机器学习】过拟合、欠拟合及其解决办法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">过拟合、欠拟合及其解决办法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T21:27:34+08:00">
+                2018-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,576
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-过拟合与欠拟合"><a href="#1-过拟合与欠拟合" class="headerlink" title="1. 过拟合与欠拟合"></a>1. 过拟合与欠拟合</h2><p>​    <strong>机器学习中一个重要的话题便是模型的泛化能力，泛化能力强的模型才是好模型</strong>.</p>
+<p>​    对于训练好的模型，若在训练集表现差，不必说在测试集表现同样会很差，这可能是欠拟合导致；若模型在训练集表现非常好，却在测试集上差强人意，则这便是过拟合导致的.</p>
+<p>​    过拟合与欠拟合也可以用 Bias 与 Variance （偏差和方差）的角度来解释，<strong>欠拟合会导致高 Bias ，过拟合会导致高 Variance ，所以模型需要在 Bias 与 Variance 之间做出一个权衡。</strong></p>
+<p>​    使用简单的模型去拟合复杂数据时，会导致模型很难拟合数据的真实分布，这时模型便欠拟合了，或者说有很大的 Bias，<strong>Bias 即为模型的期望输出与其真实输出之间的差异</strong>；有时为了得到比较精确的模型而过度拟合训练数据，或者模型复杂度过高时，可能连训练数据的噪音也拟合了，导致模型在训练集上效果非常好，但泛化性能却很差，这时模型便过拟合了，或者说有很大的 Variance，这时模型在不同训练集上得到的模型波动比较大，<strong>Variance 刻画了不同训练集得到的模型的输出与这些模型期望输出的差异</strong>。</p>
+<p><img src="https://pic3.zhimg.com/80/v2-7b5523e2f3ef416698cfecaebc73df36_hd.jpg" alt="img"></p>
+<h2 id="2-常用解决办法"><a href="#2-常用解决办法" class="headerlink" title="2. 常用解决办法"></a>2. 常用解决办法</h2><p><strong>(1)解决欠拟合的方法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">1、增加新特征，可以考虑加入进特征组合、高次特征，来增大假设空间;</div><div class="line">2、尝试非线性模型，比如核SVM 、决策树、DNN等模型;</div><div class="line">3、如果有正则项可以较小正则项参数 $\lambda$;</div><div class="line">4、Boosting ,Boosting 往往会有较小的 Bias，比如 Gradient Boosting 等.</div></pre></td></tr></table></figure>
+<p><strong>(2)解决过拟合的方法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">1、交叉检验，通过交叉检验得到较优的模型参数;</div><div class="line">2、early stop</div><div class="line">3、特征选择，减少特征数或使用较少的特征组合，对于按区间离散化的特征，增大划分的区间;</div><div class="line">4、正则化，常用的有 L1、L2 正则。而且 L1正则还可以自动进行特征选择;</div><div class="line">5、如果有正则项则可以考虑增大正则项参数 lambda;</div><div class="line">6、增加训练数据可以有限的避免过拟合;</div><div class="line">7、Bagging,将多个弱学习器Bagging 一下效果会好很多，比如随机森林等.</div></pre></td></tr></table></figure>
+<p><strong>（3）DNN中常见的方法：</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">1、早停策略。本质上是交叉验证策略，选择合适的训练次数，避免训练的网络过度拟合训练数据。</div><div class="line">2、集成学习策略。而DNN可以用Bagging的思路来正则化。首先我们要对原始的m个训练样本进行有放回随机采样，构建N组m个样本的数据集，然后分别用这N组数据集去训练我们的DNN。即采用我们的前向传播算法和反向传播算法得到N个DNN模型的W,b参数组合，最后对N个DNN模型的输出用加权平均法或者投票法决定最终输出。不过用集成学习Bagging的方法有一个问题，就是我们的DNN模型本来就比较复杂，参数很多。现在又变成了N个DNN模型，这样参数又增加了N倍，从而导致训练这样的网络要花更加多的时间和空间。因此一般N的个数不能太多，比如5-10个就可以了。</div><div class="line">3、DropOut策略。所谓的Dropout指的是在用前向传播算法和反向传播算法训练DNN模型时，一批数据迭代时，随机的从全连接DNN网络中去掉一部分隐藏层的神经元。　在对训练集中的一批数据进行训练时，我们随机去掉一部分隐藏层的神经元，并用去掉隐藏层的神经元的网络来拟合我们的一批训练数据。使用基于dropout的正则化比基于bagging的正则化简单，这显而易见，当然天下没有免费的午餐，由于dropout会将原始数据分批迭代，因此原始数据集最好较大，否则模型可能会欠拟合。</div></pre></td></tr></table></figure>
+<h2 id="3-L1和L2正则化方法"><a href="#3-L1和L2正则化方法" class="headerlink" title="3. L1和L2正则化方法"></a>3. L1和L2正则化方法</h2><p><strong>目的：防止过拟合，提高泛化能力</strong></p>
+<p>选择经验误差与结构化风险（模型复杂度）同时小的模型。</p>
+<h3 id="3-1-定义"><a href="#3-1-定义" class="headerlink" title="3.1 定义"></a>3.1 定义</h3><p>给定数据集<script type="math/tex">D={(x_1,y_1),(x_2,y_2),…(x_m,y_m)}</script>,其中<script type="math/tex">x\in R^d,y\in R</script>.</p>
+<p>考虑最简单的线性回归，以平方误差为损失函数，则优化目标为：</p>
+<script type="math/tex; mode=display">min_w\sum_{i=1}^m(y_i-w^Tx_i)^2</script><p>当样本特征很多，而样本数较少时，上式很容易陷入过拟合。解决方案，正则化项。</p>
+<p><strong><script type="math/tex">L2</script>范数正则化（“岭回归”(redge regression)）：</strong></p>
+<script type="math/tex; mode=display">min_w\sum_{i=1}^m(y_i-w^Tx_i)^2+\lambda ||w||_2^2</script><p><strong><script type="math/tex">L1</script>范数正则化：</strong></p>
+<script type="math/tex; mode=display">min_w\sum_{i=1}^m(y_i-w^Tx_i)^2+\lambda ||w||_1</script><h3 id="3-2-L1和L2的异同"><a href="#3-2-L1和L2的异同" class="headerlink" title="3.2 L1和L2的异同"></a>3.2 L1和L2的异同</h3><p>相同点：都用于避免过拟合</p>
+<p>不同点：</p>
+<ol>
+<li>L1可以让一部分特征的系数缩小到0，从而间接实现<strong>特征选择</strong>。所以L1适用于特征之间有关联的情况。</li>
+<li>L2让所有特征的系数都缩小，但是不会减为0，它会使<strong>优化求解稳定快速</strong>。所以L2适用于特征之间没有关联的情况</li>
+</ol>
+<p>总结一下就是 <strong>L1正则化产生稀疏的权值, L2正则化产生平滑的权值</strong>。为什么会这样？这里面的本质原因是什么呢？下面我们从两个角度来解释这个问题。</p>
+<h4 id="角度1：数学公式"><a href="#角度1：数学公式" class="headerlink" title="角度1：数学公式"></a>角度1：数学公式</h4><p><strong>L1 regularization:</strong></p>
+<p>在原始的代价函数后面加上一个L1正则化项，即所有权重w的绝对值的和，乘以λ/n（这里不像L2正则化项那样，需要再乘以1/2，具体原因上面已经说过。）</p>
+<p><img src="http://i.imgur.com/6jbxq15.jpg" alt="img"></p>
+<p>同样先计算导数：</p>
+<p><img src="http://i.imgur.com/kju5RTZ.jpg" alt="img"></p>
+<p>上式中sgn(w)表示w的符号。那么权重w的更新规则为：</p>
+<p><img src="http://i.imgur.com/HCkJZYl.jpg" alt="img"></p>
+<p>比原始的更新规则多出了η <em> λ </em> sgn(w)/n这一项。当w为正时，更新后的w变小。当w为负时，更新后的w变大——因此它的效果就是让w往0靠，使网络中的权重尽可能为0，也就相当于减小了网络复杂度，防止过拟合。</p>
+<p>另外，上面没有提到一个问题，当w为0时怎么办？当w等于0时，|W|是不可导的，所以我们只能按照原始的未经正则化的方法去更新w，这就相当于去掉η<em>λ</em>sgn(w)/n这一项，所以我们可以规定sgn(0)=0，这样就把w=0的情况也统一进来了。（在编程的时候，令sgn(0)=0,sgn(w&gt;0)=1,sgn(w&lt;0)=-1）</p>
+<p><strong>L2 regularization（权重衰减）</strong>:</p>
+<p>L2正则化就是在代价函数后面再加上一个正则化项：</p>
+<p><img src="http://i.imgur.com/9WnBBu1.jpg" alt="img"></p>
+<p>C0代表原始的代价函数，后面那一项就是L2正则化项，它是这样来的：所有参数w的平方的和，除以训练集的样本大小n。λ就是正则项系数，权衡正则项与C0项的比重。另外还有一个系数1/2，1/2经常会看到，主要是为了后面求导的结果方便，后面那一项求导会产生一个2，与1/2相乘刚好凑整。</p>
+<p>L2正则化项是怎么避免overfitting的呢？我们推导一下看看，先求导：</p>
+<p><img src="http://i.imgur.com/mebEC90.jpg" alt="img"></p>
+<p>可以发现L2正则化项对b的更新没有影响，但是对于w的更新有影响:</p>
+<p><img src="http://i.imgur.com/qM83geg.jpg" alt="img"></p>
+<p>在不使用L2正则化时，求导结果中w前系数为1，现在w前面系数为 1−ηλ/n ，因为η、λ、n都是正的，所以 1−ηλ/n小于1，它的效果是减小w，这也就是权重衰减（weight decay）的由来。当然考虑到后面的导数项，w最终的值可能增大也可能减小。</p>
+<p>另外，需要提一下，对于基于mini-batch的随机梯度下降，w和b更新的公式跟上面给出的有点不同：</p>
+<p><img src="http://i.imgur.com/Xs2p2EN.jpg" alt="img"></p>
+<p><img src="http://i.imgur.com/yDETU7x.jpg" alt="img"></p>
+<p>对比上面w的更新公式，可以发现后面那一项变了，变成所有导数加和，乘以η再除以m，m是一个mini-batch中样本的个数。</p>
+<p>到目前为止，我们只是解释了L2正则化项有让w“变小”的效果，但是还没解释为什么w“变小”可以防止overfitting？一个所谓“显而易见”的解释就是：更小的权值w，从某种意义上说，表示网络的复杂度更低，对数据的拟合刚刚好（这个法则也叫做奥卡姆剃刀），而在实际应用中，也验证了这一点，L2正则化的效果往往好于未经正则化的效果。</p>
+<h4 id="角度2：几何空间"><a href="#角度2：几何空间" class="headerlink" title="角度2：几何空间"></a>角度2：几何空间</h4><p>（西瓜书-253页的解释） </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-08-23-02-04.png" alt=""></p>
+<p>​    简化到2维的情形，如上图所示。其中，左边是L1图示，右边是L2图示，左边的方形线上是L1中w1/w2取值区间，右边得圆形线上是L2中w1/w2的取值区间，绿色的圆圈表示w1/w2取不同值时整个正则化项的值的等高线（凸函数），从等高线和w1/w2取值区间的交点可以看到，L1中两个权值倾向于一个较大另一个为0，L2中两个权值倾向于均为非零的较小数。这也就是L1稀疏，L2平滑的效果。</p>
+<h2 id="4-bagging-and-boosting"><a href="#4-bagging-and-boosting" class="headerlink" title="4. bagging  and boosting"></a>4. bagging  and boosting</h2><h3 id="4-1-bootstrap采样"><a href="#4-1-bootstrap采样" class="headerlink" title="4.1 bootstrap采样"></a>4.1 bootstrap采样</h3><p>​    名字来自成语“pull up by your own bootstraps”，意思是依靠你自己的资源，称为自助法，它是一种有放回的抽样方法，它是非参数统计中一种重要的估计统计量方差进而进行区间估计的统计方法。其核心思想和基本步骤如下：<br>　　（1） 采用重抽样技术从原始样本中抽取一定数量（自己给定）的样本，此过程允许重复抽样。<br>　　（2） 根据抽出的样本计算给定的统计量T。<br>　　（3） 重复上述N次（一般大于1000），得到N个统计量T。<br>　　（4） 计算上述N个统计量T的样本方差，得到统计量的方差。<br>　　应该说Bootstrap是现代统计学较为流行的一种统计方法，在小样本时效果很好。通过方差的估计可以构造置信区间等，其运用范围得到进一步延伸。</p>
+<h3 id="4-2-bagging-bootstrap-aggregating"><a href="#4-2-bagging-bootstrap-aggregating" class="headerlink" title="4.2 bagging (bootstrap aggregating)"></a>4.2 bagging (bootstrap aggregating)</h3><p>Bagging即套袋法，其算法过程如下：</p>
+<p>A）从原始样本集中抽取训练集。每轮从原始样本集中使用Bootstraping的方法抽取n个训练样本（在训练集中，有些样本可能被多次抽取到，而有些样本可能一次都没有被抽中）。共进行k轮抽取，得到k个训练集。（k个训练集之间是相互独立的）</p>
+<p>B）每次使用一个训练集得到一个模型，k个训练集共得到k个模型。（注：这里并没有具体的分类算法或回归方法，我们可以根据具体问题采用不同的分类或回归方法，如决策树、感知器等）</p>
+<p>C）对分类问题：将上步得到的k个模型采用投票的方式得到分类结果；对回归问题，计算上述模型的均值作为最后的结果。（所有模型的重要性相同）</p>
+<h3 id="4-3-boosting"><a href="#4-3-boosting" class="headerlink" title="4.3 boosting"></a>4.3 boosting</h3><p>其主要思想是将弱分类器组装成一个强分类器。在PAC（概率近似正确）学习框架下，则一定可以将弱分类器组装成一个强分类器。</p>
+<p>关于Boosting的两个核心问题：</p>
+<p>1）在每一轮如何改变训练数据的权值或概率分布？</p>
+<p>通过提高那些在前一轮被弱分类器分错样例的权值，减小前一轮分对样例的权值，来使得分类器对误分的数据有较好的效果。</p>
+<p>2）通过什么方式来组合弱分类器？</p>
+<p>通过加法模型将弱分类器进行线性组合，比如AdaBoost通过加权多数表决的方式，即增大错误率小的分类器的权值，同时减小错误率较大的分类器的权值。</p>
+<p>而提升树通过拟合残差的方式逐步减小残差，将每一步生成的模型叠加得到最终模型。</p>
+<h3 id="4-4-Bagging，Boosting二者之间的区别"><a href="#4-4-Bagging，Boosting二者之间的区别" class="headerlink" title="4.4 Bagging，Boosting二者之间的区别"></a>4.4 Bagging，Boosting二者之间的区别</h3><p>Bagging和Boosting的区别：</p>
+<p>1）样本选择上：</p>
+<p>Bagging：训练集是在原始集中有放回选取的，从原始集中选出的各轮训练集之间是独立的。</p>
+<p>Boosting：每一轮的训练集不变，只是训练集中每个样例在分类器中的权重发生变化。而权值是根据上一轮的分类结果进行调整。</p>
+<p>2）样例权重：</p>
+<p>Bagging：使用均匀取样，每个样例的权重相等</p>
+<p>Boosting：根据错误率不断调整样例的权值，错误率越大则权重越大。</p>
+<p>3）预测函数：</p>
+<p>Bagging：所有预测函数的权重相等。</p>
+<p>Boosting：每个弱分类器都有相应的权重，对于分类误差小的分类器会有更大的权重。</p>
+<p>4）并行计算：</p>
+<p>Bagging：各个预测函数可以并行生成</p>
+<p>Boosting：各个预测函数只能顺序生成，因为后一个模型参数需要前一轮模型的结果。</p>
+<p>3)方差和偏差：</p>
+<p>Bagging：偏差不变，方差变小，解决过拟合</p>
+<p>Boosting：偏差变小，解决欠拟合</p>
+<p>这两种方法都是把若干个分类器整合为一个分类器的方法，只是整合的方式不一样，最终得到不一样的效果，将不同的分类算法套入到此类算法框架中一定程度上会提高了原单一分类器的分类效果，但是也增大了计算量。</p>
+<p>下面是将决策树与这些算法框架进行结合所得到的新的算法：</p>
+<p>1）Bagging + 决策树 = 随机森林</p>
+<p>2）AdaBoost + 决策树 = 提升树</p>
+<p>3）Gradient Boosting + 决策树 = GBDT</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://zhuanlan.zhihu.com/p/29707029" target="_blank" rel="external">机器学习防止欠拟合、过拟合方法</a></p>
+<p><a href="http://blog.csdn.net/u012162613/article/details/44261657" target="_blank" rel="external">正则化方法：L1和L2 regularization、数据集扩增、dropout</a></p>
+<p><a href="https://vimsky.com/article/969.html" target="_blank" rel="external">为什么L1稀疏，L2平滑？</a></p>
+<p><a href="https://www.jianshu.com/p/cb0ad5939629" target="_blank" rel="external">Bagging和Boosting 概念及区别</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/08/【本站目录】/" rel="next" title="【本站目录】">
+                <i class="fa fa-chevron-left"></i> 【本站目录】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/09/B树、B-树、AVL树、Trie树及其应用场景/" rel="prev" title="B树、B+树、AVL树、Trie树及其应用场景">
+                B树、B+树、AVL树、Trie树及其应用场景 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-过拟合与欠拟合"><span class="nav-number">1.</span> <span class="nav-text">1. 过拟合与欠拟合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-常用解决办法"><span class="nav-number">2.</span> <span class="nav-text">2. 常用解决办法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-L1和L2正则化方法"><span class="nav-number">3.</span> <span class="nav-text">3. L1和L2正则化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-定义"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-L1和L2的异同"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 L1和L2的异同</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#角度1：数学公式"><span class="nav-number">3.2.1.</span> <span class="nav-text">角度1：数学公式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#角度2：几何空间"><span class="nav-number">3.2.2.</span> <span class="nav-text">角度2：几何空间</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-bagging-and-boosting"><span class="nav-number">4.</span> <span class="nav-text">4. bagging  and boosting</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-bootstrap采样"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 bootstrap采样</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-bagging-bootstrap-aggregating"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 bagging (bootstrap aggregating)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-boosting"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 boosting</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-Bagging，Boosting二者之间的区别"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Bagging，Boosting二者之间的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

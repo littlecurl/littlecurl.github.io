@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Heap,Dequeue," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="堆基本性质 支持操作：Add O(logN)/RemoveO(logN)/Min or MaxO(1)  heap可以用来求最大值或者最小值，不能同时求最大和最小值。  Heap结构： 一颗尽量填满的二叉树，每次插入节点时，插到最后一行的最左端的空余位置，如果本层没有空余位置了，另起一行。因此节点数目为N的堆对应的二叉树高度为O(logN)    MaxHeap vs MinHeap  MaxHe">
+<meta name="keywords" content="Heap,Dequeue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】堆Heap&amp;双端队列Dequeue">
+<meta property="og:url" content="http://yoursite.com/2017/11/18/【九章算法强化班】堆Heap/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="堆基本性质 支持操作：Add O(logN)/RemoveO(logN)/Min or MaxO(1)  heap可以用来求最大值或者最小值，不能同时求最大和最小值。  Heap结构： 一颗尽量填满的二叉树，每次插入节点时，插到最后一行的最左端的空余位置，如果本层没有空余位置了，另起一行。因此节点数目为N的堆对应的二叉树高度为O(logN)    MaxHeap vs MinHeap  MaxHe">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/11/03/59fc1f33088db.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2017-11-13-22-13-17.png">
+<meta property="og:image" content="http://www.leetcode.com/static/images/problemset/rainwatertrap.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-31-18.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-32-16.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-33-23.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-34-14.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-35-36.png">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/rainwater_empty.png">
+<meta property="og:image" content="https://leetcode.com/static/images/problemset/rainwater_fill.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-30-45.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-53-16.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-55-43.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-56-45.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-20-11-03-13.png">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.571Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】堆Heap&amp;双端队列Dequeue">
+<meta name="twitter:description" content="堆基本性质 支持操作：Add O(logN)/RemoveO(logN)/Min or MaxO(1)  heap可以用来求最大值或者最小值，不能同时求最大和最小值。  Heap结构： 一颗尽量填满的二叉树，每次插入节点时，插到最后一行的最左端的空余位置，如果本层没有空余位置了，另起一行。因此节点数目为N的堆对应的二叉树高度为O(logN)    MaxHeap vs MinHeap  MaxHe">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2017/11/03/59fc1f33088db.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/18/【九章算法强化班】堆Heap/"/>
+
+
+
+
+
+  <title>【九章算法强化班】堆Heap&双端队列Dequeue | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/18/【九章算法强化班】堆Heap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】堆Heap&双端队列Dequeue</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-18T15:15:48+08:00">
+                2017-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  7,915
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  36
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h1><h3 id="基本性质"><a href="#基本性质" class="headerlink" title="基本性质"></a>基本性质</h3><ul>
+<li><p>支持操作：Add <script type="math/tex">O(logN)</script>/Remove<script type="math/tex">O(logN)</script>/Min or Max<script type="math/tex">O(1)</script></p>
+</li>
+<li><p>heap可以用来求最大值或者最小值，不能同时求最大和最小值。</p>
+</li>
+<li><p>Heap结构：</p>
+<p>一颗尽量填满的二叉树，每次插入节点时，插到最后一行的最左端的空余位置，如果本层没有空余位置了，另起一行。因此节点数目为N的堆对应的二叉树高度为<script type="math/tex">O(logN)</script></p>
+</li>
+</ul>
+<ul>
+<li><p>MaxHeap vs MinHeap</p>
+<ul>
+<li>MaxHeap：父亲节点比左右孩子都大</li>
+<li>MinHeap：父亲节点比左右孩子都小</li>
+</ul>
+<p>因此当取最大或最小时，将root值取出即可，因此getMin/Max的时间复杂度为<script type="math/tex">O(1)</script></p>
+</li>
+<li><p>堆的存储</p>
+<p>由于我们需要频繁的对堆进行增加删除，所以一般堆的底层都是通过数组来实现（而不能用链表，因为链表需要频繁new 或 delete对象，非常慢）</p>
+<p>对于元素A[i]：</p>
+<ul>
+<li>父节点：A[i-2/2] (右移1)</li>
+<li>左孩子：A[2i+1] (左移1，可得到2i)</li>
+<li>右孩子：A[2i+2] (左移1，低位+1，可得到2i+1)</li>
+</ul>
+</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li><p>插入操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">例子：在最小堆中插入元素：</div><div class="line">	<span class="number">1</span></div><div class="line">  ↙  ↘</div><div class="line"> <span class="number">2</span>		<span class="number">3</span></div><div class="line">插入<span class="number">0</span>，因为第二行已经满了，加入到第三行最左边：</div><div class="line">	<span class="number">1</span></div><div class="line">  ↙  ↘</div><div class="line"> <span class="number">2</span>		<span class="number">3</span></div><div class="line">↙</div><div class="line"><span class="number">0</span></div><div class="line">此时这个堆已经不满足最小堆的条件（父亲节点都比孩子小）了，因此，先交换<span class="number">0</span>和<span class="number">2</span>：</div><div class="line">	<span class="number">1</span></div><div class="line">  ↙  ↘</div><div class="line"> <span class="number">0</span>		<span class="number">3</span></div><div class="line">↙</div><div class="line"><span class="number">2</span></div><div class="line">此时仍然不满足最小堆条件，继续交换：</div><div class="line">	<span class="number">0</span></div><div class="line">  ↙  ↘</div><div class="line"> <span class="number">1</span>		<span class="number">3</span></div><div class="line">↙</div><div class="line"><span class="number">2</span></div><div class="line">此时满足最小堆条件了，因此，需要交换最多 O(logN)次，插入的时间复杂度为O(logN)</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>删除操作</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">例子：在最小堆中删除元素：</div><div class="line">     	 <span class="number">1</span></div><div class="line">    ↙  		↘</div><div class="line">   <span class="number">3</span>			<span class="number">2</span></div><div class="line"> ↙  ↘       ↙  	↘</div><div class="line"><span class="number">4</span>      <span class="number">5</span>	 <span class="number">10</span>		<span class="number">100</span></div><div class="line">删除堆顶元素<span class="number">1</span>，用堆中最后一个节点替换堆顶元素：</div><div class="line">     	<span class="number">100</span></div><div class="line">    ↙  		↘</div><div class="line">   <span class="number">3</span>			<span class="number">2</span></div><div class="line"> ↙  ↘       ↙  	</div><div class="line"><span class="number">4</span>      <span class="number">5</span>	 <span class="number">10</span>		</div><div class="line">此时这个堆已经不满足最小堆的条件（父亲节点都比孩子小）了，因此将堆顶元素下沉，选择左右孩子中较小的交换：</div><div class="line">     	 <span class="number">2</span></div><div class="line">    ↙  		↘</div><div class="line">   <span class="number">3</span>		  <span class="number">100</span></div><div class="line"> ↙  ↘       ↙  	</div><div class="line"><span class="number">4</span>      <span class="number">5</span>	 <span class="number">10</span>	</div><div class="line">此时仍然不满足最小堆条件，继续交换：</div><div class="line">     	 <span class="number">2</span></div><div class="line">    ↙  		↘</div><div class="line">   <span class="number">3</span>		  <span class="number">10</span></div><div class="line"> ↙  ↘       ↙  	</div><div class="line"><span class="number">4</span>      <span class="number">5</span>	 <span class="number">100</span>	</div><div class="line"></div><div class="line">好了，删好了</div></pre></td></tr></table></figure>
+<p>PriorityQueue支持<script type="math/tex">O(logN)</script> 删除堆顶元素，但对于删除除root外的任意一点的操作，PriorityQueue的时间复杂度会降到<script type="math/tex">O(N)</script></p>
+<p>Java中还有另外一种数据结构TreeMap，支持<script type="math/tex">O(logN)</script> 删除任意元素，而且支持同时获取最大和最小。</p>
+<p>TreeMap是一平衡二叉搜索树，因此插入和删除任意元素的时间复杂度都是<script type="math/tex">O(logN)</script></p>
+<p>|               | 用    | 原理          | 实现   |<br>| ——————- | —— | —————- | —— |<br>| TreeMap       | 必会   | 平衡二叉搜索树，红黑树 | 不需要  |<br>| PriorityQueue | 必会   | heap，二叉树    | 选做   |</p>
+</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><h4 id="构建堆，堆维护"><a href="#构建堆，堆维护" class="headerlink" title="构建堆，堆维护"></a>构建堆，堆维护</h4><p>上面提到了增加和删除节点的操作，下面通过实例说明如何从一个数组开始<strong>构建一个堆</strong>：</p>
+<p>假设我们有数组<code>4,1,3,2,16,9,10,14,8,7</code></p>
+<p>它的形状为：</p>
+<p><a href="https://ooo.0o0.ooo/2017/11/03/59fc1f33088db.png" target="_blank" rel="external"><img src="https://ooo.0o0.ooo/2017/11/03/59fc1f33088db.png" alt="img"></a></p>
+<p>当然最暴力的方式就是从最后一个元素【7】开始，向上以此对树进行维护。但事实上由于后[n/2]个元素都是根节点，不需要进行维护。因此我们只需要维护前[n/2]个节点。</p>
+<p>具体步骤如下图所示：</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2017-11-13-22-13-17.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2017-11-13-22-13-17.png" alt="img"></a></p>
+<p>伪代码为：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">BUILD-MAX-HEAP(A)</div><div class="line">	A.heap.size = A.length</div><div class="line">	for i = [A.length/2] downto 1</div><div class="line">      MAX-HEAPIFTY(A,i)</div></pre></td></tr></table></figure>
+<p>根据上面的方法，我们可以将一个数组构建成一个堆，堆顶的元素是最大的。</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyHeap</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] A;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> heapSize;</div><div class="line"></div><div class="line">    <span class="comment">//构造函数</span></div><div class="line">    MyHeap(<span class="keyword">int</span>[] a)&#123;</div><div class="line">        <span class="keyword">this</span>.A = a;</div><div class="line">        heapSize = a.length;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//交换堆中元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = A[i];</div><div class="line">        A[i] = A[j];</div><div class="line">        A[j] = temp;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//堆维护（最大堆）</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">        <span class="comment">//计算左孩子和右孩子在数组中的坐标。</span></div><div class="line">        <span class="keyword">int</span> leftChild = <span class="number">2</span>*i+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> rightChild = <span class="number">2</span>*i+<span class="number">2</span>;</div><div class="line"></div><div class="line">        <span class="comment">//找到左右孩子和该节点本身中最大的</span></div><div class="line">        <span class="keyword">int</span> largest = -<span class="number">1</span>;</div><div class="line">        <span class="keyword">if</span>(leftChild &lt; heapSize &amp;&amp; A[i] &lt; A[leftChild])&#123;<span class="comment">//如果有左孩子而且左孩子比父亲大</span></div><div class="line">            largest = leftChild;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            largest = i;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(rightChild &lt; heapSize &amp;&amp; A[largest] &lt; A[rightChild])&#123;<span class="comment">//如果有右孩子而且左孩子比当前最大的大</span></div><div class="line">            largest = rightChild;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(largest!= i)&#123;<span class="comment">//如果最大的不是该节点，是其孩子，则需要交换，维护</span></div><div class="line">            swap(i,largest);</div><div class="line">            heapify(largest);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//构建最大堆</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">build</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = (heapSize-<span class="number">2</span>)/<span class="number">2</span>;i&gt;=<span class="number">0</span>;i--)&#123;</div><div class="line">            heapify(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span>[] nums = &#123;<span class="number">2</span>,<span class="number">8</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">3</span>,<span class="number">4</span>&#125;;</div><div class="line">        MyHeap test = <span class="keyword">new</span> MyHeap(nums);</div><div class="line">        test.build();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : nums)&#123;</div><div class="line">            System.out.print(i);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>时间复杂度分析:</strong></p>
+<p>在高度为h的结点上运行MAX-HEAPIFY的代价是O(h)O(h)，因此建树的总代价为：</p>
+<script type="math/tex; mode=display">\sum_{h=0}^{lgn}O(h)=O(n\sum_{h=0}^{lgn}\frac{h}{2^h})=O(n)</script><p>因此堆排序的时间复杂度为<script type="math/tex">O(n)</script></p>
+<h4 id="删除节点POP"><a href="#删除节点POP" class="headerlink" title="删除节点POP"></a>删除节点POP</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//删除节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">Poll</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> top = A[<span class="number">0</span>];</div><div class="line">    swap(<span class="number">0</span>, heapSize-<span class="number">1</span>);<span class="comment">//交换第一个和最后一个节点</span></div><div class="line">    heapSize--;</div><div class="line">    heapify(<span class="number">0</span>);<span class="comment">//shiftdown 维护</span></div><div class="line">    <span class="keyword">return</span> top;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//插入之后向上shift</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shiftUp</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> parentID = (i-<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line">    <span class="keyword">if</span>(parentID &gt; -<span class="number">1</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(A[i] &gt; A[parentID])&#123;</div><div class="line">            swap(i,parentID);</div><div class="line">            shiftUp(parentID);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//插入节点</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Add</span><span class="params">(<span class="keyword">int</span> i)</span></span>&#123;</div><div class="line">    A[heapSize] = i;</div><div class="line">    heapSize++;</div><div class="line">    shiftUp(heapSize);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="堆排序"><a href="#堆排序" class="headerlink" title="堆排序"></a>堆排序</h4><p>堆排序就是利用堆的性质，依次将堆顶元素出堆，每次堆顶元素出堆之后堆会自动维护，所以可以保证弹出的节点是有序的。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//堆排序</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[] HeapSort()&#123;</div><div class="line">    <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[heapSize];</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> size = heapSize;</div><div class="line">    <span class="keyword">while</span>(i &lt; size)&#123;</div><div class="line">        res[i] = Poll();<span class="comment">//堆顶元素出堆</span></div><div class="line">        i++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>时间复杂度：<script type="math/tex">O(nlogn)</script></p>
+<p>n次出堆，每次出堆维护时间logn</p>
+<h2 id="HashHeap"><a href="#HashHeap" class="headerlink" title="HashHeap"></a>HashHeap</h2><p>哈希堆，Hashheap是用一个hashMap优化了的heap，方便快速定位某个值在heap中的位置。与heap相比，HashHeap多了一个用来指示元素位置的索引。</p>
+<p>HashHeap的结构有点特殊，很神奇，需要多看几遍，其中包括两个结构heap和hashmap:</p>
+<ol>
+<li>heap存储元素的值</li>
+<li>HashMap存储元素在heap中<strong>对应的位置和出现的次数</strong></li>
+</ol>
+<p>这里存储出现次数是因为，有些时候，堆中可能会有重复的元素，如果只存储其位置的话，某个值就会在多个位置上，需要用一个链表来存储所有的位置，这样不仅存储起来不方便，计算也很不方便，所以很巧妙地，我们将同一个值的元素都放到heap中的同一个位置，在hashmap中存储该位置有多少个该元素，这样堆中的每个节点元素的值也不相同了，各种计算操作起来也方便了，完美~</p>
+<p>java实现</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="keyword">import</span> java.util.HashMap;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.function.BinaryOperator;</div><div class="line"></div><div class="line"><span class="comment">//hashheap实现，以最大堆为例</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HashHeap</span> </span>&#123;</div><div class="line">    HashMap&lt;Integer,Node&gt; map;<span class="comment">//存储元素值和在堆中的索引</span></div><div class="line">    ArrayList&lt;Integer&gt; heap;</div><div class="line">    <span class="keyword">int</span> heapSize;</div><div class="line">    <span class="keyword">boolean</span> isMaxHeap;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> idx;<span class="comment">//节点在堆中的位置</span></div><div class="line">        <span class="keyword">int</span> count;<span class="comment">//该数值出现次数</span></div><div class="line">        Node(<span class="keyword">int</span> idx,<span class="keyword">int</span> count)&#123;</div><div class="line">            <span class="keyword">this</span>.idx = idx;</div><div class="line">            <span class="keyword">this</span>.count = count;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(heapSize == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    HashHeap(<span class="keyword">boolean</span> isMaxHeap)&#123;</div><div class="line">        <span class="keyword">this</span>.map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        <span class="keyword">this</span>.heap = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">this</span>.isMaxHeap = isMaxHeap;</div><div class="line">        <span class="keyword">this</span>.heapSize = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//由数组构建最大堆</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Build</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> counter = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : nums)&#123;</div><div class="line">            System.out.println(counter);</div><div class="line">            add(i);</div><div class="line">            counter ++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//交换堆中节点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="comment">//获取ij在堆中指向的元素值</span></div><div class="line">        <span class="keyword">int</span> vali = heap.get(i);</div><div class="line">        <span class="keyword">int</span> valj = heap.get(j);</div><div class="line"></div><div class="line">        <span class="comment">//获取两个值在map中的个数</span></div><div class="line">        <span class="keyword">int</span> counti = map.get(vali).count;</div><div class="line">        <span class="keyword">int</span> countj = map.get(valj).count;</div><div class="line"></div><div class="line">        <span class="comment">//修改hashmap，把两个值对应的位置互换，count不变</span></div><div class="line">        map.put(vali,<span class="keyword">new</span> Node(j,counti));</div><div class="line">        map.put(valj,<span class="keyword">new</span> Node(i,countj));</div><div class="line"></div><div class="line">        <span class="comment">//交换堆中的节点值</span></div><div class="line">        heap.set(i,valj);</div><div class="line">        heap.set(j,vali);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向上交换</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ShiftUp</span><span class="params">(<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> parentIdx = (idx-<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(parentIdx &gt; -<span class="number">1</span> &amp;&amp; idx &lt; heapSize)&#123;</div><div class="line">            <span class="comment">//如果是最大堆而且孩子&gt;父亲 || 是最小堆而且孩子&lt;父亲,需要向上shift</span></div><div class="line">            <span class="keyword">if</span>((isMaxHeap &amp;&amp; heap.get(parentIdx) &lt; heap.get(idx)) ||</div><div class="line">                   !isMaxHeap &amp;&amp; heap.get(parentIdx) &gt; heap.get(idx) )&#123;</div><div class="line">                swap(idx,parentIdx);</div><div class="line">                ShiftUp(parentIdx);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向下交换</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ShiftDown</span><span class="params">(<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> leftChildIdx = <span class="number">2</span> * idx+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> rightChildIdx = <span class="number">2</span> * idx+<span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> largestIdx = idx;</div><div class="line">        <span class="keyword">if</span>(leftChildIdx &lt; heapSize)&#123;</div><div class="line">            <span class="comment">//如果是最大堆而且父亲节点小于孩子</span></div><div class="line">            <span class="keyword">if</span>((isMaxHeap &amp;&amp; heap.get(idx) &lt; heap.get(leftChildIdx)) ||</div><div class="line">                    (!isMaxHeap &amp;&amp; heap.get(idx) &gt; heap.get(leftChildIdx)))&#123;</div><div class="line">                largestIdx = leftChildIdx;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(rightChildIdx &lt; heapSize)&#123;</div><div class="line">            <span class="keyword">if</span>((isMaxHeap &amp;&amp; heap.get(largestIdx) &lt; heap.get(rightChildIdx)) ||</div><div class="line">                    (!isMaxHeap &amp;&amp; heap.get(largestIdx) &gt; heap.get(rightChildIdx)))&#123;</div><div class="line">                largestIdx = rightChildIdx;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(largestIdx != idx)&#123;</div><div class="line">            swap(idx,largestIdx);</div><div class="line">            ShiftDown(largestIdx);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//插入元素，值为n</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="comment">//如果堆中已经有该元素了,放在原来的位置，heap不用动，map计数+1</span></div><div class="line">        <span class="keyword">if</span>(map.containsKey(n))&#123;</div><div class="line">            map.put(n,<span class="keyword">new</span> Node(map.get(n).idx,map.get(n).count+<span class="number">1</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果堆中没有该元素</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            map.put(n,<span class="keyword">new</span> Node(heapSize,<span class="number">1</span>));</div><div class="line">            heap.add(n);</div><div class="line">            heapSize++;</div><div class="line">            ShiftUp(heapSize-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//删除节点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> idx = map.get(n).idx;</div><div class="line">        <span class="keyword">int</span> count = map.get(n).count;</div><div class="line">        <span class="comment">//如果该值的节点只有一个</span></div><div class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)&#123;</div><div class="line">            swap(idx,heapSize-<span class="number">1</span>);</div><div class="line">            map.remove(n);<span class="comment">///在map中删除</span></div><div class="line">            heap.remove(heap.size()-<span class="number">1</span>);</div><div class="line">            heapSize--;</div><div class="line">            ShiftUp(idx);</div><div class="line">            ShiftDown(idx);<span class="comment">//交换之后需要向下维护</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果该值的节点有多个，heap不用动，map里count-1</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            map.put(n, <span class="keyword">new</span> Node(idx, count - <span class="number">1</span>));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//弹出节点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">poll</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> peakVal = heap.get(<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> idx = map.get(peakVal).idx;</div><div class="line">        <span class="keyword">int</span> count = map.get(peakVal).count;</div><div class="line">        <span class="comment">//如果堆中只有一个该节点,需要与最后一个交换后维护，</span></div><div class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)&#123;</div><div class="line">            <span class="comment">//与最后一个交换</span></div><div class="line">            swap(<span class="number">0</span>,heapSize-<span class="number">1</span>);</div><div class="line">            heap.remove(heap.size()-<span class="number">1</span>);</div><div class="line">            heapSize--;</div><div class="line">            ShiftDown(<span class="number">0</span>);</div><div class="line">            map.remove(peakVal);<span class="comment">//在map中删除</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果堆中有多个，heap不用变，map中对应count--；</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            map.put(peakVal,<span class="keyword">new</span> Node(idx,count-<span class="number">1</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> peakVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//获取堆顶元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> heap.get(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//堆排序</span></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">HeapSort</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> size = heapSize;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (i &lt; size)&#123;</div><div class="line">            res.add(poll());</div><div class="line">            i++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        HashHeap test = <span class="keyword">new</span> HashHeap(<span class="keyword">true</span>);</div><div class="line">        <span class="keyword">int</span>[] nums = &#123;<span class="number">855249355</span>,<span class="number">67860114</span>,<span class="number">4098019</span>,<span class="number">948907207</span>,<span class="number">69865427</span>,<span class="number">347655258</span>,<span class="number">886401366</span>,<span class="number">446677701</span>,<span class="number">502269373</span>&#125;;<span class="comment">//int[] nums = &#123;-2147483648,-2147483648,2147483647,-2147483648,-2147483648,-2147483648,2147483647,2147483647,2147483647,2147483647,-2147483648,2147483647,-2147483648&#125;;</span></div><div class="line">        test.Build(nums);</div><div class="line">        test.add(<span class="number">8</span>);</div><div class="line">        test.remove(<span class="number">3</span>);</div><div class="line">        List&lt;Integer&gt; res = test.HeapSort();</div><div class="line">        System.out.print(res);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="leetcode-相关习题"><a href="#leetcode-相关习题" class="headerlink" title="leetcode 相关习题"></a>leetcode 相关习题</h2><h3 id="Trapping-Rain-Water"><a href="#Trapping-Rain-Water" class="headerlink" title="Trapping Rain Water"></a><a href="https://leetcode.com/problems/trapping-rain-water" target="_blank" rel="external">Trapping Rain Water</a></h3><blockquote>
+<p>Given <em>n</em> non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.</p>
+<p>For example,<br>Given <code>[0,1,0,2,1,0,1,3,2,1,2,1]</code>, return <code>6</code>.</p>
+<p><img src="http://www.leetcode.com/static/images/problemset/rainwatertrap.png" alt="img"></p>
+</blockquote>
+<p>向柱子中灌水，求能够灌水的总量。</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>可以从边缘向内灌水，灌水的高度不会超过边缘柱子的高度的最小值，所以说：<strong>边缘高度奠定了灌水的基调</strong></p>
+<p>从低的一边（高度为h）向内灌水，能够灌水的量为（h-h_temp），遇到更高的柱子时，更新边缘。</p>
+<p>显然，这是一个<strong>双指针</strong>问题。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-31-18.png" alt=""> </p>
+<p>开始时，令总水量sum=0，双指针指向边缘，左选择较小的向内移动，假如选择左边指针。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-32-16.png" alt=""> </p>
+<p>sum += 1，指针继续向右移动</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-33-23.png" alt=""> </p>
+<p>此时左边指针遇到了跟高的边缘，右边指针开始向内移动</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-34-14.png" alt=""> </p>
+<p>右边指针也同样遇到了更高的柱子，此时再从左右两边指针中选择一个较小的向内移动，假如选的依然是左边的，向内移动，更新sum，知道遇到更高的柱子</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-18-15-35-36.png" alt=""> </p>
+<p>右侧指针左移，直到两指针相遇。</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> right = height.length-<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(left &lt; right)&#123;</div><div class="line">        <span class="keyword">if</span>(height[left]&lt;height[right])&#123;</div><div class="line">            <span class="keyword">int</span> min = height[left];</div><div class="line">            left++;</div><div class="line">            <span class="keyword">while</span>(height[left]&lt;=min &amp;&amp; left &lt; right)&#123;</div><div class="line">                sum+=min-height[left];</div><div class="line">                left++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">int</span> min = height[right];</div><div class="line">            right--;</div><div class="line">            <span class="keyword">while</span>(height[right]&lt;=min &amp;&amp; left &lt; right)&#123;</div><div class="line">                sum+=min-height[right];</div><div class="line">                right--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> sum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Trapping-Rain-Water-II"><a href="#Trapping-Rain-Water-II" class="headerlink" title="Trapping Rain Water II"></a><a href="https://leetcode.com/problems/trapping-rain-water-ii" target="_blank" rel="external">Trapping Rain Water II</a></h3><blockquote>
+<p>Given an <code>m x n</code> matrix of positive integers representing the height of each unit cell in a 2D elevation map, compute the volume of water it is able to trap after raining.</p>
+<p><strong>Note:</strong><br>Both <em>m</em> and <em>n</em> are less than 110. The height of each unit cell is greater than 0 and is less than 20,000.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Given the following 3x6 height map:</div><div class="line">&gt; [</div><div class="line">&gt;   [1,4,3,1,3,2],</div><div class="line">&gt;   [3,2,1,3,2,4],</div><div class="line">&gt;   [2,3,3,2,3,1]</div><div class="line">&gt; ]</div><div class="line">&gt;</div><div class="line">&gt; Return 4.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><img src="https://leetcode.com/static/images/problemset/rainwater_empty.png" alt="img"><br>The above image represents the elevation map <code>[[1,4,3,1,3,2],[3,2,1,3,2,4],[2,3,3,2,3,1]]</code> before the rain.</p>
+<p><img src="https://leetcode.com/static/images/problemset/rainwater_fill.png" alt="img"><br>After the rain, water are trapped between the blocks. The total volume of water trapped is 4.</p>
+</blockquote>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>这一题是上一题在二维空间上的扩展。</p>
+<p>对比上一题的思路，上一题的围墙是左右两边的柱子，而这道题的围墙是矩阵四周一圈的墙。我们可以从最矮的墙头向内灌水，然后将被灌水的位置加入围墙。</p>
+<p>有两个要解决的点：</p>
+<ol>
+<li>找到围墙中最矮的墙头</li>
+<li>从最矮的墙头向围墙内灌水，要知道那边是围墙“内”</li>
+</ol>
+<p>对于第1点，要求围墙中最矮的墙头，且墙头是动态插入的，可以维护一个最小堆，每次出堆元素即为最小的。</p>
+<p>对于第2点，可以额外维护一个标记数组，记录是否已经被访问过，每次入堆就将该点对应的位置标记，若某一点没有被标记则是在围墙内。</p>
+<p>以上图为例：</p>
+<p>首先将四周设为围墙，将围墙元素入堆[1,4,3,1,3,2,3,4,2,3,3,2,3,1]</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-30-45.png" alt=""> </p>
+<p>选取围墙中最小的，向内灌水，比如：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-53-16.png" alt=""> </p>
+<p>由于3&gt;1，不能灌水，将3所在位置加入围墙[<del>1</del>,4,3,1,3,2,3,4,2,3,3,2,3,1, 3]</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-55-43.png" alt=""> </p>
+<p>然后依次选取高度为1的其他几个围墙作为最矮的围墙，发现都不能够往里灌水，接下来选择高度为2的围墙，发现也不能向内灌水了，选取高度为3的围墙，比如：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-20-10-56-45.png" alt=""> </p>
+<p>发现可以灌水量为2，然后将此点灌水后的高度加入围墙，[<del>1</del>,4,<del>3</del>,<del>1,</del>3,<del>2</del>,3,4,<del>2</del>,3,3,<del>2</del>,3,<del>1</del>,3,  3]：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-20-11-03-13.png" alt=""> </p>
+<p>继续重复上边的步骤，知道堆为空</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Comparator;</div><div class="line"><span class="keyword">import</span> java.util.PriorityQueue;</div><div class="line"><span class="keyword">import</span> java.util.Queue;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrappingRain2</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        <span class="keyword">int</span> x;</div><div class="line">        <span class="keyword">int</span> y;</div><div class="line">        Node(<span class="keyword">int</span> val,<span class="keyword">int</span> x,<span class="keyword">int</span> y)&#123;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">            <span class="keyword">this</span>.x = x;</div><div class="line">            <span class="keyword">this</span>.y = y;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> Comparator&lt;Node&gt; cmp = <span class="keyword">new</span> Comparator&lt;Node&gt;()&#123;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Node e1,Node e2)</span></span>&#123;</div><div class="line">            <span class="keyword">return</span> e1.val-e2.val;</div><div class="line">        &#125;</div><div class="line">    &#125;;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trapRainWater</span><span class="params">(<span class="keyword">int</span>[][] heightMap)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(heightMap.length == <span class="number">0</span> || heightMap[<span class="number">0</span>].length == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">boolean</span>[][] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[heightMap.length][heightMap[<span class="number">0</span>].length];</div><div class="line">        Queue&lt;Node&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;Node&gt;(cmp);</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span>[] x_delta = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,-<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] y_delta = &#123;-<span class="number">1</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">        <span class="comment">//初始边界入堆</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; heightMap.length;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; heightMap[<span class="number">0</span>].length;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span> || i == heightMap.length-<span class="number">1</span> || j == heightMap[<span class="number">0</span>].length-<span class="number">1</span>)&#123;</div><div class="line">                    heap.add(<span class="keyword">new</span> Node(heightMap[i][j],i,j));</div><div class="line">                    visited[i][j] = <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span>(!heap.isEmpty())&#123;</div><div class="line">            Node top =  heap.peek();</div><div class="line">            heap.remove();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; <span class="number">4</span>;i++)&#123;</div><div class="line">                <span class="keyword">int</span> x_new = top.x+x_delta[i];</div><div class="line">                <span class="keyword">int</span> y_new = top.y+y_delta[i];</div><div class="line">                <span class="keyword">if</span>(x_new &gt;=<span class="number">0</span> &amp;&amp; x_new &lt; heightMap.length &amp;&amp; y_new &gt;= <span class="number">0</span> &amp;&amp; y_new &lt; heightMap[<span class="number">0</span>].length &amp;&amp; !visited[x_new][y_new])&#123;</div><div class="line">                    <span class="keyword">if</span>(heightMap[x_new][y_new] &lt; top.val)&#123;</div><div class="line">                        sum += top.val-heightMap[x_new][y_new];</div><div class="line">                        heap.add(<span class="keyword">new</span> Node(top.val,x_new,y_new));</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span>&#123;</div><div class="line">                        heap.add(<span class="keyword">new</span> Node(heightMap[x_new][y_new],x_new,y_new));</div><div class="line">                    &#125;</div><div class="line">                    visited[x_new][y_new] = <span class="keyword">true</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span>  sum;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        TrappingRain2 test = <span class="keyword">new</span> TrappingRain2();</div><div class="line">        <span class="keyword">int</span>[][] heightMap = &#123;&#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>&#125;,&#123;<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">4</span>&#125;,&#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>&#125;&#125;;</div><div class="line">        <span class="keyword">int</span> sum = test.trapRainWater(heightMap);</div><div class="line">        System.out.println(sum);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Top-K-Frequent-Words"><a href="#Top-K-Frequent-Words" class="headerlink" title="Top K Frequent Words"></a><a href="https://leetcode.com/problems/top-k-frequent-words/" target="_blank" rel="external">Top K Frequent Words</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a non-empty list of words, return the <em>k</em> most frequent elements.</p>
+<p>Your answer should be sorted by frequency from highest to lowest. If two words have the same frequency, then the word with the lower alphabetical order comes first.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [&quot;i&quot;, &quot;love&quot;, &quot;leetcode&quot;, &quot;i&quot;, &quot;love&quot;, &quot;coding&quot;], k = 2</div><div class="line">&gt; Output: [&quot;i&quot;, &quot;love&quot;]</div><div class="line">&gt; Explanation: &quot;i&quot; and &quot;love&quot; are the two most frequent words.</div><div class="line">&gt;     Note that &quot;i&quot; comes before &quot;love&quot; due to a lower alphabetical order.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [&quot;the&quot;, &quot;day&quot;, &quot;is&quot;, &quot;sunny&quot;, &quot;the&quot;, &quot;the&quot;, &quot;the&quot;, &quot;sunny&quot;, &quot;is&quot;, &quot;is&quot;], k = 4</div><div class="line">&gt; Output: [&quot;the&quot;, &quot;is&quot;, &quot;sunny&quot;, &quot;day&quot;]</div><div class="line">&gt; Explanation: &quot;the&quot;, &quot;is&quot;, &quot;sunny&quot; and &quot;day&quot; are the four most frequent words,</div><div class="line">&gt;     with the number of occurrence being 4, 3, 2 and 1 respectively.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ol>
+<li>You may assume <em>k</em> is always valid, 1 ≤ <em>k</em> ≤ number of unique elements.</li>
+<li>Input words contain only lowercase letters.</li>
+</ol>
+<p><strong>Follow up:</strong></p>
+<ol>
+<li>Try to solve it in <em>O</em>(<em>n</em> log <em>k</em>) time and <em>O</em>(<em>n</em>) extra space.</li>
+</ol>
+</blockquote>
+<p>给定一个字符串数组，要求返回出现次数最多的前K个字符串，如果遇到多个字符串年出现次数相同时，则优先取字典序小的字符串。</p>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>正常的能够想到的思路是用一个hashmap记录每个单词出现的次数，然后放入一个堆中，堆的排序依据是出现次数多的排在前面，出现次数一样多的，字典序小的排在前面，将全部字符放入堆之后弹出前K个，就得到了出现次数最多的前K个，复杂度:<script type="math/tex">O(nlogn)</script></p>
+<p><strong>follow up</strong> : 要求我们用时<script type="math/tex">O(nlogn)</script> ，也就是说我们只需要维护大小为K的堆，因此，我们应该采用“最小堆”而非“最大堆”，堆顶元素是当前出现次数最小的，所以当下一次有新元素加进来的时候，如果堆的大小超过了k，就可以把堆顶这个出现次数最少的元素弹掉了，这样一来，最后堆中剩下的k个元素都是出现次数最多得了，是不是很神奇~！！！！</p>
+<p>所以这道题我们的堆应该是这样的：</p>
+<ol>
+<li>出现次数少的优先出堆</li>
+<li>出现次数一样的，字典序大的优先出队</li>
+<li>堆的大小为k,当堆中元素个数超过k时，手动poll出堆</li>
+</ol>
+<p>这样一来，堆的大小就一直都只有K，时间复杂度就降到<script type="math/tex">O(klogn)</script> 了。这在数据量很大的情况下是十分有必要的！！比如我们要在100亿个数字中找到最大的K个，如果用之前的建堆方法就要建一个100亿大的堆。。。超恐怖，但现在，无论多少数据，我们的堆也只有k那么大了<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line">ps: 这里还学到了一个**比较器的神奇写法**，见注释，可以在比较器中调用map中的count来进行比较诶，这样heap里面就可以只存String了。</div><div class="line"></div><div class="line">#### 代码</div><div class="line"></div><div class="line">```java</div><div class="line">import java.util.*;</div><div class="line"></div><div class="line">public class TopKFrequentWords &#123;</div><div class="line">    class Node&#123;</div><div class="line">        String word;</div><div class="line">        int count;</div><div class="line">        Node(String word,int count)&#123;</div><div class="line">            this.count = count;</div><div class="line">            this.word = word;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    public List&lt;String&gt; topKFrequent(String[] words, int k) &#123;</div><div class="line">        HashMap&lt;String,Integer&gt; map = new HashMap&lt;&gt;();</div><div class="line">        Comparator&lt;Node&gt; cmp = new Comparator&lt;Node&gt;() &#123;</div><div class="line">            @Override</div><div class="line">            public int compare(Node o1, Node o2) &#123;</div><div class="line">                if(o1.count!= o2.count) return o1.count-o2.count;//出现次数少的排在前面</div><div class="line">                else &#123;</div><div class="line">                    if(o1.word.compareTo(o2.word) &lt; 0)&#123;//在字母表中位置靠后的排在前面</div><div class="line">                        return 1;</div><div class="line">                    &#125;</div><div class="line">                    else return -1;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">//        Comparator&lt;String&gt; cmp2 = new Comparator&lt;String&gt;() &#123;</div><div class="line">//            @Override</div><div class="line">//            public int compare(String o1, String o2) &#123;</div><div class="line">//                int o1Count = map.get(o1), o2Count = map.get(o2);</div><div class="line">//                if(o1Count!= o2Count) return o1Count-o2Count;//出现次数少的排在前面</div><div class="line">//                else &#123;</div><div class="line">//                    return o2.compareTo(o1);</div><div class="line">//                &#125;</div><div class="line">//            &#125;</div><div class="line">//        &#125;;</div><div class="line">        PriorityQueue&lt;Node&gt; heap = new PriorityQueue&lt;&gt;(cmp);</div><div class="line">        for(String word : words)&#123;</div><div class="line">            map.put(word,map.getOrDefault(word,0)+1);</div><div class="line">        &#125;</div><div class="line">        for(String word:map.keySet())&#123;</div><div class="line">            heap.add(new Node(word,map.get(word)));</div><div class="line">            //手动控制heap大小</div><div class="line">            if(heap.size() &gt; k)&#123;</div><div class="line">                heap.poll();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        List&lt;String&gt; res = new ArrayList&lt;&gt;();</div><div class="line">        while (!heap.isEmpty())&#123;</div><div class="line">            res.add(heap.poll().word);</div><div class="line">        &#125;</div><div class="line">        Collections.reverse(res);</div><div class="line">        return res;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">```</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">### [Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)</div><div class="line"></div><div class="line">#### 题目</div><div class="line"></div><div class="line">&gt; Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.</div><div class="line">&gt;</div><div class="line">&gt; Examples: </div><div class="line">&gt;</div><div class="line">&gt; `[2,3,4]` , the median is `3`</div><div class="line">&gt;</div><div class="line">&gt; `[2,3]`, the median is `(2 + 3) / 2 = 2.5`</div><div class="line">&gt;</div><div class="line">&gt; Design a data structure that supports the following two operations:</div><div class="line">&gt;</div><div class="line">&gt; - void addNum(int num) - Add a integer number from the data stream to the data structure.</div><div class="line">&gt; - double findMedian() - Return the median of all elements so far.</div><div class="line">&gt;</div><div class="line">&gt; For example:</div><div class="line">&gt;</div><div class="line">&gt; ```</div><div class="line">&gt; addNum(1)</div><div class="line">&gt; addNum(2)</div><div class="line">&gt; findMedian() -&gt; 1.5</div><div class="line">&gt; addNum(3) </div><div class="line">&gt; findMedian() -&gt; 2</div><div class="line">&gt; ```</div><div class="line"></div><div class="line">数据以流的方式给出，实现加入数字和获取中位数的方法。</div><div class="line"></div><div class="line">#### 分析</div><div class="line"></div><div class="line">baseline:每次加入数字之后排序，然后计算中位数，时间复杂度：$$O(n^2logn)$$</div><div class="line"></div><div class="line">**优化：**</div><div class="line"></div><div class="line">中位数：将元素分成两堆，一堆比中位数小，一堆比中位数大</div><div class="line"></div><div class="line">在中位数左右设置两个堆，每次进来一个元素，和中位数比较，如果大于中位数，放到右边的堆中（小顶堆），比中位数小放到左边堆中（大顶堆）。</div><div class="line"></div><div class="line">入堆之后，需要比较左右两个堆的元素个数，当两边数字个之差超过2时，则需要将多的一遍的元素挪出一个去另一边，以保证两边元素个数之差&lt;=1</div><div class="line"></div><div class="line">另外，每次需更新中位数，当左右两堆元素个数相等时，中位数为两个堆顶元素均值；当左右两堆元素个数相差一时，中位数为多的那个堆的堆顶元素</div><div class="line"></div><div class="line">时间复杂度：$$O(nlogn)$$ ,n个元素入堆，入堆操作$$O(logn)$$</div><div class="line"></div><div class="line">#### 代码</div><div class="line"></div><div class="line">```java</div><div class="line">import java.util.Comparator;</div><div class="line">import java.util.PriorityQueue;</div><div class="line"></div><div class="line">public class MedianFinder &#123;</div><div class="line">    PriorityQueue&lt;Integer&gt; maxHeap;//左边最大对</div><div class="line">    PriorityQueue&lt;Integer&gt; minHeap;//右边最小堆</div><div class="line">    int leftSum;</div><div class="line">    int rightSum;</div><div class="line">    double median;</div><div class="line"></div><div class="line">    /** initialize your data structure here. */</div><div class="line">    public MedianFinder() &#123;</div><div class="line">        Comparator&lt;Integer&gt; maxCmp = new Comparator&lt;Integer&gt;() &#123;</div><div class="line">            @Override</div><div class="line">            public int compare(Integer o1, Integer o2) &#123;</div><div class="line">                return o2-o1;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        maxHeap = new PriorityQueue&lt;&gt;(maxCmp);</div><div class="line">        minHeap = new PriorityQueue&lt;&gt;();</div><div class="line">        leftSum = 0;</div><div class="line">        rightSum = 0;</div><div class="line">        median = 0;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void addNum(int num) &#123;</div><div class="line">        //如果两个堆都是空的,默认先放到右边堆中</div><div class="line">        if(minHeap.isEmpty() &amp;&amp; maxHeap.isEmpty())&#123;</div><div class="line">            minHeap.add(num);</div><div class="line">            rightSum++;</div><div class="line">            median = num;</div><div class="line">        &#125;</div><div class="line">        //加入的值大于中位数，放入右边的堆</div><div class="line">        else if(num &gt; median)&#123;</div><div class="line">            minHeap.add(num);</div><div class="line">            rightSum++;</div><div class="line">            //如果右边比左边多两个了，需要挪出一个去左边</div><div class="line">            if(rightSum-leftSum == 2)&#123;</div><div class="line">                maxHeap.add(minHeap.poll());</div><div class="line">                leftSum++;</div><div class="line">                rightSum--;</div><div class="line">            &#125;//此时两边元素相等或者右边比左边多一个</div><div class="line">            if(rightSum &gt; leftSum)&#123;</div><div class="line">                median = minHeap.peek();</div><div class="line">            &#125;</div><div class="line">            else &#123;</div><div class="line">                median = (minHeap.peek() + maxHeap.peek())/2.0;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        //否则，放入左边的堆</div><div class="line">        else &#123;</div><div class="line">            maxHeap.add(num);</div><div class="line">            leftSum++;</div><div class="line">            //如果右边比左边多两个了，需要挪出一个去左边</div><div class="line">            if(leftSum-rightSum == 2)&#123;</div><div class="line">                minHeap.add(maxHeap.poll());</div><div class="line">                leftSum--;</div><div class="line">                rightSum++;</div><div class="line">            &#125;//此时两边元素相等或者右边比左边多一个</div><div class="line">            if(leftSum &gt; rightSum)&#123;</div><div class="line">                median = maxHeap.peek();</div><div class="line">            &#125;</div><div class="line">            else &#123;</div><div class="line">                median = (minHeap.peek() + maxHeap.peek())/2.0;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public double findMedian() &#123;</div><div class="line">        return median;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * Your MedianFinder object will be instantiated and called as such:</div><div class="line"> * MedianFinder obj = new MedianFinder();</div><div class="line"> * obj.addNum(num);</div><div class="line"> * double param_2 = obj.findMedian();</div><div class="line"> */</div><div class="line">```</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">### [Sliding Window Median](https://leetcode.com/problems/sliding-window-median)   </div><div class="line"></div><div class="line">上一题的follow up</div><div class="line"></div><div class="line">#### 题目</div><div class="line"></div><div class="line">&gt; Median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value. So the median is the mean of the two middle value.</div><div class="line">&gt;</div><div class="line">&gt; Examples: </div><div class="line">&gt;</div><div class="line">&gt; `[2,3,4]` , the median is `3`</div><div class="line">&gt;</div><div class="line">&gt; `[2,3]`, the median is `(2 + 3) / 2 = 2.5`</div><div class="line">&gt;</div><div class="line">&gt; Given an array *nums*, there is a sliding window of size *k* which is moving from the very left of the array to the very right. You can only see the *k* numbers in the window. Each time the sliding window moves right by one position. Your job is to output the median array for each window in the original array.</div><div class="line">&gt;</div><div class="line">&gt; For example,</div><div class="line">&gt; Given *nums* = `[1,3,-1,-3,5,3,6,7]`, and *k* = 3.</div><div class="line">&gt;</div><div class="line">&gt; ```</div><div class="line">&gt; Window position                Median</div><div class="line">&gt; ---------------               -----</div><div class="line">&gt; [1  3  -1] -3  5  3  6  7       1</div><div class="line">&gt;  1 [3  -1  -3] 5  3  6  7       -1</div><div class="line">&gt;  1  3 [-1  -3  5] 3  6  7       -1</div><div class="line">&gt;  1  3  -1 [-3  5  3] 6  7       3</div><div class="line">&gt;  1  3  -1  -3 [5  3  6] 7       5</div><div class="line">&gt;  1  3  -1  -3  5 [3  6  7]      6</div><div class="line">&gt;</div><div class="line">&gt; ```</div><div class="line">&gt;</div><div class="line">&gt; Therefore, return the median sliding window as `[1,-1,-1,3,5,6]`.</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">#### 分析</div><div class="line"></div><div class="line">阿西吧，做了一晚上==</div><div class="line"></div><div class="line">跟上一题相比，这道题是个滑动窗口问题，滑窗问题可以拆解为：</div><div class="line"></div><div class="line">1. 加一个元素</div><div class="line">2. 删一个元素</div><div class="line"></div><div class="line">所以跟上一题一样的思路，但每次需要删除窗口错过的那个元素，那么如何找到要删除的这个元素在左边还是右边呢？</div><div class="line"></div><div class="line">1. 如果元素&gt;median，则一定在右堆</div><div class="line">2. 如果元素&lt;median，则一定在左堆</div><div class="line">3. 如果元素==median，则一定在两堆的堆顶</div><div class="line"></div><div class="line">先用PriorityQueue写了一版，90ms</div><div class="line"></div><div class="line">PriorityQueue中remove操作的时间复杂度是$$O(n)$$ ,鼓起勇气手码了个hashheap优化下，hashheap中remove操作时间复杂度是$$O(logn)$$ ,写了一晚上，186ms，想哭。。。。</div><div class="line"></div><div class="line">看了比较快的解法，用TreeSet，之后弄懂了再来写</div></pre></td></tr></table></figure></p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><p>PriorityQueue: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">        PriorityQueue&lt;Integer&gt; maxHeap;<span class="comment">//左边最大对</span></div><div class="line">        PriorityQueue&lt;Integer&gt; minHeap;<span class="comment">//右边最小堆</span></div><div class="line">        <span class="keyword">int</span> leftSum;</div><div class="line">        <span class="keyword">int</span> rightSum;</div><div class="line">        <span class="keyword">double</span> median;</div><div class="line"></div><div class="line">        <span class="comment">/** initialize your data structure here. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Solution</span><span class="params">()</span></span>&#123;</div><div class="line">            Comparator&lt;Integer&gt; maxCmp = <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</div><div class="line">                    <span class="keyword">return</span> Integer.compare(o2,o1);</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            maxHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(maxCmp);</div><div class="line">            minHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;();</div><div class="line">            leftSum = <span class="number">0</span>;</div><div class="line">            rightSum = <span class="number">0</span>;</div><div class="line">            median = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">            <span class="comment">//如果两个堆都是空的,默认先放到右边堆中</span></div><div class="line">            <span class="keyword">if</span>(minHeap.isEmpty() &amp;&amp; maxHeap.isEmpty())&#123;</div><div class="line">                minHeap.add(num);</div><div class="line">                rightSum++;</div><div class="line">                median = num;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//加入的值大于中位数，放入右边的堆</span></div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(num &gt; median)&#123;</div><div class="line">                minHeap.add(num);</div><div class="line">                rightSum++;</div><div class="line">                <span class="comment">//如果右边比左边多两个了，需要挪出一个去左边</span></div><div class="line">                <span class="keyword">if</span>(rightSum-leftSum == <span class="number">2</span>)&#123;</div><div class="line">                    maxHeap.add(minHeap.poll());</div><div class="line">                    leftSum++;</div><div class="line">                    rightSum--;</div><div class="line">                &#125;<span class="comment">//此时两边元素相等或者右边比左边多一个</span></div><div class="line">                <span class="keyword">if</span>(rightSum &gt; leftSum)&#123;</div><div class="line">                    median = minHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//否则，放入左边的堆</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                maxHeap.add(num);</div><div class="line">                leftSum++;</div><div class="line">                <span class="comment">//如果右边比左边多两个了，需要挪出一个去左边</span></div><div class="line">                <span class="keyword">if</span>(leftSum-rightSum == <span class="number">2</span>)&#123;</div><div class="line">                    minHeap.add(maxHeap.poll());</div><div class="line">                    leftSum--;</div><div class="line">                    rightSum++;</div><div class="line">                &#125;<span class="comment">//此时两边元素相等或者右边比左边多一个</span></div><div class="line">                <span class="keyword">if</span>(leftSum &gt; rightSum)&#123;</div><div class="line">                    median = maxHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">            <span class="comment">//如果要删除的在右边</span></div><div class="line">            <span class="keyword">if</span> ((num == median &amp;&amp; minHeap.peek() == num)|| num &gt; median) &#123;</div><div class="line">                minHeap.remove(num);</div><div class="line">                rightSum--;</div><div class="line">                <span class="comment">//删完两边元素相等</span></div><div class="line">                <span class="keyword">if</span>(rightSum == leftSum)&#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完右边比左边少一个</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(rightSum+<span class="number">1</span> == leftSum)&#123;</div><div class="line">                    median = maxHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完右边比左边少两个</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    minHeap.add(maxHeap.poll());</div><div class="line">                    rightSum++;</div><div class="line">                    leftSum--;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//如果要删除的在左边</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                maxHeap.remove(num);</div><div class="line">                leftSum--;</div><div class="line">                <span class="keyword">if</span>(rightSum == leftSum)&#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完左边比右边少一个</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(leftSum+<span class="number">1</span> == rightSum)&#123;</div><div class="line">                    median = minHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完左边比右边少两个</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    maxHeap.add(minHeap.poll());</div><div class="line">                    rightSum--;</div><div class="line">                    leftSum++;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedian</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> median;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">double</span>[] medianSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</div><div class="line">        <span class="keyword">double</span>[] res = <span class="keyword">new</span> <span class="keyword">double</span>[nums.length-k+<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k;i++)&#123;</div><div class="line">            addNum(nums[i]);</div><div class="line">        &#125;</div><div class="line">        res[<span class="number">0</span>] = findMedian();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = k;i &lt; nums.length;i++)&#123;</div><div class="line">            addNum(nums[i]);</div><div class="line">            remove(nums[i-k]);</div><div class="line">            res[i-k+<span class="number">1</span>] = findMedian();</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>HashHeap：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">HashHeap</span> </span>&#123;</div><div class="line">    HashMap&lt;Integer,Node&gt; map;<span class="comment">//存储元素值和在堆中的索引</span></div><div class="line">    ArrayList&lt;Integer&gt; heap;</div><div class="line">    <span class="keyword">int</span> heapSize;</div><div class="line">    <span class="keyword">boolean</span> isMaxHeap;</div><div class="line"></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> idx;<span class="comment">//节点在堆中的位置</span></div><div class="line">        <span class="keyword">int</span> count;<span class="comment">//该数值出现次数</span></div><div class="line">        Node(<span class="keyword">int</span> idx,<span class="keyword">int</span> count)&#123;</div><div class="line">            <span class="keyword">this</span>.idx = idx;</div><div class="line">            <span class="keyword">this</span>.count = count;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEmpty</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(heapSize == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    HashHeap(<span class="keyword">boolean</span> isMaxHeap)&#123;</div><div class="line">        <span class="keyword">this</span>.map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        <span class="keyword">this</span>.heap = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">this</span>.isMaxHeap = isMaxHeap;</div><div class="line">        <span class="keyword">this</span>.heapSize = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="comment">//由数组构建最大堆</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Build</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> counter = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i : nums)&#123;</div><div class="line">            System.out.println(counter);</div><div class="line">            add(i);</div><div class="line">            counter ++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//交换堆中节点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="comment">//获取ij在堆中指向的元素值</span></div><div class="line">        <span class="keyword">int</span> vali = heap.get(i);</div><div class="line">        <span class="keyword">int</span> valj = heap.get(j);</div><div class="line"></div><div class="line">        <span class="comment">//获取两个值在map中的个数</span></div><div class="line">        <span class="keyword">int</span> counti = map.get(vali).count;</div><div class="line">        <span class="keyword">int</span> countj = map.get(valj).count;</div><div class="line"></div><div class="line">        <span class="comment">//修改hashmap，把两个值对应的位置互换，count不变</span></div><div class="line">        map.put(vali,<span class="keyword">new</span> Node(j,counti));</div><div class="line">        map.put(valj,<span class="keyword">new</span> Node(i,countj));</div><div class="line"></div><div class="line">        <span class="comment">//交换堆中的节点值</span></div><div class="line">        heap.set(i,valj);</div><div class="line">        heap.set(j,vali);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向上交换</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ShiftUp</span><span class="params">(<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> parentIdx = (idx-<span class="number">1</span>)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">if</span>(parentIdx &gt; -<span class="number">1</span> &amp;&amp; idx &lt; heapSize)&#123;</div><div class="line">            <span class="comment">//如果是最大堆而且孩子&gt;父亲 || 是最小堆而且孩子&lt;父亲,需要向上shift</span></div><div class="line">            <span class="keyword">if</span>((isMaxHeap &amp;&amp; heap.get(parentIdx) &lt; heap.get(idx)) ||</div><div class="line">                   !isMaxHeap &amp;&amp; heap.get(parentIdx) &gt; heap.get(idx) )&#123;</div><div class="line">                swap(idx,parentIdx);</div><div class="line">                ShiftUp(parentIdx);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//向下交换</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ShiftDown</span><span class="params">(<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> leftChildIdx = <span class="number">2</span> * idx+<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> rightChildIdx = <span class="number">2</span> * idx+<span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> largestIdx = idx;</div><div class="line">        <span class="keyword">if</span>(leftChildIdx &lt; heapSize)&#123;</div><div class="line">            <span class="comment">//如果是最大堆而且父亲节点小于孩子</span></div><div class="line">            <span class="keyword">if</span>((isMaxHeap &amp;&amp; heap.get(idx) &lt; heap.get(leftChildIdx)) ||</div><div class="line">                    (!isMaxHeap &amp;&amp; heap.get(idx) &gt; heap.get(leftChildIdx)))&#123;</div><div class="line">                largestIdx = leftChildIdx;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span>(rightChildIdx &lt; heapSize)&#123;</div><div class="line">            <span class="keyword">if</span>((isMaxHeap &amp;&amp; heap.get(largestIdx) &lt; heap.get(rightChildIdx)) ||</div><div class="line">                    (!isMaxHeap &amp;&amp; heap.get(largestIdx) &gt; heap.get(rightChildIdx)))&#123;</div><div class="line">                largestIdx = rightChildIdx;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(largestIdx != idx)&#123;</div><div class="line">            swap(idx,largestIdx);</div><div class="line">            ShiftDown(largestIdx);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//插入元素，值为n</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="comment">//如果堆中已经有该元素了,放在原来的位置，heap不用动，map计数+1</span></div><div class="line">        <span class="keyword">if</span>(map.containsKey(n))&#123;</div><div class="line">            map.put(n,<span class="keyword">new</span> Node(map.get(n).idx,map.get(n).count+<span class="number">1</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果堆中没有该元素</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            map.put(n,<span class="keyword">new</span> Node(heapSize,<span class="number">1</span>));</div><div class="line">            heap.add(n);</div><div class="line">            heapSize++;</div><div class="line">            ShiftUp(heapSize-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//删除节点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> idx = map.get(n).idx;</div><div class="line">        <span class="keyword">int</span> count = map.get(n).count;</div><div class="line">        <span class="comment">//如果该值的节点只有一个</span></div><div class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)&#123;</div><div class="line">            swap(idx,heapSize-<span class="number">1</span>);</div><div class="line">            map.remove(n);<span class="comment">///在map中删除</span></div><div class="line">            heap.remove(heap.size()-<span class="number">1</span>);</div><div class="line">            heapSize--;</div><div class="line">            <span class="comment">//不知道</span></div><div class="line">            ShiftUp(idx);</div><div class="line">            ShiftDown(idx);<span class="comment">//交换之后需要向下维护</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果该值的节点有多个，heap不用动，map里count-1</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            map.put(n, <span class="keyword">new</span> Node(idx, count - <span class="number">1</span>));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//弹出节点</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">poll</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> peakVal = heap.get(<span class="number">0</span>);</div><div class="line">        <span class="keyword">int</span> idx = map.get(peakVal).idx;</div><div class="line">        <span class="keyword">int</span> count = map.get(peakVal).count;</div><div class="line">        <span class="comment">//如果堆中只有一个该节点,需要与最后一个交换后维护，</span></div><div class="line">        <span class="keyword">if</span>(count == <span class="number">1</span>)&#123;</div><div class="line">            <span class="comment">//与最后一个交换</span></div><div class="line">            swap(<span class="number">0</span>,heapSize-<span class="number">1</span>);</div><div class="line">            heap.remove(heap.size()-<span class="number">1</span>);</div><div class="line">            heapSize--;</div><div class="line">            ShiftUp(<span class="number">0</span>);</div><div class="line">            ShiftDown(<span class="number">0</span>);</div><div class="line">            map.remove(peakVal);<span class="comment">//在map中删除</span></div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果堆中有多个，heap不用变，map中对应count--；</span></div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            map.put(peakVal,<span class="keyword">new</span> Node(idx,count-<span class="number">1</span>));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> peakVal;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//获取堆顶元素</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">peek</span><span class="params">()</span></span>&#123;</div><div class="line">        <span class="keyword">return</span> heap.get(<span class="number">0</span>);</div><div class="line">    &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">        HashHeap maxHeap;<span class="comment">//左边最大对</span></div><div class="line">        HashHeap minHeap;<span class="comment">//右边最小堆</span></div><div class="line">        <span class="keyword">int</span> leftSum;</div><div class="line">        <span class="keyword">int</span> rightSum;</div><div class="line">        <span class="keyword">double</span> median;</div><div class="line"></div><div class="line">        <span class="comment">/** initialize your data structure here. */</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Solution</span><span class="params">()</span></span>&#123;</div><div class="line">            Comparator&lt;Integer&gt; maxCmp = <span class="keyword">new</span> Comparator&lt;Integer&gt;() &#123;</div><div class="line">                <span class="meta">@Override</span></div><div class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Integer o1, Integer o2)</span> </span>&#123;</div><div class="line">                    <span class="keyword">return</span> Integer.compare(o2,o1);</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            maxHeap = <span class="keyword">new</span> HashHeap(<span class="keyword">true</span>);</div><div class="line">            minHeap = <span class="keyword">new</span> HashHeap(<span class="keyword">false</span>);</div><div class="line">            leftSum = <span class="number">0</span>;</div><div class="line">            rightSum = <span class="number">0</span>;</div><div class="line">            median = <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addNum</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">            <span class="comment">//如果两个堆都是空的,默认先放到右边堆中</span></div><div class="line">            <span class="keyword">if</span>(minHeap.isEmpty() &amp;&amp; maxHeap.isEmpty())&#123;</div><div class="line">                minHeap.add(num);</div><div class="line">                rightSum++;</div><div class="line">                median = num;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//加入的值大于中位数，放入右边的堆</span></div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(num &gt; median)&#123;</div><div class="line">                minHeap.add(num);</div><div class="line">                rightSum++;</div><div class="line">                <span class="comment">//如果右边比左边多两个了，需要挪出一个去左边</span></div><div class="line">                <span class="keyword">if</span>(rightSum-leftSum == <span class="number">2</span>)&#123;</div><div class="line">                    maxHeap.add(minHeap.poll());</div><div class="line">                    leftSum++;</div><div class="line">                    rightSum--;</div><div class="line">                &#125;<span class="comment">//此时两边元素相等或者右边比左边多一个</span></div><div class="line">                <span class="keyword">if</span>(rightSum &gt; leftSum)&#123;</div><div class="line">                    median = minHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//否则，放入左边的堆</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                maxHeap.add(num);</div><div class="line">                leftSum++;</div><div class="line">                <span class="comment">//如果右边比左边多两个了，需要挪出一个去左边</span></div><div class="line">                <span class="keyword">if</span>(leftSum-rightSum == <span class="number">2</span>)&#123;</div><div class="line">                    minHeap.add(maxHeap.poll());</div><div class="line">                    leftSum--;</div><div class="line">                    rightSum++;</div><div class="line">                &#125;<span class="comment">//此时两边元素相等或者右边比左边多一个</span></div><div class="line">                <span class="keyword">if</span>(leftSum &gt; rightSum)&#123;</div><div class="line">                    median = maxHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                   median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">            <span class="comment">//如果要删除的在左边</span></div><div class="line">            <span class="keyword">if</span>(maxHeap.map.containsKey(num))&#123;</div><div class="line">                maxHeap.remove(num);</div><div class="line">                leftSum--;</div><div class="line">                <span class="comment">//删完相等</span></div><div class="line">                <span class="keyword">if</span>(leftSum == rightSum)&#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(leftSum+<span class="number">1</span> == rightSum)&#123;</div><div class="line">                    median = minHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完左边比右边少两个</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    maxHeap.add(minHeap.poll());</div><div class="line">                    rightSum--;</div><div class="line">                    leftSum++;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//要删除的在右边</span></div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                minHeap.remove(num);</div><div class="line">                rightSum--;</div><div class="line">                <span class="comment">//删完两边元素相等</span></div><div class="line">                <span class="keyword">if</span>(rightSum == leftSum)&#123;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完右边比左边少一个</span></div><div class="line">                <span class="keyword">else</span> <span class="keyword">if</span>(rightSum+<span class="number">1</span> == leftSum)&#123;</div><div class="line">                    </div><div class="line">                    median = maxHeap.peek();</div><div class="line">                &#125;</div><div class="line">                <span class="comment">//删完右边比左边少2个，要从左边挪一个过来</span></div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    minHeap.add(maxHeap.poll());</div><div class="line">                    leftSum--;</div><div class="line">                    rightSum++;</div><div class="line">                    median = minHeap.peek()/<span class="number">2.0</span> + maxHeap.peek()/<span class="number">2.0</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedian</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">return</span> median;</div><div class="line">        &#125;</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">double</span>[] medianSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</div><div class="line">        <span class="keyword">double</span>[] res = <span class="keyword">new</span> <span class="keyword">double</span>[nums.length-k+<span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k;i++)&#123;</div><div class="line">            addNum(nums[i]);</div><div class="line">        &#125;</div><div class="line">        res[<span class="number">0</span>] = findMedian();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = k;i &lt; nums.length;i++)&#123;</div><div class="line">            addNum(nums[i]);</div><div class="line">            remove(nums[i-k]);</div><div class="line">            res[i-k+<span class="number">1</span>] = findMedian();</div><div class="line">            System.out.print(i);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="Deque双端队列"><a href="#Deque双端队列" class="headerlink" title="Deque双端队列"></a>Deque双端队列</h1><p>可以从两端进行插入和删除</p>
+<h3 id="Sliding-Window-Maximum"><a href="#Sliding-Window-Maximum" class="headerlink" title="Sliding Window Maximum"></a><a href="https://leetcode.com/problems/sliding-window-maximum/" target="_blank" rel="external">Sliding Window Maximum</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an array <em>nums</em>, there is a sliding window of size <em>k</em> which is moving from the very left of the array to the very right. You can only see the <em>k</em> numbers in the window. Each time the sliding window moves right by one position.</p>
+<p>For example,<br>Given <em>nums</em> = <code>[1,3,-1,-3,5,3,6,7]</code>, and <em>k</em> = 3.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Window position                Max</div><div class="line">&gt; ---------------               -----</div><div class="line">&gt; [1  3  -1] -3  5  3  6  7       3</div><div class="line">&gt;  1 [3  -1  -3] 5  3  6  7       3</div><div class="line">&gt;  1  3 [-1  -3  5] 3  6  7       5</div><div class="line">&gt;  1  3  -1 [-3  5  3] 6  7       5</div><div class="line">&gt;  1  3  -1  -3 [5  3  6] 7       6</div><div class="line">&gt;  1  3  -1  -3  5 [3  6  7]      7</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Therefore, return the max sliding window as <code>[3,3,5,5,6,7]</code>.</p>
+</blockquote>
+<p>给定数组和窗口大小，要求返回窗口滑动过程中每一个位置的最大值。</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>方法一：</p>
+<p>两层循环，找窗口k内的最大值，时间复杂度<script type="math/tex">O(n*k)</script></p>
+<p>方法二：</p>
+<p>维护一个heap，窗口向前滑动时，加一个元素，减一个元素，堆顶元素即为窗口内最大元素，时间复杂度：<script type="math/tex">O(nlogk)</script></p>
+<p>方法三：双端队列Deque</p>
+<p>我们用双向队列可以在O(N)时间内解决这题。当我们遇到新的数时，将新的数和双向队列的末尾比较，如果末尾比新数小，则把末尾扔掉，直到该队列的末尾比新数大或者队列为空的时候才住手。这样，我们可以保证队列里的元素是从头到尾降序的，由于队列里只有窗口内的数，所以他们其实就是窗口内第一大，第二大，第三大…的数。保持队列里只有窗口内数的方法和上个解法一样，也是每来一个新的把窗口最左边的扔掉，然后把新的加进去。然而由于我们在加新数的时候，已经把很多没用的数给扔了，这样队列头部的数并不一定是窗口最左边的数。这里的技巧是，我们队列中存的是那个数在原数组中的下标，这样我们既可以直到这个数的值，也可以知道该数是不是窗口最左边的数。这里为什么时间复杂度是O(N)呢？因为每个数只可能被操作最多两次，一次是加入队列的时候，一次是因为有别的更大数在后面，所以被扔掉，或者因为出了窗口而被扔掉。</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] maxSlidingWindow(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k) &#123;</div><div class="line">        Deque&lt;Integer&gt; deque = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</div><div class="line">        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length-k+<span class="number">1</span>];</div><div class="line">        </div><div class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span> || k == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//窗口尾后移</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</div><div class="line">            <span class="comment">//窗口第一个元素超过窗口，弹出</span></div><div class="line">            <span class="keyword">if</span>(!deque.isEmpty() &amp;&amp; deque.peekFirst() &lt; i-k+<span class="number">1</span>)&#123;</div><div class="line">                deque.poll();</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//如果目前元素大于deque中队尾元素，将队尾元素弹出</span></div><div class="line">            <span class="keyword">while</span>(!deque.isEmpty() &amp;&amp; nums[deque.peekLast()] &lt; nums[i])&#123;</div><div class="line">                deque.pollLast();</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//加入idx</span></div><div class="line">            deque.addLast(i);</div><div class="line">            <span class="comment">//每次窗口滑动之后将最大元素加入结果集合</span></div><div class="line">            <span class="keyword">if</span>(i &gt;= k-<span class="number">1</span>)&#123;</div><div class="line">                res[i-k+<span class="number">1</span>] = nums[deque.peekFirst()];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Heap/" rel="tag"># Heap</a>
+          
+            <a href="/tags/Dequeue/" rel="tag"># Dequeue</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/17/【九章算法强化班】扫描线/" rel="next" title="【九章算法强化班】课程笔记2——扫描线">
+                <i class="fa fa-chevron-left"></i> 【九章算法强化班】课程笔记2——扫描线
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/18/【九章算法基础班】动态规划/" rel="prev" title="【九章算法基础班】动态规划">
+                【九章算法基础班】动态规划 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#堆"><span class="nav-number">1.</span> <span class="nav-text">堆</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本性质"><span class="nav-number">1.0.1.</span> <span class="nav-text">基本性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.0.2.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#构建堆，堆维护"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">构建堆，堆维护</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除节点POP"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">删除节点POP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入节点"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">插入节点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#堆排序"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">堆排序</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HashHeap"><span class="nav-number">1.1.</span> <span class="nav-text">HashHeap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-相关习题"><span class="nav-number">1.2.</span> <span class="nav-text">leetcode 相关习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Trapping-Rain-Water"><span class="nav-number">1.2.1.</span> <span class="nav-text">Trapping Rain Water</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trapping-Rain-Water-II"><span class="nav-number">1.2.2.</span> <span class="nav-text">Trapping Rain Water II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Top-K-Frequent-Words"><span class="nav-number">1.2.3.</span> <span class="nav-text">Top K Frequent Words</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Deque双端队列"><span class="nav-number">2.</span> <span class="nav-text">Deque双端队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sliding-Window-Maximum"><span class="nav-number">2.0.1.</span> <span class="nav-text">Sliding Window Maximum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">2.0.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">2.0.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">2.0.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
