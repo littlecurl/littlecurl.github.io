@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="算法,UnionFind," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Union Find并查集并查集一种用来解决集合查询合并的数据结构 假如A、B、C三人在Microsoft工作，D、E、F、G四人在Linkedin工作，给七个人都分发一个工牌，上面写着自己的公司名字，告诉他们自己的老大是哪家公司，则可以表示成如下形式。  如果A遇到F，看一眼对方的工牌，跟自己是不是一个boss，就知道对方是不是跟自己是同一家公司的人了。 如果有一天M公司把L公司收购了，那么此时">
+<meta name="keywords" content="算法,UnionFind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】课程笔记2——并查集">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/【九章算法强化班】并查集/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="Union Find并查集并查集一种用来解决集合查询合并的数据结构 假如A、B、C三人在Microsoft工作，D、E、F、G四人在Linkedin工作，给七个人都分发一个工牌，上面写着自己的公司名字，告诉他们自己的老大是哪家公司，则可以表示成如下形式。  如果A遇到F，看一眼对方的工牌，跟自己是不是一个boss，就知道对方是不是跟自己是同一家公司的人了。 如果有一天M公司把L公司收购了，那么此时">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-10-31.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-15-16.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-14-34.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-14-45.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-41-32.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-42-34.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-17-49-17.png">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.535Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】课程笔记2——并查集">
+<meta name="twitter:description" content="Union Find并查集并查集一种用来解决集合查询合并的数据结构 假如A、B、C三人在Microsoft工作，D、E、F、G四人在Linkedin工作，给七个人都分发一个工牌，上面写着自己的公司名字，告诉他们自己的老大是哪家公司，则可以表示成如下形式。  如果A遇到F，看一眼对方的工牌，跟自己是不是一个boss，就知道对方是不是跟自己是同一家公司的人了。 如果有一天M公司把L公司收购了，那么此时">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-10-31.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/05/【九章算法强化班】并查集/"/>
+
+
+
+
+
+  <title>【九章算法强化班】课程笔记2——并查集 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/【九章算法强化班】并查集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】课程笔记2——并查集</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T16:28:47+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,563
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Union-Find并查集"><a href="#Union-Find并查集" class="headerlink" title="Union Find并查集"></a>Union Find并查集</h1><h2 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h2><p><strong>一种用来解决集合查询合并的数据结构</strong></p>
+<p>假如A、B、C三人在Microsoft工作，D、E、F、G四人在Linkedin工作，给七个人都分发一个工牌，上面写着自己的公司名字，告诉他们自己的老大是哪家公司，则可以表示成如下形式。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-10-31.png" alt=""></p>
+<p>如果A遇到F，看一眼对方的工牌，跟自己是不是一个boss，就知道对方是不是跟自己是同一家公司的人了。</p>
+<p>如果有一天M公司把L公司收购了，那么此时，需要对两个公司的员工进行合并操作，给员工分发新的工牌，为了减少重新分配的麻烦，就把L的boss指向M，此时L下面的员工最大的boss是M了，那么A和E就在一个阵营了。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-15-16.png" alt=""></p>
+<p>如果在M公司三个员工和L公司四个员工中分别选出一个作为该公司的boss，可以表示成如下形式：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-14-34.png" alt=""></p>
+<p>那么合并之后，J的boss设置为B，此时大家都是一个阵营的了。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-14-45.png" alt=""></p>
+ <a id="more"></a>
+<h2 id="并查集的精髓"><a href="#并查集的精髓" class="headerlink" title="并查集的精髓"></a><strong>并查集的精髓</strong></h2><p>一共包含三个操作</p>
+<ol>
+<li><p>初始化</p>
+<p>初始化操作中，每个元素的boss指向自己.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">HashMap&lt;Integer,Integer&gt; father = <span class="keyword">new</span> HashMap&lt;integer,integer&gt;();</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">initial</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.length;i++)&#123;</div><div class="line">    father.put(nums[i],nums[i]);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>查找</p>
+<p>查找元素所在的集合，也就是最大的boss。</p>
+<p>如果要判断两个点是否属于同一个集合，就看这两个点的boss是否是同一个节点。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> parent = x;</div><div class="line">  <span class="keyword">while</span>(parent!=father.get(parent))&#123;</div><div class="line">    parent = fater.get(parent);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> parent;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>时间复杂度：<script type="math/tex">O(n)</script></p>
+</li>
+<li><p>合并</p>
+<p>两个不想交的集合，其中一个的大boss认另一个为boss。</p>
+<p>找到两个元素的boss，如果不是同一个，就把一个的boss指向另一个的boss。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> fa_x = find(x);</div><div class="line">  <span class="keyword">int</span> fa_y = find(y);</div><div class="line">  <span class="keyword">if</span>(fa_x != f_y)&#123;</div><div class="line">    father.put(fa_X,fa_y);<span class="comment">//合并两个boss</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>时间复杂度：<script type="math/tex">O(n)</script></p>
+</li>
+</ol>
+<h2 id="并查集的优化"><a href="#并查集的优化" class="headerlink" title="并查集的优化"></a><strong>并查集的优化</strong></h2><p>baseline的find流程：</p>
+<p>如果有这样一条路径：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">A--&gt;B--&gt;C--&gt;D--&gt;E--&gt;F</div></pre></td></tr></table></figure>
+<p>查找A的boss时，需要遍历整个路径，寻找B、C、D时还需要再遍历一次，这显然是大量重复的工作，所以我们可以把一次遍历途中经过的节点都直接指向boss，下次再查询的时候，时间复杂的就是<script type="math/tex">O(1)</script>了，这就是<strong>带路径压缩的并查集</strong>的查找：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-41-32.png" alt=""></p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-16-42-34.png" alt=""></p>
+<p>平均时间复杂度降至<script type="math/tex">O(1)</script></p>
+<h2 id="并查集模板-c-版"><a href="#并查集模板-c-版" class="headerlink" title="并查集模板(c++版)"></a>并查集模板(c++版)</h2><ol>
+<li><p>hash_map实现：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">UnionFind</span>&#123;</span></div><div class="line">    <span class="keyword">private</span>:</div><div class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt; father;</div><div class="line">    <span class="keyword">public</span>:</div><div class="line">        <span class="comment">//初始化并查集</span></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">initial</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; elements)</span></span>&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; elements.size();i++)&#123;</div><div class="line">                father.insert(make_pair(elements[i],elements[i]));</div><div class="line">            &#125;    </div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//并查集中插入操作，不支持删除</span></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> x_fa)</span></span>&#123;</div><div class="line">            father.insert(make_pair(x,x_fa));</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//在并查集中查找元素的boss</span></div><div class="line">        <span class="function"><span class="keyword">int</span> <span class="title">findfather</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</div><div class="line">            <span class="keyword">int</span> parent = x;</div><div class="line">            <span class="keyword">while</span>(father[parent] != parent)&#123;</div><div class="line">                parent = father[parent];</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//带路径压缩的并查集</span></div><div class="line">            <span class="keyword">while</span>(father.find(x)-&gt;second != x)&#123;</div><div class="line">                x = father[x];</div><div class="line">                father[x] = parent;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> parent;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//合并两个元素</span></div><div class="line">        <span class="function"><span class="keyword">void</span> <span class="title">unionset</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</div><div class="line">            <span class="keyword">int</span> x_father = findfather(x);</div><div class="line">            <span class="keyword">int</span> y_father = findfather(y);</div><div class="line">            <span class="keyword">if</span>(x_father != y_father)&#123;</div><div class="line">                father[y_father] = x_father;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//计算并查集中有多少个不想交的子集合</span></div><div class="line">        <span class="function"><span class="keyword">int</span> <span class="title">countsets</span><span class="params">()</span></span>&#123;</div><div class="line">            <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; father_set;</div><div class="line">            <span class="keyword">for</span>(<span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>,<span class="keyword">int</span>&gt;::iterator iter = father.begin();iter != father.end();iter++)&#123;</div><div class="line">                <span class="keyword">int</span> parent = findfather(iter-&gt;first);</div><div class="line">                iter-&gt;second = parent;</div><div class="line">                father_set.insert(parent);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> father_set.size();</div><div class="line">        &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+</li>
+<li><p>vector实现</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//用vector定义并查集，index就是元素值</div><div class="line">class UnionFind&#123;</div><div class="line">    private:</div><div class="line">        vector&lt;int&gt; father;</div><div class="line">    public:</div><div class="line">        //初始化并查集</div><div class="line">        void initial(int n)&#123;</div><div class="line">            father.resize(n,-1);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //并查集中更新操作</div><div class="line">        void fresh(int x,int x_fa)&#123;</div><div class="line">            father[x] = x_fa;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //在并查集中查找元素的boss</div><div class="line">        int findfather(int x)&#123;</div><div class="line">            int parent = x;</div><div class="line">            while(father[parent] != parent)&#123;</div><div class="line">                parent = father[parent];</div><div class="line">            &#125;</div><div class="line">            //带路径压缩的并查集</div><div class="line">            while(father[x] != x)&#123;</div><div class="line">                father[x] = parent;</div><div class="line">                x = father[x];</div><div class="line">            &#125;</div><div class="line">            return parent;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //合并两个元素</div><div class="line">        void unionset(int x,int y)&#123;</div><div class="line">            int x_father = findfather(x);</div><div class="line">            int y_father = findfather(y);</div><div class="line">            if(x_father != y_father)&#123;</div><div class="line">                father[y_father] = x_father;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //计算并查集中有多少个不想交的子集合</div><div class="line">        int countsets()&#123;</div><div class="line">            unordered_set&lt;int&gt; father_set;</div><div class="line">            for(int i = 0; i &lt; father.size();i++)&#123;</div><div class="line">                if(father[i]!=-1)&#123;</div><div class="line">                    int fathertemp = findfather(father[i]);</div><div class="line">                    if(fathertemp!=-1)&#123;</div><div class="line">                        father_set.insert(fathertemp);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            return father_set.size();</div><div class="line">        &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>用vector会比hashmap快，但如果数据很稀疏，空间复杂度会比较高。</p>
+</li>
+</ol>
+<h2 id="相关题目"><a href="#相关题目" class="headerlink" title="相关题目"></a>相关题目</h2><ul>
+<li><a href="https://leetcode.com/problems/number-of-islands/description/" target="_blank" rel="external"><del>leetcode200. Number of Islands</del></a></li>
+<li><a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/description/" target="_blank" rel="external"><del>leetcode323. Number of Connected Components in an Undirected Graph</del></a></li>
+<li><a href="https://leetcode.com/problems/number-of-islands-ii/description/" target="_blank" rel="external"><del>leetcode305. Number of Islands II</del></a></li>
+<li><a href="https://leetcode.com/problems/graph-valid-tree/description/" target="_blank" rel="external"><del>leetcode261. Graph Valid Tree</del></a></li>
+<li><a href="https://leetcode.com/problems/surrounded-regions/description/" target="_blank" rel="external"><del>leetcode130. Surrounded Regions</del></a></li>
+<li><a href="https://leetcode.com/problems/longest-consecutive-sequence/" target="_blank" rel="external">leetcode128. Longest Consecutive Sequence</a></li>
+<li><a href="https://leetcode.com/problems/friend-circles/" target="_blank" rel="external">leetcode547. Friend Circles</a></li>
+</ul>
+<h3 id="leetcode200-Number-of-Islands"><a href="#leetcode200-Number-of-Islands" class="headerlink" title="leetcode200. Number of Islands"></a>leetcode200. Number of Islands</h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a 2d grid map of <code>&#39;1&#39;</code>s (land) and <code>&#39;0&#39;</code>s (water), count the number of islands. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 11110</div><div class="line">&gt; 11010</div><div class="line">&gt; 11000</div><div class="line">&gt; 00000</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Answer: 1</p>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 11000</div><div class="line">&gt; 11000</div><div class="line">&gt; 00100</div><div class="line">&gt; 00011</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Answer: 3</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>题目的意思是说矩阵中的1代表陆地，0代表海洋，如果某个1的上或下或左或右也是1的话，就是属于同一片陆地，要求矩阵中陆地的个数。也就是找出矩阵中连接子图的个数。</p>
+<p>有两种思路：</p>
+<ol>
+<li><p>并查集</p>
+<p>找出矩阵中子图的个数，可以利用并查集，在每个点附近做查找和合并操作，如果其周围有1，就讲其归为一类，最后返回并查集的集合个数就是所求的。</p>
+<p>并查集处理二维矩阵时索引比较麻烦，所以这里需要先将二维坐标转化为一维并查集坐标：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">矩阵维度：m*n</div><div class="line">二维坐标：(i,j) --&gt; 一维坐标：x*n+j</div><div class="line">一维坐标：idx     --&gt; 二维坐标：(idx/m,idx%m)</div></pre></td></tr></table></figure>
+<p>经过坐标转化，可以使用并查集进行计算了</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">numIslands</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; grid)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> rows = grid.size();</div><div class="line">    <span class="keyword">if</span>(rows==<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> cols = grid[<span class="number">0</span>].size();</div><div class="line">    <span class="keyword">if</span>(cols==<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">    UnionFind unionfindset;<span class="comment">//声明并查集</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; island;<span class="comment">//存储是1的元素</span></div><div class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt; &gt; isseen(rows,<span class="built_in">vector</span>&lt;<span class="keyword">bool</span>&gt;(cols,<span class="number">0</span>));<span class="comment">//记录是否遍历过</span></div><div class="line">    <span class="comment">//初始化,插入元素</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; rows;i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ;j &lt; cols;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(grid[i][j]==<span class="string">'1'</span>)&#123;</div><div class="line">                <span class="comment">//father.insert(make_pair(i*cols+j,i*cols+j));</span></div><div class="line">                unionfindset.add(i*cols+j,i*cols+j);</div><div class="line">                island.push_back(&#123;i,j&#125;);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//遍历边</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; island.size();i++)&#123;</div><div class="line">        <span class="keyword">int</span> x_idx = island[i][<span class="number">0</span>];</div><div class="line">        <span class="keyword">int</span> y_idx = island[i][<span class="number">1</span>];</div><div class="line">        <span class="keyword">int</span> idx = x_idx*cols+y_idx;</div><div class="line">        <span class="keyword">if</span>(isseen[x_idx][y_idx]==<span class="number">0</span>)&#123;</div><div class="line">            isseen[x_idx][y_idx] = <span class="number">1</span>;</div><div class="line">            <span class="keyword">if</span>(x_idx<span class="number">-1</span> &gt;= <span class="number">0</span> &amp;&amp; grid[x_idx<span class="number">-1</span>][y_idx]==<span class="string">'1'</span>)&#123;<span class="comment">//上</span></div><div class="line">                isseen[x_idx<span class="number">-1</span>][y_idx] = <span class="number">1</span>;</div><div class="line">                unionfindset.unionset(idx-cols,idx);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(y_idx<span class="number">-1</span> &gt;= <span class="number">0</span> &amp;&amp; grid[x_idx][y_idx<span class="number">-1</span>]==<span class="string">'1'</span>)&#123;<span class="comment">//左</span></div><div class="line">                isseen[x_idx][y_idx<span class="number">-1</span>] = <span class="number">1</span>;</div><div class="line">                unionfindset.unionset(idx<span class="number">-1</span>,idx);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> unionfindset.countsets();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>BFS/DFS</p>
+<p>从矩阵中的一个1开始做深度或广度优先遍历，其周围能够遍历到的1都是跟其属于同片陆地的，把遍历过的陆地标记为0，并把count++；然后继续从下一个出现1的地方开始遍历，跟前面的操作一样，最后就可以得到count就是矩阵中陆地的个数。</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; grid,<span class="keyword">int</span> x_idx,<span class="keyword">int</span> y_idx,<span class="keyword">int</span>&amp; rows,<span class="keyword">int</span>&amp; cols)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(x_idx&lt;<span class="number">0</span> || x_idx &gt;=rows || y_idx&lt;<span class="number">0</span> || y_idx &gt;= cols || grid[x_idx][y_idx]==<span class="string">'0'</span>)</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    grid[x_idx][y_idx]=<span class="string">'0'</span>;</div><div class="line">    bfs(grid,x_idx,y_idx<span class="number">-1</span>,rows,cols);</div><div class="line">    bfs(grid,x_idx<span class="number">-1</span>,y_idx,rows,cols);</div><div class="line">    bfs(grid,x_idx,y_idx+<span class="number">1</span>,rows,cols);</div><div class="line">    bfs(grid,x_idx+<span class="number">1</span>,y_idx,rows,cols);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>int numIslands(vector<vector<char>&gt;&amp; grid) {</vector<char></p>
+<pre><code>int rows = grid.size();
+if(rows==0){
+    return 0;
+}
+int cols = grid[0].size();
+if(cols==0){
+    return 0;
+}
+//unordered_map&lt;int,int&gt; father;//并查集
+//vector&lt;vector&lt;int&gt;&gt; island;//存储是1的元素
+int count = 0;
+for(int i = 0; i &lt; rows;i++){
+    for(int j = 0 ; j &lt; cols;j++){
+        if(grid[i][j]==&#39;1&#39;){
+            count++;
+            bfs(grid,i,j,rows,cols);
+        }
+    }
+}
+return count;
+</code></pre><p>}</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">### leetcode305.Number of Islands II </div><div class="line"></div><div class="line">#### 题目</div><div class="line">&gt; A 2d grid map of `m` rows and `n` columns is initially filled with water. We may perform an *addLand* operation which turns the water at position (row, col) into a land. Given a list of positions to operate, **count the number of islands after each addLand operation**. An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</div><div class="line">&gt;</div><div class="line">&gt; **Example:**</div><div class="line">&gt;</div><div class="line">&gt; Given `m = 3, n = 3`, `positions = [[0,0], [0,1], [1,2], [2,1]]`.</div><div class="line">&gt; Initially, the 2d grid `grid` is filled with water. (Assume 0 represents water and 1 represents land).</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>0 0 0<br>0 0 0<br>0 0 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;</div><div class="line">&gt; Operation #1: addLand(0, 0) turns the water at grid[0][0] into a land.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>1 0 0<br>0 0 0   Number of islands = 1<br>0 0 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;</div><div class="line">&gt; Operation #2: addLand(0, 1) turns the water at grid[0][1] into a land.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>1 1 0<br>0 0 0   Number of islands = 1<br>0 0 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;</div><div class="line">&gt; Operation #3: addLand(1, 2) turns the water at grid[1][2] into a land.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>1 1 0<br>0 0 1   Number of islands = 2<br>0 0 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;</div><div class="line">&gt; Operation #4: addLand(2, 1) turns the water at grid[2][1] into a land.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+<p>1 1 0<br>0 0 1   Number of islands = 3<br>0 1 0</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;</div><div class="line">&gt; We return the result as an array: `[1, 1, 2, 3]`</div><div class="line"></div><div class="line">一个矩阵，元素都是0，代表海洋，每次选择一个元素标记为1，代表陆地，输出每轮矩阵中的island个数。</div><div class="line"></div><div class="line">#### 思路</div><div class="line"></div><div class="line">这道题目跟上面题目不同的地方在于这次是每次选择一个点进行更新，所以如果每次用DFS/BFS遍历的话，会有大量重复的运算，如果用并查集，则只需要每次对于新加入的island对其周围进行检查然后对并查集进行更新即可。</div><div class="line"></div><div class="line">#### 代码</div><div class="line"></div><div class="line">​```c++</div><div class="line">//用vector定义并查集，index就是元素值</div><div class="line">class UnionFind&#123;</div><div class="line">    private:</div><div class="line">        vector&lt;int&gt; father;</div><div class="line">    public:</div><div class="line">        //初始化并查集</div><div class="line">        void initial(int n)&#123;</div><div class="line">            father.resize(n,-1);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //并查集中更新操作</div><div class="line">        void fresh(int x,int x_fa)&#123;</div><div class="line">            father[x] = x_fa;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //在并查集中查找元素的boss</div><div class="line">        int findfather(int x)&#123;</div><div class="line">            int parent = x;</div><div class="line">            while(father[parent] != parent)&#123;</div><div class="line">                parent = father[parent];</div><div class="line">            &#125;</div><div class="line">            //带路径压缩的并查集</div><div class="line">            while(father[x] != x)&#123;</div><div class="line">                father[x] = parent;</div><div class="line">                x = father[x];</div><div class="line">            &#125;</div><div class="line">            return parent;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //合并两个元素</div><div class="line">        void unionset(int x,int y)&#123;</div><div class="line">            int x_father = findfather(x);</div><div class="line">            int y_father = findfather(y);</div><div class="line">            if(x_father != y_father)&#123;</div><div class="line">                father[y_father] = x_father;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        //计算并查集中有多少个不想交的子集合</div><div class="line">        int countsets()&#123;</div><div class="line">            unordered_set&lt;int&gt; father_set;</div><div class="line">            for(int i = 0; i &lt; father.size();i++)&#123;</div><div class="line">                if(father[i]!=-1)&#123;</div><div class="line">                    int fathertemp = findfather(father[i]);</div><div class="line">                    if(fathertemp!=-1)&#123;</div><div class="line">                        father_set.insert(fathertemp);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">            return father_set.size();</div><div class="line">        &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">public:</div><div class="line">vector&lt;int&gt; numIslands2(int m, int n, vector&lt;pair&lt;int, int&gt;&gt;&amp; positions) &#123;</div><div class="line">    int count = 0;</div><div class="line">    vector&lt;int&gt; results;</div><div class="line">    UnionFind UnionFindset;</div><div class="line">    vector&lt;int&gt; x_add = &#123;0,0,1,-1&#125;;</div><div class="line">    vector&lt;int&gt; y_add = &#123;1,-1,0,0&#125;;</div><div class="line">    //初始化地图</div><div class="line">    vector&lt;vector&lt;int&gt; &gt; mapmatrix(m,vector&lt;int&gt;(n,0));</div><div class="line">    for(int i = 0; i &lt; positions.size();i++)&#123;</div><div class="line">        int x = positions[i].first;</div><div class="line">        int y = positions[i].second;</div><div class="line">        mapmatrix[x][y] = 1;</div><div class="line">        int idx_demension_one = x*n+y;</div><div class="line">        UnionFindset.add(idx_demension_one,idx_demension_one);//加入并查集</div><div class="line">        count++;</div><div class="line">        for(int j = 0 ; j &lt; 4;j++)&#123;</div><div class="line">            //相邻元素的坐标</div><div class="line">            int x_neighbor = x+x_add[j];</div><div class="line">            int y_neighbor = y+y_add[j];</div><div class="line">            int idx_demension_one_neighbor = x_neighbor*n+y_neighbor;</div><div class="line">            //如果相邻元素还在地图中，而且是陆地（val=1）</div><div class="line">            if(x_neighbor&gt;=0 &amp;&amp; x_neighbor&lt;m &amp;&amp; y_neighbor&gt;=0 &amp;&amp; y_neighbor&lt;n &amp;&amp; mapmatrix[x_neighbor][y_neighbor]==1 &amp;&amp; UnionFindset.findfather(idx_demension_one) != UnionFindset.findfather(idx_demension_one_neighbor))&#123;</div><div class="line">                UnionFindset.unionset(idx_demension_one,idx_demension_one_neighbor);</div><div class="line">                count--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        results.push_back(count);</div><div class="line">    &#125;</div><div class="line">    return results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="leetcode261-Graph-Valid-Tree"><a href="#leetcode261-Graph-Valid-Tree" class="headerlink" title="leetcode261. Graph Valid Tree"></a>leetcode261. Graph Valid Tree</h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given <code>n</code> nodes labeled from <code>0</code> to <code>n - 1</code> and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.</p>
+<p>For example:</p>
+<p>Given <code>n = 5</code> and <code>edges = [[0, 1], [0, 2], [0, 3], [1, 4]]</code>, return <code>true</code>.</p>
+<p>Given <code>n = 5</code> and <code>edges = [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]</code>, return <code>false</code>.</p>
+<p><strong>Note</strong>: you can assume that no duplicate edges will appear in <code>edges</code>. Since all edges are undirected, <code>[0, 1]</code> is the same as <code>[1, 0]</code>and thus will not appear together in <code>edges</code>.</p>
+</blockquote>
+<p>给定n个节点和节点之间的边集，判断由这些节点和边集是否能够构成树。</p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>给定n个几点和边集构成树的条件有两个：</p>
+<ol>
+<li>所有的点都在一个并查集中，也就是都属于一个root节点</li>
+<li>不能有环</li>
+</ol>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">bool</span> <span class="title">validTree</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt;&amp; edges)</span> </span>&#123;</div><div class="line">    UnionFind UnionFindgraph;</div><div class="line">    UnionFindgraph.initial(n);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n;i++)&#123;</div><div class="line">        UnionFindgraph.fresh(i,i);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//遍历边</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; edges.size();i++)&#123;</div><div class="line">        <span class="keyword">int</span> start = edges[i].first;</div><div class="line">        <span class="keyword">int</span> end = edges[i].second;</div><div class="line">        <span class="keyword">int</span> start_fa = UnionFindgraph.findfather(start);</div><div class="line">        <span class="keyword">int</span> end_fa = UnionFindgraph.findfather(end);</div><div class="line">        <span class="keyword">if</span>(start_fa == end_fa)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            UnionFindgraph.unionset(start_fa,end_fa);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(UnionFindgraph.countsets()==<span class="number">1</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="leetcode323-Number-of-Connected-Components-in-an-Undirected-Graph"><a href="#leetcode323-Number-of-Connected-Components-in-an-Undirected-Graph" class="headerlink" title="leetcode323. Number of Connected Components in an Undirected Graph"></a>leetcode323. Number of Connected Components in an Undirected Graph</h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given <code>n</code> nodes labeled from <code>0</code> to <code>n - 1</code> and a list of undirected edges (each edge is a pair of nodes), write a function to find the number of connected components in an undirected graph.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;      0          3</div><div class="line">&gt;      |          |</div><div class="line">&gt;      1 --- 2    4</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Given <code>n = 5</code> and <code>edges = [[0, 1], [1, 2], [3, 4]]</code>, return <code>2</code>.</p>
+<p><strong>Example 2:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;      0           4</div><div class="line">&gt;      |           |</div><div class="line">&gt;      1 --- 2 --- 3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>Given <code>n = 5</code> and <code>edges = [[0, 1], [1, 2], [2, 3], [3, 4]]</code>, return <code>1</code>.</p>
+</blockquote>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>判断矩阵中联通子图图的个数，遍历边集，将边首尾节点合并，最终的并查集boss数就是联通子图的个数。</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">countComponents</span><span class="params">(<span class="keyword">int</span> n, <span class="built_in">vector</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt;&amp; edges)</span> </span>&#123;</div><div class="line">    UnionFind UnionFindgraph;</div><div class="line">    UnionFindgraph.initial(n);</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n;i++)&#123;</div><div class="line">        UnionFindgraph.fresh(i,i);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//遍历边</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; edges.size();i++)&#123;</div><div class="line">        <span class="keyword">int</span> start = edges[i].first;</div><div class="line">        <span class="keyword">int</span> end = edges[i].second;</div><div class="line">        UnionFindgraph.unionset(start,end);</div><div class="line">    &#125; </div><div class="line">    <span class="keyword">return</span> UnionFindgraph.countsets();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="leetcode130-Surrounded-Regions"><a href="#leetcode130-Surrounded-Regions" class="headerlink" title="leetcode130. Surrounded Regions"></a>leetcode130. Surrounded Regions</h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a 2D board containing <code>&#39;X&#39;</code> and <code>&#39;O&#39;</code> (the <strong>letter</strong> O), capture all regions surrounded by <code>&#39;X&#39;</code>.</p>
+<p>A region is captured by flipping all <code>&#39;O&#39;</code>s into <code>&#39;X&#39;</code>s in that surrounded region.</p>
+<p>For example,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; X X X X</div><div class="line">&gt; X O O X</div><div class="line">&gt; X X O X</div><div class="line">&gt; X O X X</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>After running your function, the board should be:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; X X X X</div><div class="line">&gt; X X X X</div><div class="line">&gt; X X X X</div><div class="line">&gt; X O X X</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>将被X围住的O标记为X。</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>通过分析可知，就是要将所有以O组成、但没有连通到网格边缘的区域变为X。</p>
+<ol>
+<li>BFS/DFS：沿着四个边向内找O，找到每一个O就把相连的都变成N，因为 他们都是要保留的，最后遍历二维数组，遇到O变成X，遇到N变回O</li>
+<li>并查集：将区域内的O合并，组成集合，如果有元素在边界，就将该集合的father设为N，最后遍历所有的0，如果其father为N，就标记为O，否则标记为X。</li>
+</ol>
+<p>显然，1会比较快，下面使用BFS实现的.</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight c++"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board,<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> rows,<span class="keyword">int</span> cols)</span></span>&#123;</div><div class="line">    <span class="comment">// if(x&lt;0 || x &gt;= rows || y&lt;0 || y &gt;= cols || board[x][y]=='X')&#123;</span></div><div class="line">    <span class="comment">//     return;</span></div><div class="line">    <span class="comment">// &#125;</span></div><div class="line">    <span class="keyword">if</span>(x&gt;=<span class="number">0</span> &amp;&amp; x &lt; rows &amp;&amp; y&gt;=<span class="number">0</span> &amp;&amp; y &lt; cols &amp;&amp; board[x][y]==<span class="string">'O'</span>)&#123;</div><div class="line">        board[x][y]=<span class="string">'N'</span>;</div><div class="line">        dfs(board,x<span class="number">-1</span>,y,rows,cols);</div><div class="line">        dfs(board,x+<span class="number">1</span>,y,rows,cols);</div><div class="line">        dfs(board,x,y<span class="number">-1</span>,rows,cols);</div><div class="line">        dfs(board,x,y+<span class="number">1</span>,rows,cols);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">char</span>&gt;&gt;&amp; board)</span> </span>&#123; </div><div class="line">    <span class="keyword">int</span> rows = board.size();</div><div class="line">    <span class="keyword">if</span>(rows==<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> cols = board[<span class="number">0</span>].size();</div><div class="line">    <span class="keyword">if</span>(cols==<span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//上下边框</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; cols;i++)&#123;</div><div class="line">        dfs(board,<span class="number">0</span>,i,rows,cols);</div><div class="line">        dfs(board,rows<span class="number">-1</span>,i,rows,cols);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//左右边框</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; rows;i++)&#123;</div><div class="line">        dfs(board,i,<span class="number">0</span>,rows,cols);</div><div class="line">        dfs(board,i,cols<span class="number">-1</span>,rows,cols);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; rows;i++)&#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; cols;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(board[i][j] == <span class="string">'N'</span>)&#123;</div><div class="line">                board[i][j] = <span class="string">'O'</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(board[i][j] == <span class="string">'O'</span>)&#123;</div><div class="line">                board[i][j] = <span class="string">'X'</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>什么时候用并查集？</p>
+<ul>
+<li>集合合并</li>
+<li>判断两个点是否在同一个集合内</li>
+</ul>
+<h1 id="trie字典树"><a href="#trie字典树" class="headerlink" title="trie字典树"></a>trie字典树</h1><h2 id="Trie字典树"><a href="#Trie字典树" class="headerlink" title="Trie字典树"></a>Trie字典树</h2><p>源自单词：retrieve</p>
+<p>假设有[b，abc，abd，bcd，abcd，efg，hii ]这6个单词 , 查找abc 在不在字典里面</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-11-06-17-49-17.png" alt=""> </p>
+<h2 id="hash和trie的比较"><a href="#hash和trie的比较" class="headerlink" title="hash和trie的比较"></a>hash和trie的比较</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>hash_table</th>
+<th>TIRE树</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>查找时间复杂度</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>空间复杂度</td>
+<td></td>
+<td>优于hash_table</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于a,aa,aaa,aaaa的情况</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>hash</th>
+<th>trie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>存储</td>
+<td>10个a</td>
+<td>5个a节点</td>
+</tr>
+<tr>
+<td>可用操作</td>
+<td>有/无/查询</td>
+<td>有/无/前缀查询</td>
+</tr>
+<tr>
+<td></td>
+<td>1行</td>
+<td>75~100行</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所以选择hash原因是代码量小, 但是涉及到前缀查询的时候, 考虑trie树</p>
+<h2 id="什么时候更适合用trie树"><a href="#什么时候更适合用trie树" class="headerlink" title="什么时候更适合用trie树"></a>什么时候更适合用trie树</h2><p>一个一个字符串遍历的时候。</p>
+<p>需要节约空间</p>
+<p>查找前缀</p>
+<h2 id="Trie模板"><a href="#Trie模板" class="headerlink" title="Trie模板"></a>Trie模板</h2><p>例题：</p>
+<p>Word search II</p>
+<h1 id="扫描线"><a href="#扫描线" class="headerlink" title="扫描线"></a>扫描线</h1><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p><a href="https://stomachache007.wordpress.com/2017/10/23/%E4%B9%9D%E7%AB%A0%E7%AE%97%E6%B3%95%E9%AB%98%E7%BA%A7%E7%8F%AD%E7%AC%94%E8%AE%B02-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8A/" target="_blank" rel="external">stomachache007的blog</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/算法/" rel="tag"># 算法</a>
+          
+            <a href="/tags/UnionFind/" rel="tag"># UnionFind</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/05/【九章算法强化班习题集】/" rel="next" title="【九章算法强化班习题集】">
+                <i class="fa fa-chevron-left"></i> 【九章算法强化班习题集】
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/06/【神经网络和深度学习】课程笔记1/" rel="prev" title="【神经网络和深度学习】课程笔记1">
+                【神经网络和深度学习】课程笔记1 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Union-Find并查集"><span class="nav-number">1.</span> <span class="nav-text">Union Find并查集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集"><span class="nav-number">1.1.</span> <span class="nav-text">并查集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集的精髓"><span class="nav-number">1.2.</span> <span class="nav-text">并查集的精髓</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集的优化"><span class="nav-number">1.3.</span> <span class="nav-text">并查集的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并查集模板-c-版"><span class="nav-number">1.4.</span> <span class="nav-text">并查集模板(c++版)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关题目"><span class="nav-number">1.5.</span> <span class="nav-text">相关题目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode200-Number-of-Islands"><span class="nav-number">1.5.1.</span> <span class="nav-text">leetcode200. Number of Islands</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode261-Graph-Valid-Tree"><span class="nav-number">1.5.2.</span> <span class="nav-text">leetcode261. Graph Valid Tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">1.5.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">1.5.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.5.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode323-Number-of-Connected-Components-in-an-Undirected-Graph"><span class="nav-number">1.5.3.</span> <span class="nav-text">leetcode323. Number of Connected Components in an Undirected Graph</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.5.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.5.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.5.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode130-Surrounded-Regions"><span class="nav-number">1.5.4.</span> <span class="nav-text">leetcode130. Surrounded Regions</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">1.5.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">1.5.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.5.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.6.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#trie字典树"><span class="nav-number">2.</span> <span class="nav-text">trie字典树</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Trie字典树"><span class="nav-number">2.1.</span> <span class="nav-text">Trie字典树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hash和trie的比较"><span class="nav-number">2.2.</span> <span class="nav-text">hash和trie的比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#什么时候更适合用trie树"><span class="nav-number">2.3.</span> <span class="nav-text">什么时候更适合用trie树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Trie模板"><span class="nav-number">2.4.</span> <span class="nav-text">Trie模板</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扫描线"><span class="nav-number">3.</span> <span class="nav-text">扫描线</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">4.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="回溯," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是回溯回溯是一种穷举，但与brute force有一些区别，回溯带了两点脑子的，并不多，brute force一点也没带。如果用爬山来比喻：第一点脑子是回溯知道回头；相反如果是brute force,发现走不通立刻跳下山摔死，换第二条命从头换一条路走。第二点脑子是回溯知道剪枝；如果有一条岔路走不通，那这条路我们不走，就可以少走很多不必要走的路。 识别回溯问题判断回溯很简单，拿到一个问题，你感觉">
+<meta name="keywords" content="回溯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="回溯法、【leetcode】51.52 N-Queens">
+<meta property="og:url" content="http://yoursite.com/2017/11/04/【算法】回溯法/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="什么是回溯回溯是一种穷举，但与brute force有一些区别，回溯带了两点脑子的，并不多，brute force一点也没带。如果用爬山来比喻：第一点脑子是回溯知道回头；相反如果是brute force,发现走不通立刻跳下山摔死，换第二条命从头换一条路走。第二点脑子是回溯知道剪枝；如果有一条岔路走不通，那这条路我们不走，就可以少走很多不必要走的路。 识别回溯问题判断回溯很简单，拿到一个问题，你感觉">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2017-12-23-21-01-06.png">
+<meta property="og:image" content="https://leetcode.com/media/original_images/31_Next_Permutation.gif">
+<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png">
+<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png">
+<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sudoku-by-L2G-20050714_solution.svg/250px-Sudoku-by-L2G-20050714_solution.svg.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-16-18-15-09.png">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.397Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="回溯法、【leetcode】51.52 N-Queens">
+<meta name="twitter:description" content="什么是回溯回溯是一种穷举，但与brute force有一些区别，回溯带了两点脑子的，并不多，brute force一点也没带。如果用爬山来比喻：第一点脑子是回溯知道回头；相反如果是brute force,发现走不通立刻跳下山摔死，换第二条命从头换一条路走。第二点脑子是回溯知道剪枝；如果有一条岔路走不通，那这条路我们不走，就可以少走很多不必要走的路。 识别回溯问题判断回溯很简单，拿到一个问题，你感觉">
+<meta name="twitter:image" content="http://om1bxijvl.bkt.clouddn.com/2017-12-23-21-01-06.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/04/【算法】回溯法/"/>
+
+
+
+
+
+  <title>回溯法、【leetcode】51.52 N-Queens | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/04/【算法】回溯法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">回溯法、【leetcode】51.52 N-Queens</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-04T16:35:06+08:00">
+                2017-11-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  9,070
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  45
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="什么是回溯"><a href="#什么是回溯" class="headerlink" title="什么是回溯"></a>什么是回溯</h2><p>回溯是一种穷举，但与brute force有一些区别，回溯带了两点脑子的，并不多，brute force一点也没带。<br>如果用爬山来比喻：<br>第一点脑子是回溯知道回头；相反如果是brute force,发现走不通立刻跳下山摔死，换第二条命从头换一条路走。<br>第二点脑子是回溯知道剪枝；如果有一条岔路走不通，那这条路我们不走，就可以少走很多不必要走的路。</p>
+<h2 id="识别回溯问题"><a href="#识别回溯问题" class="headerlink" title="识别回溯问题"></a>识别回溯问题</h2><p>判断回溯很简单，拿到一个问题，你感觉如果不穷举一下就没法知道答案，那就可以开始回溯了。<br>一般回溯的问题有三种：</p>
+<ol>
+<li>Find a path to success 有没有解</li>
+<li>Find all paths to success 求所有解<ol>
+<li>求所有解的个数</li>
+<li>求所有解的具体信息</li>
+</ol>
+</li>
+</ol>
+<ol>
+<li>Find the best path to success 求最优解</li>
+</ol>
+<p>还有一些爱混淆的概念：递归，回溯，DFS。<br>回溯是一种找路方法，搜索的时候走不通就回头换路接着走，直到走通了或者发现此山根本不通。<br>DFS是一种开路策略，就是一条道先走到头，再往回走一步换一条路走到头，这也是回溯用到的策略。在树和图上回溯时人们叫它DFS。<br>递归是一种行为，回溯和递归如出一辙，都是一言不合就回到来时的路，所以一般回溯用递归实现；当然也可以不用，用栈。</p>
+<p>关于回溯的三种问题，模板略有不同，<br>第一种，返回值是true/false。<br>第二种，求个数，设全局counter，返回值是void；求所有解信息，设result，返回值void。<br>第三种，设个全局变量best，返回值是void。</p>
+<h2 id="求解模板"><a href="#求解模板" class="headerlink" title="求解模板"></a>求解模板</h2><p>第一种，有没有解：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">boolean solve(Node n) &#123;</div><div class="line">    if n is a leaf node &#123;</div><div class="line">        if the leaf is a goal node, return true</div><div class="line">        else return false</div><div class="line">    &#125; else &#123;</div><div class="line">        for each child c of n &#123;</div><div class="line">            if solve(c) succeeds, return true</div><div class="line">        &#125;</div><div class="line">        return false</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第二种，求所有的解：<br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">void solve(Node n) &#123;</div><div class="line">    if n is a leaf node &#123;</div><div class="line">        if the leaf is a goal node, count++, return;</div><div class="line">        else return</div><div class="line">    &#125; else &#123;</div><div class="line">        for each child c of n &#123;</div><div class="line">            solve(c)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>第三种，求最优解：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">void solve(Node n) &#123;</div><div class="line">    if n is a leaf node &#123;</div><div class="line">        if the leaf is a goal node, update best result, return;</div><div class="line">        else return</div><div class="line">    &#125; else &#123;</div><div class="line">        for each child c of n &#123;</div><div class="line">            solve(c)</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="八皇后问题"><a href="#八皇后问题" class="headerlink" title="八皇后问题"></a>八皇后问题</h2><p>八皇后问题是大数学家高斯于1850年提出来的。该问题是在8×8的国际象棋棋盘上放置8个皇后，使得没有一个皇后能“吃掉”任何其他一个皇后，即没有任何两个皇后被放置在棋盘的同一行、同一列或同一斜线上。</p>
+<p>扩展到一般情况就是：在n*n的棋盘上放置n和棋子，使得没有任何两个棋子在同一行、同一列或同一对角线上</p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>为了更好的理解回溯法，把这个问题分解成三个子问题：</p>
+<ol>
+<li>是否有这样的安放方法，满足游戏规则</li>
+<li>如果有，有多少个安放方式[leetcode 52]</li>
+<li>输出所有的安放方式[leetcode 51]</li>
+</ol>
+<p>因为任何两个皇后不可能在同一行，所以我们可以采用如下的策略：<br><strong>一行一行地安放皇后，每次放置皇后时需要确保此次放置的皇后跟之前已经放置的皇后没有处于同行、同列、同对角线上</strong></p>
+<p>需要下面两个函数：</p>
+<ol>
+<li>递归调用安放皇后（回溯法）<br>逐个遍历可以安放皇后的位置，并递归调用取定下一层可以安放皇后的位置。直到最后一行的元素存在合法的放置位置，说明这是一种合理的安放情况。</li>
+</ol>
+<ol>
+<li>判断在某一点放queen是否合法</li>
+</ol>
+<p>因为是一行一行放，所以可以保证不在一行上，需要判断同一列是否已经有皇后，以及左上方和右上方对角线方向是否已经有皇后。</p>
+<p>另外还需要一个额外的空间标记当前皇后们安放的位置</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>三个子问题的函数2，判断某一点是否可以放置皇后的函数一样：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//判断是否可以放置</div><div class="line">bool isvalid(vector&lt;vector&lt;int&gt;&gt;&amp; vec,int n, int k,int i)&#123;</div><div class="line">     //k为当前行，i为当前列</div><div class="line">    //判断左上方对角线是否有皇后</div><div class="line">    int left = i;</div><div class="line">    int up = k;</div><div class="line">    while(left&gt;=0&amp;&amp;up&gt;=0)&#123;</div><div class="line">        if(vec[up][left]==1)</div><div class="line">            return false;</div><div class="line">        left--;</div><div class="line">        up--;</div><div class="line">    &#125;</div><div class="line">    //判断右上方对角线是否有皇后</div><div class="line">    int right = i;</div><div class="line">    up = k;</div><div class="line">    while(right&lt;=n-1&amp;&amp;up&gt;=0)&#123;</div><div class="line">        if(vec[up][right]==1)</div><div class="line">            return false;</div><div class="line">        right++;</div><div class="line">        up--;</div><div class="line">    &#125;</div><div class="line">    //判断同列是否有元素</div><div class="line">    for(int j = 0; j &lt; k ;j++)&#123;</div><div class="line">        if(vec[j][i]==1)</div><div class="line">            return false;</div><div class="line">    &#125;</div><div class="line">    return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中<code>vector&lt;vector&lt;int&gt;&gt;&amp; vec</code>是用来存放当前棋盘上放置的皇后位置。</p>
+<p>差别在于回溯函数：</p>
+<h4 id="1-是否存在"><a href="#1-是否存在" class="headerlink" title="1. 是否存在"></a>1. 是否存在</h4><p>只需要找到一个满足条件的放置方案即可，逐行放置皇后，遇到不满足条件的情况就回退到上一层，继续寻找</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//递归调用，判断皇后放置字当前点之后是否存在合法路径</div><div class="line">void solve(vector&lt;vector&lt;int&gt;&gt;&amp; vec,int n,int k,int l)&#123;</div><div class="line">    //k为当前行，l为上一个的列</div><div class="line">    //判断下一行是否有位置放置queen</div><div class="line">    if(k==n-1)&#123;//最后一行，安放最后一个皇后</div><div class="line">        for(int i=0;i &lt;n;i++)&#123;</div><div class="line">            if(isvalid(vec,n,k,i))&#123;//如果存在合法安放情况，返回true</div><div class="line">                return true;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    else&#123;</div><div class="line">        for(int i = 0 ; i &lt; n;i++)&#123;</div><div class="line">            if(isvalid(vec,n,k,i))&#123;//该点合理，将皇后放到该点，递归调用，判断下一层是否存在合法方案</div><div class="line">                vec[k][i]=1;//房子皇后，标记皇后位置</div><div class="line">                if (solve(vec,n,k+1,i))//下一层存在合法方案。返回true 否则回退，将皇后从该点移除</div><div class="line">                    return true;</div><div class="line">                vec[k][i]=0;//取消皇后位置标记</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">bool ifNQueens(int n) &#123;</div><div class="line">    if(n==1)</div><div class="line">        return true;</div><div class="line">    if(n&lt;4)</div><div class="line">        return false</div><div class="line">    vector&lt;vector&lt;int&gt; &gt; vec(n,vector&lt;int&gt;(n,0));//存储当前棋盘皇后位置</div><div class="line">    //遍历首行放置皇后</div><div class="line">    for(int i = 0 ; i &lt; n;i++)&#123;</div><div class="line">        vec[0][i]=1;</div><div class="line">        if(solve(vec,n,1,i))//找到一条合法放置方式，返回true</div><div class="line">            return true</div><div class="line">        vec[0][i]=0;//否则恢复该点未被选中的棋盘，继续遍历下一个点</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-存在多少种安放方式-leetcode-51"><a href="#2-存在多少种安放方式-leetcode-51" class="headerlink" title="2. 存在多少种安放方式 [leetcode] 51"></a>2. 存在多少种安放方式 [leetcode] 51</h4><p>在上面存在的基础之上，引入一个count计数变量，记录合法方案的数量，也就是没找到一个合法的安放方式就+1，知道遍历完所有的情况。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span> resultNum = <span class="number">0</span>;</div><div class="line"><span class="keyword">char</span>[][] map;</div><div class="line"><span class="comment">//判断当前点是否合理</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line"><span class="comment">//上方是否有点</span></div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> line = <span class="number">0</span>;line &lt; i;line++)&#123;</div><div class="line"><span class="keyword">if</span>(map[line][j] == <span class="string">'Q'</span>)&#123;</div><div class="line"><span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//左上对角线是否有Q</span></div><div class="line"><span class="keyword">int</span> line = i-<span class="number">1</span>;</div><div class="line"><span class="keyword">int</span> col = j-<span class="number">1</span>;</div><div class="line"><span class="keyword">while</span> (line &gt;= <span class="number">0</span> &amp;&amp; col &gt;=<span class="number">0</span>)&#123;</div><div class="line"><span class="keyword">if</span>(map[line][col] == <span class="string">'Q'</span>)&#123;</div><div class="line"><span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div><div class="line">line--;</div><div class="line">col--;</div><div class="line">&#125;</div><div class="line"><span class="comment">//右上方是否有Q</span></div><div class="line">line = i-<span class="number">1</span>;</div><div class="line">col = j+<span class="number">1</span>;</div><div class="line"><span class="keyword">while</span> (line &gt;= <span class="number">0</span> &amp;&amp; col &lt;map.length)&#123;</div><div class="line"><span class="keyword">if</span>(map[line][col] == <span class="string">'Q'</span>)&#123;</div><div class="line"><span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">&#125;</div><div class="line">line--;</div><div class="line">col++;</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> row)</span></span>&#123;</div><div class="line"><span class="keyword">if</span>(row == map.length)&#123;</div><div class="line">resultNum += <span class="number">1</span>;</div><div class="line"><span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">else</span>&#123;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; map.length;j++)&#123;</div><div class="line"><span class="keyword">if</span>(isValid(row,j))&#123;</div><div class="line">map[row][j] = <span class="string">'Q'</span>;</div><div class="line">solve(row+<span class="number">1</span>);</div><div class="line">map[row][j] = <span class="string">'.'</span>;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">totalNQueens</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line"><span class="comment">//初始化map</span></div><div class="line"><span class="keyword">this</span>.map = <span class="keyword">new</span> <span class="keyword">char</span>[n][n];</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; n;i++)&#123;</div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n ;j ++)&#123;</div><div class="line">map[i][j] = <span class="string">'.'</span>;</div><div class="line">&#125;</div><div class="line">&#125;</div><div class="line">solve(<span class="number">0</span>);</div><div class="line"><span class="keyword">return</span> resultNum;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="3-输出所有的安放方式-leetcode-51"><a href="#3-输出所有的安放方式-leetcode-51" class="headerlink" title="3.输出所有的安放方式 [leetcode] 51"></a>3.输出所有的安放方式 [leetcode] 51</h4><p>这次需要我们将所有合法的安放方式都输出，也就当找到一条合法安放方式时，就把当前的皇后放置情况输出到结果集。</p>
+<p>另外根据题目输出结果格式要求：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[</div><div class="line"> [&quot;.Q..&quot;,  // Solution 1</div><div class="line">  &quot;...Q&quot;,</div><div class="line">  &quot;Q...&quot;,</div><div class="line">  &quot;..Q.&quot;],</div><div class="line"></div><div class="line"> [&quot;..Q.&quot;,  // Solution 2</div><div class="line">  &quot;Q...&quot;,</div><div class="line">  &quot;...Q&quot;,</div><div class="line">  &quot;.Q..&quot;]</div><div class="line">]</div></pre></td></tr></table></figure>
+<p>对保存安放情况的变量类型作出修改：由原来的<code>vector&lt;vector&lt;int&gt;&gt;&amp; vec</code> 变为<code>vector&lt;string&gt;&amp; vec</code></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">public class NQueen &#123;</div><div class="line">    char[][] map;</div><div class="line">    //判断当前点是否合理</div><div class="line">    public boolean isValid(int i,int j)&#123;</div><div class="line">        //上方是否有点</div><div class="line">        for(int line = 0;line &lt; i;line++)&#123;</div><div class="line">            if(map[line][j] == &apos;Q&apos;)&#123;</div><div class="line">                return false;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        //左上对角线是否有Q</div><div class="line">        int line = i-1;</div><div class="line">        int col = j-1;</div><div class="line">        while (line &gt;= 0 &amp;&amp; col &gt;=0)&#123;</div><div class="line">            if(map[line][col] == &apos;Q&apos;)&#123;</div><div class="line">                return false;</div><div class="line">            &#125;</div><div class="line">            line--;</div><div class="line">            col--;</div><div class="line">        &#125;</div><div class="line">        //右上方是否有Q</div><div class="line">        line = i-1;</div><div class="line">        col = j+1;</div><div class="line">        while (line &gt;= 0 &amp;&amp; col &lt;map.length)&#123;</div><div class="line">            if(map[line][col] == &apos;Q&apos;)&#123;</div><div class="line">                return false;</div><div class="line">            &#125;</div><div class="line">            line--;</div><div class="line">            col++;</div><div class="line">        &#125;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void solve(List&lt;List&lt;String&gt;&gt; results,int row)&#123;</div><div class="line">        if(row == map.length)&#123;</div><div class="line">            //map转化为结果存入result</div><div class="line">            List&lt;String&gt; res = new ArrayList&lt;&gt;();</div><div class="line">            for(int i = 0 ;i &lt; map.length;i++)&#123;</div><div class="line">                String s = new String();</div><div class="line">                for(int j = 0 ; j &lt; map.length;j++)&#123;</div><div class="line">                    s += map[i][j];</div><div class="line">                &#125;</div><div class="line">                res.add(s);</div><div class="line">            &#125;</div><div class="line">            results.add(res);</div><div class="line">        &#125;</div><div class="line">        else&#123;</div><div class="line">            for(int j = 0; j &lt; map.length;j++)&#123;</div><div class="line">                if(isValid(row,j))&#123;</div><div class="line">                    map[row][j] = &apos;Q&apos;;</div><div class="line">                    solve(results,row+1);</div><div class="line">                    map[row][j] = &apos;.&apos;;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public List&lt;List&lt;String&gt;&gt; solveNQueens(int n) &#123;</div><div class="line">        List&lt;List&lt;String&gt;&gt; results = new ArrayList&lt;&gt;();</div><div class="line">        //初始化map</div><div class="line">        this.map = new char[n][n];</div><div class="line">        for(int i = 0 ; i &lt; n;i++)&#123;</div><div class="line">            for(int j = 0; j &lt; n ;j ++)&#123;</div><div class="line">                map[i][j] = &apos;.&apos;;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        solve(results,0);</div><div class="line">        return results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h1 id="leetcode相关问题"><a href="#leetcode相关问题" class="headerlink" title="leetcode相关问题"></a>leetcode相关问题</h1><h2 id="全排列问题"><a href="#全排列问题" class="headerlink" title="全排列问题"></a>全排列问题</h2><h3 id="Permutations"><a href="#Permutations" class="headerlink" title="Permutations"></a><a href="https://leetcode.com/problems/permutations/" target="_blank" rel="external">Permutations</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a collection of <strong>distinct</strong> numbers, return all possible permutations.</p>
+<p>For example,<br><code>[1,2,3]</code> have the following permutations:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [1,2,3],</div><div class="line">&gt;   [1,3,2],</div><div class="line">&gt;   [2,1,3],</div><div class="line">&gt;   [2,3,1],</div><div class="line">&gt;   [3,1,2],</div><div class="line">&gt;   [3,2,1]</div><div class="line">&gt; ]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>求给定数组中元素的排列组合，元素无重复</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>分析元素排列的全部可能，典型的回溯，按照上面的模板做就好</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Permutations</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span>[] hasVisit;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; results;</div><div class="line">    List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span>[] nums)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (n == nums.length)&#123;</div><div class="line">            <span class="comment">//结果放入results</span></div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</div><div class="line">                <span class="comment">//该元素没有中出现过,放入result</span></div><div class="line">                <span class="keyword">if</span>(!hasVisit[i])&#123;</div><div class="line">                    hasVisit[i] = <span class="keyword">true</span>;</div><div class="line">                    result.add(nums[i]);</div><div class="line">                    solve(n+<span class="number">1</span>,nums);</div><div class="line">                    hasVisit[i] = <span class="keyword">false</span>;</div><div class="line">                    result.remove(result.size()-<span class="number">1</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        <span class="keyword">this</span>.results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">this</span>.hasVisit = <span class="keyword">new</span> <span class="keyword">boolean</span>[nums.length];</div><div class="line"></div><div class="line">        solve(<span class="number">0</span>,nums);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法二：</p>
+<p><strong>固定-交换法</strong></p>
+<p>还有一种思路，这个更好理解一丢丢：</p>
+<p>n个数的全排列，一共有n!n!种情况. （n个位置，第一个位置有n种，当第一个位置固定下来之后，第二个位置有n-1种情况…）</p>
+<p>全排列的过程：</p>
+<ul>
+<li>选择第一个字符</li>
+<li>获得第一个字符固定下来之后的所有的全排列<ul>
+<li>选择第二个字符</li>
+<li>获得第一+ 二个字符固定下来之后的所有的全排列</li>
+</ul>
+</li>
+</ul>
+<p>从这个过程可见，这是一个递归的过程。</p>
+<p>所以这种方式也是通过固定一个元素，进行剩余元素的交换。缺点是，每次交换过后需要再次交换以回到上一层数组。</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2017-12-23-21-01-06.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2017-12-23-21-01-06.png" alt="img"></a></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">permutationsSwitch</span> </span>&#123;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = nums[i];</div><div class="line">        nums[i] = nums[j];</div><div class="line">        nums[j] = temp;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> fixed)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(fixed == nums.length)&#123;</div><div class="line">            List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> e : nums)&#123;</div><div class="line">                result.add(e);</div><div class="line">            &#125;</div><div class="line">            results.add(result);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = fixed;i &lt; nums.length;i++) &#123;</div><div class="line">                swap(nums,fixed,i);</div><div class="line">                helper(nums,fixed +<span class="number">1</span>);</div><div class="line">                swap(nums,fixed,i);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        helper(nums,<span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Permutations-II"><a href="#Permutations-II" class="headerlink" title="Permutations II"></a><a href="https://leetcode.com/problems/permutations-ii/" target="_blank" rel="external">Permutations II</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a collection of numbers that might contain duplicates, return all possible unique permutations.</p>
+<p>For example,<br><code>[1,1,2]</code> have the following unique permutations:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [1,1,2],</div><div class="line">&gt;   [1,2,1],</div><div class="line">&gt;   [2,1,1]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>相比上一题，有重复元素</p>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>遇到重复元素先排序，排序之后按照上题的思路，</p>
+<p>注意：选取同一位置上的元素时，需要跳过重复元素</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PermutationsII</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span>[] hasVisit;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; results;</div><div class="line">    List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span>[] nums)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span> (n == nums.length)&#123;</div><div class="line">            <span class="comment">//结果放入results</span></div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">int</span> last = Integer.MIN_VALUE;<span class="comment">//用以就该位置当前元素，下一轮遇到重复时需要跳过</span></div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</div><div class="line">                <span class="keyword">if</span>(hasVisit[i] || (i != <span class="number">0</span> &amp;&amp; nums[i] == last))&#123;<span class="comment">//这里不可以用nums[i] == nums[i-1]</span></div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">else</span> &#123;</div><div class="line">                    hasVisit[i] = <span class="keyword">true</span>;</div><div class="line">                    result.add(nums[i]);</div><div class="line">                    solve(n+<span class="number">1</span>,nums);</div><div class="line">                    hasVisit[i] = <span class="keyword">false</span>;</div><div class="line">                    result.remove(result.size()-<span class="number">1</span>);</div><div class="line">                    last = nums[i];</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; permuteUnique(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">        <span class="keyword">this</span>.results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">this</span>.hasVisit = <span class="keyword">new</span> <span class="keyword">boolean</span>[nums.length];</div><div class="line">        Arrays.sort(nums);</div><div class="line">        solve(<span class="number">0</span>,nums);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Permutation-Sequence"><a href="#Permutation-Sequence" class="headerlink" title="Permutation Sequence"></a><a href="https://leetcode.com/problems/permutation-sequence/" target="_blank" rel="external">Permutation Sequence</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>The set <code>[1,2,3,…,*n*]</code> contains a total of <em>n</em>! unique permutations.</p>
+<p>By listing and labeling all of the permutations in order,<br>We get the following sequence (ie, for <em>n</em> = 3):</p>
+<ol>
+<li><code>&quot;123&quot;</code></li>
+<li><code>&quot;132&quot;</code></li>
+<li><code>&quot;213&quot;</code></li>
+<li><code>&quot;231&quot;</code></li>
+<li><code>&quot;312&quot;</code></li>
+<li><code>&quot;321&quot;</code></li>
+</ol>
+<p>Given <em>n</em> and <em>k</em>, return the <em>k</em>th permutation sequence.</p>
+<p><strong>Note:</strong> Given <em>n</em> will be between 1 and 9 inclusive.</p>
+</blockquote>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>对于<code>n</code>个字符组成的字符串<code>{1,2,3,...,n}</code>，取第<code>k</code>个数时，首先可以求出第一个数，即<code>(k-1)/(n-1)!</code>。</p>
+<p>按照这样的方法依次求出每一位的数字。</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">boolean</span>[] hasVisit;</div><div class="line">String result = <span class="keyword">new</span> String();</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">calProduct</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> result = <span class="number">1</span>;</div><div class="line">  <span class="keyword">while</span>(n &gt; <span class="number">0</span>)&#123;</div><div class="line">    result *= n;</div><div class="line">    n--;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span>[] nums,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(n == nums.length)&#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//要找到第nn个数字放到这里</span></div><div class="line">  <span class="keyword">int</span> nn = (k-<span class="number">1</span>)/calProduct(nums.length-n-<span class="number">1</span>);</div><div class="line">  <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">  <span class="keyword">int</span> num = <span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span>(j &lt; nums.length &amp;&amp; num &lt; nn)&#123;</div><div class="line">    <span class="comment">//如果nums[j]已经被用过了</span></div><div class="line">    <span class="keyword">while</span>(hasVisit[j])&#123;</div><div class="line">      j++;</div><div class="line">    &#125;</div><div class="line">    num++;</div><div class="line">    j++;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">while</span>(hasVisit[j])&#123;</div><div class="line">    j++;</div><div class="line">  &#125;</div><div class="line">  result += nums[j];</div><div class="line">  hasVisit[j] = <span class="keyword">true</span>;</div><div class="line">  solve(n+<span class="number">1</span>,nums,k - (nn)*calProduct(nums.length-n-<span class="number">1</span>));</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> String <span class="title">getPermutation</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span>[] nums = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt;= n;i++)&#123;</div><div class="line">    nums[i-<span class="number">1</span>] = i;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">this</span>.hasVisit = <span class="keyword">new</span> <span class="keyword">boolean</span>[nums.length];</div><div class="line">  solve(<span class="number">0</span>,nums,k);</div><div class="line">  <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Binary-Watch"><a href="#Binary-Watch" class="headerlink" title="Binary Watch"></a><a href="https://leetcode.com/problems/binary-watch/" target="_blank" rel="external">Binary Watch</a></h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>A binary watch has 4 LEDs on the top which represent the <strong>hours</strong> (<strong>0-11</strong>), and the 6 LEDs on the bottom represent the <strong>minutes</strong> (<strong>0-59</strong>).</p>
+<p>Each LED represents a zero or one, with the least significant bit on the right.</p>
+<p>For example, the above binary watch reads “3:25”.</p>
+<p>Given a non-negative integer <em>n</em> which represents the number of LEDs that are currently on, return all possible times the watch could represent.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: n = 1</div><div class="line">&gt; Return: [&quot;1:00&quot;, &quot;2:00&quot;, &quot;4:00&quot;, &quot;8:00&quot;, &quot;0:01&quot;, &quot;0:02&quot;, &quot;0:04&quot;, &quot;0:08&quot;, &quot;0:16&quot;, &quot;0:32&quot;]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ul>
+<li>The order of output does not matter.</li>
+<li>The hour must not contain a leading zero, for example “01:00” is not valid, it should be “1:00”.</li>
+<li>The minute must be consist of two digits and may contain a leading zero, for example “10:2” is not valid, it should be “10:02”.</li>
+</ul>
+</blockquote>
+<p>一个二进制手表，第一行有4个灯代表小时，第二行有6个灯代表分钟，给定一个num表示总共可以亮的灯的数量，返回所有可能的时间</p>
+<p>注意：时间表示范围为0-11:59</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>方法一：</p>
+<p>分别对小时和分钟进行回溯，把num分配到两行上，计算小时和分钟的可能值，再进行组合输出</p>
+<p>方法二：</p>
+<p>利用<code>Integer.bitCount()</code> 函数计算二进制表示的1的个数，遍历00:00-11:59所有的时间，当小时和分钟的二进制表示中1的个数和为0时输出到结果集合。</p>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BinaryWatch</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; HorM;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; HHs;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; MMs;</div><div class="line"></div><div class="line">    <span class="comment">//计算时间,转化为字符串</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">calTime</span><span class="params">(List&lt;Integer&gt; hour,List&lt;Integer&gt; minute)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span>[] hh = &#123;<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] mm = &#123;<span class="number">32</span>,<span class="number">16</span>,<span class="number">8</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>&#125;;</div><div class="line">        <span class="keyword">int</span> h = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> m = <span class="number">0</span>;</div><div class="line">        String res = <span class="keyword">new</span> String();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>;i++)&#123;</div><div class="line">            h += hour.get(i) * hh[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">6</span>;i++)&#123;</div><div class="line">            m += minute.get(i) * mm[i];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(h &lt;<span class="number">12</span> &amp;&amp; m &lt; <span class="number">60</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(m&lt;<span class="number">10</span>)&#123;</div><div class="line">                res = Integer.toString(h) + <span class="string">":0"</span> + Integer.toString(m);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                res = Integer.toString(h) + <span class="string">":"</span> + Integer.toString(m);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//计算小时或者分钟</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> oneSum,List&lt;Integer&gt; HorM,<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(HorM.size() == n &amp;&amp; oneSum == <span class="number">0</span>)&#123;</div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(HorM);</div><div class="line">            <span class="keyword">if</span>(n==<span class="number">4</span>)&#123;</div><div class="line">                HHs.add(temp);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                MMs.add(temp);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(HorM.size() == n &amp;&amp; oneSum != <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            HorM.add(<span class="number">0</span>);</div><div class="line">            solve(oneSum,HorM,n);</div><div class="line">            HorM.remove(HorM.size()-<span class="number">1</span>);</div><div class="line">            HorM.add(<span class="number">1</span>);</div><div class="line">            solve(oneSum - <span class="number">1</span>,HorM,n);</div><div class="line">            HorM.remove(HorM.size()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">readBinaryWatch</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="comment">//计算第一行最少和最多放置几个元素</span></div><div class="line">        <span class="keyword">int</span> min = Math.min(<span class="number">0</span>,Math.max(<span class="number">0</span>,num-<span class="number">8</span>));</div><div class="line">        <span class="keyword">int</span> max = Math.min(<span class="number">4</span>,num);</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = min ; i &lt;= max;i++)&#123;</div><div class="line">            HHs = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            MMs = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            HorM = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            <span class="comment">//i为第一行放置个数</span></div><div class="line">            <span class="comment">//计算小时数组</span></div><div class="line">            solve(i,HorM,<span class="number">4</span>);</div><div class="line">            <span class="comment">//计算分钟数组</span></div><div class="line">            HorM = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            solve(num - i,HorM,<span class="number">6</span>);</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> ii = <span class="number">0</span>; ii &lt; HHs.size();ii++)&#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> jj = <span class="number">0</span> ; jj &lt; MMs.size();jj++)&#123;</div><div class="line">                    String res = calTime(HHs.get(ii),MMs.get(jj));</div><div class="line">                    <span class="keyword">if</span>(!res.isEmpty())&#123;</div><div class="line">                        result.add(res);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        BinaryWatch test = <span class="keyword">new</span> BinaryWatch();</div><div class="line">        List&lt;String&gt; result = test.readBinaryWatch(<span class="number">2</span>);</div><div class="line">        System.out.print(result);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>方法二：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">readBinaryWatch</span><span class="params">(<span class="keyword">int</span> num)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> h = <span class="number">0</span>; h &lt; <span class="number">12</span>; h ++) &#123;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; <span class="number">60</span>; m ++) &#123;</div><div class="line">                <span class="keyword">if</span> (Integer.bitCount(h) + Integer.bitCount(m) == num) &#123;</div><div class="line">                    <span class="keyword">if</span> (m &lt; <span class="number">10</span>) &#123;</div><div class="line">                        res.add(h + <span class="string">":"</span> + <span class="string">"0"</span> + m);</div><div class="line">                    &#125; <span class="keyword">else</span> &#123;</div><div class="line">                        res.add(h + <span class="string">":"</span> + m);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> res;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Next-Permutation"><a href="#Next-Permutation" class="headerlink" title="Next Permutation"></a><a href="https://leetcode.com/problems/next-permutation" target="_blank" rel="external">Next Permutation</a></h3><h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.</p>
+<p>If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).</p>
+<p>The replacement must be in-place, do not allocate extra memory.</p>
+<p>Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.<br><code>1,2,3</code> → <code>1,3,2</code><br><code>3,2,1</code> → <code>1,2,3</code><br><code>1,1,5</code> → <code>1,5,1</code></p>
+</blockquote>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>如果数组是降序的，则这几个数组的组合中，后面没有了：</p>
+<p>比如[9,7,6,5,4]，这几个数字是降序的，由这几个数字组成的排列中没有序号大于这个组合方式的了。</p>
+<p>当数组中出现升序位置时，说明后面有编号大于此排列的排列情况</p>
+<p><img src="https://leetcode.com/media/original_images/31_Next_Permutation.gif" alt="Next Permutation"></p>
+<p>步骤：</p>
+<ol>
+<li>找到第一处升序数组[4,7]</li>
+<li>将升序位置与后面数组中最后一个大于该元素的位置交换[4,5]</li>
+<li>此时原来5位置的后面都比4小，前面都比4大，而且是降序，所以将后半段数组倒置即可。</li>
+</ol>
+<h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//交换两个位置</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">  <span class="keyword">int</span> temp = nums[i];</div><div class="line">  nums[i] = nums[j];</div><div class="line">  nums[j] = temp;</div><div class="line">&#125;</div><div class="line"><span class="comment">//数组反转</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reverse</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">  <span class="keyword">while</span> (i &lt; j)&#123;</div><div class="line">    <span class="keyword">int</span> temp = nums[i];</div><div class="line">    nums[i] = nums[j];</div><div class="line">    nums[j] = temp;</div><div class="line">    i++;</div><div class="line">    j--;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">nextPermutation</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> i = nums.length-<span class="number">1</span>;</div><div class="line">  <span class="comment">//找第一次出现升序的地方</span></div><div class="line">  <span class="keyword">while</span>(i &gt; <span class="number">0</span>)&#123;</div><div class="line">    <span class="keyword">if</span>(nums[i] &gt; nums[i-<span class="number">1</span>])&#123;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    i--;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(i == <span class="number">0</span>)&#123;</div><div class="line">    reverse(nums,<span class="number">0</span>,nums.length-<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">//找到第一个比nums[i-1]小的数字</span></div><div class="line">    <span class="keyword">int</span> j = i+<span class="number">1</span>;</div><div class="line">    <span class="keyword">int</span> target = nums[i-<span class="number">1</span>];</div><div class="line">    <span class="keyword">while</span>(j &lt; nums.length)&#123;</div><div class="line">      <span class="keyword">if</span>(nums[j] &lt;= target)&#123;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">      j++;</div><div class="line">    &#125;</div><div class="line">    swap(nums,i-<span class="number">1</span>,j-<span class="number">1</span>);</div><div class="line">    reverse(nums,i,nums.length-<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="组合问题"><a href="#组合问题" class="headerlink" title="组合问题"></a>组合问题</h2><h3 id="Combinations"><a href="#Combinations" class="headerlink" title="Combinations"></a><a href="https://leetcode.com/problems/combinations/" target="_blank" rel="external">Combinations</a></h3><h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given two integers <em>n</em> and <em>k</em>, return all possible combinations of <em>k</em> numbers out of 1 … <em>n</em>.</p>
+<p>For example,<br>If <em>n</em> = 4 and <em>k</em> = 2, a solution is:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [2,4],</div><div class="line">&gt;   [3,4],</div><div class="line">&gt;   [2,3],</div><div class="line">&gt;   [1,2],</div><div class="line">&gt;   [1,3],</div><div class="line">&gt;   [1,4],</div><div class="line">&gt; ]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定n和k，给出<script type="math/tex">C(n,k)</script> 的全部组合方式</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>非常典型的回溯问题</p>
+<p>思路就是从n个里面选择1个，然后再剩余的n-1个里面选择k-1个</p>
+<h4 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line"><span class="comment">//一共1-n和数字，从start开始，选择k个</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> n,<span class="keyword">int</span> start,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">  <span class="comment">//k个都选完了，加入结果</span></div><div class="line">  <span class="keyword">if</span>(k == <span class="number">0</span>)&#123;</div><div class="line">    List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    temp.addAll(result);</div><div class="line">    results.add(temp);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//遍历到最后了，但是没选够k个，返回</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(start == n+<span class="number">1</span>)&#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">//遍历从start右边的元素，选取一个，在剩下的元素中选取k-1个</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = start;i &lt;= n;i++)&#123;</div><div class="line">      result.add(i);</div><div class="line">      solve(n,i+<span class="number">1</span>,k-<span class="number">1</span>);</div><div class="line">      result.remove(result.size()-<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combine(<span class="keyword">int</span> n, <span class="keyword">int</span> k) &#123;</div><div class="line">  solve(n,<span class="number">1</span>,k);</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Combination-Sum"><a href="#Combination-Sum" class="headerlink" title="Combination Sum"></a><a href="https://leetcode.com/problems/combination-sum/" target="_blank" rel="external">Combination Sum</a></h3><h4 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a <strong>set</strong> of candidate numbers (<strong>C</strong>) <strong>(without duplicates)</strong> and a target number (<strong>T</strong>), find all unique combinations in <strong>C</strong> where the candidate numbers sums to <strong>T</strong>.</p>
+<p>The <strong>same</strong> repeated number may be chosen from <strong>C</strong> unlimited number of times.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>All numbers (including target) will be positive integers.</li>
+<li>The solution set must not contain duplicate combinations.</li>
+</ul>
+<p>For example, given candidate set <code>[2, 3, 6, 7]</code> and target <code>7</code>,<br>A solution set is: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [7],</div><div class="line">&gt;   [2, 2, 3]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给一个数组和一个target.求数组中的元素和等于target的所有可能。元素可以多次取。</p>
+<h4 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>回溯</p>
+<h4 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CombinationSum</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target,<span class="keyword">int</span> start)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(target == <span class="number">0</span>)&#123;</div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (target &lt; <span class="number">0</span> || start == candidates.length)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = start;i &lt; candidates.length;i++)&#123;</div><div class="line">                result.add(candidates[i]);</div><div class="line">                solve(candidates,target-candidates[i],i);</div><div class="line">                result.remove(result.size()-<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</div><div class="line">        solve(candidates,target,<span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Combination-Sum-II"><a href="#Combination-Sum-II" class="headerlink" title="Combination Sum II"></a><a href="https://leetcode.com/problems/combination-sum-ii/" target="_blank" rel="external">Combination Sum II</a></h3><h4 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a collection of candidate numbers (<strong>C</strong>) and a target number (<strong>T</strong>), find all unique combinations in <strong>C</strong> where the candidate numbers sums to <strong>T</strong>.</p>
+<p>Each number in <strong>C</strong> may only be used <strong>once</strong> in the combination.</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>All numbers (including target) will be positive integers.</li>
+<li>The solution set must not contain duplicate combinations.</li>
+</ul>
+<p>For example, given candidate set <code>[10, 1, 2, 7, 6, 1, 5]</code> and target <code>8</code>,<br>A solution set is: </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [1, 7],</div><div class="line">&gt;   [1, 2, 5],</div><div class="line">&gt;   [2, 6],</div><div class="line">&gt;   [1, 1, 6]</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给一个有重数组和一个target.求数组中的元素和等于target的所有可能。元素不可以多次取。</p>
+<h4 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>这道题与上一题的最大区别就是不能多次取！需要注意的地方就是递归进入时的i需要加一（跳过本元素）</p>
+<h4 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CombinationSum</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target,<span class="keyword">int</span> start)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(target == <span class="number">0</span>)&#123;</div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (target &lt; <span class="number">0</span> || start == candidates.length)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = start;i &lt; candidates.length;i++)&#123;</div><div class="line">                <span class="keyword">if</span>(i &gt; start  &amp;&amp; candidates[i] == candidates[i - <span class="number">1</span>])<span class="keyword">continue</span>; <span class="comment">// 去重</span></div><div class="line">                result.add(candidates[i]);</div><div class="line">                solve(candidates,target-candidates[i],i+<span class="number">1</span>);</div><div class="line">                result.remove(result.size()-<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</div><div class="line">        Arrays.sort(candidates);</div><div class="line">        solve(candidates,target,<span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        CombinationSum test = <span class="keyword">new</span> CombinationSum();</div><div class="line">        <span class="keyword">int</span>[] candidates = &#123;<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">7</span>&#125;;</div><div class="line">        <span class="keyword">int</span> target = <span class="number">7</span>;</div><div class="line">        List&lt;List&lt;Integer&gt;&gt; resuts = test.combinationSum(candidates,target);</div><div class="line">        System.out.print(resuts);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Combination-Sum-III"><a href="#Combination-Sum-III" class="headerlink" title="Combination Sum III"></a><a href="https://leetcode.com/problems/combination-sum-iii/" target="_blank" rel="external">Combination Sum III</a></h3><h4 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Find all possible combinations of <strong>*k*</strong> numbers that add up to a number <strong>*n*</strong>, given that only numbers from 1 to 9 can be used and each combination should be a unique set of numbers.</p>
+<p><strong>*Example 1:*</strong></p>
+<p>Input: <strong>*k*</strong> = 3, <strong>*n*</strong> = 7</p>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [[1,2,4]]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>*Example 2:*</strong></p>
+<p>Input: <strong>*k*</strong> = 3, <strong>*n*</strong> = 9</p>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [[1,2,6], [1,3,5], [2,3,4]]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>求k个数（0-9的数）的和为n的所有组合。</p>
+<h4 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h4><p>还是回溯问题。</p>
+<h4 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> n, <span class="keyword">int</span> start)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(k == <span class="number">0</span> &amp;&amp; n == <span class="number">0</span>)&#123;</div><div class="line">    List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    temp.addAll(result);</div><div class="line">    results.add(temp);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(k &lt; <span class="number">0</span> || n &lt; <span class="number">0</span>)&#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = start ; i &lt;= <span class="number">9</span>; i++)&#123;</div><div class="line">      result.add(i);</div><div class="line">      solve(k-<span class="number">1</span>,n-i,i+<span class="number">1</span>);</div><div class="line">      result.remove(result.size()-<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Count-Numbers-with-Unique-Digits"><a href="#Count-Numbers-with-Unique-Digits" class="headerlink" title="Count Numbers with Unique Digits"></a><a href="https://leetcode.com/problems/count-numbers-with-unique-digits/" target="_blank" rel="external">Count Numbers with Unique Digits</a></h3><h4 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a <strong>non-negative</strong> integer n, count all numbers with unique digits, x, where 0 ≤ x &lt; 10n.</p>
+<p><strong>Example:</strong><br>Given n = 2, return 91. (The answer should be the total numbers in the range of 0 ≤ x &lt; 100, excluding <code>[11,22,33,44,55,66,77,88,99]</code>)</p>
+<p><strong>Credits:</strong><br>Special thanks to <a href="https://discuss.leetcode.com/user/memoryless" target="_blank" rel="external">@memoryless</a> for adding this problem and creating all test cases.</p>
+</blockquote>
+<p>给一个n。求x的个数，其中0&lt;=x&lt;=10n0&lt;=x&lt;=10n ，且x的每一位的数字都不相同。</p>
+<h4 id="思路-3"><a href="#思路-3" class="headerlink" title="思路"></a>思路</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">n位数的可能有如下：</div><div class="line"></div><div class="line"><span class="number">0</span>      （就是<span class="number">0</span>）</div><div class="line"><span class="number">1</span> 位数 -&gt; C(<span class="number">9</span>,<span class="number">1</span>)  (从<span class="number">1</span>-<span class="number">9</span>里随机挑选一个)</div><div class="line"><span class="number">2</span> 位数 -&gt; C(<span class="number">9</span>,<span class="number">1</span>) * C(<span class="number">9</span>,<span class="number">1</span>)  (第一位从<span class="number">1</span>-<span class="number">9</span>挑，第二位与第一位不同即可，所以也是<span class="number">9</span>种)</div><div class="line"><span class="number">3</span> 位数 -&gt; C(<span class="number">9</span>,<span class="number">1</span>) * C(<span class="number">9</span>,<span class="number">1</span>) * C(<span class="number">8</span>,<span class="number">1</span>) (第一位从<span class="number">1</span>-<span class="number">9</span>挑，第二位与第一位不同，第三位与前两位不同)</div><div class="line">...</div><div class="line">n 位数</div><div class="line"></div><div class="line">代码：</div><div class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countNumbersWithUniqueDigits</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> num = <span class="number">10</span>;</div><div class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(n == <span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> num;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">int</span>[] c = &#123;<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>&#125;;</div><div class="line">            <span class="keyword">int</span> product = <span class="number">9</span>;</div><div class="line">            <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">            <span class="keyword">while</span>(i &lt; n-<span class="number">1</span>)&#123;</div><div class="line">                product *= c[i];</div><div class="line">                num += product;</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> num;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Beautiful-Arrangement"><a href="#Beautiful-Arrangement" class="headerlink" title="Beautiful Arrangement"></a><a href="https://leetcode.com/problems/beautiful-arrangement/" target="_blank" rel="external">Beautiful Arrangement</a></h3><h4 id="题目-10"><a href="#题目-10" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Suppose you have <strong>N</strong> integers from 1 to N. We define a beautiful arrangement as an array that is constructed by these <strong>N</strong> numbers successfully if one of the following is true for the ith position (1 &lt;= i &lt;= N) in this array:</p>
+<ol>
+<li>The number at the ith position is divisible by <strong>i</strong>.</li>
+<li><strong>i</strong> is divisible by the number at the ith position.</li>
+</ol>
+<p>Now given N, how many beautiful arrangements can you construct?</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: 2</div><div class="line">&gt; Output: 2</div><div class="line">&gt; Explanation: </div><div class="line">&gt;</div><div class="line">&gt; The first beautiful arrangement is [1, 2]:</div><div class="line">&gt;</div><div class="line">&gt; Number at the 1st position (i=1) is 1, and 1 is divisible by i (i=1).</div><div class="line">&gt;</div><div class="line">&gt; Number at the 2nd position (i=2) is 2, and 2 is divisible by i (i=2).</div><div class="line">&gt;</div><div class="line">&gt; The second beautiful arrangement is [2, 1]:</div><div class="line">&gt;</div><div class="line">&gt; Number at the 1st position (i=1) is 2, and 2 is divisible by i (i=1).</div><div class="line">&gt;</div><div class="line">&gt; Number at the 2nd position (i=2) is 1, and i (i=2) is divisible by 1.</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h4><p>回溯，遇到满足条件的sum++;</p>
+<h4 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BeautifulArrangement</span> </span>&#123;</div><div class="line">    <span class="keyword">boolean</span>[] map;</div><div class="line">    <span class="keyword">int</span>[] result;</div><div class="line">    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isValid</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> val)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(idx % val == <span class="number">0</span> || (idx !=<span class="number">0</span> &amp;&amp; val % idx == <span class="number">0</span>))&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> N)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(idx == N)&#123;</div><div class="line">            sum++;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= N;i++)&#123;</div><div class="line">                <span class="keyword">if</span>(!map[i-<span class="number">1</span>] &amp;&amp; isValid(idx+<span class="number">1</span>,i))&#123;</div><div class="line">                    result[idx] = i;</div><div class="line">                    map[i-<span class="number">1</span>] = <span class="keyword">true</span>;</div><div class="line">                    solve(idx+<span class="number">1</span>,N);</div><div class="line">                    map[i-<span class="number">1</span>] = <span class="keyword">false</span>;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countArrangement</span><span class="params">(<span class="keyword">int</span> N)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.map = <span class="keyword">new</span> <span class="keyword">boolean</span>[N];</div><div class="line">        <span class="keyword">this</span>.result = <span class="keyword">new</span> <span class="keyword">int</span>[N];</div><div class="line">        solve(<span class="number">0</span>,N);</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.sum;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Letter-Combinations-of-a-Phone-Number"><a href="#Letter-Combinations-of-a-Phone-Number" class="headerlink" title="Letter Combinations of a Phone Number"></a><a href="https://leetcode.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="external">Letter Combinations of a Phone Number</a></h3><h4 id="题目-11"><a href="#题目-11" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a digit string, return all possible letter combinations that the number could represent.</p>
+<p>A mapping of digit to letters (just like on the telephone buttons) is given below.</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt="img"></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input:Digit string &quot;23&quot;</div><div class="line">&gt; Output: [&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h4><p>组合问题，回溯即可</p>
+<h4 id="代码-11"><a href="#代码-11" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LetterCombinationsofaPhoneNumber</span> </span>&#123;</div><div class="line">    HashMap&lt;Character, <span class="keyword">char</span>[]&gt; table = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    String result = <span class="keyword">new</span> String();</div><div class="line">    List&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">buildTable</span><span class="params">()</span></span>&#123;</div><div class="line">        table.put(<span class="string">'1'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">0</span>]);</div><div class="line">        table.put(<span class="string">'2'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>&#125;);</div><div class="line">        table.put(<span class="string">'3'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'d'</span>,<span class="string">'e'</span>,<span class="string">'f'</span>&#125;);</div><div class="line">        table.put(<span class="string">'4'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'g'</span>,<span class="string">'h'</span>,<span class="string">'i'</span>&#125;);</div><div class="line">        table.put(<span class="string">'5'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'j'</span>,<span class="string">'k'</span>,<span class="string">'l'</span>&#125;);</div><div class="line">        table.put(<span class="string">'6'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'m'</span>,<span class="string">'n'</span>,<span class="string">'o'</span>&#125;);</div><div class="line">        table.put(<span class="string">'7'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'p'</span>,<span class="string">'q'</span>,<span class="string">'r'</span>,<span class="string">'s'</span>&#125;);</div><div class="line">        table.put(<span class="string">'8'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'t'</span>,<span class="string">'u'</span>,<span class="string">'v'</span>&#125;);</div><div class="line">        table.put(<span class="string">'9'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'w'</span>,<span class="string">'x'</span>,<span class="string">'y'</span>,<span class="string">'z'</span>&#125;);</div><div class="line">        table.put(<span class="string">'0'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">' '</span>&#125;);</div><div class="line">        table.put(<span class="string">'#'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'#'</span>&#125;);</div><div class="line">        table.put(<span class="string">'*'</span>,<span class="keyword">new</span> <span class="keyword">char</span>[]&#123;<span class="string">'*'</span>&#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(String digits,<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(idx == digits.length())&#123;</div><div class="line">            String temp = <span class="keyword">new</span> String();</div><div class="line">            temp += result;</div><div class="line">            <span class="keyword">if</span>(!temp.isEmpty())&#123;</div><div class="line">                results.add(temp);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="keyword">if</span>(table.get(digits.charAt(idx)).length == <span class="number">0</span>)&#123;</div><div class="line">                solve(digits,idx+<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(table.get(digits.charAt(idx)).length == <span class="number">1</span>)&#123;</div><div class="line">                result += table.get(digits.charAt(idx))[<span class="number">0</span>];</div><div class="line">                solve(digits,idx+<span class="number">1</span>);</div><div class="line">                result = result.substring(<span class="number">0</span>,result.length()-<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; table.get(digits.charAt(idx)).length;i++)&#123;</div><div class="line">                    result += table.get(digits.charAt(idx))[i];</div><div class="line">                    solve(digits,idx+<span class="number">1</span>);</div><div class="line">                    result = result.substring(<span class="number">0</span>,result.length()-<span class="number">1</span>);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">letterCombinations</span><span class="params">(String digits)</span> </span>&#123;</div><div class="line">        buildTable();</div><div class="line">        solve(digits,<span class="number">0</span>);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line"></div><div class="line">        LetterCombinationsofaPhoneNumber test = <span class="keyword">new</span> LetterCombinationsofaPhoneNumber();</div><div class="line">        String digits = <span class="string">"22"</span>;</div><div class="line">        test.buildTable();</div><div class="line">        List&lt;String&gt; results = test.letterCombinations(digits);</div><div class="line">        System.out.print(results);</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Generate-Parentheses"><a href="#Generate-Parentheses" class="headerlink" title="Generate Parentheses"></a><a href="https://leetcode.com/problems/generate-parentheses/" target="_blank" rel="external">Generate Parentheses</a></h3><h4 id="题目-12"><a href="#题目-12" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given <em>n</em> pairs of parentheses, write a function to generate all combinations of well-formed parentheses.</p>
+<p>For example, given <em>n</em> = 3, a solution set is:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   &quot;((()))&quot;,</div><div class="line">&gt;   &quot;(()())&quot;,</div><div class="line">&gt;   &quot;(())()&quot;,</div><div class="line">&gt;   &quot;()(())&quot;,</div><div class="line">&gt;   &quot;()()()&quot;</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h4><p>回溯，向2n个位置放<code>‘(’</code>  或<code>‘)’</code> 用变量<code>rightNeed</code> 表示右边还需要的<code>‘)’</code>数量，也就是当前<code>‘(’</code>  与<code>‘)’</code> 的数量差：</p>
+<ol>
+<li>如果放置过程中出现右括号必做括号多的情况，返回上一层，因为这种情况不可能是结果了，无需向下计算</li>
+<li>当2n个括号放置完毕，且左右括号相等时</li>
+<li>加入括号有两重方式，加入左括号或者右括号</li>
+</ol>
+<h4 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    List&lt;String&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    String result = <span class="keyword">new</span> String();</div><div class="line">    <span class="keyword">char</span>[] parentheses;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> idx,<span class="keyword">int</span> rightNeed,<span class="keyword">int</span> n)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(rightNeed &lt; <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(idx == <span class="number">2</span>*n)&#123;</div><div class="line">            <span class="keyword">if</span>(rightNeed == <span class="number">0</span>)&#123;</div><div class="line">                String temp = <span class="keyword">new</span> String();</div><div class="line">                temp += result;</div><div class="line">                results.add(temp);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">//加入括号分两种情况讨论：left和right</span></div><div class="line">            result += <span class="string">'('</span>;</div><div class="line">            solve(idx+<span class="number">1</span>,rightNeed+<span class="number">1</span>,n);</div><div class="line">            result = result.substring(<span class="number">0</span>,result.length()-<span class="number">1</span>);</div><div class="line"></div><div class="line">            result += <span class="string">')'</span>;</div><div class="line">            solve(idx+<span class="number">1</span>,rightNeed-<span class="number">1</span>,n);</div><div class="line">            result = result.substring(<span class="number">0</span>,result.length()-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">generateParenthesis</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        solve(<span class="number">0</span>,<span class="number">0</span>,n);</div><div class="line">        <span class="keyword">return</span> results;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Sudoku-Solver"><a href="#Sudoku-Solver" class="headerlink" title="Sudoku Solver"></a><a href="https://leetcode.com/problems/sudoku-solver/" target="_blank" rel="external">Sudoku Solver</a></h3><p>Write a program to solve a Sudoku puzzle by filling the empty cells.</p>
+<p>Empty cells are indicated by the character <code>&#39;.&#39;</code>.</p>
+<p>You may assume that there will be only one unique solution.</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Sudoku-by-L2G-20050714.svg/250px-Sudoku-by-L2G-20050714.svg.png" alt="img"></p>
+<p>A sudoku puzzle…</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Sudoku-by-L2G-20050714_solution.svg/250px-Sudoku-by-L2G-20050714_solution.svg.png" alt="img"></p>
+<p>9×99×9 的数独，填入数字1-9，要求行列不重复，且每个宫内不重复。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">boolean</span>[][] usedinLine = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">9</span>][<span class="number">9</span>];<span class="comment">//第i行中是否用过数字k</span></div><div class="line"><span class="keyword">boolean</span>[][] usedinCol = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">9</span>][<span class="number">9</span>];<span class="comment">//第i列中是否用过数字k</span></div><div class="line"><span class="keyword">boolean</span>[][][] usedinBlock = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">3</span>][<span class="number">3</span>][<span class="number">9</span>];<span class="comment">//第ij个格子中是否用过数字k</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">solve</span><span class="params">(<span class="keyword">char</span>[][] board)</span></span>&#123;</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">9</span>;i++)&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; <span class="number">9</span>;j++)&#123;</div><div class="line">      <span class="keyword">if</span>(board[i][j] != <span class="string">'.'</span>)&#123;</div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> val = <span class="number">1</span>; val &lt;= <span class="number">9</span>; val++) &#123;</div><div class="line">          <span class="keyword">if</span> (!usedinLine[i][val - <span class="number">1</span>] &amp;&amp; !usedinCol[j][val - <span class="number">1</span>] &amp;&amp; !usedinBlock[i / <span class="number">3</span>][j / <span class="number">3</span>][val - <span class="number">1</span>]) &#123;</div><div class="line">            usedinLine[i][val - <span class="number">1</span>] = <span class="keyword">true</span>;</div><div class="line">            usedinCol[j][val - <span class="number">1</span>] = <span class="keyword">true</span>;</div><div class="line">            usedinBlock[i / <span class="number">3</span>][j / <span class="number">3</span>][val - <span class="number">1</span>] = <span class="keyword">true</span>;</div><div class="line">            board[i][j] = (<span class="keyword">char</span>) (val + <span class="number">48</span>);</div><div class="line">            <span class="keyword">if</span> (solve(board)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            usedinLine[i][val - <span class="number">1</span>] = <span class="keyword">false</span>;</div><div class="line">            usedinCol[j][val - <span class="number">1</span>] = <span class="keyword">false</span>;</div><div class="line">            usedinBlock[i / <span class="number">3</span>][j / <span class="number">3</span>][val - <span class="number">1</span>] = <span class="keyword">false</span>;</div><div class="line">            board[i][j] = <span class="string">'.'</span>;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solveSudoku</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</div><div class="line">  <span class="comment">//初始化</span></div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; <span class="number">9</span>;i++)&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt; <span class="number">9</span>;j++)&#123;</div><div class="line">      <span class="keyword">if</span>(board[i][j] != <span class="string">'.'</span>)&#123;</div><div class="line">        usedinLine[i][board[i][j]-<span class="string">'1'</span>] = <span class="keyword">true</span>;</div><div class="line">        usedinCol[j][board[i][j]-<span class="string">'1'</span>] = <span class="keyword">true</span>;</div><div class="line">        usedinBlock[i/<span class="number">3</span>][j/<span class="number">3</span>][board[i][j]-<span class="string">'1'</span>] = <span class="keyword">true</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  solve(board);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Wildcard-Matching"><a href="#Wildcard-Matching" class="headerlink" title="Wildcard Matching"></a><a href="https://leetcode.com/problems/wildcard-matching" target="_blank" rel="external">Wildcard Matching</a></h3><h4 id="题目-13"><a href="#题目-13" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Implement wildcard pattern matching with support for <code>&#39;?&#39;</code> and <code>&#39;*&#39;</code>.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; &apos;?&apos; Matches any single character.</div><div class="line">&gt; &apos;*&apos; Matches any sequence of characters (including the empty sequence).</div><div class="line">&gt;</div><div class="line">&gt; The matching should cover the entire input string (not partial).</div><div class="line">&gt;</div><div class="line">&gt; The function prototype should be:</div><div class="line">&gt; bool isMatch(const char *s, const char *p)</div><div class="line">&gt;</div><div class="line">&gt; Some examples:</div><div class="line">&gt; isMatch(&quot;aa&quot;,&quot;a&quot;) → false</div><div class="line">&gt; isMatch(&quot;aa&quot;,&quot;aa&quot;) → true</div><div class="line">&gt; isMatch(&quot;aaa&quot;,&quot;aa&quot;) → false</div><div class="line">&gt; isMatch(&quot;aa&quot;, &quot;*&quot;) → true</div><div class="line">&gt; isMatch(&quot;aa&quot;, &quot;a*&quot;) → true</div><div class="line">&gt; isMatch(&quot;ab&quot;, &quot;?*&quot;) → true</div><div class="line">&gt; isMatch(&quot;aab&quot;, &quot;c*a*b&quot;) → false</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h4><p>被伤透了的一道题。。。凉凉</p>
+<p>思路就是：两指针i,j + 回溯</p>
+<ol>
+<li>两指针所指元素相等或者j指向‘?’，两指针后移递归调用</li>
+<li>两指针指的元素不相等，j也没指向‘?’和‘*’，这种情况凑不成一样的了，回溯</li>
+<li>如果j指向‘*’i可以选择跳过0\1\2.…一直到可以跳到最后一个元素，然后j也向后跳一个，看后面的是否相等，也就是递归调用了</li>
+</ol>
+<p>边界条件：</p>
+<ol>
+<li>两指针都指向末尾了，返回true</li>
+<li>j到末尾了，i没有，返回false</li>
+<li>i到末尾了，j没有，如果j后面都是*则返回true,否则不可能相等，返回true</li>
+</ol>
+<p>写完了超时了，因为ij组合会重复计算，所以需要用dp,把算过的存下来</p>
+<h4 id="代码-13"><a href="#代码-13" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WildcardMatching</span> </span>&#123;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">solve</span><span class="params">(String s, String p,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">    <span class="comment">//边界条件</span></div><div class="line">    <span class="comment">//两指针都遍历到末尾</span></div><div class="line">    <span class="keyword">if</span>(i == s.length() &amp;&amp; j == p.length())&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//j遍历到末尾，i没有</span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(j == p.length())&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//i指针遍历到末尾，j没有</span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(i == s.length())&#123;</div><div class="line">      <span class="comment">//如果j后面都是*了，则可以相等</span></div><div class="line">      <span class="keyword">while</span>(j &lt; p.length() &amp;&amp; p.charAt(j) == <span class="string">'*'</span>)&#123;</div><div class="line">        j++;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span>(j == p.length())&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">//如果j后面不是全是*则一定不可以</span></div><div class="line">      <span class="keyword">else</span> <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//遇到*，i可以继续向后遍历，判断是否相等，回溯</span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p.charAt(j) == <span class="string">'*'</span>)&#123;</div><div class="line">      <span class="keyword">while</span>(i &lt;= s.length())&#123;</div><div class="line">        <span class="keyword">if</span>(solve(s,p,i,j+<span class="number">1</span>)) <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        i++;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//遇到？或者两个字符相等，继续匹配下一个</span></div><div class="line">    <span class="keyword">else</span> <span class="keyword">if</span>(p.charAt(j) == <span class="string">'?'</span> || s.charAt(i) == p.charAt(j))&#123;</div><div class="line">      <span class="keyword">return</span> solve(s,p,i+<span class="number">1</span>,j+<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//两字符单纯地不相等</span></div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String s, String p)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> solve(s,p,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    WildcardMatching test = <span class="keyword">new</span> WildcardMatching();</div><div class="line">    String s = <span class="string">"a"</span>;</div><div class="line">    String p = <span class="string">"aa"</span>;</div><div class="line">    <span class="keyword">boolean</span> a = test.solve(s,p,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">    System.out.print(a);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>改进DP：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">int</span>[][] dp;</div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">solve</span><span class="params">(String s, String p,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">  <span class="comment">//计算过了 直接返回</span></div><div class="line">  <span class="keyword">if</span>(dp[i][j] != <span class="number">0</span>)&#123;</div><div class="line">    <span class="keyword">return</span> dp[i][j];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//边界条件</span></div><div class="line">  <span class="comment">//两指针都遍历到末尾</span></div><div class="line">  <span class="keyword">if</span>(i == s.length() &amp;&amp; j == p.length())&#123;</div><div class="line">    dp[i][j] = <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> dp[i][j];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//j遍历到末尾，i没有</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(j == p.length())&#123;</div><div class="line">    dp[i][j] = -<span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> dp[i][j];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//i指针遍历到末尾，j没有</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(i == s.length())&#123;</div><div class="line">    <span class="comment">//如果j后面都是*了，则可以相等</span></div><div class="line">    <span class="keyword">while</span>(j &lt; p.length() &amp;&amp; p.charAt(j) == <span class="string">'*'</span>)&#123;</div><div class="line">      j++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(j == p.length())&#123;</div><div class="line">      dp[i][j] = <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果j后面不是全是*则一定不可以</span></div><div class="line">    <span class="keyword">else</span> dp[i][j] = <span class="number">0</span>;</div><div class="line">    <span class="keyword">return</span> dp[i][j];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//遇到*，i可以继续向后遍历，判断是否相等，回溯</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(p.charAt(j) == <span class="string">'*'</span>)&#123;</div><div class="line">    dp[i][j] = -<span class="number">1</span>;</div><div class="line">    <span class="keyword">while</span>(i &lt;= s.length())&#123;</div><div class="line">      <span class="keyword">if</span>(solve(s,p,i,j+<span class="number">1</span>) == <span class="number">1</span>)&#123;</div><div class="line">        dp[i][j] = <span class="number">1</span>;</div><div class="line">        <span class="keyword">return</span> dp[i][j];</div><div class="line">      &#125;</div><div class="line">      i++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> dp[i-<span class="number">1</span>][j];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//遇到？或者两个字符相等，继续匹配下一个</span></div><div class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(p.charAt(j) == <span class="string">'?'</span> || s.charAt(i) == p.charAt(j))&#123;</div><div class="line">    dp[i][j] = solve(s,p,i+<span class="number">1</span>,j+<span class="number">1</span>);</div><div class="line">    <span class="keyword">return</span> dp[i][j];</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//两字符单纯地不相等</span></div><div class="line">  <span class="keyword">else</span> &#123;</div><div class="line">    dp[i][j] = -<span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> dp[i][j];</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String s, String p)</span> </span>&#123;</div><div class="line">  dp = <span class="keyword">new</span> <span class="keyword">int</span>[s.length()+<span class="number">1</span>][p.length()+<span class="number">1</span>];</div><div class="line">  solve(s,p,<span class="number">0</span>,<span class="number">0</span>);</div><div class="line">  <span class="keyword">return</span> dp[s.length()][p.length()]==<span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Regular-Expression-Matching"><a href="#Regular-Expression-Matching" class="headerlink" title="Regular Expression Matching"></a><a href="https://leetcode.com/problems/regular-expression-matching/" target="_blank" rel="external">Regular Expression Matching</a></h3><h4 id="题目-14"><a href="#题目-14" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Implement regular expression matching with support for <code>&#39;.&#39;</code> and <code>&#39;*&#39;</code>.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; &apos;.&apos; Matches any single character.</div><div class="line">&gt; &apos;*&apos; Matches zero or more of the preceding element.</div><div class="line">&gt;</div><div class="line">&gt; The matching should cover the entire input string (not partial).</div><div class="line">&gt;</div><div class="line">&gt; The function prototype should be:</div><div class="line">&gt; bool isMatch(const char *s, const char *p)</div><div class="line">&gt;</div><div class="line">&gt; Some examples:</div><div class="line">&gt; isMatch(&quot;aa&quot;,&quot;a&quot;) → false</div><div class="line">&gt; isMatch(&quot;aa&quot;,&quot;aa&quot;) → true</div><div class="line">&gt; isMatch(&quot;aaa&quot;,&quot;aa&quot;) → false</div><div class="line">&gt; isMatch(&quot;aa&quot;, &quot;a*&quot;) → true</div><div class="line">&gt; isMatch(&quot;aa&quot;, &quot;.*&quot;) → true</div><div class="line">&gt; isMatch(&quot;ab&quot;, &quot;.*&quot;) → true</div><div class="line">&gt; isMatch(&quot;aab&quot;, &quot;c*a*b&quot;) → true</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h4><p><code>.</code>可代表任意一个字母</p>
+<p><code>*</code> 和它前面的字母组合m在一起，可以用于表示0或任意多个m</p>
+<p>思路就是两指针，从后向前匹配，当遇到*时，有两种选择：</p>
+<ol>
+<li>匹配s中的0个（j-2,i不变），继续向后递归</li>
+<li>匹配s中的1个（j不变,i-1），继续向后递归</li>
+<li>多个的情况包含在2中</li>
+</ol>
+<h4 id="代码-14"><a href="#代码-14" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegularExpressionMatching</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">solve</span><span class="params">(String s, String p,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(i &lt; <span class="number">0</span> &amp;&amp; j &lt; <span class="number">0</span>)&#123;<span class="keyword">return</span> <span class="keyword">true</span>;&#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(j &lt; <span class="number">0</span>)&#123; <span class="keyword">return</span> <span class="keyword">false</span>; &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(i &lt; <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(p.charAt(j) == <span class="string">'*'</span>)&#123;</div><div class="line">                <span class="keyword">return</span> solve(s,p,i,j-<span class="number">2</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(p.charAt(j) == <span class="string">'*'</span>)&#123;</div><div class="line">            <span class="comment">//如果*前面一个是.或者是跟i指向的字母一样，可以选择匹配1个或者不匹配</span></div><div class="line">            <span class="keyword">if</span>(p.charAt(j-<span class="number">1</span>) == <span class="string">'.'</span> || p.charAt(j-<span class="number">1</span>) == s.charAt(i))&#123;</div><div class="line">                <span class="keyword">return</span> solve(s, p,i-<span class="number">1</span>,j) || <span class="comment">//匹配了s中的1个字符，j向前移两位，继续，这里匹配了多个字符的情况包含在后续的计算中了</span></div><div class="line">                        solve(s,p,i,j-<span class="number">2</span>);<span class="comment">//匹配了s中的0个字符，j向前移两位，继续</span></div><div class="line">            &#125;</div><div class="line">            <span class="comment">//如果*前面不是.也不和i指向的数字一样，只能让他复制0个，继续往后判断</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                <span class="keyword">return</span>  solve(s, p,i,j-<span class="number">2</span>);<span class="comment">//匹配了s中的0个字符，j向前移两位，继续</span></div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(s.charAt(i) == p.charAt(j) || p.charAt(j) == <span class="string">'.'</span>)&#123;</div><div class="line">            <span class="keyword">return</span> solve(s,p,i-<span class="number">1</span>,j-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//指向字母不一样</span></div><div class="line">        <span class="keyword">else</span> &#123;<span class="keyword">return</span> <span class="keyword">false</span>;&#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isMatch</span><span class="params">(String s, String p)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> solve(s,p,s.length()-<span class="number">1</span>,p.length()-<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        RegularExpressionMatching test = <span class="keyword">new</span> RegularExpressionMatching();</div><div class="line">        String s = <span class="string">"aab"</span>;</div><div class="line">        String p = <span class="string">"c*a*b"</span>;</div><div class="line">        <span class="keyword">boolean</span> a = test.isMatch(s,p);</div><div class="line">        System.out.print(a);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Subsets-II"><a href="#Subsets-II" class="headerlink" title="Subsets II    "></a><a href="https://leetcode.com/problems/subsets" target="_blank" rel="external"><a href="https://leetcode.com/problems/subsets-ii" target="_blank" rel="external">Subsets II</a>    </a></h3><h4 id="题目-15"><a href="#题目-15" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a collection of integers that might contain duplicates, <strong>nums</strong>, return all possible subsets (the power set).</p>
+<p><strong>Note:</strong> The solution set must not contain duplicate subsets.</p>
+<p>For example,<br>If <strong>nums</strong> = <code>[1,2,2]</code>, a solution is:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [2],</div><div class="line">&gt;   [1],</div><div class="line">&gt;   [1,2,2],</div><div class="line">&gt;   [2,2],</div><div class="line">&gt;   [1,2],</div><div class="line">&gt;   []</div><div class="line">&gt; ]</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h4><p>遇到重复元素先排序，然后回溯。需要注意的是遇到重复的元素需要跳过，但是只有在本位置用过的才不可以用相同元素，所以需要加一个flag来验证一下</p>
+<h4 id="代码-15"><a href="#代码-15" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">  <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">if</span>(idx == nums.length)&#123;<span class="keyword">return</span>;&#125;</div><div class="line">  <span class="keyword">else</span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = idx ; i &lt; nums.length;i++)&#123;</div><div class="line">      <span class="keyword">if</span>(i &gt; <span class="number">0</span> &amp;&amp; nums[i] == nums[i-<span class="number">1</span>] &amp;&amp; flag)&#123;</div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line">      result.add(nums[i]);</div><div class="line">      List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">      temp.addAll(result);</div><div class="line">      results.add(temp);</div><div class="line">      solve(nums,i+<span class="number">1</span>);</div><div class="line">      result.remove(result.size()-<span class="number">1</span>);</div><div class="line">      flag = <span class="keyword">true</span>;<span class="comment">//记录在本位置是否用过</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; subsetsWithDup(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">  Arrays.sort(nums);</div><div class="line">  results.add(<span class="keyword">new</span> ArrayList&lt;&gt;());</div><div class="line">  solve(nums,<span class="number">0</span>);</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Increasing-Subsequences"><a href="#Increasing-Subsequences" class="headerlink" title="Increasing Subsequences"></a><a href="https://leetcode.com/problems/increasing-subsequences" target="_blank" rel="external">Increasing Subsequences</a></h3><h4 id="题目-16"><a href="#题目-16" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<hr>
+<p>Given an integer array, your task is to find all the different possible increasing subsequences of the given array, and the length of an increasing subsequence should be at least 2 .</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: [4, 6, 7, 7]</div><div class="line">&gt; Output: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Note:</strong></p>
+<ol>
+<li>The length of the given array will not exceed 15.</li>
+<li>The range of integer in the given array is [-100,100].</li>
+<li>The given array may contain duplicates, and two equal integers should also be considered as a special case of increasing sequence.</li>
+</ol>
+</blockquote>
+<p>给定数组，列举所有递增子序列</p>
+<h4 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h4><p>回溯</p>
+<p>如果加入的元素比result中最后一个元素的，就加入结果集合，否则不加入，继续向后。对于重复元素，需要跳过，这里元素无法排序，所以需要一个额外的数组维护元素是否出现过。</p>
+<h4 id="代码-16"><a href="#代码-16" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.ArrayList;</div><div class="line"><span class="keyword">import</span> java.util.Arrays;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IncreasingSubsequences</span> </span>&#123;</div><div class="line">  List&lt;List&lt;Integer&gt;&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> idx)</span></span>&#123;</div><div class="line">    <span class="keyword">boolean</span>[] flag= <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">201</span>];</div><div class="line">    <span class="keyword">if</span>(idx == nums.length)&#123;<span class="keyword">return</span>;&#125;</div><div class="line">    <span class="keyword">else</span>&#123;</div><div class="line">      <span class="keyword">for</span>(<span class="keyword">int</span> i = idx ; i &lt; nums.length;i++)&#123;</div><div class="line">        <span class="keyword">if</span>(flag[nums[i]+<span class="number">100</span>])&#123;</div><div class="line">          <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果当前result里没有元素或者当前元素比result里面的最后一个元素大，加入元素</span></div><div class="line">        <span class="keyword">if</span>(result.size() == <span class="number">0</span> || nums[i] &gt;= result.get(result.size()-<span class="number">1</span>))&#123;</div><div class="line">          result.add(nums[i]);</div><div class="line">          flag[nums[i]+<span class="number">100</span>] = <span class="keyword">true</span>;<span class="comment">//标志本轮这个元素用过了</span></div><div class="line">          <span class="keyword">if</span>(result.size() &gt; <span class="number">1</span>)&#123;<span class="comment">//如果当前子序列长度大于1,加入结果集</span></div><div class="line">            List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">            temp.addAll(result);</div><div class="line">            results.add(temp);</div><div class="line">          &#125;</div><div class="line">          solve(nums,i+<span class="number">1</span>);<span class="comment">//不管是不是加入结果集了，都要继续下一层</span></div><div class="line">          result.remove(result.size()-<span class="number">1</span>);<span class="comment">//有nums[i]的计算完毕，将其移除</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; findSubsequences(<span class="keyword">int</span>[] nums) &#123;</div><div class="line">    solve(nums,<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">  &#125;</div><div class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">    IncreasingSubsequences test = <span class="keyword">new</span> IncreasingSubsequences();</div><div class="line">    <span class="keyword">int</span>[] nums = &#123;<span class="number">4</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">7</span>&#125;;</div><div class="line">    List&lt;List&lt;Integer&gt;&gt; res = test.findSubsequences(nums);</div><div class="line">    System.out.print(res);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Gray-Code"><a href="#Gray-Code" class="headerlink" title="Gray Code"></a><a href="https://leetcode.com/problems/gray-code/" target="_blank" rel="external">Gray Code</a></h3><h4 id="题目-17"><a href="#题目-17" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>The gray code is a binary numeral system where two successive values differ in only one bit.</p>
+<p>Given a non-negative integer <em>n</em> representing the total number of bits in the code, print the sequence of gray code. A gray code sequence must begin with 0.</p>
+<p>For example, given <em>n</em> = 2, return <code>[0,1,3,2]</code>. Its gray code sequence is:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 00 - 0</div><div class="line">&gt; 01 - 1</div><div class="line">&gt; 11 - 3</div><div class="line">&gt; 10 - 2</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Note:</strong><br>For a given <em>n</em>, a gray code sequence is not uniquely defined.</p>
+<p>For example, <code>[0,2,3,1]</code> is also a valid gray code sequence according to the above definition.</p>
+<p>For now, the judge is able to judge based on one instance of gray code sequence. Sorry about that.</p>
+</blockquote>
+<h4 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h4><p> <img src="http://omaby2s5z.bkt.clouddn.com/2018-01-16-18-15-09.png" alt=""></p>
+<p>格雷码是很经典的问题，规则其实很简单，在二进制形式下，任何相邻的两个值的二进制表示形式只有一位是不同的，我们可以找找规律。</p>
+<p>一位就是简单的：0,1</p>
+<p>两位是：00,01,11,10</p>
+<p>三位是：000,001,011,010,110,111,101,100</p>
+<p>发现什么规律没有？我们把一位的两个数，前面加上0，就是二位的头两个数，前面加上1再反序，就是二位的后两个数。把二位的前面加上0，就是三位的头四个数，把二位的前面加上1再反过来，就是三位的后四个数。</p>
+<p>也就是说，对于每多一位的格雷码，前面一半的第一位都是0，后面一半的第一位都是1，其余的位，前后两半正好是中间对称的，前面一半就是少一位的格雷码序列，后面一半时把其反序。</p>
+<p>知道这个规律就好做了，我们可以递归来做，每次取n-1位的格雷码来做上述操作，对于一位的格雷码，直接赋值是0,1就可以了。</p>
+<p>不过题目要求返回的是十进制数，而不是字符串，所以我们最好直接操作十进制数，这里前面加0其实就不用做什么，前面加1的话可以将1左移n-1位然后与各个数字相加即可。</p>
+<p>注意题目说的n是非负数，所以要考虑n=0的情况，测试用例的n=0时返回的是0。</p>
+<h4 id="代码-17"><a href="#代码-17" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">grayCode</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">  List&lt;Integer&gt; results = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  <span class="keyword">if</span>(n == <span class="number">0</span>)&#123;</div><div class="line">    results.add(<span class="number">0</span>);</div><div class="line">    <span class="keyword">return</span> results;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  results.add(<span class="number">0</span>);</div><div class="line">  results.add(<span class="number">1</span>);</div><div class="line"></div><div class="line">  <span class="keyword">if</span>(n == <span class="number">1</span>)&#123; <span class="keyword">return</span> results;&#125;</div><div class="line">  <span class="keyword">int</span> i = <span class="number">1</span>;</div><div class="line">  <span class="keyword">while</span>(i &lt; n)&#123;</div><div class="line">    <span class="keyword">int</span> len = results.size();</div><div class="line">    <span class="keyword">while</span>(len &gt; <span class="number">0</span>)&#123;</div><div class="line">      <span class="keyword">int</span> delta = <span class="number">1</span>&lt;&lt;i;</div><div class="line">      results.add(results.get(len-<span class="number">1</span>) + delta);</div><div class="line">      len--;</div><div class="line">    &#125;</div><div class="line">    i++;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> results;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a href="https://segmentfault.com/a/1190000006121957" target="_blank" rel="external">liuqi627的博客</a><br><a href="http://www.jianshu.com/p/8f3b8df612ae" target="_blank" rel="external">Jason_Yuan的博客</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/回溯/" rel="tag"># 回溯</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/04/c-STL中堆的使用/" rel="next" title="c++STL中堆的使用">
+                <i class="fa fa-chevron-left"></i> c++STL中堆的使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/04/c-STL中vector的一些操作/" rel="prev" title="c++STL中vector的一些操作">
+                c++STL中vector的一些操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是回溯"><span class="nav-number">1.</span> <span class="nav-text">什么是回溯</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#识别回溯问题"><span class="nav-number">2.</span> <span class="nav-text">识别回溯问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#求解模板"><span class="nav-number">3.</span> <span class="nav-text">求解模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#八皇后问题"><span class="nav-number">4.</span> <span class="nav-text">八皇后问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#思路"><span class="nav-number">4.1.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码"><span class="nav-number">4.2.</span> <span class="nav-text">代码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-是否存在"><span class="nav-number">4.2.1.</span> <span class="nav-text">1. 是否存在</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-存在多少种安放方式-leetcode-51"><span class="nav-number">4.2.2.</span> <span class="nav-text">2. 存在多少种安放方式 [leetcode] 51</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-输出所有的安放方式-leetcode-51"><span class="nav-number">4.2.3.</span> <span class="nav-text">3.输出所有的安放方式 [leetcode] 51</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#leetcode相关问题"><span class="nav-number"></span> <span class="nav-text">leetcode相关问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#全排列问题"><span class="nav-number">1.</span> <span class="nav-text">全排列问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Permutations"><span class="nav-number">1.1.</span> <span class="nav-text">Permutations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">1.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Permutations-II"><span class="nav-number">1.2.</span> <span class="nav-text">Permutations II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Permutation-Sequence"><span class="nav-number">1.3.</span> <span class="nav-text">Permutation Sequence</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">1.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binary-Watch"><span class="nav-number">1.4.</span> <span class="nav-text">Binary Watch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">1.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-2"><span class="nav-number">1.4.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-4"><span class="nav-number">1.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Next-Permutation"><span class="nav-number">1.5.</span> <span class="nav-text">Next Permutation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-4"><span class="nav-number">1.5.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-5"><span class="nav-number">1.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组合问题"><span class="nav-number">2.</span> <span class="nav-text">组合问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Combinations"><span class="nav-number">2.1.</span> <span class="nav-text">Combinations</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-5"><span class="nav-number">2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">2.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-6"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Combination-Sum"><span class="nav-number">2.2.</span> <span class="nav-text">Combination Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-6"><span class="nav-number">2.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-4"><span class="nav-number">2.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-7"><span class="nav-number">2.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Combination-Sum-II"><span class="nav-number">2.3.</span> <span class="nav-text">Combination Sum II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-7"><span class="nav-number">2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-5"><span class="nav-number">2.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-8"><span class="nav-number">2.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Combination-Sum-III"><span class="nav-number">2.4.</span> <span class="nav-text">Combination Sum III</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-8"><span class="nav-number">2.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-6"><span class="nav-number">2.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-9"><span class="nav-number">2.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他"><span class="nav-number">3.</span> <span class="nav-text">其他</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Count-Numbers-with-Unique-Digits"><span class="nav-number">3.1.</span> <span class="nav-text">Count Numbers with Unique Digits</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-9"><span class="nav-number">3.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-3"><span class="nav-number">3.1.2.</span> <span class="nav-text">思路</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Beautiful-Arrangement"><span class="nav-number">3.2.</span> <span class="nav-text">Beautiful Arrangement</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-10"><span class="nav-number">3.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-7"><span class="nav-number">3.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-10"><span class="nav-number">3.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Letter-Combinations-of-a-Phone-Number"><span class="nav-number">3.3.</span> <span class="nav-text">Letter Combinations of a Phone Number</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-11"><span class="nav-number">3.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-8"><span class="nav-number">3.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-11"><span class="nav-number">3.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-Parentheses"><span class="nav-number">3.4.</span> <span class="nav-text">Generate Parentheses</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-12"><span class="nav-number">3.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-9"><span class="nav-number">3.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-12"><span class="nav-number">3.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sudoku-Solver"><span class="nav-number">3.5.</span> <span class="nav-text">Sudoku Solver</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Wildcard-Matching"><span class="nav-number">3.6.</span> <span class="nav-text">Wildcard Matching</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-13"><span class="nav-number">3.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-10"><span class="nav-number">3.6.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-13"><span class="nav-number">3.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regular-Expression-Matching"><span class="nav-number">3.7.</span> <span class="nav-text">Regular Expression Matching</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-14"><span class="nav-number">3.7.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-11"><span class="nav-number">3.7.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-14"><span class="nav-number">3.7.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Subsets-II"><span class="nav-number">3.8.</span> <span class="nav-text">Subsets II    </span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-15"><span class="nav-number">3.8.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-12"><span class="nav-number">3.8.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-15"><span class="nav-number">3.8.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Increasing-Subsequences"><span class="nav-number">3.9.</span> <span class="nav-text">Increasing Subsequences</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-16"><span class="nav-number">3.9.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-13"><span class="nav-number">3.9.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-16"><span class="nav-number">3.9.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gray-Code"><span class="nav-number">3.10.</span> <span class="nav-text">Gray Code</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-17"><span class="nav-number">3.10.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-14"><span class="nav-number">3.10.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-17"><span class="nav-number">3.10.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

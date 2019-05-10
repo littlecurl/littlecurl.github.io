@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="outline  例题1.Find Peak Element A peak element is an element that is greater than its neighbors. Given an input array where num[i] ≠ num[i+1], find a peak element and return its index. The array may co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】follow up">
+<meta property="og:url" content="http://yoursite.com/2018/02/26/【九章算法强化班】follow-up/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="outline  例题1.Find Peak Element A peak element is an element that is greater than its neighbors. Given an input array where num[i] ≠ num[i+1], find a peak element and return its index. The array may co">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-26-20-43-25.png">
+<meta property="og:updated_time" content="2018-02-28T07:35:25.015Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】follow up">
+<meta name="twitter:description" content="outline  例题1.Find Peak Element A peak element is an element that is greater than its neighbors. Given an input array where num[i] ≠ num[i+1], find a peak element and return its index. The array may co">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-26-20-43-25.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/26/【九章算法强化班】follow-up/"/>
+
+
+
+
+
+  <title>【九章算法强化班】follow up | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/26/【九章算法强化班】follow-up/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】follow up</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T15:07:15+08:00">
+                2018-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,265
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="outline"><a href="#outline" class="headerlink" title="outline"></a>outline</h2><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-26-20-43-25.png" alt=""> </p>
+<h2 id="例题1-Find-Peak-Element"><a href="#例题1-Find-Peak-Element" class="headerlink" title="例题1.Find Peak Element"></a>例题1.<a href="https://leetcode.com/problems/find-peak-element" target="_blank" rel="external">Find Peak Element</a></h2><blockquote>
+<p>A peak element is an element that is greater than its neighbors.</p>
+<p>Given an input array where <code>num[i] ≠ num[i+1]</code>, find a peak element and return its index.</p>
+<p>The array may contain multiple peaks, in that case return the index to any one of the peaks is fine.</p>
+<p>You may imagine that <code>num[-1] = num[n] = -∞</code>.</p>
+<p>For example, in array <code>[1, 2, 3, 1]</code>, 3 is a peak element and your function should return the index number 2.</p>
+</blockquote>
+<p>找局部最大值。</p>
+<p>思路：</p>
+<ol>
+<li><p>baseline：</p>
+<p>遍历，找到i：nums[i-1]&lt;num[i]&lt;num[i+1]</p>
+<p>复杂度<script type="math/tex">O(n)</script></p>
+</li>
+</ol>
+<ol>
+<li><p>优化：二分法</p>
+<p>首先我们找到中间节点mid，如果大于两边返回当前index就可以了，如果左边的节点比mid大，那么我们可以继续在左半区间查找，这里面一定存在一个peak，为什么这么说呢？假设此时的区间范围为[0, mid - 1]， 因为num[mid - 1]一定大于num[mid]了，如果num[mid - 2] &lt;= num[mid - 1]，那么num[mid - 1]就是一个peak。如果num[mid - 2] &gt; num[mid - 1]，那么我们就继续在[0, mid - 2]区间查找，因为num[-1]为负无穷，所以最终我们绝对能在左半区间找到一个peak。同理右半区间一样。</p>
+<p>复杂度<script type="math/tex">O(logn)</script></p>
+</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findPeakElement</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">         <span class="keyword">if</span>(nums.length == <span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//遇到这种需要判断元素左右的将start设为1，end设为len-2,放置越界</span></div><div class="line">        <span class="keyword">int</span> start = <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length-<span class="number">2</span>;</div><div class="line">        <span class="keyword">while</span>(start+<span class="number">1</span>&lt;end)&#123;</div><div class="line">            <span class="keyword">int</span> mid = start + (end-start)/<span class="number">2</span>;</div><div class="line">            <span class="keyword">if</span>((nums[mid] &gt; nums[mid+<span class="number">1</span>]) &amp;&amp; (nums[mid] &gt; nums[mid-<span class="number">1</span>]))&#123;</div><div class="line">                <span class="keyword">return</span> mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span>((nums[mid] &lt; nums[mid+<span class="number">1</span>]) &amp;&amp; (nums[mid] &lt; nums[mid-<span class="number">1</span>]))&#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span> ((nums[mid] &gt; nums[mid+<span class="number">1</span>]) &amp;&amp; (nums[mid] &lt; nums[mid-<span class="number">1</span>]))&#123;</div><div class="line">                end = mid;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                start = mid;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(nums[start] &lt; nums[end])&#123;</div><div class="line">            <span class="keyword">return</span>  end;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">return</span> start;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="follow-up-Find-Peak-Element-II"><a href="#follow-up-Find-Peak-Element-II" class="headerlink" title="follow up: Find Peak Element II"></a>follow up: Find Peak Element II</h3><p> 由一维拓展到二维，在矩阵上找peak element</p>
+<p>peak element：<code>matrix[i][j]</code> 比其上下左右相邻元素大</p>
+<p>思路：</p>
+<ol>
+<li><p>baseline：</p>
+<p>遍历</p>
+<p>复杂度复杂度<script type="math/tex">O(n^2)</script></p>
+</li>
+<li><p>优化：二分法</p>
+<ul>
+<li>找到中间行的最大值<code>matrix[i][j]</code></li>
+<li>跟相邻上下元素比较，决定向上/向下走</li>
+<li>如果上面的元素比较大，向上走，否则向下走</li>
+</ul>
+<p>复杂度<script type="math/tex">O(nlogn)</script></p>
+</li>
+<li><p>优化：行列交替二分</p>
+<ul>
+<li>找到中间行的最大值<code>matrix[i][j]</code> <script type="math/tex">O(n)</script></li>
+<li>跟相邻上下元素比较，决定向上/向下走 剩下一半矩阵</li>
+<li>找中间列的最大值<code>matrix[i][j]</code><script type="math/tex">O(n/2)</script></li>
+<li>跟相邻左右元素比较，决定向左/向右走 剩下n/4矩阵</li>
+</ul>
+<p>复杂度<script type="math/tex">O(n)</script></p>
+</li>
+</ol>
+<h2 id="例题2-Subarray-Sum"><a href="#例题2-Subarray-Sum" class="headerlink" title="例题2. Subarray Sum"></a>例题2. <a href="http://www.lintcode.com/en/problem/subarray-sum/" target="_blank" rel="external">Subarray Sum</a></h2><blockquote>
+<p>Given an integer array, find a subarray where the sum of numbers is <strong>zero</strong>. Your code should return the index of the first number and the index of the last number.</p>
+<p>Example</p>
+<p>Given <code>[-3, 1, 2, -3, 4]</code>, return <code>[0, 2]</code> or <code>[1, 3]</code>.</p>
+</blockquote>
+<p>找子数组，和为0</p>
+<p>思路：</p>
+<ol>
+<li><p>baseline:</p>
+<p>两指针遍历</p>
+<p>复杂度复杂度<script type="math/tex">O(n^2)</script></p>
+</li>
+<li><p>prefix sum:</p>
+<p>用hash表记录前缀和的取值</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">subarraySum</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        ArrayList&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        HashMap&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i  &lt; nums.length;i++)&#123;</div><div class="line">            sum += nums[i];</div><div class="line">            <span class="keyword">if</span>(sum == <span class="number">0</span>)&#123;</div><div class="line">                result.add(<span class="number">0</span>);</div><div class="line">                result.add(i);</div><div class="line">                <span class="keyword">return</span> result;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span>(map.containsKey(sum))&#123;</div><div class="line">                result.add(map.get(sum)+<span class="number">1</span>);</div><div class="line">                result.add(i);</div><div class="line">                <span class="keyword">return</span> result;</div><div class="line">            &#125;</div><div class="line">            map.put(sum,i);<span class="comment">//key是前缀和，value是idx</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="follow-up-1-Submatrix-Sum"><a href="#follow-up-1-Submatrix-Sum" class="headerlink" title="follow up 1: Submatrix Sum"></a>follow up 1: <a href="http://www.lintcode.com/en/problem/submatrix-sum/" target="_blank" rel="external">Submatrix Sum</a></h3><blockquote>
+<p>Given an integer matrix, find a submatrix where the sum of numbers is zero. Your code should return the coordinate of the left-up and right-down number.</p>
+<p>Example</p>
+<p>Given matrix</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; [</div><div class="line">&gt;   [1 ,5 ,7],</div><div class="line">&gt;   [3 ,7 ,-8],</div><div class="line">&gt;   [4 ,-8 ,9],</div><div class="line">&gt; ]</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>return <code>[(1,1), (2,2)]</code></p>
+</blockquote>
+<p>求元素和为0的子矩阵，返回矩阵的左上角和右下角元素位置</p>
+<p>思路：</p>
+<ol>
+<li><p>先定位子矩阵的首行和尾行（外层循环）</p>
+</li>
+<li><p>把首行和尾行之间的元素压成一行，变成一个数组</p>
+</li>
+<li><p>对上面的数组做subarray sum，找到和为0的子数组就可以定位子矩阵的首列和尾列。</p>
+<p>​</p>
+</li>
+</ol>
+<p>预计算presum矩阵：</p>
+<p><code>presum[i][j] = matrix[0][0]到matrix[i][j]的所有元素和</code></p>
+<p>当外层循环固定为l和h时，内层循环j从0开始遍历，矩阵的前缀和为<code>presum[h][j]-presum[l][j]</code></p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span>[][] submatrixSum(<span class="keyword">int</span>[][] matrix) &#123;</div><div class="line">    <span class="comment">// write your code here</span></div><div class="line">    <span class="keyword">int</span>[][] result = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>][<span class="number">2</span>];</div><div class="line">    <span class="keyword">int</span> rows = matrix.length;</div><div class="line">    <span class="keyword">if</span>(rows == <span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span> cols = matrix[<span class="number">0</span>].length;</div><div class="line">    <span class="keyword">if</span>(cols == <span class="number">0</span>)&#123;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">int</span>[][] presum = <span class="keyword">new</span> <span class="keyword">int</span>[rows+<span class="number">1</span>][cols+<span class="number">1</span>];</div><div class="line">    <span class="comment">//初始化</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows+<span class="number">1</span>;i++)&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; cols+<span class="number">1</span>;j++)&#123;</div><div class="line">            <span class="keyword">if</span>(i == <span class="number">0</span> || j == <span class="number">0</span>)&#123;</div><div class="line">                presum[i][j] = <span class="number">0</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                presum[i][j] = matrix[i-<span class="number">1</span>][j-<span class="number">1</span>] + presum[i-<span class="number">1</span>][j] + presum[i][j-<span class="number">1</span>] - presum[i-<span class="number">1</span>][j-<span class="number">1</span>];</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows;i++) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; rows + <span class="number">1</span>; j++) &#123;</div><div class="line">            HashMap&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap();</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt; cols + <span class="number">1</span>; k++) &#123;</div><div class="line">                <span class="keyword">int</span> diff = presum[j][k] - presum[i][k];</div><div class="line">                <span class="keyword">if</span> (map.containsKey(diff)) &#123;</div><div class="line">                    result[<span class="number">0</span>][<span class="number">0</span>] = i;</div><div class="line">                    result[<span class="number">0</span>][<span class="number">1</span>] = map.get(diff);</div><div class="line">                    result[<span class="number">1</span>][<span class="number">0</span>] = j-<span class="number">1</span>;</div><div class="line">                    result[<span class="number">1</span>][<span class="number">1</span>] = k-<span class="number">1</span>;</div><div class="line">                    <span class="keyword">return</span> result;</div><div class="line">                &#125; <span class="keyword">else</span> &#123;</div><div class="line">                    map.put(diff, k);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="follow-up-2-Subarray-Sum-II"><a href="#follow-up-2-Subarray-Sum-II" class="headerlink" title="follow up 2: Subarray Sum II"></a>follow up 2: Subarray Sum II</h3><p>给定一个数组nums和一个区间interval，返回nums数组中和在区间interval中的子数组个数，如nums = [1,2,3,4]，interval = [1,3],return 4,the possible answers are:[0,0],[0,1],[1,1],[2,2]</p>
+<p>思路：</p>
+<p>low &lt; prefix[j] - prefix[i] &lt; high</p>
+<p>low + prefix[i] &lt; prefix[j] &lt; high + prefix[i]</p>
+<p>prefix[i]  &lt;  prefix[j] - low</p>
+<p>prefix[i]  &gt; prefix[j] - high</p>
+<p>所以本题就是要找到在[prefix[j] - high , prefix[j] - low]范围内的prefix[i] </p>
+<p>由于prefix[i]是递增的，所以可以存在数组中，用二分法查找</p>
+<h2 id="例题3-Maximum-Subarray"><a href="#例题3-Maximum-Subarray" class="headerlink" title="例题3. Maximum Subarray"></a>例题3. <a href="https://leetcode.com/problems/maximum-subarray" target="_blank" rel="external">Maximum Subarray</a></h2><blockquote>
+<p>Find the contiguous subarray within an array (containing at least one number) which has the largest sum.</p>
+<p>For example, given the array <code>[-2,1,-3,4,-1,2,1,-5,4]</code>,<br>the contiguous subarray <code>[4,-1,2,1]</code> has the largest sum = <code>6</code>.</p>
+</blockquote>
+<p>找和最大的子数组</p>
+<p>思路：</p>
+<p>方法1：prefixsum</p>
+<p>维护最小的prefixsum和当前最大的子数组和</p>
+<p>方法2：dp</p>
+<p>dp[i] = max(dp[i-1] + num[i],num[i])</p>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArray</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        <span class="keyword">int</span> maxVal = nums[<span class="number">0</span>];</div><div class="line">        dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; nums.length;i++)&#123;</div><div class="line">            dp[i] = Math.max(nums[i],dp[i-<span class="number">1</span>]+nums[i]);</div><div class="line">            maxVal = Math.max(maxVal,dp[i]);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> maxVal;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="follow-up-循环连续子数组"><a href="#follow-up-循环连续子数组" class="headerlink" title="follow up 循环连续子数组"></a>follow up 循环连续子数组</h2><p>上题的数组变成循环数组。</p>
+<p>处理循环数组三种方法：</p>
+<ol>
+<li>拆开</li>
+<li>扩展</li>
+<li>取反</li>
+</ol>
+<p>分别看对于这道题是否可行：</p>
+<ol>
+<li><p>拆开</p>
+<p>house robber用到了这个方法，抢第一个就不能抢最后一个，抢最后一个就不能抢第一个</p>
+</li>
+<li><p>扩展</p>
+<p>将数组翻一倍，[-3, 1, 3, -3, 4]变成[-3, 1, 3, -3, 4,-3,1,3,-3]，然后找最大子数组，但是长度不能超过nums的长度。</p>
+</li>
+<li><p>取反</p>
+<p>找循环数组中的最大子数组，有两种情况：</p>
+<ol>
+<li>在数组的中部，正常找就行了</li>
+<li>一半在数组后面，一半在数组头部，因为数组的总和是一定的，因此这种情况可以转化成在数组中部找最小的子数组</li>
+</ol>
+<p>然后取上面两种情况的最大值。</p>
+<p>​</p>
+</li>
+</ol>
+<h2 id="例题4-Wiggle-Sort"><a href="#例题4-Wiggle-Sort" class="headerlink" title="例题4.  Wiggle Sort"></a>例题4.  <a href="https://leetcode.com/problems/wiggle-sort" target="_blank" rel="external">Wiggle Sort</a></h2><blockquote>
+<p>Given an unsorted array <code>nums</code>, reorder it <strong>in-place</strong> such that <code>nums[0] &lt;= nums[1] &gt;= nums[2] &lt;= nums[3]...</code>.</p>
+<p>For example, given <code>nums = [3, 5, 2, 1, 6, 4]</code>, one possible answer is <code>[1, 6, 2, 5, 3, 4]</code>.</p>
+</blockquote>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wiggleSort</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        Arrays.sort(nums);</div><div class="line">        <span class="keyword">int</span> start = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> end = nums.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">int</span>[] copy = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(start &lt;= end)&#123;</div><div class="line">            <span class="keyword">if</span> (flag == <span class="keyword">false</span>)&#123;</div><div class="line">                copy[idx] = nums[start];</div><div class="line">                start++;</div><div class="line">                flag = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                copy[idx] = nums[end];</div><div class="line">                end--;</div><div class="line">                flag = <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            idx++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; nums.length;i++)&#123;</div><div class="line">            nums[i] = copy[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="follow-up-Wiggle-Sort-II"><a href="#follow-up-Wiggle-Sort-II" class="headerlink" title="follow up Wiggle Sort II"></a>follow up <a href="https://leetcode.com/problems/wiggle-sort-ii" target="_blank" rel="external">Wiggle Sort II</a></h3><blockquote>
+<p>Given an unsorted array <code>nums</code>, reorder it such that <code>nums[0] &lt; nums[1] &gt; nums[2] &lt; nums[3]...</code>.</p>
+<p><strong>Example:</strong><br>(1) Given <code>nums = [1, 5, 1, 1, 6, 4]</code>, one possible answer is <code>[1, 4, 1, 5, 1, 6]</code>.<br>(2) Given <code>nums = [1, 3, 2, 2, 3, 1]</code>, one possible answer is <code>[2, 3, 1, 3, 1, 2]</code>.</p>
+</blockquote>
+<p>思路：</p>
+<ol>
+<li><p>baseline：</p>
+<p>对数组排序，排序之后将数组分成大小两堆，然后依次选取排序</p>
+</li>
+<li><p>quick sort思想</p>
+<p>利用quick sort 找到中点，然后对左右两边元素一次选取排序</p>
+</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">wiggleSort</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        Arrays.sort(nums);</div><div class="line">        <span class="keyword">int</span> end = nums.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> mid = end/<span class="number">2</span>;</div><div class="line">        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">int</span>[] copy = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(idx &lt; nums.length)&#123;</div><div class="line">            <span class="keyword">if</span> (flag == <span class="keyword">false</span>)&#123;</div><div class="line">                copy[idx] = nums[mid];</div><div class="line">                mid--;</div><div class="line">                flag = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                copy[idx] = nums[end];</div><div class="line">                end--;</div><div class="line">                flag = <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            idx++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.length;i++)&#123;</div><div class="line">            nums[i] = copy[i];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="例题5-Building-Post-Office-Best-Meeting-Point"><a href="#例题5-Building-Post-Office-Best-Meeting-Point" class="headerlink" title="例题5. Building Post Office Best Meeting Point"></a>例题5. Building Post Office <a href="https://leetcode.com/problems/best-meeting-point" target="_blank" rel="external">Best Meeting Point</a></h2><blockquote>
+<p>A group of two or more people wants to meet and minimize the total travel distance. You are given a 2D grid of values 0 or 1, where each 1 marks the home of someone in the group. The distance is calculated using <a href="http://en.wikipedia.org/wiki/Taxicab_geometry" target="_blank" rel="external">Manhattan Distance</a>, where distance(p1, p2) = <code>|p2.x - p1.x| + |p2.y - p1.y|</code>.</p>
+<p>For example, given three people living at <code>(0,0)</code>, <code>(0,4)</code>, and <code>(2,2)</code>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 1 - 0 - 0 - 0 - 1</div><div class="line">&gt; |   |   |   |   |</div><div class="line">&gt; 0 - 0 - 0 - 0 - 0</div><div class="line">&gt; |   |   |   |   |</div><div class="line">&gt; 0 - 0 - 1 - 0 - 0</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>The point <code>(0,2)</code> is an ideal meeting point, as the total travel distance of 2+2+2=6 is minimal. So return 6.</p>
+</blockquote>
+<p>思路：</p>
+<ol>
+<li><p>baseline：</p>
+<p>遍历所有位置，计算每个位置到所有人的距离，取最小的</p>
+</li>
+<li><p>优化：</p>
+<p>看成一维，对于所有人来说，meeting point选在所有人的中位数的位置距离和最近，因此对行和列坐标分别选取中位数，得到meeting point</p>
+</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minTotalDistance</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</div><div class="line">        List&lt;Integer&gt; rows = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List&lt;Integer&gt; cols = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        <span class="comment">//int  num = 0;</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; grid.length;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span> ; j &lt;grid[<span class="number">0</span>].length;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="number">1</span>)&#123;</div><div class="line">                    rows.add(i);</div><div class="line">                    cols.add(j);</div><div class="line">                    <span class="comment">//num++;</span></div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> num = rows.size()/<span class="number">2</span>;</div><div class="line">        Collections.sort(rows);</div><div class="line">        Collections.sort(cols);</div><div class="line">        <span class="keyword">int</span> x = rows.get(num);</div><div class="line">        <span class="keyword">int</span> y = cols.get(num);</div><div class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; rows.size();i++)&#123;</div><div class="line">            result += Math.abs(x- rows.get(i));</div><div class="line">            result += Math.abs(y- cols.get(i));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="follow-up1-Shortest-Distance-from-All-Buildings"><a href="#follow-up1-Shortest-Distance-from-All-Buildings" class="headerlink" title="follow up1. Shortest Distance from All Buildings"></a>follow up1. <a href="https://leetcode.com/problems/shortest-distance-from-all-buildings" target="_blank" rel="external">Shortest Distance from All Buildings</a></h3><blockquote>
+<p>You want to build a house on an <em>empty</em> land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values <strong>0</strong>, <strong>1</strong> or <strong>2</strong>, where:</p>
+<ul>
+<li>Each <strong>0</strong> marks an empty land which you can pass by freely.</li>
+<li>Each <strong>1</strong> marks a building which you cannot pass through.</li>
+<li>Each <strong>2</strong> marks an obstacle which you cannot pass through.</li>
+</ul>
+<p>For example, given three buildings at <code>(0,0)</code>, <code>(0,4)</code>, <code>(2,2)</code>, and an obstacle at <code>(0,2)</code>:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; 1 - 0 - 2 - 0 - 1</div><div class="line">&gt; |   |   |   |   |</div><div class="line">&gt; 0 - 0 - 0 - 0 - 0</div><div class="line">&gt; |   |   |   |   |</div><div class="line">&gt; 0 - 0 - 1 - 0 - 0</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>The point <code>(1,2)</code> is an ideal empty land to build a house, as the total travel distance of 3+3+1=7 is minimal. So return 7.</p>
+</blockquote>
+<p>思路：</p>
+<ol>
+<li><p>baseline：</p>
+<p>bfs，计算每个点到所有人的距离，取距离和最小的</p>
+<p>时间复杂度：外层循环<script type="math/tex">O(n^2)</script> 然后内层bfs<script type="math/tex">O(n^2)</script>，因此时间复杂度<script type="math/tex">O(n^4)</script></p>
+</li>
+<li><p>反向bfs</p>
+<p>计算每个人到所有位置的距离<code>dis[k][i][j]</code> ，复杂度<script type="math/tex">O(n^2)</script></p>
+<p>然后再遍历矩阵中每一个点，查询距离，取最小值，复杂度<script type="math/tex">O(n^2)</script></p>
+<p>因此时间复杂度<script type="math/tex">O(n^2)</script></p>
+</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="comment">//计算到所有空地的距离</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">bfs</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">int</span> idx,<span class="keyword">int</span>[][][] distance,<span class="keyword">int</span> rows, <span class="keyword">int</span> cols,<span class="keyword">int</span>[][] grid)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span>[] x_delta = &#123;<span class="number">1</span>,-<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>&#125;;</div><div class="line">        <span class="keyword">int</span>[] y_delta = &#123;<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,-<span class="number">1</span>&#125;;</div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        queue.add(i*cols+j);</div><div class="line">        <span class="keyword">int</span> dis = <span class="number">1</span>;</div><div class="line">        <span class="keyword">while</span>(!queue.isEmpty())&#123;</div><div class="line">            <span class="keyword">int</span> size = queue.size();</div><div class="line">            <span class="keyword">while</span>(size &gt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">int</span> val = queue.poll();</div><div class="line">                <span class="keyword">int</span> x = val/cols;</div><div class="line">                <span class="keyword">int</span> y = val % cols;</div><div class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> ii = <span class="number">0</span>; ii &lt; <span class="number">4</span>;ii++)&#123;</div><div class="line">                    <span class="keyword">int</span> x_new = x + x_delta[ii];</div><div class="line">                    <span class="keyword">int</span> y_new = y + y_delta[ii];</div><div class="line">                    <span class="keyword">if</span>(x_new &gt;= <span class="number">0</span> &amp;&amp; x_new &lt; rows &amp;&amp; y_new &gt;= <span class="number">0</span> &amp;&amp; y_new &lt;cols) &#123;</div><div class="line">                        <span class="keyword">if</span>(grid[x_new][y_new] == <span class="number">0</span> &amp;&amp; distance[idx][x_new][y_new] == <span class="number">0</span>)&#123;</div><div class="line">                            distance[idx][x_new][y_new] = dis;</div><div class="line">                            queue.add(x_new * cols + y_new);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">                size--;</div><div class="line">            &#125;</div><div class="line">            dis++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">shortestDistance</span><span class="params">(<span class="keyword">int</span>[][] grid)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = grid.length;</div><div class="line">        <span class="keyword">if</span>(rows == <span class="number">0</span>)&#123;<span class="keyword">return</span> -<span class="number">1</span>;&#125;</div><div class="line">        <span class="keyword">int</span> cols = grid[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">if</span>(cols == <span class="number">0</span>)&#123;<span class="keyword">return</span> -<span class="number">1</span>;&#125;</div><div class="line">        <span class="comment">//计算有多少个1</span></div><div class="line">        <span class="keyword">int</span> count = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; cols;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="number">1</span>)&#123;</div><div class="line">                    count++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span>[][][] distance = <span class="keyword">new</span> <span class="keyword">int</span>[count][rows][cols];</div><div class="line">        <span class="comment">//计算（i,j）到所有0点的距离</span></div><div class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; cols;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="number">1</span>)&#123;</div><div class="line">                    bfs(i,j,idx,distance,rows,cols,grid);</div><div class="line">                    idx++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> minDist = Integer.MAX_VALUE;</div><div class="line">        <span class="comment">//找距离和最短的</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; rows;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; cols;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="number">0</span>)&#123;</div><div class="line">                    <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">                    <span class="keyword">boolean</span> flag = <span class="keyword">true</span>;</div><div class="line">                    <span class="keyword">for</span>(<span class="keyword">int</span> k = <span class="number">0</span>;k &lt; distance.length;k++)&#123;</div><div class="line">                        <span class="keyword">if</span>(distance[k][i][j] == <span class="number">0</span>)&#123;</div><div class="line">                            flag = <span class="keyword">false</span>;</div><div class="line">                            <span class="keyword">break</span>;</div><div class="line">                        &#125;</div><div class="line">                        <span class="keyword">else</span>&#123;</div><div class="line">                            sum += distance[k][i][j];</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">if</span>(flag)&#123;</div><div class="line">                        minDist = Math.min(minDist,sum);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(minDist == Integer.MAX_VALUE)&#123;</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> minDist;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="follow-up-2-Bomb-Enemy"><a href="#follow-up-2-Bomb-Enemy" class="headerlink" title="follow up 2. Bomb Enemy"></a>follow up 2. <a href="https://leetcode.com/problems/bomb-enemy" target="_blank" rel="external">Bomb Enemy</a></h3><blockquote>
+<p>Given a 2D grid, each cell is either a wall <code>&#39;W&#39;</code>, an enemy <code>&#39;E&#39;</code> or empty <code>&#39;0&#39;</code> (the number zero), return the maximum enemies you can kill using one bomb.<br>The bomb kills all the enemies in the same row and column from the planted point until it hits the wall since the wall is too strong to be destroyed.<br>Note that you can only put the bomb at an empty cell.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; For the given grid</div><div class="line">&gt;</div><div class="line">&gt; 0 E 0 0</div><div class="line">&gt; E 0 W E</div><div class="line">&gt; 0 E 0 0</div><div class="line">&gt;</div><div class="line">&gt; return 3. (Placing a bomb at (1,1) kills 3 enemies)</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>思路：</p>
+<ol>
+<li><p>baseline：</p>
+<p>bfs，计算每个点能够炸到的到所有人</p>
+<p>时间复杂度：外层循环<script type="math/tex">O(n^2)</script> 然后内层<script type="math/tex">O(n)</script>，因此时间复杂度<script type="math/tex">O(n^3)</script></p>
+</li>
+<li><p>反向bfs</p>
+<p>申请四个数组：</p>
+<p><code>left[i][j]:在(i,j)放炸弹，向左最多炸人数</code></p>
+<p><code>right[i][j]:在(i,j)放炸弹，向右最多炸人数</code></p>
+<p><code>up[i][j]:在(i,j)放炸弹，向上最多炸人数</code></p>
+<p><code>dowm[i][j]:在(i,j)放炸弹，向下最多炸人数</code></p>
+<p>将四个数组相加就得到在(i,j)放炸弹，总共炸人数</p>
+<p>因此时间复杂度<script type="math/tex">O(n^2)</script> </p>
+</li>
+</ol>
+<p>代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BombEnemy</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxKilledEnemies</span><span class="params">(<span class="keyword">char</span>[][] grid)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> rows = grid.length;</div><div class="line">        <span class="keyword">if</span>(rows == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> cols = grid[<span class="number">0</span>].length;</div><div class="line">        <span class="keyword">if</span>(cols == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span>[][] left = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">        <span class="keyword">int</span>[][] right = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">        <span class="keyword">int</span>[][] up = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">        <span class="keyword">int</span>[][] down = <span class="keyword">new</span> <span class="keyword">int</span>[rows][cols];</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; rows;i++)&#123;</div><div class="line">            <span class="keyword">int</span> leftsum = <span class="number">0</span>;</div><div class="line">            <span class="keyword">int</span> rightsum = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; cols;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="string">'0'</span>)&#123; left[i][j] = leftsum; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="string">'W'</span>)&#123; leftsum = <span class="number">0</span>; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[i][j] == <span class="string">'E'</span>)&#123; leftsum++; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[i][cols-<span class="number">1</span>-j] == <span class="string">'0'</span>)&#123; right[i][cols-<span class="number">1</span>-j] = rightsum; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[i][cols-<span class="number">1</span>-j] == <span class="string">'W'</span>)&#123; rightsum = <span class="number">0</span>; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[i][cols-<span class="number">1</span>-j] == <span class="string">'E'</span>)&#123; rightsum++; &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; cols;i++)&#123;</div><div class="line">            <span class="keyword">int</span> upsum = <span class="number">0</span>;</div><div class="line">            <span class="keyword">int</span> downsum = <span class="number">0</span>;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; rows;j++)&#123;</div><div class="line">                <span class="keyword">if</span>(grid[j][i] == <span class="string">'0'</span>)&#123; up[j][i] = upsum; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[j][i] == <span class="string">'W'</span>)&#123; upsum = <span class="number">0</span>; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[j][i] == <span class="string">'E'</span>)&#123; upsum++; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[rows-<span class="number">1</span>-j][i] == <span class="string">'0'</span>)&#123; down[rows-<span class="number">1</span>-j][i] = downsum; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[rows-<span class="number">1</span>-j][i] == <span class="string">'W'</span>)&#123; downsum = <span class="number">0</span>; &#125;</div><div class="line">                <span class="keyword">if</span>(grid[rows-<span class="number">1</span>-j][i] == <span class="string">'E'</span>)&#123; downsum++; &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> maxnum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; rows;i++)&#123;</div><div class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; cols;j++)&#123;</div><div class="line">                maxnum = Math.max(maxnum,left[i][j] + right[i][j] + up[i][j] + down[i][j]);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> maxnum;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="例题6-N个数组的第K大问题"><a href="#例题6-N个数组的第K大问题" class="headerlink" title="例题6. N个数组的第K大问题"></a>例题6. N个数组的第K大问题</h2><p>在N个数组中找到第K大的元素</p>
+<p>排序+heap</p>
+<p>类似merge K sorted list</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/08/【数据结构】线段树/" rel="next" title="【leetcode】线段树">
+                <i class="fa fa-chevron-left"></i> 【leetcode】线段树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/05/【九章系统设计】一致性哈希-短网址系统设计/" rel="prev" title="【九章系统设计】一致性哈希&短网址系统设计">
+                【九章系统设计】一致性哈希&短网址系统设计 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#outline"><span class="nav-number">1.</span> <span class="nav-text">outline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题1-Find-Peak-Element"><span class="nav-number">2.</span> <span class="nav-text">例题1.Find Peak Element</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-up-Find-Peak-Element-II"><span class="nav-number">2.1.</span> <span class="nav-text">follow up: Find Peak Element II</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题2-Subarray-Sum"><span class="nav-number">3.</span> <span class="nav-text">例题2. Subarray Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-up-1-Submatrix-Sum"><span class="nav-number">3.1.</span> <span class="nav-text">follow up 1: Submatrix Sum</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-up-2-Subarray-Sum-II"><span class="nav-number">3.2.</span> <span class="nav-text">follow up 2: Subarray Sum II</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题3-Maximum-Subarray"><span class="nav-number">4.</span> <span class="nav-text">例题3. Maximum Subarray</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#follow-up-循环连续子数组"><span class="nav-number">5.</span> <span class="nav-text">follow up 循环连续子数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题4-Wiggle-Sort"><span class="nav-number">6.</span> <span class="nav-text">例题4.  Wiggle Sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-up-Wiggle-Sort-II"><span class="nav-number">6.1.</span> <span class="nav-text">follow up Wiggle Sort II</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题5-Building-Post-Office-Best-Meeting-Point"><span class="nav-number">7.</span> <span class="nav-text">例题5. Building Post Office Best Meeting Point</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-up1-Shortest-Distance-from-All-Buildings"><span class="nav-number">7.1.</span> <span class="nav-text">follow up1. Shortest Distance from All Buildings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#follow-up-2-Bomb-Enemy"><span class="nav-number">7.2.</span> <span class="nav-text">follow up 2. Bomb Enemy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例题6-N个数组的第K大问题"><span class="nav-number">8.</span> <span class="nav-text">例题6. N个数组的第K大问题</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="outline Design User System用户系统 Mencached 优化数据库查询软件 Authentication 用户验证 SQL VS NoSQL 如何选取数据库 Friendship 存储好友关系（不用graph DB用什么）   How to Scale? Sharding Consistent Hashing(第5节) Replica(第5节)    4S分析法 Scen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章系统设计】从用户系统理解数据库和缓存">
+<meta property="og:url" content="http://yoursite.com/2018/01/30/【九章系统设计】从用户系统理解数据库和缓存/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="outline Design User System用户系统 Mencached 优化数据库查询软件 Authentication 用户验证 SQL VS NoSQL 如何选取数据库 Friendship 存储好友关系（不用graph DB用什么）   How to Scale? Sharding Consistent Hashing(第5节) Replica(第5节)    4S分析法 Scen">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-31-00-30-58.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-01-23-23-56.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-01-23-28-05.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-21-40-11.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-21-40-30.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-01-23-44-43.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-19-50.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-31-39.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-34-58.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-46-37.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-48-30.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-46-59.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-11-14-51-02.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-11-15-10-31.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-11-16-25-51.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-11-16-30-49.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-11-17-38-23.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-11-17-42-48.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-01-27-15-54-58.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-01-27-15-56-25.png">
+<meta property="og:updated_time" content="2018-03-05T07:25:13.315Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章系统设计】从用户系统理解数据库和缓存">
+<meta name="twitter:description" content="outline Design User System用户系统 Mencached 优化数据库查询软件 Authentication 用户验证 SQL VS NoSQL 如何选取数据库 Friendship 存储好友关系（不用graph DB用什么）   How to Scale? Sharding Consistent Hashing(第5节) Replica(第5节)    4S分析法 Scen">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-01-31-00-30-58.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/30/【九章系统设计】从用户系统理解数据库和缓存/"/>
+
+
+
+
+
+  <title>【九章系统设计】从用户系统理解数据库和缓存 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/30/【九章系统设计】从用户系统理解数据库和缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章系统设计】从用户系统理解数据库和缓存</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-30T23:49:17+08:00">
+                2018-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/系统设计/" itemprop="url" rel="index">
+                    <span itemprop="name">系统设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,232
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="outline"><a href="#outline" class="headerlink" title="outline"></a>outline</h1><ul>
+<li>Design User System用户系统<ul>
+<li>Mencached 优化数据库查询软件</li>
+<li>Authentication 用户验证</li>
+<li>SQL VS NoSQL 如何选取数据库</li>
+<li>Friendship 存储好友关系（不用graph DB用什么）</li>
+</ul>
+</li>
+<li>How to Scale?<ul>
+<li>Sharding</li>
+<li>Consistent Hashing(第5节)</li>
+<li>Replica(第5节)</li>
+</ul>
+</li>
+</ul>
+<h1 id="4S分析法"><a href="#4S分析法" class="headerlink" title="4S分析法"></a>4S分析法</h1><ul>
+<li><p>Scenario场景</p>
+<ul>
+<li><p>注册、登录、查询、用户修改信息</p>
+<p>哪个需求量最大？查询最大，因为用户登录时给他展示的各种信息邓邓就是通过查询出来的结果</p>
+</li>
+<li><p>支持100M DAU(每日登录用户数)</p>
+</li>
+<li><p>注册，登录，信息修改QPS约：</p>
+<ul>
+<li>100M*0.1/86400 ~ 100</li>
+<li>0.1=平均每个用户每天登陆+注册+信息修改</li>
+<li>Peak = 100*3 = 300</li>
+</ul>
+</li>
+<li><p>查询的QPS约为：</p>
+<ul>
+<li>100M*100/86400 ~ 100k</li>
+<li>100 = 平均每个用户每天查询与用户信息相关的操作次数（查看好友、发信息，更新消息主页等）</li>
+<li>Peak = 100k*3 = 300K</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Service服务</p>
+<ul>
+<li>一个AuthService 负责登录注册</li>
+<li>一个UserService 负责用户信息与存储</li>
+<li>一个FriendshipService存储好友关系</li>
+</ul>
+</li>
+<li><p>Storage:QPS与常用数据存储系统</p>
+<ul>
+<li>MySQL/PostgreSQL等数据库性能<ul>
+<li>约1kQPS</li>
+</ul>
+</li>
+<li>MongoDB/Cassandra等硬盘性NoSQL数据库<ul>
+<li>约10QPS</li>
+</ul>
+</li>
+<li>Redis/memcached等内存型NoSQL数据库性能<ul>
+<li>100k~1mQPS</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Scale</p>
+<p>根据上面的QPS分析，注册、登录、信息修改300QPS，用mysql应该就够了</p>
+<p>用户查询适合什么样的数据存储系统？</p>
+</li>
+</ul>
+<h1 id="1-缓存"><a href="#1-缓存" class="headerlink" title="1. 缓存"></a>1. 缓存</h1><h2 id="1-1-Cache"><a href="#1-1-Cache" class="headerlink" title="1.1 Cache"></a>1.1 Cache</h2><p><strong>用户系统特点：读非常多，写非常少，一定要用Cache进行优化</strong></p>
+<ul>
+<li>Cache 是什么？<ul>
+<li>缓存，把之后可能要查询的东西先存一下<ul>
+<li>下次用的时候直接从这里拿，无需重新计算和存取数据库</li>
+</ul>
+</li>
+<li>可以理解为一个Java中的HashMap</li>
+<li>key-value的结构</li>
+</ul>
+</li>
+<li>有哪些常用的Cache软件？<ul>
+<li>memcached（不支持数据持久化）</li>
+<li>Redis(支持数据持久化)</li>
+</ul>
+</li>
+<li>Cache一定存在内存中么？<ul>
+<li>不是</li>
+<li>Cache是用于连接不同的介质，解决速度差异的问题</li>
+<li>File System有时候也是一种cache</li>
+<li>CPU也有Cache</li>
+<li>内存是硬盘和CPU的cache</li>
+</ul>
+</li>
+<li>Cache一定是Server Cache 么?<ul>
+<li>不，浏览器也可能有客户端的cache</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-2-Mem-Cache"><a href="#1-2-Mem-Cache" class="headerlink" title="1.2 Mem-Cache"></a>1.2 Mem-Cache</h2><p>内存中的Cache</p>
+<p>Memcached：一个内存cache软件，就看成hashmap用</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-01-31-00-30-58.png" alt=""> </p>
+<p>memcached如何优化DB的查询?</p>
+<p>先去cache中查找，如果没有，再去DB中查找：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-01-23-23-56.png" alt=""> </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-01-23-28-05.png" alt=""> </p>
+<p>分析：</p>
+<p>我们认为database中的才是最正确的</p>
+<p>A：database set时可能会出现问题，但没有太大问题，比如你发了一条微博，显示没成功。</p>
+<p>但是如果database成功了，cache更新失败了，那么用户得到的数据都是更新之前的数据。</p>
+<p>B：如果cache成功了，但是database没有成功，cache里存的不是database中的真正数据，看成脏数据。</p>
+<p>C：如果cache delete成功了，但是database更新失败，没关系，还可以去database里面读取</p>
+<p>D：如果database 修改成功了，但是cache失败了，此时用户从cache读取的就是之前的数据</p>
+<p>相比之下C比较好，但是C也存在一定的问题：</p>
+<p>比如第8行和第9行程序，如果我们刚刚获取了user但是这个时候有另一个进程修改了用户信息，此时再更新cache中的user信息就是旧数据了。</p>
+<h2 id="1-3-Cache-Aside-和-Cache-Through"><a href="#1-3-Cache-Aside-和-Cache-Through" class="headerlink" title="1.3 Cache Aside 和 Cache Through"></a>1.3 Cache Aside 和 Cache Through</h2><h3 id="Cache-Aside"><a href="#Cache-Aside" class="headerlink" title="Cache Aside"></a>Cache Aside</h3><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-21-40-11.png" alt=""> </p>
+<p>前面代码中的例子就是Cache Aside，需要分别对Cache和DB进行操作，这样就会造成不同步的后果</p>
+<h3 id="Cache-Through"><a href="#Cache-Through" class="headerlink" title="Cache Through"></a>Cache Through</h3><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-21-40-30.png" alt=""> </p>
+<h1 id="2-Service-服务"><a href="#2-Service-服务" class="headerlink" title="2. Service 服务"></a>2. Service 服务</h1><h2 id="2-1-Authentication-Service"><a href="#2-1-Authentication-Service" class="headerlink" title="2.1. Authentication Service"></a>2.1. Authentication Service</h2><ul>
+<li>如何实现用户登录和保持登录</li>
+<li>会话表，session</li>
+</ul>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-01-23-44-43.png" alt=""> </p>
+<ul>
+<li>用户Login之后<ul>
+<li>创建一个session对象</li>
+<li>并把seesion_key作为cookie返回给浏览器</li>
+<li>浏览器将该值记录在浏览器的cookie中</li>
+<li>用户每次想服务器发送的访问，都会自动带上该网站所有的cookie</li>
+<li>此时服务器检测到cookie中的session_key是有效的，就认为用户登录了</li>
+</ul>
+</li>
+<li>用户logout之后，从session table中删除对应的数据</li>
+<li>Session table存在哪？<ul>
+<li>数据库？</li>
+<li>缓存？</li>
+<li>都可以？</li>
+<li>理论上都可以的，但是如果只存在cache中，一旦负责cache的机器宕机，就会有很多用户同时需要重新登录，所以存在数据库里更好一些，如果访问用户多的话，可以用cache做优化。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-2-Friendship-Service"><a href="#2-2-Friendship-Service" class="headerlink" title="2.2. Friendship Service"></a>2.2. Friendship Service</h2><h3 id="好友关系分类"><a href="#好友关系分类" class="headerlink" title="好友关系分类"></a>好友关系分类</h3><ul>
+<li><p>单向好友关系（微博、twitter、Instagram）</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-19-50.png" alt=""> </p>
+</li>
+</ul>
+<ul>
+<li><p>双向好友关系（微信、Facebook）</p>
+<ul>
+<li><p>方案一：存为两条信息，A关注了B，B关注了A</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-31-39.png" alt=""> </p>
+</li>
+<li><p>方案二：存为一条信息，但查询的时候需要查询两次</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-34-58.png" alt=""> </p>
+</li>
+</ul>
+</li>
+<li><p>好友关系所涉及的操作非常简单，基本都是Key-value</p>
+<ul>
+<li>求某个user的所有关注对象</li>
+<li>求某个user的所有粉丝</li>
+<li>A关注B → 插入一条数据</li>
+<li>B关注A → 删除一条数据</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3-小结"><a href="#2-3-小结" class="headerlink" title="2.3. 小结"></a>2.3. 小结</h2><ul>
+<li>对于用户系统而言：<ul>
+<li>写很少</li>
+<li>读很多</li>
+</ul>
+</li>
+<li>写操作很少，意味着<ul>
+<li>从QPS角度来说，一台mysql就够了</li>
+</ul>
+</li>
+<li>读操作很多，意味着<ul>
+<li>可以使用memcached进行读操作的缓存优化</li>
+</ul>
+</li>
+<li>进一步的问题，如果读写操作都很多怎么办？<ul>
+<li>方法一：使用更多的数据库服务器分摊流量</li>
+<li>方法二：使用像Redis这样的读写操作都很快的Cache-through型数据库<ul>
+<li>Memcached是一个Cached-aside型的database,Client需要自己负责管理Cache-miss时的数据的loading</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-Storage-数据库的选取"><a href="#3-Storage-数据库的选取" class="headerlink" title="3. Storage 数据库的选取"></a>3. Storage 数据库的选取</h1><h2 id="3-1-数据库的选取原则SQL-vs-NoSQL"><a href="#3-1-数据库的选取原则SQL-vs-NoSQL" class="headerlink" title="3.1. 数据库的选取原则SQL vs NoSQL"></a>3.1. 数据库的选取原则SQL vs NoSQL</h2><ol>
+<li><p>大部分情况用SQL和noSQL都可以</p>
+</li>
+<li><p>需要支持transaction的话不能选用NoSQL</p>
+<p>什么是transaction？（交易）</p>
+<p>transaction需要数据处理同时成立，比如在银行转账，A转给B10元，需要A-10和B+10同时成立</p>
+</li>
+<li><p>SQL型的数据库比较成熟，可以帮你做很多事，但是NoSQL很多事都要亲力亲为，比如序列化，多级索引</p>
+</li>
+<li><p>如果想省点服务器获得更高的性能，NoSQL更好，硬盘型的NoSQL比SQL一般要快10倍以上</p>
+</li>
+</ol>
+<h2 id="3-2-好友关系的存储"><a href="#3-2-好友关系的存储" class="headerlink" title="3.2. 好友关系的存储"></a>3.2. 好友关系的存储</h2><ol>
+<li><p>存在SQL</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-46-37.png" alt=""> </p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-48-30.png" alt=""> </p>
+</li>
+<li><p>存在NoSQL</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-10-22-46-59.png" alt=""> </p>
+</li>
+</ol>
+<h2 id="3-3-以Cassandra为例剖析经典的NOSQL数据结构"><a href="#3-3-以Cassandra为例剖析经典的NOSQL数据结构" class="headerlink" title="3.3. 以Cassandra为例剖析经典的NOSQL数据结构"></a>3.3. 以Cassandra为例剖析经典的NOSQL数据结构</h2><h4 id="Cassandra是一个三层结构-三元组结构-的NoSQL数据库"><a href="#Cassandra是一个三层结构-三元组结构-的NoSQL数据库" class="headerlink" title="Cassandra是一个三层结构(三元组结构)的NoSQL数据库:"></a>Cassandra是一个三层结构(三元组结构)的NoSQL数据库:</h4><p><strong>插入数据：insert(row_key,column_key,value)</strong></p>
+<ol>
+<li>第一层：row_key<ul>
+<li>又称为hash_key，cassandra会根据这个key计算一个hash值，然后决定这条数据存在哪</li>
+<li>是传统我们所说的key-value中的key</li>
+<li>任何查询都需要带上这个key，但无法进行range query</li>
+<li>最常用的row_key:uer_id</li>
+</ul>
+</li>
+<li>第二层：column_key<ul>
+<li>是排序的，可以进行range query</li>
+<li>可以按column指定顺序排序，支持按column范围查询query(row_key,column_start,column_end)</li>
+<li>可以是复合值，比如是一个timestamp+user_id的组合</li>
+</ul>
+</li>
+<li>第三层：value<ul>
+<li>一般是string</li>
+<li>如果需要存很多信息的话，可以自己做序列化</li>
+</ul>
+</li>
+</ol>
+<h4 id="SQL-vs-NoSQL"><a href="#SQL-vs-NoSQL" class="headerlink" title="SQL  vs NoSQL"></a>SQL  vs NoSQL</h4><ul>
+<li><p>SQL的一条数据以行为单位，取出整个row作为一条数据</p>
+</li>
+<li><p>SQL的column实在Schema中事先指定好的，不能随意添加。</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-11-14-51-02.png" alt=""> </p>
+</li>
+<li><p>NoSQL的column是动态的，无限大，可以随意添加</p>
+</li>
+<li><p>一条数据以grid为单位，row_key + column_key + value = 一条数据</p>
+</li>
+<li><p>只需要提前定义好column_key本身的格式（是int还是int+string）</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-11-15-10-31.png" alt=""> </p>
+</li>
+</ul>
+<h4 id="Cassandra存储friendship"><a href="#Cassandra存储friendship" class="headerlink" title="Cassandra存储friendship"></a>Cassandra存储friendship</h4><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-11-16-25-51.png" alt=""> </p>
+<p> 重要的信息，需要频繁查的信息不能放在value中，要放在column_key中</p>
+<h4 id="Cassandra存储NewsFeed"><a href="#Cassandra存储NewsFeed" class="headerlink" title="Cassandra存储NewsFeed"></a>Cassandra存储NewsFeed</h4><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-11-16-30-49.png" alt=""> </p>
+<p>将create_time存在column_key中可以按时间排序</p>
+<h1 id="4-How-to-scale-单点失效"><a href="#4-How-to-scale-单点失效" class="headerlink" title="4. How to scale? 单点失效"></a>4. How to scale? 单点失效</h1><p>100M用户存在一台mysql数据库存的下，Storage没问题</p>
+<p>通过Cache优化读操作之后，只有300QPS的写，QPS也没有问题</p>
+<p>还有什么问题？</p>
+<p><strong>单点失效 Simgle Point Failure</strong></p>
+<p>万一某一台数据库挂了，短暂的挂：网站不可用了，彻底挂了：数据全部丢失</p>
+<p><strong>需要做sharding和Replica</strong></p>
+<h2 id="4-1-Sharding-数据拆分"><a href="#4-1-Sharding-数据拆分" class="headerlink" title="4.1. Sharding 数据拆分"></a>4.1. Sharding 数据拆分</h2><ul>
+<li>按照一定的规则，将数据拆分成不同的部分，保存在不同的机器上</li>
+<li>这样就算某个机器挂了，也不会导致网站100%不可用。</li>
+</ul>
+<h3 id="4-1-1-Sharding-in-SQL-vs-NoSQL"><a href="#4-1-1-Sharding-in-SQL-vs-NoSQL" class="headerlink" title="4.1.1. Sharding in SQL vs NoSQL"></a>4.1.1. Sharding in SQL vs NoSQL</h3><p>SQL自身不带Sharding功能，需要手动实现</p>
+<p>以Cassandra为代表的NoSQL大多自带Sharding</p>
+<p>这就是为什么发明NoSQL</p>
+<h3 id="4-1-2-纵向拆分（Horiaontal-Sharding）"><a href="#4-1-2-纵向拆分（Horiaontal-Sharding）" class="headerlink" title="4.1.2. 纵向拆分（Horiaontal Sharding）"></a>4.1.2. 纵向拆分（Horiaontal Sharding）</h3><p>简单的纵向切分：</p>
+<ul>
+<li>user table 放一台数据库</li>
+<li>Friendship Table 放一台数据库</li>
+<li>Message Table 放一台数据库</li>
+</ul>
+<p>复杂的纵向切分：</p>
+<ul>
+<li>比如User Table里有如下信息：<ul>
+<li>Email</li>
+<li>Username</li>
+<li>Password</li>
+<li>push_preference</li>
+<li>avatar</li>
+</ul>
+</li>
+<li>一般email/username/password不会经常变动，而push_preference,avatar变动频率较高</li>
+<li>可以把这样的一张表拆分成两个表，User Table 和User Profile Table<ul>
+<li>将这两张表放在两台机器上</li>
+<li>如果UserprofileTable挂了，不会影响user的正常登录操作</li>
+</ul>
+</li>
+</ul>
+<p>实际上就是将table按column进行切分，存储在不同的机器上</p>
+<p>缺点：如果数据量很大，有很多很多个用户，纵向拆分之后，仍然很大</p>
+<h3 id="4-1-3-横向拆分（核心）"><a href="#4-1-3-横向拆分（核心）" class="headerlink" title="4.1.3. 横向拆分（核心）"></a>4.1.3. 横向拆分（核心）</h3><p>一个粗暴的想法：</p>
+<p>假如拆分Friendship Table，假设有10台数据库的机器，可以想到按照from_user_id%10来进行查分，这样做有什么问题？</p>
+<p>假设10台机器不够用了，现在买了一台新机器，原来的%10变成了%11，几乎所有的数据都需要进行位置大迁移！！！！</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-11-17-38-23.png" alt=""> </p>
+<p><strong>数据迁移造成的问题：</strong></p>
+<ol>
+<li>慢，牵一发而动全身</li>
+<li>前一期间，服务器压力增大，容易宕机</li>
+<li>容易造成数据不一致</li>
+</ol>
+<p>如何解决？</p>
+<p><strong>一致性Hash算法</strong></p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-11-17-42-48.png" alt=""></p>
+<p>更具体的内容听说在下一节，哈哈</p>
+<h2 id="4-2-Replica-数据备份"><a href="#4-2-Replica-数据备份" class="headerlink" title="4.2. Replica 数据备份"></a>4.2. Replica 数据备份</h2><ul>
+<li>通常的做法是：一式三份（重要的事情说三遍）</li>
+<li>Replica同时还能分摊读请求</li>
+</ul>
+<p>剩下的内容听说也在下一节，哈哈</p>
+<h1 id="5-缓存淘汰算法："><a href="#5-缓存淘汰算法：" class="headerlink" title="5. 缓存淘汰算法："></a>5. 缓存淘汰算法：</h1><p>缓存调度算法，缓存页面调度算法：先分配一定的页面空间，使用页面的时候首先去查询空间是否有该页面的缓存，如果有的话直接拿出来，如果没有的话先查询，如果页面空间没有满的时候，使用新页面的时候，就释放旧的页面空间，把新页面缓存起来，以便下次使用同样的页面的时候方便调用。</p>
+<p>伪代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function">def <span class="title">getUser</span><span class="params">(user_id)</span>:</span></div><div class="line"><span class="function">	user </span>= cache.get(user_id)</div><div class="line">    <span class="keyword">if</span> user :</div><div class="line">      <span class="keyword">return</span> user</div><div class="line">    user = database.get(user_id)</div><div class="line">    cache.set(key, user)</div><div class="line">    <span class="keyword">return</span> user</div><div class="line">  </div><div class="line"><span class="function">def <span class="title">setUser</span><span class="params">(user)</span>:</span></div><div class="line"><span class="function">  cache.<span class="title">delete</span><span class="params">(user.user_id)</span></span></div><div class="line"><span class="function">  database.<span class="title">set</span><span class="params">(user)</span></span></div></pre></td></tr></table></figure>
+<p><code>cache</code> 一般是有有效期的，也就是如果缓存中这个数据过期了，那就从缓存中清理出去。而<code>cache</code> 的实现过程和淘汰机制不同，会导致不同的性能表现。常见的就是IFIO，LRU，LFU缓存过期策略。</p>
+<ol>
+<li>FIFO(First In First Out) : 先进先出。淘汰掉很久以前进来的数据，而新数据等到之后再淘汰。也就是一个队列。</li>
+<li>LRU (Least recently used) : 最近最少使用。淘汰最近不适用的数据</li>
+<li>LFU (Least frequently used) : 最近使用次数最少。淘汰掉使用次数最少的页面。</li>
+</ol>
+<h2 id="5-1-FIFO"><a href="#5-1-FIFO" class="headerlink" title="5.1. FIFO"></a>5.1. FIFO</h2><p>按照“先进先出（First In，First Out）”的原理淘汰数据，正好符合队列的特性，数据结构上使用队列Queue来实现。</p>
+<p>如下图：</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-01-27-15-54-58.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-01-27-15-54-58.png" alt="img"></a></p>
+<ol>
+<li>新访问的数据插入FIFO队列尾部，数据在FIFO队列中顺序移动；</li>
+<li>淘汰FIFO队列头部的数据；</li>
+</ol>
+<h2 id="5-2-LRU-Cache"><a href="#5-2-LRU-Cache" class="headerlink" title="5.2. LRU Cache"></a>5.2. LRU Cache</h2><p>（Least recently used，最近最少使用）算法根据数据的历史访问记录来进行淘汰数据，其核心思想是“如果数据最近被访问过，那么将来被访问的几率也更高”，因此优先将最近没有被访问的数据删掉。</p>
+<p>最常见的实现是使用一个链表保存缓存数据，详细算法实现如下：</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-01-27-15-56-25.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-01-27-15-56-25.png" alt="img"></a></p>
+<ol>
+<li>新数据插入到链表头部；</li>
+</ol>
+<ol>
+<li>每当缓存命中（即缓存数据被访问），则将数据移到链表头部；</li>
+<li>当链表满的时候，将链表尾部的数据丢弃。</li>
+</ol>
+<p>leetcode题目： <a href="https://leetcode.com/problems/lru-cache" target="_blank" rel="external">LRU Cache</a></p>
+<blockquote>
+<p>Design and implement a data structure for <a href="https://en.wikipedia.org/wiki/Cache_replacement_policies#LRU" target="_blank" rel="external">Least Recently Used (LRU) cache</a>. It should support the following operations: <code>get</code> and <code>put</code>.</p>
+<p><code>get(key)</code> - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.<br><code>put(key, value)</code> - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
+<p><strong>Follow up:</strong><br>Could you do both operations in <strong>O(1)</strong> time complexity?</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; LRUCache cache = new LRUCache( 2 /* capacity */ );</div><div class="line">&gt;</div><div class="line">&gt; cache.put(1, 1);</div><div class="line">&gt; cache.put(2, 2);</div><div class="line">&gt; cache.get(1);       // returns 1</div><div class="line">&gt; cache.put(3, 3);    // evicts key 2</div><div class="line">&gt; cache.get(2);       // returns -1 (not found)</div><div class="line">&gt; cache.put(4, 4);    // evicts key 1</div><div class="line">&gt; cache.get(1);       // returns -1 (not found)</div><div class="line">&gt; cache.get(3);       // returns 3</div><div class="line">&gt; cache.get(4);       // returns 4</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>简单的说，就是保证基本的get和set的功能的同时，还要保证最近访问(get或put)的节点保持在限定容量的Cache中，如果超过容量则应该把LRU(近期最少使用)的节点删除掉。</p>
+<p>思路：</p>
+<p>题目要求利用LRU缓存淘汰机制，在<script type="math/tex">O(1)</script> 时间复杂度下实现缓存的加入和删除操作</p>
+<p>代码：</p>
+<h2 id="5-2-LFU-Cache"><a href="#5-2-LFU-Cache" class="headerlink" title="5.2. LFU Cache"></a>5.2. <a href="https://leetcode.com/problems/lfu-cache" target="_blank" rel="external">LFU Cache</a></h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/27/【Java】Java常用笔记/" rel="next" title="Java常用笔记">
+                <i class="fa fa-chevron-left"></i> Java常用笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/31/【排序】堆排序/" rel="prev" title="堆排序">
+                堆排序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#outline"><span class="nav-number">1.</span> <span class="nav-text">outline</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4S分析法"><span class="nav-number">2.</span> <span class="nav-text">4S分析法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-缓存"><span class="nav-number">3.</span> <span class="nav-text">1. 缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Cache"><span class="nav-number">3.1.</span> <span class="nav-text">1.1 Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Mem-Cache"><span class="nav-number">3.2.</span> <span class="nav-text">1.2 Mem-Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-Cache-Aside-和-Cache-Through"><span class="nav-number">3.3.</span> <span class="nav-text">1.3 Cache Aside 和 Cache Through</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache-Aside"><span class="nav-number">3.3.1.</span> <span class="nav-text">Cache Aside</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache-Through"><span class="nav-number">3.3.2.</span> <span class="nav-text">Cache Through</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Service-服务"><span class="nav-number">4.</span> <span class="nav-text">2. Service 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Authentication-Service"><span class="nav-number">4.1.</span> <span class="nav-text">2.1. Authentication Service</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Friendship-Service"><span class="nav-number">4.2.</span> <span class="nav-text">2.2. Friendship Service</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#好友关系分类"><span class="nav-number">4.2.1.</span> <span class="nav-text">好友关系分类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-小结"><span class="nav-number">4.3.</span> <span class="nav-text">2.3. 小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Storage-数据库的选取"><span class="nav-number">5.</span> <span class="nav-text">3. Storage 数据库的选取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-数据库的选取原则SQL-vs-NoSQL"><span class="nav-number">5.1.</span> <span class="nav-text">3.1. 数据库的选取原则SQL vs NoSQL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-好友关系的存储"><span class="nav-number">5.2.</span> <span class="nav-text">3.2. 好友关系的存储</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-以Cassandra为例剖析经典的NOSQL数据结构"><span class="nav-number">5.3.</span> <span class="nav-text">3.3. 以Cassandra为例剖析经典的NOSQL数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Cassandra是一个三层结构-三元组结构-的NoSQL数据库"><span class="nav-number">5.3.0.1.</span> <span class="nav-text">Cassandra是一个三层结构(三元组结构)的NoSQL数据库:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SQL-vs-NoSQL"><span class="nav-number">5.3.0.2.</span> <span class="nav-text">SQL  vs NoSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cassandra存储friendship"><span class="nav-number">5.3.0.3.</span> <span class="nav-text">Cassandra存储friendship</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Cassandra存储NewsFeed"><span class="nav-number">5.3.0.4.</span> <span class="nav-text">Cassandra存储NewsFeed</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-How-to-scale-单点失效"><span class="nav-number">6.</span> <span class="nav-text">4. How to scale? 单点失效</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Sharding-数据拆分"><span class="nav-number">6.1.</span> <span class="nav-text">4.1. Sharding 数据拆分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-Sharding-in-SQL-vs-NoSQL"><span class="nav-number">6.1.1.</span> <span class="nav-text">4.1.1. Sharding in SQL vs NoSQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-纵向拆分（Horiaontal-Sharding）"><span class="nav-number">6.1.2.</span> <span class="nav-text">4.1.2. 纵向拆分（Horiaontal Sharding）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-横向拆分（核心）"><span class="nav-number">6.1.3.</span> <span class="nav-text">4.1.3. 横向拆分（核心）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Replica-数据备份"><span class="nav-number">6.2.</span> <span class="nav-text">4.2. Replica 数据备份</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-缓存淘汰算法："><span class="nav-number">7.</span> <span class="nav-text">5. 缓存淘汰算法：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-FIFO"><span class="nav-number">7.1.</span> <span class="nav-text">5.1. FIFO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-LRU-Cache"><span class="nav-number">7.2.</span> <span class="nav-text">5.2. LRU Cache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-LFU-Cache"><span class="nav-number">7.3.</span> <span class="nav-text">5.2. LFU Cache</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

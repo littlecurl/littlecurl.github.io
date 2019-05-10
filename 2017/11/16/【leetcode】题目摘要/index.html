@@ -1,0 +1,2276 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="leetcode," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="leetcode刷题总结">
+<meta name="keywords" content="leetcode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Siyao&#39;s Blog">
+<meta property="og:url" content="http://yoursite.com/2017/11/16/【leetcode】题目摘要/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="leetcode刷题总结">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-05T10:14:02.833Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Siyao&#39;s Blog">
+<meta name="twitter:description" content="leetcode刷题总结">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/16/【leetcode】题目摘要/"/>
+
+
+
+
+
+  <title> | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/【leetcode】题目摘要/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T09:56:40+08:00">
+                2017-11-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,910
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>leetcode刷题总结</p>
+<a id="more"></a>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th>题意</th>
+<th>知识点</th>
+<th>思路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/implement-trie-prefix-tree/" target="_blank" rel="external">208.Implement Trie (Prefix Tree)</a></td>
+<td>实现一个Trie树模板，支持插入、搜索、前缀搜索操作</td>
+<td>Trie</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/add-and-search-word-data-structure-design/" target="_blank" rel="external">211.Add and Search Word - Data structure design</a></td>
+<td>实现Trie树的插入、搜索，支持搜索”a.b”格式，”.”表示通配符</td>
+<td>Trie+DFS</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/map-sum-pairs/" target="_blank" rel="external">677.Map Sum Pairs</a></td>
+<td>单词有权重，输入前缀词，给出所有以此为前缀的词的权重之和</td>
+<td>Trie+DFS</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/number-of-islands/" target="_blank" rel="external">200.Number of Islands</a></td>
+<td>统计中有0,1，相邻1为island，统计island个数(连通子图)</td>
+<td>并查集、DFS</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/number-of-islands-ii/" target="_blank" rel="external">305.Number of Islands II</a></td>
+<td>初始矩阵为0，每次随机将某一位改变成1，统计每一时刻island个数</td>
+<td>并查集</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/surrounded-regions/" target="_blank" rel="external">130.Surrounded Regions</a></td>
+<td>“XXOO”将被X包围的O改成X，处于边界的O不算被包围</td>
+<td>DFS、并查集</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/graph-valid-tree/" target="_blank" rel="external">261.Graph Valid Tree</a></td>
+<td>给定点集和边集，判断此图是否为树</td>
+<td>并查集</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/number-of-connected-components-in-an-undirected-graph/" target="_blank" rel="external">323.Number of Connected Components in an Undirected Graph</a></td>
+<td>给定点集和边集，返回连通子图个数</td>
+<td>并查集</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/word-search" target="_blank" rel="external">79.Word Search</a></td>
+<td>给一个字母矩阵和一个单词，查找字母矩阵中是否有该单词</td>
+<td>回溯+BFS</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/word-search-ii/" target="_blank" rel="external">212.Word Search II</a></td>
+<td>给一个字母矩阵和一个单词数组，返回数组，里面包含出现在矩阵中的所有单词</td>
+<td>Trie+DFS</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="http://www.lintcode.com/zh-cn/problem/number-of-airplanes-in-the-sky/" target="_blank" rel="external">lintcode391. 数飞机</a></td>
+<td>给定一些区间，求同一时刻空中最多有多少飞机</td>
+<td>扫描线</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/meeting-rooms/" target="_blank" rel="external">252.Meeting Rooms</a></td>
+<td>给定一些区间，判断是否可以参加所有会议（所有会议没有冲突）</td>
+<td>排序扫描/扫描线</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/meeting-rooms-ii" target="_blank" rel="external">253.Meeting Rooms II</a></td>
+<td>给定一些区间，求最多需要多少间会议室（最多有多少会议同时开）</td>
+<td>扫描线</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/trapping-rain-water" target="_blank" rel="external">42.Trapping Rain Water</a></td>
+<td>一维接雨水</td>
+<td>双指针</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/trapping-rain-water-ii" target="_blank" rel="external">407.Trapping Rain Water II</a></td>
+<td>二维接雨水</td>
+<td>堆</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/unique-paths" target="_blank" rel="external">62.Unique Paths</a></td>
+<td>从网格左上角走到右下角有多少种方案</td>
+<td>DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/unique-paths-ii" target="_blank" rel="external">63.Unique Paths II</a></td>
+<td>从网格左上角走到右下角有多少种方案，有一些障碍点</td>
+<td>DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/triangle" target="_blank" rel="external">120.Triangle</a></td>
+<td>给定一个三角形，求从顶端走到最下面的最短路径</td>
+<td>DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/climbing-stairs" target="_blank" rel="external">70.Climbing Stairs</a></td>
+<td>爬楼梯，每次只可以爬一步或者两步，求爬到顶有多少种方案</td>
+<td>DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/jump-game" target="_blank" rel="external">55.Jump Game</a></td>
+<td></td>
+<td>贪心法</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/jump-game-ii" target="_blank" rel="external">45.Jump Game II</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/binary-tree-postorder-traversal/" target="_blank" rel="external">145.Binary Tree Postorder Traversal</a></td>
+<td>二叉树的后续遍历</td>
+<td>DFS、递归、回溯</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/binary-tree-inorder-traversal/" target="_blank" rel="external">94.Binary Tree Inorder Traversal</a></td>
+<td>二叉树的中续遍历</td>
+<td>DFS、递归、回溯</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/binary-tree-preorder-traversal/" target="_blank" rel="external">144.Binary Tree Preorder Traversal</a></td>
+<td>二叉树的前续遍历</td>
+<td>DFS、递归、回溯</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/invert-binary-tree/" target="_blank" rel="external">226.Invert Binary Tree</a></td>
+<td>二叉树对称翻转</td>
+<td>分治法、递归</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/same-tree/" target="_blank" rel="external">100.Same Tree</a></td>
+<td>判断两个二叉树是否相同</td>
+<td>递归</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/" target="_blank" rel="external">236.Lowest Common Ancestor of a Binary Tree</a></td>
+<td>求二叉树中两个节点的最近公共祖先</td>
+<td>分治法、递归</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/balanced-binary-tree/" target="_blank" rel="external">110.Balanced Binary Tree</a></td>
+<td>给定一个二叉树，判断是否是平衡二叉树</td>
+<td>递归</td>
+<td>额外resultTypt判断是否平衡以及最大深度差</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/maximum-depth-of-binary-tree/" target="_blank" rel="external">104.Maximum Depth of Binary Tree</a></td>
+<td>给定二叉树，求其最大深度</td>
+<td>分治法、递归</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/interleaving-string/" target="_blank" rel="external">97.Interleaving String</a></td>
+<td>给定三个字符串s1,s2,s3,返回s3是否能够由s1和s2组成，s1,s2中字母顺序不变</td>
+<td>序列型DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/distinct-subsequences/" target="_blank" rel="external">115.Distinct Subsequences</a></td>
+<td>给定字符串S和T，从S中选取字母构成T共有多少种方案</td>
+<td>序列型DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/edit-distance/" target="_blank" rel="external">72.Edit Distance</a></td>
+<td>给定两字符串s1,s2和三种操作：插入、删除、替换，最少经过多少步操作可以使得s1和s2一样</td>
+<td>序列型DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/palindromic-substrings/" target="_blank" rel="external">647.Palindromic Substrings</a></td>
+<td>给定一个字符串，返回其中回文串个数</td>
+<td>序列型DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/palindrome-partitioning-ii/" target="_blank" rel="external">132.Palindrome Partitioning II</a></td>
+<td>给定一个字符串，最少切几刀可以使每一段都是回文串</td>
+<td>序列型DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/word-break/" target="_blank" rel="external">139.Word Break</a></td>
+<td>给定一个字符串和一个单词表，返回字符串是否可以切割成全部由单词表中的单词组成</td>
+<td>序列型DP</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/increasing-triplet-subsequence/" target="_blank" rel="external">334.Increasing Triplet Subsequence</a></td>
+<td>给定一个数组，返回是否有递增的三元组</td>
+<td>两指针</td>
+<td></td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/longest-increasing-subsequence/" target="_blank" rel="external">300.Longest Increasing Subsequence</a></td>
+<td>给定一个序列，求其最长递增子序列的长度</td>
+<td>坐标型DP</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="Binary-Search"><a href="#Binary-Search" class="headerlink" title="Binary Search"></a>Binary Search</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th>题意</th>
+<th>知识点</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/powx-n" target="_blank" rel="external">50.Pow(x, n)</a></td>
+<td>求x的n次方</td>
+<td>二分法+递归</td>
+<td>int -&gt;long</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/divide-two-integers/" target="_blank" rel="external">29.Divide Two Integers</a></td>
+<td>求两个数相除a/b</td>
+<td>二分搜索。找到最大的x：x*b &lt;= a</td>
+<td>边界条件-2147483648/-1</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/find-the-duplicate-number/" target="_blank" rel="external">287.Find the Duplicate Number</a></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="LinkedList"><a href="#LinkedList" class="headerlink" title="LinkedList"></a>LinkedList</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th>题意</th>
+<th>知识点</th>
+<th>思路</th>
+<th>难易</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/odd-even-linked-list/" target="_blank" rel="external">328.Odd Even Linked List</a></td>
+<td>给定链表，将偶数位放置在链表后，奇数位偶数位数字相对位置保持不变</td>
+<td>链表</td>
+<td></td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/palindrome-linked-list/" target="_blank" rel="external">234Palindrome Linked List</a></td>
+<td>判断链表是否是回文串</td>
+<td>回文，链表</td>
+<td>1.找到链表中位数，将后半段反转，对比前后元素是否一致<br>2.利用stack，将前一半存起来，继续 向后扫描与stack中元素对比</td>
+<td>难</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/" target="_blank" rel="external">160.Intersection of Two Linked Lists</a></td>
+<td>找到两链表AA和B相交的位置</td>
+<td>链表</td>
+<td>两个指针分别遍历，一个先A后B，一个先B后A，两指针指向节点相等即为相交处</td>
+<td>技巧题</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/insertion-sort-list/" target="_blank" rel="external">147.Insertion Sort List</a></td>
+<td>链表的插入排序</td>
+<td>链表、插入排序</td>
+<td>建dummy节点，原链表元素按序插入dummy节点开头的链表</td>
+<td>技巧+中等</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/swap-nodes-in-pairs/" target="_blank" rel="external">24.Swap Nodes in Pairs</a></td>
+<td>从前向后，两两交换链表节点</td>
+<td>链表、交换</td>
+<td>从前向后遍历，两两交换</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/remove-linked-list-elements/" target="_blank" rel="external">203.Remove Linked List Elements</a></td>
+<td>给定链表和val，删除链表中所有值为val的元素</td>
+<td>链表、删除节点</td>
+<td>遍历，删除</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="external">2.Add Two Numbers</a></td>
+<td>给定两个链表表示两个数字，位数由低到高，返回链表表示两个链表的和</td>
+<td>链表</td>
+<td>遍历相加，记录进位</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/add-two-numbers-ii/" target="_blank" rel="external">445.Add Two Numbers II</a></td>
+<td>给定两个链表表示两个数字，位数由高到低，返回链表表示两个链表的和</td>
+<td>链表、反转</td>
+<td>反转-&gt;相加-&gt;反转</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/" target="_blank" rel="external">109.Convert Sorted List to Binary Search Tree</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td>难</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/plus-one-linked-list/" target="_blank" rel="external">369.Plus One Linked List</a></td>
+<td>给定链表代表一个数字，由高位到低位，返回该数字+1链表</td>
+<td>链表、反转</td>
+<td>1.反转-&gt;相加-&gt;反转<br>2.递归<br>3.技巧：找从后向前第一个不为9的元素+1，后面9置0</td>
+<td>简单+技巧</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/split-linked-list-in-parts/" target="_blank" rel="external">725.Split Linked List in Parts</a></td>
+<td>给定一个链表和数字k，将链表分为k段，每段长度差不大于1，长的放前面</td>
+<td>链表</td>
+<td>1.求链表长度len<br>2.m = len/k,n = len%k<br>3.前n个链表长度为m+1，其余长度为m</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/reverse-nodes-in-k-group/" target="_blank" rel="external">25.Reverse Nodes in k-Group</a></td>
+<td>给定链表和数字k，将链表分组，每组k个元素，按组反转</td>
+<td>链表、反转</td>
+<td>两指针指向分组头和尾，将头和尾之间的链表反转</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/" target="_blank" rel="external">109.Convert Sorted List to Binary Search Tree</a></td>
+<td>链表转为高度平衡搜索二叉树</td>
+<td>链表、二叉搜索树</td>
+<td>递归，中点做为root，对左链表和右链表递归调用构建BST</td>
+<td>中等</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th>题意</th>
+<th>知识点</th>
+<th>思路</th>
+<th>难易</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/merge-sorted-array" target="_blank" rel="external">88.Merge Sorted Array</a></td>
+<td>合并两个有序数组到第一个数组</td>
+<td>数组</td>
+<td>从后向前遍历，比较大小依次从后向前插入nums1</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/intersection-of-two-arrays" target="_blank" rel="external">349.Intersection of Two Arrays</a></td>
+<td>找两个数组交集，去重</td>
+<td>排序、hashmap</td>
+<td>1.排序<br>2.两指针遍历</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/intersection-of-two-arrays-ii" target="_blank" rel="external">350.Intersection of Two Arrays II</a></td>
+<td>找两个数组交集</td>
+<td>排序、hashmap</td>
+<td>1.排序<br>2.两指针遍历</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/sparse-matrix-multiplication" target="_blank" rel="external">311.Sparse Matrix Multiplication</a></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="Two-Pointers"><a href="#Two-Pointers" class="headerlink" title="Two Pointers"></a>Two Pointers</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>题目</th>
+<th>题意</th>
+<th>知识点</th>
+<th>思路</th>
+<th>难易</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://leetcode.com/problems/sort-transformed-array/" target="_blank" rel="external">360.Sort Transformed Array</a></td>
+<td>给定有序数组，计算ax^2+bx+c，返回结果依然有序</td>
+<td>two pointers</td>
+<td>根据二次函数性质，a&gt;0先减后增，比较两指针，从后向前插入，a&lt;0反之</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/max-consecutive-ones" target="_blank" rel="external">485.Max Consecutive Ones</a></td>
+<td>给定数组有0有1，返回连续1的最大长度</td>
+<td>two pointers</td>
+<td>两指针滑窗，记录当前最大长度，遇到0跳过重新开始</td>
+<td>简单</td>
+</tr>
+<tr>
+<td><a href="https://leetcode.com/problems/max-consecutive-ones-ii" target="_blank" rel="external">487.Max Consecutive Ones II</a></td>
+<td>给定数组有0有1，最多可以把一个0变成1，返回连续1的最大长度</td>
+<td>two pointers</td>
+<td>两指针滑窗，记录窗口内0的个数，超过1缩小窗口大小，记录滑窗最大长度</td>
+<td>简单</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/14/【九章算法强化班】Trie树/" rel="next" title="【九章算法强化班】课程笔记2——Trie树">
+                <i class="fa fa-chevron-left"></i> 【九章算法强化班】课程笔记2——Trie树
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/17/【九章算法强化班】扫描线/" rel="prev" title="【九章算法强化班】课程笔记2——扫描线">
+                【九章算法强化班】课程笔记2——扫描线 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-Search"><span class="nav-number">1.</span> <span class="nav-text">Binary Search</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LinkedList"><span class="nav-number"></span> <span class="nav-text">LinkedList</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Array"><span class="nav-number"></span> <span class="nav-text">Array</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Two-Pointers"><span class="nav-number"></span> <span class="nav-text">Two Pointers</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

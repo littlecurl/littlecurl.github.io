@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Bid Optimizing and Inventory Scoring in Targeted Online Advertising这篇文章来自美国一家很优秀的DSP公司——M6D,介绍了DSP的工作流程和其中的一个核心技术：real-time bidding(实时竞价技术) 实时竞价：找准正确的广告信息和广告位信息，以一个能够反映真实价格的竞拍价格参与广告展示机会的竞价">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bid Optimizing and Inventory Scoring in Targeted Online论文笔记">
+<meta property="og:url" content="http://yoursite.com/2017/11/27/Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online论文笔记/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="Bid Optimizing and Inventory Scoring in Targeted Online Advertising这篇文章来自美国一家很优秀的DSP公司——M6D,介绍了DSP的工作流程和其中的一个核心技术：real-time bidding(实时竞价技术) 实时竞价：找准正确的广告信息和广告位信息，以一个能够反映真实价格的竞拍价格参与广告展示机会的竞价">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/59113178e5863.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/591132bf75168.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/591133298b64a.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/59113394b3a89.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/5911344436942.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/59113a88e1b2f.png">
+<meta property="og:image" content="https://ooo.0o0.ooo/2017/05/09/59113a558161d.png">
+<meta property="og:updated_time" content="2017-12-07T11:41:16.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Bid Optimizing and Inventory Scoring in Targeted Online论文笔记">
+<meta name="twitter:description" content="Bid Optimizing and Inventory Scoring in Targeted Online Advertising这篇文章来自美国一家很优秀的DSP公司——M6D,介绍了DSP的工作流程和其中的一个核心技术：real-time bidding(实时竞价技术) 实时竞价：找准正确的广告信息和广告位信息，以一个能够反映真实价格的竞拍价格参与广告展示机会的竞价">
+<meta name="twitter:image" content="https://ooo.0o0.ooo/2017/05/09/59113178e5863.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/27/Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online论文笔记/"/>
+
+
+
+
+
+  <title>Bid Optimizing and Inventory Scoring in Targeted Online论文笔记 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/27/Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online论文笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Bid Optimizing and Inventory Scoring in Targeted Online论文笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T21:39:03+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/RTB/" itemprop="url" rel="index">
+                    <span itemprop="name">RTB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,477
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online-Advertising"><a href="#Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online-Advertising" class="headerlink" title="Bid Optimizing and Inventory Scoring in Targeted Online Advertising"></a>Bid Optimizing and Inventory Scoring in Targeted Online Advertising</h2><p>这篇文章来自美国一家很优秀的DSP公司——M6D,介绍了DSP的工作流程和其中的一个核心技术：real-time bidding(实时竞价技术)</p>
+<p>实时竞价：找准正确的广告信息和广告位信息，以一个能够反映真实价格的竞拍价格参与广告展示机会的竞价</p>
+<a id="more"></a>
+<h2 id="M6D竞价流程"><a href="#M6D竞价流程" class="headerlink" title="M6D竞价流程"></a>M6D竞价流程</h2><ol>
+<li><strong>追踪用户行为</strong>：DSP公司通常会在广告主的网站上埋点（即放上一个1x1的不可见像素），这样当互联网用户第一次访问广告主的网站时，就会得到DSP公司的一个cookie，这样DSP公司就可以追踪到这个网民的在广告主网站上的行为了(这些数据也叫action data)。DSP公司还会和第三方的网站合作（例如：新浪，腾讯），在他们的网站上也埋点，或者向DMP购买网民行为数据，这样就可以追踪到网民在这些网站上的行为了(这些数据也叫mapping data)。这里值得一提的是，DSP公司对某一个用户记录的cookie和第三方网站或DMP或exchange记录的cookie是不一样的，这里需要一个叫Cookie Mapping的过程，这不是本文重点，以下假设DSP已经做好了Cookie Mapping，每个用户有一个唯一的id标识。</li>
+<li>受众选择（audience selection）: m6d对每一个campaign(即每一个广告主的每个推广活动), 训练一个audience selection model, 该模型以在广告主的网站上发生转化行为（转化行为可以是注册成为用户，点击某个特定页面，购买产品。每个广告主对转化的定义不一样）的用户为正例，没有发生转化行为的用户为负例（是的，正负例很不均匀，通常要做采样和结果修正）。得到模型后，对所有的用户预估对这个campaign的转化概率p(c | u),即该用户u有多大的概率会在广告主的网站上发生转化行为（c表示conversion），去掉大多数转化概率非常小的用户，将目标用户根据转化概率高低分到不同的segments中。这样我们对每个campaign就找到了很多的目标用户，而且这些用户根据他们的质量高低，被分别放在不同的segments中。</li>
+<li>通知exchange: DSP将这些目标用户的cookie告诉exchange，这样当有这些cookie的请求来的时候，exchange才会来向DSP的服务器发送请求。</li>
+<li>Segment管理： 通常DSP公司会有账户管理员（运营人员），他们人工来对每个campaign的做一些设定。他们根据每个campaign所属的行业特点，经济状况，决定开启哪些segments，关掉哪些segments。例如：对没钱的小公司的campaign, 那些用户转化概率小一些的segment就不要投广告了。他们还需要对每个segment设定一个基础出价（base price）。账户管理员可以拿到每个segment的平均预估转化概率，来辅助他们设定基础出价。这一步也是人工影响投放策略最主要的地方。</li>
+<li>进行实时竞价：当exchange把请求发过来的时候，DSP会拿到以下信息：当前广告位的信息，当前用户的cookie和基本信息。DSP需要在100ms内，根据对当前用户的理解，并且考虑当前广告位，根据自己的bidding算法，来要决定是否要买这次展现，投放哪个campaign的广告，出价是多少（bidding），并向exchange返回出价信息？如果超过时间DSP没有响应，则exchange默认DSP放弃这次竞价。</li>
+<li>展现广告：如果赢得了展现机会，则DSP返回创意，用户就会在该广告位看到该创意。</li>
+<li>追踪转化：因为DSP在广告主的网站上埋了点，就能知道用户是否在这次展现之后进行了转化行为。根据这些数据统计转化率，每个转化平均成本等指标，汇总成报告给广告主。</li>
+</ol>
+<h2 id="核心算法"><a href="#核心算法" class="headerlink" title="核心算法"></a>核心算法</h2><p>当exchange发送请求时，DSP会接受到当前用户的cookie和一些最基本的用户信息，以及当前广告位的信息。DSP则需要找到这个用户所属的所有segments，而这些segments可能会对应多个campaign。那么应该出哪个campaign的广告呢？这里有一个内部竞价的过程。</p>
+<p>m6d是这么做的，首先要把一些不合适出广告的campaign根据规则过去掉。主要的规则有，如果一个用户之前已经被展现了这个campaign的广告数达到一定的个数了，那么就不要再浪费广告费了（这个次数限制通常叫frequency cap）。另外一个主要规则是，如果一个campaign已经达到了它的每日，或者每周，或者每月预算限制了，那么也不再为它投放广告了。对于剩下的campaign候选，DSP会对他们都根据算法计算出最合适的出价，然后简单地选取出价最高的那个（出价反映了当前用户对该campaign的价值）。</p>
+<p>下面介绍下对于某一个campaign, 如何计算对当前展现机会的出价。</p>
+<p>前面的audience selection部分，我们已经对每个用户划分了segments，然后账户管理员又对每个segment给出了基础出价（base price），当时这个出价考虑的是这个用户和这个campaign的适合程度，并没有考虑当前广告位是否适合这个campaign投广告，是否适合这个用户。因此m6d的算法，以基础出价为基准，根据当前广告位计算出一个调整因子$\phi$，最后的出价就是$baseprice * \phi$ 。因此我们全部的工作就是要计算这个$\phi$。</p>
+<h4 id="计算调整因子-phi-的依据"><a href="#计算调整因子-phi-的依据" class="headerlink" title="计算调整因子$\phi$的依据"></a>计算调整因子$\phi$的依据</h4><p>在实时竞价中，一次展示机会的价值可以由其带来的真正效益来衡量，我们用转化率*转化价值来表示</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/59113178e5863.png" alt=""> </p>
+<p>由于转化价值不好估计，我们就在转化率上面做文章。<br>对于同一个campaign来说，如果我们知道一个展现的转化率是另外一个展现的2倍，那么前面那个展现的出价应该是后面那个展现的出价的2倍。这就是M6D设计的竞价函数的依据。</p>
+<h4 id="调整因子-phi-计算"><a href="#调整因子-phi-计算" class="headerlink" title="调整因子$\phi$计算"></a>调整因子$\phi$计算</h4><p>按照上面的逻辑，既然我们为segments出了一个平均价格baseprice，当一个展现机会的的转化率是这个segments中用户的平均转化率的$\phi$倍，我们应该为这个展现出$baseprice * \phi$的出价。因此有：</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/591132bf75168.png" alt=""> </p>
+<p>其中，u指的是用户，i是当前的广告位(inventory)，c指的是转化，a指某一具体的广告。分母计算的是在所有广告位（用j指代）上的平均转化率。这个分母要计算起来很复杂，我们要遍历所有的广告位(inventory)。但我们知道：</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/591133298b64a.png" alt=""> </p>
+<p>因此最终调整因子的计算化简为：</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/59113394b3a89.png" alt=""> </p>
+<p>所以m6d的bidding算法的最核心部分，就是为每个campaign都建立两个模型来分别预估p(c|u,i)和p(c|u)。考虑到每个campaign的转化数据很少，这2个模型的训练数据很少，要训练这两个模型太难了。因此m6d将同一个segment中的用户不做区分，从而可以把上式变为</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/5911344436942.png" alt=""> </p>
+<p>其中，s是segment。这样就只需要训练p(c|s,i)和p(c|s)。因为s的个数远小于u的个数，这2个模型的特征空间显著变小了，模型更容易得到更好的结果。</p>
+<h4 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h4><p>以上就是m6d对bidding的建模过程了，剩下的工作就是如何训练得到这两个模型。</p>
+<p><strong>p(c|s,i)模型</strong>:  要得到这个模型的训练数据，还有一个冷启动的过程。必须事先对这些segments在这些inventories上投放，然后把那些最终带来转化的展现标记为正例，没有最终带来转化的展现标记为负例。m6d认为一次转化是由之前7天内该用户见到的最后一次展现带来的。这个模型的特征只有两类，一类就是segment id, 另外一类就是inventory id。也就是说，每一个样本只有两个非0的特征，一个是segment id对应的那个特征，另外一个是inventory id对应的那个特征。m6d没有组合segment和inventory特征，这样做的结果是：不管对于哪个segment，某个特定的inventory对最后预估值的贡献都是一样的。这个假设可以认为在大多数情况下是合理的。而且如果真要把这些组合特征加入模型，特征空间一下子又大了不少，对于少得可怜的训练数据来说，很容易就过拟合了。</p>
+<p><strong>p(c|s)模型</strong>：和p(c|s,i)模型基本一样，区别就是特征只有segment id。</p>
+<p>这两个模型的正例比例都非常低，因此训练过程中进行了采样（sampling）和修正（recalibration）。</p>
+<h4 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h4><p>考虑了广告位（inventory）和不考虑广告位对转化率的预估由有多大的影响呢？以下的图展示了区别：</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/59113a88e1b2f.png" alt=""> </p>
+<p>具体看个例子。对于一个hotel广告主的一个campaign，不同的广告位预估出来的$\phi$值也很不相同，旅游类的预估值最高，社会媒体的最低。说明这个模型还是有一定区分度的。</p>
+<p><img src="https://ooo.0o0.ooo/2017/05/09/59113a558161d.png" alt=""> </p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/22/搜索引擎Top-k快速检索问题/" rel="next" title="搜索引擎Top-k快速检索问题">
+                <i class="fa fa-chevron-left"></i> 搜索引擎Top-k快速检索问题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/29/【九章算法基础班】二叉树与分治法/" rel="prev" title="【九章算法基础班】二叉树与分治法">
+                【九章算法基础班】二叉树与分治法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bid-Optimizing-and-Inventory-Scoring-in-Targeted-Online-Advertising"><span class="nav-number">1.</span> <span class="nav-text">Bid Optimizing and Inventory Scoring in Targeted Online Advertising</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#M6D竞价流程"><span class="nav-number">2.</span> <span class="nav-text">M6D竞价流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#核心算法"><span class="nav-number">3.</span> <span class="nav-text">核心算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#计算调整因子-phi-的依据"><span class="nav-number">3.0.1.</span> <span class="nav-text">计算调整因子$\phi$的依据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调整因子-phi-计算"><span class="nav-number">3.0.2.</span> <span class="nav-text">调整因子$\phi$计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模型训练"><span class="nav-number">3.0.3.</span> <span class="nav-text">模型训练</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结果分析"><span class="nav-number">3.0.4.</span> <span class="nav-text">结果分析</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

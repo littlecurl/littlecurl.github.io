@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="outline 一个数组，从两边往中间移动（对撞型） 一个数组，同时向前移动（前向型） 两个数组两根指针（并行型）  1.对撞型或相会型  leetcode 11.Container With Most Water题目 Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法强化班】两指针">
+<meta property="og:url" content="http://yoursite.com/2018/02/02/【九章算法强化班】两指针/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="outline 一个数组，从两边往中间移动（对撞型） 一个数组，同时向前移动（前向型） 两个数组两根指针（并行型）  1.对撞型或相会型  leetcode 11.Container With Most Water题目 Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-02-12-41-27.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-02-15-34-03.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-02-16-57-31.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-02-21-47-48.png">
+<meta property="og:updated_time" content="2018-02-08T07:05:26.570Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法强化班】两指针">
+<meta name="twitter:description" content="outline 一个数组，从两边往中间移动（对撞型） 一个数组，同时向前移动（前向型） 两个数组两根指针（并行型）  1.对撞型或相会型  leetcode 11.Container With Most Water题目 Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2018-02-02-12-41-27.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/02/【九章算法强化班】两指针/"/>
+
+
+
+
+
+  <title>【九章算法强化班】两指针 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/02/【九章算法强化班】两指针/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法强化班】两指针</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-02T12:31:57+08:00">
+                2018-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,769
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  18
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="outline"><a href="#outline" class="headerlink" title="outline"></a>outline</h1><ol>
+<li>一个数组，从两边往中间移动（对撞型）</li>
+<li>一个数组，同时向前移动（前向型）</li>
+<li>两个数组两根指针（并行型）</li>
+</ol>
+<h2 id="1-对撞型或相会型"><a href="#1-对撞型或相会型" class="headerlink" title="1.对撞型或相会型"></a>1.对撞型或相会型</h2><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-02-12-41-27.png" alt=""> </p>
+<h3 id="leetcode-11-Container-With-Most-Water"><a href="#leetcode-11-Container-With-Most-Water" class="headerlink" title="leetcode 11.Container With Most Water"></a><a href="https://leetcode.com/problems/container-with-most-water" target="_blank" rel="external">leetcode 11.Container With Most Water</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given <em>n</em> non-negative integers <em>a1</em>, <em>a2</em>, …, <em>an</em>, where each represents a point at coordinate (<em>i</em>, <em>ai</em>). <em>n</em> vertical lines are drawn such that the two endpoints of line <em>i</em> is at (<em>i</em>, <em>ai</em>) and (<em>i</em>, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
+<p>Note: You may not slant the container and <em>n</em> is at least 2.</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>灌水问题，从两边向内灌水，所以初始两个指针ij一头一尾，此时能够容纳的水量是i和j中比较高度的柱子高度*ij两个柱子之间的距离：</p>
+<p>max(height[i] , height[j]) * (j - i)</p>
+<p>然后考虑将柱子向内移动，其实我们只需要移动比较矮的柱子，因为如果移动长的一边的柱子，根据上面的公式，j-i会变短，max(height[i] , height[j])可能变小可能不变，所以总的水量不会增加，所以我们只有移动短的柱子，才有可能会遇到更高的柱子，使得水量增大。</p>
+<p>这样一来，每次选取较短的柱子向内移动，时间复杂度为<script type="math/tex">O(n)</script></p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="keyword">int</span>[] height)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j = height.length-<span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> max = Integer.MIN_VALUE;</div><div class="line">        <span class="keyword">while</span>(i &lt; j)&#123;</div><div class="line">            <span class="keyword">if</span>(height[i] &lt; height[j])&#123;</div><div class="line">                max = Math.max(max,(j-i) *height[i]);</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                max = Math.max(max,(j-i) * height[j]);</div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Quick-select-—-Kth-Largest-Element-in-an-Array"><a href="#Quick-select-—-Kth-Largest-Element-in-an-Array" class="headerlink" title="Quick select — Kth Largest Element in an Array"></a>Quick select — <a href="https://leetcode.com/problems/kth-largest-element-in-an-array/" target="_blank" rel="external">Kth Largest Element in an Array</a></h3><h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><blockquote>
+<p>Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.</p>
+<p>For example,<br>Given <code>[3,2,1,5,6,4]</code> and k = 2, return 5.</p>
+</blockquote>
+<p>在一组数字中找到第K大的数字</p>
+<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>方法一：可以用堆，维护一个大小为K的堆，将数字依次加入堆，找到第k大，时间复杂度<script type="math/tex">O(nlogk)</script></p>
+<p>方法二：quick select，基于quick sort的思想</p>
+<ol>
+<li>每次在数组中随机选取一个数组作为pivort，这里面随机选取，经过大量的验证，选取中间位置的数字作为pivot比较稳妥。</li>
+<li>然后和快排一样，将比它小的放在它左边，比它大的放在右边，找到pivot的位置即是pivot的最终位置。<ol>
+<li>如果此时pivot的位置==k-1，找到了</li>
+<li>如果此时pivot的位置 &gt;k-1，只需在pivot左边寻找第k大</li>
+<li>如果此时pivot的位置 &lt;k-1，只需在pivot右边寻找第k-pivot大</li>
+</ol>
+</li>
+</ol>
+<p>这种方法的时间复杂度为<script type="math/tex">O(n)+O(n/2)+O(n/4)+...+O(1) = O(2n) = O(n)</script></p>
+<p>两种方法的比较：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-02-15-34-03.png" alt=""> </p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> temp = nums[i];</div><div class="line">        nums[i] = nums[j];</div><div class="line">        nums[j] = temp;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] nums,<span class="keyword">int</span> start,<span class="keyword">int</span> end,<span class="keyword">int</span> k)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> pivotIdx = start+(end-start)/<span class="number">2</span>;</div><div class="line">        <span class="keyword">int</span> pivot = nums[pivotIdx];</div><div class="line">        <span class="keyword">int</span> j = end;</div><div class="line">        <span class="keyword">int</span> i = start;</div><div class="line">        swap(nums,i,pivotIdx);<span class="comment">//把pivot交换至数组头</span></div><div class="line">        <span class="keyword">while</span>(i &lt; j)&#123;</div><div class="line">            <span class="keyword">while</span>(i &lt; j &amp;&amp; nums[j] &lt;= pivot)&#123;</div><div class="line">                j--;</div><div class="line">            &#125;</div><div class="line">            nums[i] = nums[j];</div><div class="line">            <span class="keyword">while</span>(i &lt; j &amp;&amp; nums[i] &gt;= pivot)&#123;</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">            nums[j] = nums[i];</div><div class="line">        &#125;</div><div class="line">        nums[j] = pivot;</div><div class="line">        <span class="keyword">if</span>((j - start) == k-<span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> pivot;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ((j - start) &gt; k-<span class="number">1</span>)&#123;</div><div class="line">            <span class="keyword">return</span> partition(nums,start,j-<span class="number">1</span>,k);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span>&#123;</div><div class="line">            <span class="keyword">return</span> partition(nums,j+<span class="number">1</span>,end,k-j+start-<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findKthLargest</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> partition(nums,<span class="number">0</span>,nums.length-<span class="number">1</span>,k);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-02-16-57-31.png" alt=""> </p>
+<h3 id="lintcode-399-Nuts-amp-Bolts-Problem"><a href="#lintcode-399-Nuts-amp-Bolts-Problem" class="headerlink" title="lintcode 399.Nuts &amp; Bolts Problem"></a><a href="https://www.lintcode.com/en/problem/nuts-bolts-problem/" target="_blank" rel="external">lintcode 399.Nuts &amp; Bolts Problem</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>给定一组 n 个不同大小的 nuts 和 n 个不同大小的 bolts。nuts 和 bolts 一一匹配。 不允许将 nut 之间互相比较，也不允许将 bolt 之间互相比较。也就是说，只许将 nut 与 bolt 进行比较， 或将 bolt 与 nut 进行比较。请比较 nut 与 bolt 的大小</p>
+<p>样例</p>
+<p>给出 nuts = <code>[&#39;ab&#39;,&#39;bc&#39;,&#39;dd&#39;,&#39;gg&#39;]</code>, bolts = <code>[&#39;AB&#39;,&#39;GG&#39;, &#39;DD&#39;, &#39;BC&#39;]</code><br>你的程序应该找出bolts和nuts的匹配。<br>一组可能的返回结果是：<br>nuts = <code>[&#39;ab&#39;,&#39;bc&#39;,&#39;dd&#39;,&#39;gg&#39;]</code>, bolts = <code>[&#39;AB&#39;,&#39;BC&#39;,&#39;DD&#39;,&#39;GG&#39;]</code></p>
+</blockquote>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>因为nuts和bolts两个数组在各自的内部不能互相比较，只能在两个数组之间的元素进行比较。所以这就需要利用一个array中的元素对另一个array进行partition，并反过来重复这一个过程，最终让两个array都满足comparator所定义的相同顺序。</p>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * public class NBCompare &#123;</span></div><div class="line"><span class="comment"> *     public int cmp(String a, String b);</span></div><div class="line"><span class="comment"> * &#125;</span></div><div class="line"><span class="comment"> * You can use compare.cmp(a, b) to compare nuts "a" and bolts "b",</span></div><div class="line"><span class="comment"> * if "a" is bigger than "b", it will return 1, else if they are equal,</span></div><div class="line"><span class="comment"> * it will return 0, else if "a" is smaller than "b", it will return -1.</span></div><div class="line"><span class="comment"> * When "a" is not a nut or "b" is not a bolt, it will return 2, which is not valid.</span></div><div class="line"><span class="comment">*/</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="comment">/**</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> nuts: an array of integers</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> bolts: an array of integers</span></div><div class="line"><span class="comment">     * <span class="doctag">@param</span> compare: a instance of Comparator</span></div><div class="line"><span class="comment">     * <span class="doctag">@return</span>: nothing</span></div><div class="line"><span class="comment">     */</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">quicksort</span><span class="params">(String[] nuts,String[] bolts,NBComparator compare,<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">         <span class="keyword">if</span>(start &gt;= end) <span class="keyword">return</span>;</div><div class="line">         <span class="comment">//选取bolts中的第一个元素作为pivot，计算在nuts中对应的元素的位置</span></div><div class="line">         <span class="keyword">int</span> nuts_pivotidx = partition(nuts,bolts[start],compare,start,end);</div><div class="line">         <span class="comment">//利用nuts中的pivot对bolts中元素排序</span></div><div class="line">         partition(bolts,nuts[nuts_pivotidx],compare,start,end);</div><div class="line">         <span class="comment">//对picot左边右边分别排序</span></div><div class="line">         quicksort(nuts, bolts, compare, start, nuts_pivotidx - <span class="number">1</span>);</div><div class="line">         quicksort(nuts, bolts, compare, nuts_pivotidx + <span class="number">1</span>, end);</div><div class="line">     &#125;</div><div class="line">     </div><div class="line">     <span class="comment">//输入nuts和bolts中的pivot,对nuts排序，返回对应元素的位置</span></div><div class="line">     <span class="comment">//输入bolts和nuts中的pivot,对bolts排序，返回对应元素的位置</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(String[] str,String pivot,NBComparator compare,<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">         <span class="comment">//在另一个数组中找到对应的螺丝或者螺母</span></div><div class="line">         <span class="keyword">for</span>(<span class="keyword">int</span> i = start;i &lt;= end;i++)&#123;</div><div class="line">             <span class="keyword">if</span>(compare.cmp(str[i],pivot) == <span class="number">0</span> || </div><div class="line">             compare.cmp(pivot,str[i]) == <span class="number">0</span>)&#123;</div><div class="line">                 swap(str,i,start);</div><div class="line">                 <span class="keyword">break</span>;</div><div class="line">             &#125;</div><div class="line">         &#125;</div><div class="line">         <span class="comment">//快速排序</span></div><div class="line">         String pivotTemp = str[start];</div><div class="line">         <span class="keyword">int</span> left = start;</div><div class="line">         <span class="keyword">int</span> right = end;</div><div class="line">         <span class="keyword">while</span>(left &lt; right)&#123;</div><div class="line">             <span class="keyword">while</span>(left &lt; end &amp;&amp; (compare.cmp(str[right], pivot) == -<span class="number">1</span> || </div><div class="line">            compare.cmp(pivot,str[right]) == <span class="number">1</span>))&#123;</div><div class="line">                right--;</div><div class="line">            &#125;</div><div class="line">            str[left] = str[right];</div><div class="line">             <span class="keyword">while</span>(left &lt; end &amp;&amp; (compare.cmp(str[right], pivot) == <span class="number">1</span> || </div><div class="line">            compare.cmp(pivot, str[right]) == -<span class="number">1</span>))&#123;</div><div class="line">                left++;</div><div class="line">            &#125;</div><div class="line">            str[right] = str[left];</div><div class="line">        &#125;</div><div class="line">        str[left] = pivotTemp;    </div><div class="line">        <span class="keyword">return</span> left;</div><div class="line">     &#125;</div><div class="line">     </div><div class="line">     <span class="comment">//交换元素</span></div><div class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swap</span><span class="params">(String[] strings,<span class="keyword">int</span> i,<span class="keyword">int</span> j)</span></span>&#123;</div><div class="line">         String temp = strings[i];</div><div class="line">         strings[i] = strings[j];</div><div class="line">         strings[j] = temp;</div><div class="line">     &#125;</div><div class="line">     </div><div class="line">     </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sortNutsAndBolts</span><span class="params">(String[] nuts, String[] bolts, NBComparator compare)</span> </span>&#123;</div><div class="line">        <span class="comment">// write your code here</span></div><div class="line">        <span class="keyword">if</span>(nuts == <span class="keyword">null</span> || bolts == <span class="keyword">null</span>) <span class="keyword">return</span>;</div><div class="line">        <span class="keyword">if</span>(nuts.length != bolts.length) <span class="keyword">return</span>;</div><div class="line">        quicksort(nuts,bolts,compare,<span class="number">0</span>,nuts.length-<span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="2-窗口类"><a href="#2-窗口类" class="headerlink" title="2.窗口类"></a>2.窗口类</h2><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-02-02-21-47-48.png" alt=""> </p>
+<h3 id="Minimum-Size-Subarray-Sum"><a href="#Minimum-Size-Subarray-Sum" class="headerlink" title="Minimum Size Subarray Sum"></a><a href="https://leetcode.com/problems/minimum-size-subarray-sum" target="_blank" rel="external">Minimum Size Subarray Sum</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given an array of <strong>n</strong> positive integers and a positive integer <strong>s</strong>, find the minimal length of a <strong>contiguous</strong> subarray of which the sum ≥ <strong>s</strong>. If there isn’t one, return 0 instead.</p>
+<p>For example, given the array <code>[2,3,1,2,4,3]</code> and <code>s = 7</code>,<br>the subarray <code>[4,3]</code> has the minimal length under the problem constraint.</p>
+</blockquote>
+<p>返回数组中元素和&gt;=s的最长子数组的长度</p>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><p>两指针控制滑动窗口类问题，当窗口内元素和&lt;s时右指针向右滑动，更新最大长度</p>
+<p>当窗口内元素和&gt;=s时，左指针向右滑动至&lt;s，无需更新最大长度</p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">minSubArrayLen</span><span class="params">(<span class="keyword">int</span> s, <span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(nums.length == <span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> minLen = Integer.MAX_VALUE;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; nums.length;j++)&#123;</div><div class="line">            sum += nums[j];</div><div class="line">            <span class="keyword">while</span>(sum &gt;= s)&#123;</div><div class="line">                minLen = Math.min(minLen,j-i+<span class="number">1</span>);</div><div class="line">                sum -= nums[i];</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> minLen == Integer.MAX_VALUE?<span class="number">0</span>:minLen;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Longest-Substring-Without-Repeating-Characters"><a href="#Longest-Substring-Without-Repeating-Characters" class="headerlink" title="Longest Substring Without Repeating Characters"></a><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters" target="_blank" rel="external">Longest Substring Without Repeating Characters</a></h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a string, find the length of the <strong>longest substring</strong> without repeating characters.</p>
+<p><strong>Examples:</strong></p>
+<p>Given <code>&quot;abcabcbb&quot;</code>, the answer is <code>&quot;abc&quot;</code>, which the length is 3.</p>
+<p>Given <code>&quot;bbbbb&quot;</code>, the answer is <code>&quot;b&quot;</code>, with the length of 1.</p>
+<p>Given <code>&quot;pwwkew&quot;</code>, the answer is <code>&quot;wke&quot;</code>, with the length of 3. Note that the answer must be a <strong>substring</strong>, <code>&quot;pwke&quot;</code> is a <em>subsequence</em> and not a substring.</p>
+</blockquote>
+<p>查找字符串中没有重复元素的最长子串</p>
+<h4 id="思路-1"><a href="#思路-1" class="headerlink" title="思路"></a>思路</h4><p>记录窗口中出现过哪些字母，当遇到重复字母的时候窗口缩小</p>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] map = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];<span class="comment">//相当于hashmap</span></div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> maxlen = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span>(j &lt; s.length())&#123;</div><div class="line">            <span class="keyword">if</span>(map[s.charAt(j)] == <span class="number">0</span>)&#123;</div><div class="line">                map[s.charAt(j)] = <span class="number">1</span>;</div><div class="line">                maxlen = Math.max(maxlen,j-i+<span class="number">1</span>);</div><div class="line">                j++;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//map[s.charAt(j)] == 1</span></div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                <span class="keyword">while</span>(s.charAt(j) != s.charAt(i))&#123;</div><div class="line">                    map[s.charAt(i)] = <span class="number">0</span>;</div><div class="line">                    i++;</div><div class="line">                &#125;</div><div class="line">                i++;</div><div class="line">                j++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> maxlen;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Minimum-Window-Substring"><a href="#Minimum-Window-Substring" class="headerlink" title="Minimum Window Substring"></a><a href="https://leetcode.com/problems/minimum-window-substring" target="_blank" rel="external">Minimum Window Substring</a></h3><h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
+<p>For example,<br><strong>S</strong> = <code>&quot;ADOBECODEBANC&quot;</code><br><strong>T</strong> = <code>&quot;ABC&quot;</code></p>
+<p>Minimum window is <code>&quot;BANC&quot;</code>.</p>
+</blockquote>
+<p>返回s中能够包含t的最短子串</p>
+<h4 id="思路-2"><a href="#思路-2" class="headerlink" title="思路"></a>思路</h4><p>滑动窗口+hashtable的思想</p>
+<p>首先需要两个hash表，一个存储t中的字母，一个存储s中子串的字母，还需要一个能够判别s中的子串是否能够包含t的函数。</p>
+<p>然后两指针滑动窗口，右指针向右滑动，当滑窗中的子串能够包含t时，窗口缩小，左指针右移，更新最短窗口，直到窗口内子串不足以包含t中全部字母，此时右指针继续向后移动，重复上述过程。</p>
+<h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="comment">//判断s是否包含t</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isContain</span><span class="params">(<span class="keyword">int</span>[] mapT,<span class="keyword">int</span>[] mapS)</span></span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; mapT.length;i++)&#123;</div><div class="line">            <span class="keyword">if</span>(mapS[i] &lt; mapT[i])&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">minWindow</span><span class="params">(String s, String t)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] mapT = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</div><div class="line">        <span class="keyword">int</span>[] mapS = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</div><div class="line">        <span class="keyword">int</span> minlen = Integer.MAX_VALUE;</div><div class="line">        StringBuilder minWindow = <span class="keyword">new</span> StringBuilder();</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> ch : t.toCharArray())&#123;</div><div class="line">            mapT[ch]++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; s.length();j++) &#123;</div><div class="line">            mapS[s.charAt(j)]++;</div><div class="line">            <span class="keyword">while</span>(isContain(mapT,mapS))&#123;</div><div class="line">                <span class="keyword">if</span>(minlen &gt; j-i+<span class="number">1</span>)&#123;</div><div class="line">                    minlen = j-i+<span class="number">1</span>;</div><div class="line">                    minWindow = <span class="keyword">new</span> StringBuilder(s.substring(i,j+<span class="number">1</span>));</div><div class="line">                &#125;</div><div class="line">                mapS[s.charAt(i)]--;</div><div class="line">                i++;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(minlen == Integer.MAX_VALUE)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="string">""</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">return</span> minWindow.toString();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Longest-Substring-with-At-Most-K-Distinct-Characters"><a href="#Longest-Substring-with-At-Most-K-Distinct-Characters" class="headerlink" title="Longest Substring with At Most K Distinct Characters"></a><a href="https://leetcode.com/problems/longest-substring-with-at-most-k-distinct-characters/" target="_blank" rel="external">Longest Substring with At Most K Distinct Characters</a></h3><h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a string, find the length of the longest substring T that contains at most <em>k</em> distinct characters.</p>
+<p>For example, Given s = <code>“eceba”</code> and k = 2,</p>
+<p>T is “ece” which its length is 3.</p>
+</blockquote>
+<p>在字符串中找到一个子串，最多包含k个不同的字母，返回满足这样条件的子串的最大长度。</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><p>还是滑窗+hash表</p>
+<p>用hash表存储当前子串中字母，用charNum存储子串中的不同字母个数</p>
+<ol>
+<li>当窗口内字母个数&lt;=k时右指针向右滑动，扩大窗口，更新窗口大小</li>
+<li>当窗口内字母个数&gt;k时，左指针右移，缩小窗口，</li>
+</ol>
+<h4 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstringKDistinct</span><span class="params">(String s, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span>[] map = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">256</span>];</div><div class="line">        <span class="keyword">int</span> charNum = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> maxlen = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &lt; s.length();j++)&#123;</div><div class="line">            <span class="comment">//之前已经出现过这个字母了</span></div><div class="line">            <span class="keyword">if</span>(map[s.charAt(j)]&gt;<span class="number">0</span>)&#123;</div><div class="line">                map[s.charAt(j)]++;</div><div class="line">                maxlen = Math.max(maxlen,j-i+<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//之前没出现过这个字母,但出现的字母数&lt;k</span></div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (charNum &lt; k)&#123;</div><div class="line">                map[s.charAt(j)]++;</div><div class="line">                charNum++;</div><div class="line">                maxlen = Math.max(maxlen,j-i+<span class="number">1</span>);</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//之前没出现过这个字母,但出现的字母数==k</span></div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                map[s.charAt(j)]++;</div><div class="line">                charNum++;</div><div class="line">                <span class="keyword">while</span>(charNum &gt; k)&#123;</div><div class="line">                    <span class="keyword">if</span>(map[s.charAt(i)] == <span class="number">1</span>)&#123;</div><div class="line">                        map[s.charAt(i)]--;</div><div class="line">                        charNum--;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">else</span> &#123;</div><div class="line">                        map[s.charAt(i)]--;</div><div class="line">                    &#125;</div><div class="line">                    i++;</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> maxlen;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="两个数组两个指针"><a href="#两个数组两个指针" class="headerlink" title="两个数组两个指针"></a>两个数组两个指针</h2><h3 id="最小差"><a href="#最小差" class="headerlink" title="最小差"></a><a href="http://www.lintcode.com/zh-cn/problem/the-smallest-difference/" target="_blank" rel="external">最小差</a></h3><h4 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>给定两个整数数组（第一个是数组 <code>A</code>，第二个是数组 <code>B</code>），在数组 A 中取 A[i]，数组 B 中取 B[j]，A[i] 和 B[j]两者的差越小越好(|A[i] - B[j]|)。返回最小差。</p>
+<p>样例</p>
+<p>给定数组 A = <code>[3,4,6,7]</code>， B = <code>[2,3,8,9]</code>，返回 <code>0</code>。</p>
+</blockquote>
+<p>给定两个数组，返回两个数组元素之间的最小差</p>
+<h4 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>baseline:双层for循环，A中循环一遍B中循环一遍，计算每两个元素之间的差值取最小，时间复杂度：<script type="math/tex">O(n^2)</script></p>
+<p>优化：</p>
+<p>先排序，排序之后遍历A中元素，用二分查找的思路在B中寻找与元素A[i]差值最小的元素，时间复杂度：<script type="math/tex">O(nlogn)</script></p>
+<p>骚操作：</p>
+<p>两指针ij分别指向AB，更新A[i]和B[j]的差值</p>
+<p>当A[i]&lt;B[j]时，i后移，反之j后移</p>
+<h4 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">smallestDifference</span><span class="params">(<span class="keyword">int</span>[] A, <span class="keyword">int</span>[] B)</span> </span>&#123;</div><div class="line">    <span class="comment">// write your code here</span></div><div class="line">    Arrays.sort(A);</div><div class="line">    Arrays.sort(B);</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> min = Integer.MAX_VALUE;</div><div class="line">    <span class="keyword">while</span>(i &lt; A.length &amp;&amp; j &lt; B.length)&#123;</div><div class="line">        min = Math.min(min,Math.abs(A[i]-B[j]));</div><div class="line">        <span class="keyword">if</span>(A[i] &lt; B[j])&#123;</div><div class="line">            i++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            j++;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> min;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Smallest-Range"><a href="#Smallest-Range" class="headerlink" title="Smallest Range"></a><a href="https://leetcode.com/problems/smallest-range/" target="_blank" rel="external">Smallest Range</a></h3><h4 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>You have <code>k</code> lists of sorted integers in ascending order. Find the <strong>smallest</strong> range that includes at least one number from each of the <code>k</code> lists.</p>
+<p>We define the range [a,b] is smaller than range [c,d] if <code>b-a &lt; d-c</code> or <code>a &lt; c</code> if <code>b-a == d-c</code>.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input:[[4,10,15,24,26], [0,9,12,20], [5,18,22,30]]</div><div class="line">&gt; Output: [20,24]</div><div class="line">&gt; Explanation: </div><div class="line">&gt; List 1: [4, 10, 15, 24,26], 24 is in range [20,24].</div><div class="line">&gt; List 2: [0, 9, 12, 20], 20 is in range [20,24].</div><div class="line">&gt; List 3: [5, 18, 22, 30], 22 is in range [20,24].</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定k个数组，找到最短的区间，该区间需满足包含来自每个数组的至少一个元素</p>
+<h4 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>k个数组k个指针，k个指针中的最大最小即是当前情况下的区间。</p>
+<p>每次将值最小的指针向后移动，更新当前情况下的区间长度。</p>
+<p>这里就需要找到哪个指针所指的值是最小的了，所以我们需要一个最小堆来维护k个指针中的最小值。</p>
+<p>另外，我们还需要计算k个指针中的最大值，这个最大值用一个变量max维护就可以了，每次入堆的元素都跟当前max比较更新一下就好。</p>
+<h4 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.Comparator;</div><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"><span class="keyword">import</span> java.util.PriorityQueue;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SmallestRange</span> </span>&#123;</div><div class="line">  <span class="comment">//定义结构Node，存储节所在的数组idx和值</span></div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Node</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> idx;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        Node(<span class="keyword">int</span> idx,<span class="keyword">int</span> val)&#123;</div><div class="line">            <span class="keyword">this</span>.idx = idx;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] smallestRange(List&lt;List&lt;Integer&gt;&gt; nums) &#123;</div><div class="line">        <span class="keyword">int</span>[] idx = <span class="keyword">new</span> <span class="keyword">int</span>[nums.size()];<span class="comment">//代表指针指向每一个数组</span></div><div class="line">        Comparator&lt;Node&gt; cmp = <span class="keyword">new</span> Comparator&lt;Node&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(Node o1, Node o2)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> o1.val - o2.val;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">        PriorityQueue&lt;Node&gt; minheap= <span class="keyword">new</span> PriorityQueue&lt;&gt;(cmp);<span class="comment">//最小堆</span></div><div class="line">        <span class="keyword">int</span> max  = Integer.MIN_VALUE;<span class="comment">//存储当前遇到的最大值</span></div><div class="line">        <span class="keyword">int</span> minRangeLen = Integer.MAX_VALUE;<span class="comment">//存储最小区间的长读</span></div><div class="line">        <span class="keyword">int</span>[] minRange = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];<span class="comment">//存储最小区间</span></div><div class="line">        <span class="comment">//先把所有list第一个元素先入堆，同时记录最大值</span></div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; idx.length;i++)&#123;</div><div class="line">            <span class="keyword">int</span> val = nums.get(i).get(idx[i]);</div><div class="line">            minheap.add(<span class="keyword">new</span> Node(i,val));</div><div class="line">            max = Math.max(max,val);</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//出堆</span></div><div class="line">        <span class="keyword">while</span> (!minheap.isEmpty())&#123;</div><div class="line">            <span class="comment">//取堆顶元素</span></div><div class="line">            Node temp = minheap.poll();</div><div class="line">            <span class="comment">//更新当前最小区间的长度</span></div><div class="line">            <span class="keyword">if</span>(max-temp.val &lt; minRangeLen)&#123;</div><div class="line">                minRangeLen = max-temp.val;</div><div class="line">                minRange[<span class="number">0</span>] = temp.val;</div><div class="line">                minRange[<span class="number">1</span>] = max;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//堆顶元素所在的区间指针后移一位</span></div><div class="line">            idx[temp.idx]++;</div><div class="line">            <span class="comment">//如果对顶元素所在的区间指针溢出了，跳出</span></div><div class="line">            <span class="keyword">if</span>(idx[temp.idx] == nums.get(temp.idx).size())&#123;</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">          <span class="comment">//找到下一个值，更新max，入堆</span></div><div class="line">            <span class="keyword">int</span> nextval = nums.get(temp.idx).get(idx[temp.idx]);</div><div class="line">            max = Math.max(max,nextval);</div><div class="line">            minheap.add(<span class="keyword">new</span> Node(temp.idx,nextval));</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> minRange;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Partition-Labels"><a href="#Partition-Labels" class="headerlink" title="Partition Labels"></a><a href="https://leetcode.com/problems/partition-labels/" target="_blank" rel="external">Partition Labels</a></h3><h4 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>A string <code>S</code> of lowercase letters is given. We want to partition this string into as many parts as possible so that each letter appears in at most one part, and return a list of integers representing the size of these parts.</p>
+<p><strong>Example 1:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: S = &quot;ababcbacadefegdehijhklij&quot;</div><div class="line">&gt; Output: [9,7,8]</div><div class="line">&gt; Explanation:</div><div class="line">&gt; The partition is &quot;ababcbaca&quot;, &quot;defegde&quot;, &quot;hijhklij&quot;.</div><div class="line">&gt; This is a partition so that each letter appears in at most one part.</div><div class="line">&gt; A partition like &quot;ababcbacadefegde&quot;, &quot;hijhklij&quot; is incorrect, because it splits S into less parts.</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>给定一个字符串，要求将字符串分割，保证每个字母只出现在一个子串中，最终返回分割的字符串长度</p>
+<h4 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h4><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">由于每个字母只能出现在一个字符串中，比如第一个字母a，其所在的子串至少要从第一个a到最后一个a。</div><div class="line">S = &quot;ababcbacadefegdehijhklij&quot;</div><div class="line">     ↑       ↑</div><div class="line">     i       maxRight</div><div class="line">但此时并不一定找到第一个合适的分割点了，因为在这两个a中其他字母，有可能出现在后半段中，所以我们还需要遍历这两个指针中间的字母，确定每一个字母在字符串中出现的最后位置，在这个过程中，前后两个指针的距离可能会变得更远，中间的每一个元素都需要遍历到。所以我们用maxRight来存储当前遍历过的字母的最远位置，则i的遍历区间应该是while (i &lt;= maxright)。</div></pre></td></tr></table></figure>
+<h4 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    List&lt;Integer&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">partition</span><span class="params">(String s,<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span></span>&#123;</div><div class="line">        <span class="keyword">if</span>(start &gt; end)&#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">int</span> i = start;</div><div class="line">        <span class="keyword">int</span> j = end;</div><div class="line">        <span class="keyword">int</span> maxright = i;<span class="comment">//初始化maxright</span></div><div class="line">        <span class="keyword">while</span> (i &lt;= maxright)&#123;</div><div class="line">            <span class="keyword">char</span> ch = s.charAt(i);</div><div class="line">            <span class="keyword">while</span> (s.charAt(j) != ch)&#123;</div><div class="line">                j--;</div><div class="line">            &#125;<span class="comment">//找到ch出现的最后一个位置</span></div><div class="line">            maxright = Math.max(maxright,j);<span class="comment">//更新最远距离</span></div><div class="line">            <span class="keyword">if</span>(i == maxright)&#123;<span class="comment">//找到了最后一个，跳出</span></div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">            i++;</div><div class="line">            j = end;</div><div class="line">        &#125;</div><div class="line">      <span class="comment">//更新结果集，继续分割右边</span></div><div class="line">        result.add(maxright-start+<span class="number">1</span>);</div><div class="line">        partition(s,maxright+<span class="number">1</span>,end);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">partitionLabels</span><span class="params">(String S)</span> </span>&#123;</div><div class="line">        partition(S,<span class="number">0</span>,S.length()-<span class="number">1</span>);</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/31/【排序】堆排序/" rel="next" title="堆排序">
+                <i class="fa fa-chevron-left"></i> 堆排序
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/08/【leetcode】sort/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#outline"><span class="nav-number">1.</span> <span class="nav-text">outline</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-对撞型或相会型"><span class="nav-number">1.1.</span> <span class="nav-text">1.对撞型或相会型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#leetcode-11-Container-With-Most-Water"><span class="nav-number">1.1.1.</span> <span class="nav-text">leetcode 11.Container With Most Water</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Quick-select-—-Kth-Largest-Element-in-an-Array"><span class="nav-number">1.1.2.</span> <span class="nav-text">Quick select — Kth Largest Element in an Array</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lintcode-399-Nuts-amp-Bolts-Problem"><span class="nav-number">1.1.3.</span> <span class="nav-text">lintcode 399.Nuts & Bolts Problem</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-窗口类"><span class="nav-number">1.2.</span> <span class="nav-text">2.窗口类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Minimum-Size-Subarray-Sum"><span class="nav-number">1.2.1.</span> <span class="nav-text">Minimum Size Subarray Sum</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-Substring-Without-Repeating-Characters"><span class="nav-number">1.2.2.</span> <span class="nav-text">Longest Substring Without Repeating Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-1"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-4"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Minimum-Window-Substring"><span class="nav-number">1.2.3.</span> <span class="nav-text">Minimum Window Substring</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-4"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#思路-2"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-5"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Longest-Substring-with-At-Most-K-Distinct-Characters"><span class="nav-number">1.2.4.</span> <span class="nav-text">Longest Substring with At Most K Distinct Characters</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-5"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-6"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两个数组两个指针"><span class="nav-number">1.3.</span> <span class="nav-text">两个数组两个指针</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最小差"><span class="nav-number">1.3.1.</span> <span class="nav-text">最小差</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-6"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-4"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-7"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Smallest-Range"><span class="nav-number">1.3.2.</span> <span class="nav-text">Smallest Range</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-7"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-5"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-8"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partition-Labels"><span class="nav-number">1.3.3.</span> <span class="nav-text">Partition Labels</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-8"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-6"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-9"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

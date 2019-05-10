@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="考点重要程度：链表 -&amp;gt; DFS/BFS -&amp;gt;DP 基础test: //print() 打印完整链表ListNode node1 = new ListNode(1);ListNode node2 = new ListNode(2);ListNode node3 = new ListNode(3);ListNode head = node1;node1.next = node2;node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【九章算法基础班】课程笔记——链表">
+<meta property="og:url" content="http://yoursite.com/2017/12/11/【九章算法基础班】链表/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="考点重要程度：链表 -&amp;gt; DFS/BFS -&amp;gt;DP 基础test: //print() 打印完整链表ListNode node1 = new ListNode(1);ListNode node2 = new ListNode(2);ListNode node3 = new ListNode(3);ListNode head = node1;node1.next = node2;node">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-12-00-49-23.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-14-23-57-14.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-14-23-55-46.png">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-22-20-02-17.png">
+<meta property="og:updated_time" content="2017-12-23T07:47:14.008Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【九章算法基础班】课程笔记——链表">
+<meta name="twitter:description" content="考点重要程度：链表 -&amp;gt; DFS/BFS -&amp;gt;DP 基础test: //print() 打印完整链表ListNode node1 = new ListNode(1);ListNode node2 = new ListNode(2);ListNode node3 = new ListNode(3);ListNode head = node1;node1.next = node2;node">
+<meta name="twitter:image" content="http://omaby2s5z.bkt.clouddn.com/2017-12-12-00-49-23.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/11/【九章算法基础班】链表/"/>
+
+
+
+
+
+  <title>【九章算法基础班】课程笔记——链表 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/11/【九章算法基础班】链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【九章算法基础班】课程笔记——链表</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-11T22:39:23+08:00">
+                2017-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/九章算法/" itemprop="url" rel="index">
+                    <span itemprop="name">九章算法</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,288
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  26
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>考点重要程度：链表 -&gt; DFS/BFS -&gt;DP</p>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>test:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//print() 打印完整链表</span></div><div class="line">ListNode node1 = <span class="keyword">new</span> ListNode(<span class="number">1</span>);</div><div class="line">ListNode node2 = <span class="keyword">new</span> ListNode(<span class="number">2</span>);</div><div class="line">ListNode node3 = <span class="keyword">new</span> ListNode(<span class="number">3</span>);</div><div class="line"></div><div class="line">ListNode head = node1;</div><div class="line">node1.next = node2;</div><div class="line">node2.next = node3;</div><div class="line"></div><div class="line">print(head);</div><div class="line"><span class="comment">//1-&gt;2-&gt;3</span></div><div class="line">node1 = node2;</div><div class="line">print(head);</div><div class="line"><span class="comment">//1-&gt;2-&gt;3</span></div><div class="line"></div><div class="line">ListNode包括一个值和一个指针，head占<span class="number">4</span>Byte(<span class="number">32</span>bit)空间，head实际上是一个指针，通过head所指向的地址去找对应节点存储的值和下一个指针。</div><div class="line"></div><div class="line">链表结构：</div><div class="line">    [<span class="number">1</span>,] -&gt;  [<span class="number">2</span>,] -&gt; [<span class="number">3</span>,]  </div><div class="line">      ↑        ↑       ↑</div><div class="line">   head,n1     n2     n3</div><div class="line">   <span class="number">4</span><span class="keyword">byte</span>     <span class="number">4</span><span class="keyword">byte</span>   <span class="number">4</span><span class="keyword">byte</span></div><div class="line">   </div><div class="line">node1和node2都是指向节点的指针，如果令node1 = node2,那么只是node1存储的地址和node2存储的地址一样了，但是链表的机构没有改变，所以输出依然是:</div><div class="line"><span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span> </div><div class="line">  </div><div class="line">如果要改变链表的结构，需要node.next = balabala</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="相关习题"><a href="#相关习题" class="headerlink" title="相关习题"></a>相关习题</h2><h3 id="Remove-Duplicates-from-Sorted-List"><a href="#Remove-Duplicates-from-Sorted-List" class="headerlink" title="Remove Duplicates from Sorted List"></a><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list" target="_blank" rel="external">Remove Duplicates from Sorted List</a></h3><h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a sorted linked list, delete all duplicates such that each element appear only <em>once</em>.</p>
+<p>For example,<br>Given <code>1-&gt;1-&gt;2</code>, return <code>1-&gt;2</code>.<br>Given <code>1-&gt;1-&gt;2-&gt;3-&gt;3</code>, return <code>1-&gt;2-&gt;3</code>.</p>
+</blockquote>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>删掉链表中有重复的节点，保留一个</p>
+<p>因为删除某个节点node，需要让node的前序节点.next = node.next，因此需要构造一个dummy node，让其指向前序节点，这样需要删除head的时候就可以令dummy.next = node.next。初始化时令dummy.next=head</p>
+<p>最后返回dummy.next</p>
+<h4 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">  ListNode prev;<span class="comment">//用于记录重复元素第一次出现的位置</span></div><div class="line">  ListNode curt = head;<span class="comment">//用于向后遍历链表</span></div><div class="line"></div><div class="line">  <span class="keyword">while</span>(curt != <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="comment">//遇到重复元素</span></div><div class="line">    <span class="keyword">if</span>(curt.next != <span class="keyword">null</span> &amp;&amp; curt.val == curt.next.val)&#123;</div><div class="line">      prev = curt;<span class="comment">//记录第一个出现的元素</span></div><div class="line">      <span class="keyword">int</span> val = curt.val;<span class="comment">//存储当前节点的值，用于后续判断是否和当前值相等</span></div><div class="line">      <span class="comment">//curt向后移动，直到和curt值不相等停止</span></div><div class="line">      <span class="keyword">while</span> (curt != <span class="keyword">null</span> &amp;&amp; curt.val == val)&#123;</div><div class="line">        curt = curt.next;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">//curt == null || curt.val != val;此时curt指向后面第一个和它值不相等的元素</span></div><div class="line">      <span class="comment">//将prev.next指向第一个不相等的元素</span></div><div class="line">      prev.next = curt;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果没有遇到重复元素，curt继续后移一位</span></div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">      curt = curt.next;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> head;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Remove-Duplicates-from-Sorted-List-II"><a href="#Remove-Duplicates-from-Sorted-List-II" class="headerlink" title="Remove Duplicates from Sorted List II"></a><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii" target="_blank" rel="external">Remove Duplicates from Sorted List II</a></h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only <em>distinct</em> numbers from the original list.</p>
+<p>For example,<br>Given <code>1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5</code>, return <code>1-&gt;2-&gt;5</code>.<br>Given <code>1-&gt;1-&gt;1-&gt;2-&gt;3</code>, return <code>2-&gt;3</code>.</p>
+</blockquote>
+<h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><p>删除链表中重复出现的节点，全部删掉一个都不保留</p>
+<p>因为删除某个节点node，需要让node的前序节点.next = node.next，删除全部重复的元素可能删掉head元素，因此需要构造一个dummy node，让其指向head的前序节点，也就是dummy.next = head。这样需要删除head的时候就可以令dummy.next = head.next。</p>
+<p>最后反回dummy.next</p>
+<h4 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">deleteDuplicates</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">  ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);<span class="comment">//虚拟节点用于指向head</span></div><div class="line">  dummy.next = head;</div><div class="line"></div><div class="line">  ListNode prev = dummy;</div><div class="line">  ListNode curt = head;</div><div class="line"></div><div class="line">  <span class="keyword">while</span>(curt != <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="comment">//遇到重复元素</span></div><div class="line">    <span class="keyword">if</span>(curt.next != <span class="keyword">null</span> &amp;&amp; curt.val == curt.next.val)&#123;</div><div class="line">      <span class="keyword">int</span> val = curt.val;<span class="comment">//存储当前节点的值，用于后续判断是否和当前值相等</span></div><div class="line">      <span class="comment">//curt向后移动，直到和curt值不相等停止</span></div><div class="line">      <span class="keyword">while</span> (curt != <span class="keyword">null</span> &amp;&amp; curt.val == val)&#123;</div><div class="line">        curt = curt.next;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">//curt == null || curt.val != val;此时curt指向后面第一个和它值不相等的元素</span></div><div class="line">      <span class="comment">//将prev.next指向第一个不相等的元素</span></div><div class="line">      prev.next = curt;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//如果没有遇到重复元素，prev和curt都后移一位</span></div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">      prev = prev.next;</div><div class="line">      curt = curt.next;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> dummy.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Reverse-Linked-List"><a href="#Reverse-Linked-List" class="headerlink" title="Reverse Linked List"></a><a href="https://leetcode.com/problems/reverse-linked-list" target="_blank" rel="external">Reverse Linked List</a></h3><h4 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Reverse a singly linked list.、</p>
+<p>Hint:</p>
+<p>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+</blockquote>
+<p>链表反转</p>
+<h4 id="分析-2"><a href="#分析-2" class="headerlink" title="分析"></a>分析</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"> <span class="keyword">null</span>   [<span class="number">1</span>,] -&gt; [<span class="number">2</span>,] -&gt; [<span class="number">3</span>,] -&gt; [<span class="number">4</span>,] -&gt; [,<span class="number">5</span>,]</div><div class="line">  ↑       ↑</div><div class="line"> prev   curt</div><div class="line"> </div><div class="line"><span class="number">1</span>. 用temp记录下curt.next（因为后面要修改curt.next）</div><div class="line"> <span class="keyword">null</span>   [<span class="number">1</span>,] -&gt; [<span class="number">2</span>,] -&gt; [<span class="number">3</span>,] -&gt; [<span class="number">4</span>,] -&gt; [,<span class="number">5</span>,]</div><div class="line">  ↑       ↑      ↑</div><div class="line"> prev   curt    temp</div><div class="line"> </div><div class="line"><span class="number">2</span>. 将curt.next指向其前序节点prev，此时原来的后续链断掉:</div><div class="line"> <span class="keyword">null</span> &lt;- [<span class="number">1</span>,]  [<span class="number">2</span>,] -&gt; [<span class="number">3</span>,] -&gt; [<span class="number">4</span>,] -&gt; [,<span class="number">5</span>,]</div><div class="line">  ↑       ↑      ↑</div><div class="line"> prev   curt    temp</div><div class="line"><span class="number">3</span>. 将prev移到curt位置，curt移动到原来的curt.next,即temp:</div><div class="line"><span class="keyword">null</span> &lt;- [<span class="number">1</span>,]  [<span class="number">2</span>,] -&gt; [<span class="number">3</span>,] -&gt; [<span class="number">4</span>,] -&gt; [,<span class="number">5</span>,]</div><div class="line">         ↑      ↑       ↑</div><div class="line">        prev   curt    temp</div><div class="line"></div><div class="line">ListNode temp = curt.next;</div><div class="line">curt.next = prev</div><div class="line">prev = curt;</div><div class="line">curt = temp;</div></pre></td></tr></table></figure>
+<h4 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">  ListNode prev = <span class="keyword">null</span>;</div><div class="line">  ListNode curt = head;</div><div class="line"></div><div class="line">  <span class="keyword">while</span>(curt != <span class="keyword">null</span>)&#123;</div><div class="line">    ListNode temp = curt.next;</div><div class="line">    curt.next = prev;</div><div class="line">    prev = curt;</div><div class="line">    curt = temp;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> prev;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Reverse-Linked-List-II"><a href="#Reverse-Linked-List-II" class="headerlink" title="Reverse Linked List II"></a><a href="https://leetcode.com/problems/reverse-linked-list-ii" target="_blank" rel="external">Reverse Linked List II</a></h3><blockquote>
+<p>Reverse a linked list from position <em>m</em> to <em>n</em>. Do it in-place and in one-pass.</p>
+<p>For example:<br>Given <code>1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL</code>, <em>m</em> = 2 and <em>n</em> = 4,</p>
+<p>return <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;NULL</code>.</p>
+<p><strong>Note:</strong><br>Given <em>m</em>, <em>n</em> satisfy the following condition:<br>1 ≤ <em>m</em> ≤ <em>n</em> ≤ length of list.</p>
+</blockquote>
+<p>将链表的第m-n位置上的元素反转</p>
+<h4 id="分析-3"><a href="#分析-3" class="headerlink" title="分析"></a>分析</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">[<span class="number">1</span>,]-&gt;[<span class="number">2</span>,]-&gt;...-&gt;[m-<span class="number">1</span>,]-&gt;[m,]-&gt;...-&gt;[n,]-&gt;[n+<span class="number">1</span>,]-&gt;...</div><div class="line">翻转m和n之间的部分，分为三个步骤：</div><div class="line"><span class="number">1</span>. 找到m-<span class="number">1</span>和m的点，设为prev和curt</div><div class="line"><span class="number">2</span>. 将m~n反转</div><div class="line"><span class="number">3</span>. 把m-<span class="number">1</span>.next指向n;把m.next指向n.next</div></pre></td></tr></table></figure>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-12-12-00-49-23.png" alt=""></p>
+<h4 id="代码-3"><a href="#代码-3" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverseBetween</span><span class="params">(ListNode head, <span class="keyword">int</span> m, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        dummy.next = head;</div><div class="line">        ListNode prev = dummy;</div><div class="line">        ListNode curt = head;</div><div class="line"></div><div class="line">        <span class="keyword">int</span> i = <span class="number">1</span>;</div><div class="line">        <span class="comment">//寻找第m个节点</span></div><div class="line">        <span class="keyword">while</span> (i &lt; m)&#123;</div><div class="line">            curt = curt.next;</div><div class="line">            prev = prev.next;</div><div class="line">            i++;</div><div class="line">        &#125;<span class="comment">//此时prev指向第m-1个节点，curt指向第m个节点</span></div><div class="line"></div><div class="line">        <span class="comment">//记录下m节点和m-1节点位置，用于反转后连接</span></div><div class="line">        ListNode m_node = curt;</div><div class="line">        ListNode m_prev = prev;</div><div class="line"></div><div class="line">        <span class="comment">//将m到n反转</span></div><div class="line">        <span class="keyword">while</span> (i &lt;= n)&#123;</div><div class="line">            ListNode temp = curt.next;</div><div class="line">            curt.next = prev;</div><div class="line">            prev = curt;</div><div class="line">            curt = temp;</div><div class="line">            i++;</div><div class="line">        &#125;<span class="comment">//此时curt指向第n+1个节点，prev指向第n个节点</span></div><div class="line"></div><div class="line">        <span class="comment">//将m的前序节点的next指向第n个节点</span></div><div class="line">        m_prev.next = prev;</div><div class="line">        <span class="comment">//将m节点的next指向第n+1个节点</span></div><div class="line">        m_node.next = curt;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="Partition-List"><a href="#Partition-List" class="headerlink" title="Partition List"></a><a href="https://leetcode.com/problems/partition-list" target="_blank" rel="external">Partition List</a></h3><h4 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h4><p>Given a linked list and a value <em>x</em>, partition it such that all nodes less than <em>x</em> come before nodes greater than or equal to <em>x</em>.</p>
+<p>You should preserve the original relative order of the nodes in each of the two partitions.</p>
+<p>For example,<br>Given <code>1-&gt;4-&gt;3-&gt;2-&gt;5-&gt;2</code> and <em>x</em> = 3,<br>return <code>1-&gt;2-&gt;2-&gt;4-&gt;3-&gt;5</code>.</p>
+<p>给定一个链表和一个数x，将链表中比x小的排在左边，大于等于x的数字排在右边，数字的相对顺序保持不变</p>
+<h4 id="分析-4"><a href="#分析-4" class="headerlink" title="分析"></a>分析</h4><p>将链表排成两队，小于x的一队，大于等于x的一队，然后把两个链表连起来。</p>
+<p>链表的结构会发生变化，所以需要两个dummy node，一个用来指向小的队dummy_low，一个用来指向大的队dummy_high。</p>
+<p><strong>解题步骤：</strong></p>
+<ol>
+<li>遍历数组，将比x小的元素放到dummy_low队伍后面，将比x大的元素放到dummy_high队伍后面</li>
+<li>结束后将两个链表连接起来：dummy_low.next指向dummy_high.next</li>
+<li>将链表结尾置空：tail.next = null,否则会保留原始节点的next。</li>
+<li>返回dummy_low.next;</li>
+</ol>
+<h4 id="代码-4"><a href="#代码-4" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PartitionList</span> </span>&#123;</div><div class="line">    <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> val;</div><div class="line">        ListNode next;</div><div class="line"></div><div class="line">        ListNode(<span class="keyword">int</span> val) &#123;</div><div class="line">            <span class="keyword">this</span>.val = val;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">establish</span><span class="params">(<span class="keyword">int</span>[] array)</span></span>&#123;</div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode curt = dummy;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> item : array)&#123;</div><div class="line">            ListNode node = <span class="keyword">new</span> ListNode(item);</div><div class="line">            curt.next = node;</div><div class="line">            curt = curt.next;</div><div class="line">        &#125;</div><div class="line">        curt.next = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">partition</span><span class="params">(ListNode head, <span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">        ListNode dummy_low = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode dummy_high = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line"></div><div class="line">        ListNode prev_low = dummy_low;<span class="comment">//用于向小链表插入</span></div><div class="line">        ListNode prev_high = dummy_high;<span class="comment">//用于向大链表插入</span></div><div class="line"></div><div class="line">        <span class="comment">//分别放到两个队伍里</span></div><div class="line">        ListNode curt = head;</div><div class="line">        <span class="keyword">while</span>(curt != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(curt.val &lt; x)&#123;</div><div class="line">                prev_low.next = curt;</div><div class="line">                prev_low = prev_low.next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                prev_high.next = curt;</div><div class="line">                prev_high = prev_high.next;</div><div class="line">            &#125;</div><div class="line">            curt = curt.next;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//将两链表连接</span></div><div class="line">        prev_low.next = dummy_high.next;</div><div class="line">        prev_high.next = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dummy_low.next;</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printList</span><span class="params">(ListNode head)</span></span>&#123;</div><div class="line">        <span class="keyword">while</span>(head != <span class="keyword">null</span>)&#123;</div><div class="line">            System.out.println(head.val);</div><div class="line">            System.out.println(<span class="string">" -&gt; "</span>);</div><div class="line">            head = head.next;</div><div class="line">        &#125;</div><div class="line">        System.out.println(<span class="string">"null"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</div><div class="line">        PartitionList test = <span class="keyword">new</span> PartitionList();</div><div class="line">        <span class="keyword">int</span>[] array = &#123;<span class="number">1</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">2</span>&#125;;</div><div class="line">        <span class="keyword">int</span> x = <span class="number">3</span>;</div><div class="line">        ListNode head = test.establish(array);</div><div class="line">        head = test.partition(head,x);</div><div class="line">        test.printList(head);</div><div class="line">    &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Merge-Two-Sorted-Lists"><a href="#Merge-Two-Sorted-Lists" class="headerlink" title="Merge Two Sorted Lists"></a><a href="https://leetcode.com/problems/merge-two-sorted-lists/" target="_blank" rel="external">Merge Two Sorted Lists</a></h3><h4 id="题目-4"><a href="#题目-4" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Input: 1-&gt;2-&gt;4, 1-&gt;3-&gt;4</div><div class="line">&gt; Output: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-5"><a href="#分析-5" class="headerlink" title="分析"></a>分析</h4><p>链表结构可能改变， 所以需要dummy node</p>
+<p>需要一个prev指针记录当前节点，初始化指向dummy_node两个curt指针分别指向两个链表当前节点，用于比较，将比较小的接在prev后面，知道两个curt中有一个为空，将另一个链表的后面直接接到prev后面。</p>
+<p>最后返回dummy.next</p>
+<h4 id="代码-5"><a href="#代码-5" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">mergeTwoLists</span><span class="params">(ListNode l1, ListNode l2)</span> </span>&#123;</div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode prev = dummy;</div><div class="line">        ListNode curt1 = l1;</div><div class="line">        ListNode curt2 = l2;</div><div class="line">        <span class="keyword">while</span> (curt1 != <span class="keyword">null</span> &amp;&amp; curt2 != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(curt1.val &lt; curt2.val)&#123;</div><div class="line">                prev.next = curt1;</div><div class="line">                curt1 = curt1.next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span> &#123;</div><div class="line">                prev.next = curt2;</div><div class="line">                curt2 = curt2.next;</div><div class="line">            &#125;</div><div class="line">            prev = prev.next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(curt1 == <span class="keyword">null</span>)&#123;</div><div class="line">            prev.next = curt2;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            prev.next = curt1;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Sort-List"><a href="#Sort-List" class="headerlink" title="Sort List"></a><a href="https://leetcode.com/problems/sort-list" target="_blank" rel="external">Sort List</a></h3><h4 id="题目-5"><a href="#题目-5" class="headerlink" title="题目"></a>题目</h4><p>Sort a linked list in <em>O</em>(<em>n</em> log <em>n</em>) time using constant space complexity.</p>
+<p>将链表排序，时间复杂度为 <em>O</em>(<em>n</em> log <em>n</em>)</p>
+<h4 id="分析-6"><a href="#分析-6" class="headerlink" title="分析"></a>分析</h4><p>时间复杂度为nlogn的排序：quick sort\merge sort\heap sort</p>
+<p>quick sort和merge sort的区别：</p>
+<ol>
+<li><p>算法流程</p>
+<p>quik sort：整体有序 -&gt; 局部有序、不稳定排序</p>
+<ul>
+<li>整体有序：选定一个元素，比它小的都在它左边，比它大的都在它右边</li>
+<li>局部有序：然后再对左段和右段分别做快排</li>
+</ul>
+<p>merge sort：局部有序 -&gt; 整体有序、稳定排序</p>
+<ul>
+<li>局部有序：选取中点将序列分成左右两段，对左右两边分别排序</li>
+<li>整体有序：将左右两边sort list 进行merge操作使得整个list有序</li>
+</ul>
+</li>
+</ol>
+<ol>
+<li><p>排序的稳定性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">[2 , 1&apos; , 1&apos;&apos;, 1&apos;&apos;&apos; , 4 , 3&apos; , 3&apos;&apos;]</div><div class="line">merge sort的merge操作不会改变元素的相对顺序，所以是稳定排序</div><div class="line">quick sort会改变元素的相对位置，所以不是稳定排序</div></pre></td></tr></table></figure>
+<p>​</p>
+</li>
+<li><p>时间复杂度</p>
+<p>quick sort平均时间复杂度<script type="math/tex">O(nlogn)</script>，最坏时间复杂度<script type="math/tex">O(n^2)</script></p>
+<p>merge sort时间复杂度：<script type="math/tex">O(nlogn)</script></p>
+</li>
+<li><p>空间复杂度</p>
+<p>quick sort：<script type="math/tex">O(1)</script></p>
+<p>merge sort：<script type="math/tex">O(n)</script> ，但是在链表中不需要开辟额外的空间</p>
+</li>
+</ol>
+<p><strong>解题步骤：</strong></p>
+<p>merge sort</p>
+<p>​    具体步骤：</p>
+<ol>
+<li>merge sort在链表中找中点，有两种方法：<ol>
+<li>遍历一遍，得到链表的长度n，则中间位置是n/2，再从头遍历一遍，到n/2的位置停止，找到中点</li>
+<li>设置两个错位指针，一个slow一个fast，初始化都指向head，slow每次向右移动一位，fast每次向右移动两位，fast移动到末尾的时候，head指向中间，取到链表中点</li>
+</ol>
+</li>
+<li>对左右两段递归进行排序</li>
+<li>merge两段有序链表</li>
+</ol>
+<h4 id="代码-6"><a href="#代码-6" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line">merge sort:</div><div class="line"><span class="comment">//寻找链表中点,中间偏前</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">findMid</span><span class="params">(ListNode head)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> head;</div><div class="line">  &#125;</div><div class="line">  ListNode slow = head;</div><div class="line">  ListNode fast = head;</div><div class="line">  <span class="keyword">while</span>(fast.next != <span class="keyword">null</span> &amp;&amp; fast.next.next != <span class="keyword">null</span>) &#123;</div><div class="line">    slow = slow.next;</div><div class="line">    fast = fast.next.next;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> slow;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//merge两段有序链表</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">merge</span><span class="params">(ListNode left_h,ListNode right_h)</span></span>&#123;</div><div class="line">  ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">  ListNode prev = dummy;</div><div class="line">  ListNode curt_l = left_h;</div><div class="line">  ListNode curt_r = right_h;</div><div class="line">  <span class="keyword">while</span> (curt_l != <span class="keyword">null</span> &amp;&amp; curt_r != <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">if</span>(curt_l.val &lt; curt_r.val)&#123;</div><div class="line">      prev.next = curt_l;</div><div class="line">      prev = prev.next;</div><div class="line">      curt_l = curt_l.next;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">      prev.next = curt_r;</div><div class="line">      prev = prev.next;</div><div class="line">      curt_r = curt_r.next;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(curt_l == <span class="keyword">null</span>)&#123;</div><div class="line">    prev.next = curt_r;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(curt_r == <span class="keyword">null</span>)&#123;</div><div class="line">    prev.next = curt_l;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> dummy.next;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//递归调用merge sort</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">sortList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span>(head.next == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> head;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//寻找链表中点mid</span></div><div class="line">  ListNode mid = findMid(head);</div><div class="line"></div><div class="line">  <span class="comment">//链表中点.next之后的链表排序</span></div><div class="line">  ListNode right = sortList(mid.next);</div><div class="line"></div><div class="line">  <span class="comment">//链表中点之前包括中点的链表排序</span></div><div class="line">  mid.next = <span class="keyword">null</span>;</div><div class="line">  ListNode left = sortList(head);</div><div class="line"></div><div class="line">  <span class="comment">//merge两段有序链表</span></div><div class="line">  ListNode res = merge(left,right);</div><div class="line">  <span class="keyword">return</span> res;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Reorder-List"><a href="#Reorder-List" class="headerlink" title="Reorder List"></a><a href="https://leetcode.com/problems/reorder-list/" target="_blank" rel="external">Reorder List</a></h3><h4 id="题目-6"><a href="#题目-6" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a singly linked list <em>L</em>: <em>L</em>0→<em>L</em>1→…→<em>L**n</em>-1→<em>L</em>n,</p>
+<p>reorder it to: <em>L</em>0→<em>L**n</em>→<em>L</em>1→<em>L**n</em>-1→<em>L</em>2→<em>L**n</em>-2→…</p>
+<p>You must do this in-place without altering the nodes’ values.</p>
+<p>For example,</p>
+<p>Given <code>{1,2,3,4}</code>, reorder it to <code>{1,4,2,3}</code>.</p>
+</blockquote>
+<h4 id="分析-7"><a href="#分析-7" class="headerlink" title="分析"></a>分析</h4><p>题目需要从后向前访问链表，但是链表是单向的，所以需要reverse反转操作，再和原链表merge。</p>
+<p><strong>具体步骤：</strong></p>
+<ol>
+<li>找到链表中点，mid</li>
+<li>将mid之后的链表反转</li>
+<li>将mid之前的链表和mid之后反转的链表做merge操作</li>
+</ol>
+<h4 id="代码-7"><a href="#代码-7" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//找到中间位置的元素</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">findMid</span><span class="params">(ListNode head)</span></span>&#123;</div><div class="line">    <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> head;</div><div class="line">    &#125;</div><div class="line">    ListNode slow = head;</div><div class="line">    ListNode fast = head;</div><div class="line">    <span class="keyword">while</span>(fast.next != <span class="keyword">null</span> &amp;&amp; fast.next.next != <span class="keyword">null</span>)&#123;</div><div class="line">        slow = slow.next;</div><div class="line">        fast = fast.next.next;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> slow;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//链表反转</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">reverse</span><span class="params">(ListNode head)</span></span>&#123;</div><div class="line">    ListNode prev = <span class="keyword">null</span>;</div><div class="line">    ListNode curt = head;</div><div class="line">    <span class="keyword">while</span>(curt != <span class="keyword">null</span>)&#123;</div><div class="line">        ListNode temp = curt.next;</div><div class="line">        curt.next = prev;</div><div class="line">        prev = curt;</div><div class="line">        curt = temp;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> prev;</div><div class="line">&#125;</div><div class="line"><span class="comment">//交替merge</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(ListNode left,ListNode right)</span></span>&#123;</div><div class="line">    ListNode prev = left;</div><div class="line">    ListNode curt1 = left.next;</div><div class="line">    ListNode curt2 = right;</div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(curt1 != <span class="keyword">null</span> &amp;&amp; curt2 != <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">if</span>(i % <span class="number">2</span> == <span class="number">0</span>)&#123;</div><div class="line">            prev.next = curt2;</div><div class="line">            curt2 = curt2.next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> &#123;</div><div class="line">            prev.next = curt1;</div><div class="line">            curt1 = curt1.next;</div><div class="line">        &#125;</div><div class="line">        prev = prev.next;</div><div class="line">        i++;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(curt1 == <span class="keyword">null</span>)&#123;</div><div class="line">        prev.next = curt2;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">else</span> &#123;</div><div class="line">        prev.next = curt1;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reorderList</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">    <span class="comment">//边界条件</span></div><div class="line">    <span class="keyword">if</span>(head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//找到mid</span></div><div class="line">    ListNode mid = findMid(head);</div><div class="line"></div><div class="line">    <span class="comment">//将mid之后的部分反转</span></div><div class="line">    ListNode right = reverse(mid.next);</div><div class="line">    mid.next = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">    <span class="comment">//前半部分和反转后的后半部分merge</span></div><div class="line">    merge(head,right);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Fast-slow-pointer"><a href="#Fast-slow-pointer" class="headerlink" title="Fast-slow pointer"></a>Fast-slow pointer</h2><h3 id="1-Middle-of-Linked-List"><a href="#1-Middle-of-Linked-List" class="headerlink" title="1. Middle of Linked List"></a>1. Middle of Linked List</h3><p>寻找指针链表中点，快慢指针，快指针每次走两步，慢指针每次走一步，快指针走到链表结尾时，慢指针在中间</p>
+<h3 id="2-Remove-Nth-Node-From-End-of-List"><a href="#2-Remove-Nth-Node-From-End-of-List" class="headerlink" title="2 .Remove Nth Node From End of List"></a>2 .<a href="https://leetcode.com/problems/remove-nth-node-from-end-of-list/" target="_blank" rel="external">Remove Nth Node From End of List</a></h3><h4 id="题目-7"><a href="#题目-7" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a linked list, remove the <em>n</em>th node from the end of list and return its head.</p>
+<p>For example,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt;    Given linked list: 1-&gt;2-&gt;3-&gt;4-&gt;5, and n = 2.</div><div class="line">&gt;</div><div class="line">&gt;    After removing the second node from the end, the linked list becomes 1-&gt;2-&gt;3-&gt;5.</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p><strong>Note:</strong><br>Given <em>n</em> will always be valid.<br>Try to do this in one pass.</p>
+</blockquote>
+<p>删除掉从末尾开始第n个节点</p>
+<h4 id="分析-8"><a href="#分析-8" class="headerlink" title="分析"></a>分析</h4><p>两个指针，fast先走n+！步slow再出发，当fast==null时，slow指向倒数第n+1个节点，删掉slow后面的节点：slow.next = slow.next.next</p>
+<h4 id="代码-8"><a href="#代码-8" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">removeNthFromEnd</span><span class="params">(ListNode head, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">    dummy.next = head;</div><div class="line">    ListNode slow = dummy;</div><div class="line">    ListNode fast = dummy;</div><div class="line">    <span class="comment">//fast先走n+1步</span></div><div class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</div><div class="line">    <span class="keyword">while</span>(i &lt;= n)&#123;</div><div class="line">        fast = fast.next;</div><div class="line">        i++;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//fast、slow同时向后遍历</span></div><div class="line">    <span class="keyword">while</span>(fast != <span class="keyword">null</span>)&#123;</div><div class="line">        fast =fast.next;</div><div class="line">        slow = slow.next;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//删除节点</span></div><div class="line">    slow.next = slow.next.next；</div><div class="line"></div><div class="line">    <span class="keyword">return</span> dummy.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="3-Linked-List-Cycle"><a href="#3-Linked-List-Cycle" class="headerlink" title="3. Linked List Cycle"></a>3. <a href="https://leetcode.com/problems/linked-list-cycle/" target="_blank" rel="external">Linked List Cycle</a></h3><h4 id="题目-8"><a href="#题目-8" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a linked list, determine if it has a cycle in it.</p>
+<p>Follow up:<br>Can you solve it without using extra space?</p>
+</blockquote>
+<p>给定一个链表，判断是否有圈</p>
+<h4 id="分析-9"><a href="#分析-9" class="headerlink" title="分析"></a>分析</h4><p>方法一：</p>
+<p>判断node是否有被重复访问</p>
+<p>从head出发，把所有访问过的点放到一个hash表里，空间复杂度O(n)</p>
+<p>方法二：</p>
+<p>一个快指针一个慢指针，如果路径上有环，快慢指针一定会相遇</p>
+<p>初始化：slow = head;fast = head.next</p>
+<h4 id="代码-9"><a href="#代码-9" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasCycle</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (head == <span class="keyword">null</span>)&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line">    ListNode fast = head.next;</div><div class="line">    ListNode slow = head;</div><div class="line">    <span class="keyword">while</span>(fast != slow)&#123;</div><div class="line">        <span class="comment">//fast走到null</span></div><div class="line">        <span class="keyword">if</span>(fast == <span class="keyword">null</span> || fast.next == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        fast = fast.next.next;</div><div class="line">        slow =slow.next;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//fast和slow相遇了</span></div><div class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-Linked-List-Cycle-II"><a href="#4-Linked-List-Cycle-II" class="headerlink" title="4. Linked List Cycle II"></a>4. <a href="https://leetcode.com/problems/linked-list-cycle-ii/" target="_blank" rel="external">Linked List Cycle II</a></h3><h4 id="题目-9"><a href="#题目-9" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a linked list, return the node where the cycle begins. If there is no cycle, return <code>null</code>.</p>
+<p><strong>Note:</strong> Do not modify the linked list.</p>
+<p><strong>Follow up</strong>:<br>Can you solve it without using extra space?</p>
+</blockquote>
+<p>是否有环，如果有，找到环的入口</p>
+<h4 id="分析-10"><a href="#分析-10" class="headerlink" title="分析"></a>分析</h4><p>slow从快慢指针相遇的地方出发，fast指针从初始地方出发，两个指针每次走一步，直到相遇，就是环的入口</p>
+<h4 id="代码-10"><a href="#代码-10" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">detectCycle</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (head == <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  ListNode fast = head.next;</div><div class="line">  ListNode slow = head;</div><div class="line">  <span class="keyword">while</span>(fast != slow)&#123;</div><div class="line">    <span class="comment">//fast走到null</span></div><div class="line">    <span class="keyword">if</span>(fast == <span class="keyword">null</span> || fast.next == <span class="keyword">null</span>)&#123;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line">    fast = fast.next.next;</div><div class="line">    slow = slow.next;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//fast和slow相遇了</span></div><div class="line">  slow = head;</div><div class="line">  fast = fast.next;</div><div class="line">  <span class="keyword">while</span>(slow != fast)&#123;</div><div class="line">    slow = slow.next;</div><div class="line">    fast = fast.next;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> slow;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="5-Rotate-List"><a href="#5-Rotate-List" class="headerlink" title="5. Rotate List"></a>5. <a href="https://leetcode.com/problems/rotate-list/" target="_blank" rel="external">Rotate List</a></h3><h4 id="题目-10"><a href="#题目-10" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a list, rotate the list to the right by <em>k</em> places, where <em>k</em> is non-negative.</p>
+<p><strong>Example:</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; Given 1-&gt;2-&gt;3-&gt;4-&gt;5-&gt;NULL and k = 2,</div><div class="line">&gt; return 4-&gt;5-&gt;1-&gt;2-&gt;3-&gt;NULL.</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<h4 id="分析-11"><a href="#分析-11" class="headerlink" title="分析"></a>分析</h4><p>将链表向后移k次</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">Given <span class="number">1</span>-&gt;<span class="number">2</span>-&gt;<span class="number">3</span>-&gt;<span class="number">4</span>-&gt;<span class="number">5</span>-&gt;NULL and k = <span class="number">2</span>,</div><div class="line">            ↑  ↑  ↑</div><div class="line">node.next=head ↑  ↑</div><div class="line">      dummy.next tail.next=head</div></pre></td></tr></table></figure>
+<p>求解步骤：</p>
+<ol>
+<li>求链表长度len，如果k&gt;len,k = k%len;</li>
+<li>找到从后往前数第k个元素，也就是从前往后数第len-k个元素node，和末尾元素tail</li>
+<li>tail.next = dummy.next;dummy.next = node.next;node.next = null</li>
+</ol>
+<h4 id="代码-11"><a href="#代码-11" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">rotateRight</span><span class="params">(ListNode head, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">       <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</div><div class="line">           <span class="keyword">return</span> head;</div><div class="line">       &#125;</div><div class="line">       ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">       dummy.next = head;</div><div class="line">       ListNode tail = dummy;</div><div class="line">       <span class="keyword">int</span> len = <span class="number">0</span>;</div><div class="line">       <span class="keyword">while</span>(tail.next != <span class="keyword">null</span>)&#123;</div><div class="line">           tail = tail.next;</div><div class="line">           len++;</div><div class="line">       &#125;</div><div class="line">       k = k % len;</div><div class="line">       ListNode node = dummy;</div><div class="line">       <span class="keyword">int</span> i = <span class="number">1</span>;</div><div class="line">       <span class="keyword">while</span>(i &lt;= len - k)&#123;</div><div class="line">           node = node.next;</div><div class="line">           i++;</div><div class="line">       &#125;</div><div class="line">       tail.next = dummy.next;</div><div class="line">       dummy.next = node.next;</div><div class="line">       node.next = <span class="keyword">null</span>;</div><div class="line"></div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<h3 id="Merge-k-Sorted-Lists"><a href="#Merge-k-Sorted-Lists" class="headerlink" title="Merge k Sorted Lists"></a><a href="https://leetcode.com/problems/merge-k-sorted-lists/" target="_blank" rel="external">Merge k Sorted Lists</a></h3><h4 id="题目-11"><a href="#题目-11" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Merge <em>k</em> sorted linked lists and return it as one sorted list. Analyze and describe its complexity.</p>
+</blockquote>
+<p>merge k 个有序链表</p>
+<h4 id="分析-12"><a href="#分析-12" class="headerlink" title="分析"></a>分析</h4><p>一共三种方法，都需要掌握：</p>
+<p>方法一：heap</p>
+<p>用PriorityQueue实现</p>
+<p>第一个参数 - 第二个参数：升序，最小堆</p>
+<p>第二个参数 - 第一个参数：降序，最大堆</p>
+<p>初始化：将链表头放进去</p>
+<p>每次弹出最小的元素，放到结果链表后面，然后将其next入堆，重复上述</p>
+<p>N：所有数的个数</p>
+<p>K：链表个数</p>
+<p>时间复杂度：<script type="math/tex">O(NlogK)</script> ，heap中最多有k各元素，插入操作时间复杂度是<script type="math/tex">O(logk)</script></p>
+<p>空间复杂度：<script type="math/tex">O(K)</script></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="comment">//heap</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">mergeKLists</span><span class="params">(ListNode[] lists)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> k = lists.length;</div><div class="line">        PriorityQueue&lt;ListNode&gt; minHeap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(<span class="keyword">new</span> Comparator&lt;ListNode&gt;() &#123;</div><div class="line">           <span class="comment">// @Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(ListNode o1, ListNode o2)</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> o1.val - o2.val;</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode prev = dummy;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k;i++)&#123;</div><div class="line">            ListNode head = lists[i];</div><div class="line">            <span class="keyword">if</span>(head != <span class="keyword">null</span>)&#123;</div><div class="line">                minHeap.add(head);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span>(!minHeap.isEmpty())&#123;</div><div class="line">            ListNode curt = minHeap.poll();</div><div class="line">            prev.next = curt;</div><div class="line">            <span class="keyword">if</span>(curt.next != <span class="keyword">null</span>)&#123;</div><div class="line">                minHeap.add(curt.next);</div><div class="line">            &#125;</div><div class="line">            prev = prev.next;</div><div class="line">        &#125;</div><div class="line">        prev.next = <span class="keyword">null</span>;</div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>方法二：分治法</p>
+<p>merge k 个链表</p>
+<ul>
+<li>拆分成merge前k/2个链表得到list1和merge后k/2个链表得到list2</li>
+<li>合并list1和 list2，得到结果</li>
+</ul>
+<p>递归调用求解上述子问题</p>
+<p>时间复杂度：<script type="math/tex">O(NlogK)</script></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line">     result</div><div class="line">     ↗    ↖</div><div class="line">   ↗      ↗ ↖</div><div class="line">↗  ↖    ↗   ↗  ↖</div><div class="line"><span class="number">1</span>	<span class="number">2</span> |	<span class="number">3</span> |	<span class="number">4</span>	<span class="number">5</span></div><div class="line"> </div><div class="line"></div><div class="line">    <span class="comment">//分治</span></div><div class="line">    <span class="comment">//merge两个List</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">MergeTwoList</span><span class="params">(ListNode left,ListNode right)</span></span>&#123;</div><div class="line">        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);</div><div class="line">        ListNode prev = dummy;</div><div class="line">        ListNode prev1 = left;</div><div class="line">        ListNode prev2 = right;</div><div class="line">        <span class="keyword">while</span>(prev1 != <span class="keyword">null</span> &amp;&amp; prev2 != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(prev1.val &lt; prev2.val)&#123;</div><div class="line">                prev.next = prev1;</div><div class="line">                prev1 = prev1.next;</div><div class="line">                prev = prev.next;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">else</span>&#123;</div><div class="line">                prev.next = prev2;</div><div class="line">                prev2 = prev2.next;</div><div class="line">                prev = prev.next;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(prev1 == <span class="keyword">null</span>)&#123;</div><div class="line">            prev.next = prev2;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span>(prev2 == <span class="keyword">null</span>)&#123;</div><div class="line">            prev.next = prev1;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> dummy.next;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">//分治法mergek个数组</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">divideMergeKList</span><span class="params">(ListNode[] lists,<span class="keyword">int</span> start,<span class="keyword">int</span> end)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(start == end)&#123;</div><div class="line">            <span class="keyword">return</span> lists[start];</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//拆分成两部分</span></div><div class="line">        ListNode left = divideMergeKList(lists,start,start+(end-start)/<span class="number">2</span>);</div><div class="line">        ListNode right = divideMergeKList(lists,start+(end-start)/<span class="number">2</span>+<span class="number">1</span>,end);</div><div class="line">        <span class="comment">//合并两部分结果返回</span></div><div class="line">        <span class="keyword">return</span> MergeTwoList(left,right);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//调用分治法</span></div><div class="line">    <span class="function"><span class="keyword">public</span> ListNode <span class="title">DividemergeKLists</span><span class="params">(ListNode[] lists)</span></span>&#123;</div><div class="line">        <span class="keyword">int</span> len = lists.length;</div><div class="line">        <span class="keyword">if</span>(len ==<span class="number">0</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> divideMergeKList(lists,<span class="number">0</span>,len-<span class="number">1</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>方法三：两两合并</p>
+<p>1、2合并，3、4合并，….n</p>
+<p>向上递归合并</p>
+<p>时间复杂度：<script type="math/tex">O(NlogK)</script></p>
+<p>如果是1、2合并，然后忽然3合并，…n</p>
+<p>时间复杂度O(NK)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"> <span class="comment">//两两合并</span></div><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">mergeKListsOneByOne</span><span class="params">(ListNode[] lists)</span></span>&#123;</div><div class="line">  <span class="keyword">if</span>(lists.length == <span class="number">0</span>)&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">  &#125;</div><div class="line">  List&lt;ListNode&gt; newlists = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lists.length;i++) &#123;</div><div class="line">    newlists.add(lists[i]);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">while</span> (newlists.size() &gt; <span class="number">1</span>)&#123;</div><div class="line">    List&lt;ListNode&gt; listTemp = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i+<span class="number">1</span> &lt; newlists.size();i+=<span class="number">2</span>)&#123;</div><div class="line">      listTemp.add(MergeTwoList(newlists.get(i),newlists.get(i+<span class="number">1</span>)));</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span>(newlists.size() % <span class="number">2</span> == <span class="number">1</span>)&#123;</div><div class="line">      listTemp.add(newlists.get(newlists.size()-<span class="number">1</span>));</div><div class="line">    &#125;</div><div class="line">    newlists = listTemp;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> newlists.get(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Copy-List-with-Random-Pointer"><a href="#Copy-List-with-Random-Pointer" class="headerlink" title="Copy List with Random Pointer"></a><a href="https://leetcode.com/problems/copy-list-with-random-pointer/" target="_blank" rel="external">Copy List with Random Pointer</a></h3><h4 id="题目-12"><a href="#题目-12" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.</p>
+<p>Return a deep copy of the list.</p>
+</blockquote>
+<p>给定一个链表，每个节点除包含一个next指针以外，还有一个指向任意节点的random pointer，clone链表</p>
+<h4 id="分析-13"><a href="#分析-13" class="headerlink" title="分析"></a>分析</h4><p>方法一：</p>
+<p>hash_map</p>
+<p>先按next指针复制链表，把原链表老节点和新链表新节点的映射关系存入hash_map，再遍历一遍原链表，按照hash_map中的对应关系，把random pointer在对应的新节点中标出。</p>
+<p>空间复杂度<script type="math/tex">O(n)</script></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> RandomListNode <span class="title">copyRandomList</span><span class="params">(RandomListNode head)</span> </span>&#123;</div><div class="line">       RandomListNode dummy = <span class="keyword">new</span> RandomListNode(<span class="number">0</span>);</div><div class="line">       RandomListNode prevNew = dummy;</div><div class="line">       RandomListNode prev = head;</div><div class="line">       HashMap&lt;RandomListNode,RandomListNode&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">       <span class="comment">//将链表和next指针复制，对应点存入hashmap</span></div><div class="line">       <span class="keyword">while</span>(prev != <span class="keyword">null</span>)&#123;</div><div class="line">           RandomListNode temp = <span class="keyword">new</span> RandomListNode(prev.label);</div><div class="line">           prevNew.next = temp;</div><div class="line">           map.put(prev,prevNew.next);</div><div class="line">           prev = prev.next;</div><div class="line">           prevNew = prevNew.next;</div><div class="line">       &#125;</div><div class="line">       <span class="comment">//复制random poiner</span></div><div class="line">       prev = head;</div><div class="line">       prevNew = dummy.next;</div><div class="line">       <span class="keyword">while</span>(prev != <span class="keyword">null</span>)&#123;</div><div class="line">           prevNew.random = map.get(prev.random);</div><div class="line">           prev = prev.next;</div><div class="line">           prevNew = prevNew.next;</div><div class="line">       &#125;</div><div class="line">       <span class="keyword">return</span> dummy.next;</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+<p>方法二：</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-12-14-23-57-14.png" alt=""> </p>
+<h4 id="代码-12"><a href="#代码-12" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> RandomListNode <span class="title">copyRandomList2</span><span class="params">(RandomListNode head)</span> </span>&#123;</div><div class="line">  RandomListNode prev = head;</div><div class="line">  <span class="comment">//将每个元素都复制一份，插在原来元素的后面一位上</span></div><div class="line">  <span class="keyword">while</span>(prev != <span class="keyword">null</span>)&#123;</div><div class="line">    RandomListNode node = <span class="keyword">new</span> RandomListNode(prev.label);</div><div class="line">    node.next = prev.next;</div><div class="line">    prev.next = node;</div><div class="line">    prev = prev.next.next;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">//加入random pointer</span></div><div class="line">  prev = head;</div><div class="line">  <span class="keyword">while</span>(prev != <span class="keyword">null</span>)&#123;</div><div class="line">    <span class="keyword">if</span>(prev.random != <span class="keyword">null</span>)&#123;</div><div class="line">      prev.next.random = prev.random.next;</div><div class="line">    &#125;</div><div class="line">    prev = prev.next.next;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//删掉原来元素；</span></div><div class="line">  RandomListNode dummy = <span class="keyword">new</span> RandomListNode(<span class="number">0</span>);</div><div class="line">  dummy.next = head;</div><div class="line">  prev = dummy;</div><div class="line">  RandomListNode curt = head;</div><div class="line">  <span class="keyword">while</span>(curt != <span class="keyword">null</span>)&#123;</div><div class="line">    prev.next = curt.next;</div><div class="line">    curt.next = curt.next.next;</div><div class="line">    prev = prev.next;</div><div class="line">    curt = curt.next;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> dummy.next;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="http://omaby2s5z.bkt.clouddn.com/2017-12-14-23-55-46.png" alt=""> </p>
+<h2 id="leetcode-相关习题"><a href="#leetcode-相关习题" class="headerlink" title="leetcode 相关习题"></a>leetcode 相关习题</h2><h3 id="Palindrome-Linked-List"><a href="#Palindrome-Linked-List" class="headerlink" title="Palindrome Linked List"></a><a href="https://leetcode.com/problems/palindrome-linked-list/" target="_blank" rel="external">Palindrome Linked List</a></h3><h4 id="题目-13"><a href="#题目-13" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Given a singly linked list, determine if it is a palindrome.</p>
+<p><strong>Follow up:</strong><br>Could you do it in O(n) time and O(1) space?</p>
+</blockquote>
+<p>给定链表，判读是否是回文串，要求时间复杂度<script type="math/tex">O(n)</script>，空间复杂度<script type="math/tex">O(1)</script></p>
+<h4 id="分析-14"><a href="#分析-14" class="headerlink" title="分析"></a>分析</h4><p>方法一：</p>
+<p>利用stack，先进后出的性质：</p>
+<ol>
+<li>找到终点，过程中将前半部分链表入栈</li>
+<li>继续向后遍历，出栈，对比元素是否一致</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindromeStack</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">        <span class="comment">//空链表和只有一个元素</span></div><div class="line">        <span class="keyword">if</span>(head == <span class="keyword">null</span> || head.next == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//快慢指针寻找中点,前半部分元素入栈</span></div><div class="line">        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;&gt;();</div><div class="line">        ListNode mid = head;</div><div class="line">        ListNode tail = head;</div><div class="line">        stack.push(head.val);</div><div class="line">        <span class="keyword">while</span>(tail.next != <span class="keyword">null</span> &amp;&amp; tail.next.next != <span class="keyword">null</span>)&#123;</div><div class="line">            mid = mid.next;</div><div class="line">            stack.push(mid.val);</div><div class="line">            tail = tail.next.next;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//如果是奇数个元素，将mid弹出，无须比较</span></div><div class="line">        <span class="keyword">if</span>(tail.next == <span class="keyword">null</span>)&#123;</div><div class="line">            stack.pop();</div><div class="line">        &#125;</div><div class="line">        mid = mid.next;</div><div class="line">        <span class="keyword">while</span>(mid != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">int</span> temp = stack.peek();</div><div class="line">            <span class="keyword">if</span>(temp != mid.val)&#123;</div><div class="line">                <span class="keyword">return</span>  <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            stack.pop();</div><div class="line">            mid = mid.next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>方法二：</p>
+<ol>
+<li>先找到中点</li>
+<li>将后半部分的链表反转</li>
+<li>对比前后两部分是否一致</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(ListNode head)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(head == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//快慢指针寻找中点</span></div><div class="line">        ListNode mid = head;</div><div class="line">        ListNode tail = head;</div><div class="line">        <span class="keyword">while</span>(tail.next != <span class="keyword">null</span> &amp;&amp; tail.next.next != <span class="keyword">null</span>)&#123;</div><div class="line">            mid = mid.next;</div><div class="line">            tail = tail.next.next;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//反转后半个链表</span></div><div class="line">        ListNode prev = <span class="keyword">null</span>;</div><div class="line">        ListNode curt = mid.next;</div><div class="line">        <span class="keyword">while</span>(curt !=  <span class="keyword">null</span>)&#123;</div><div class="line">            ListNode temp = curt.next;</div><div class="line">            curt.next = prev;</div><div class="line">            prev = curt;</div><div class="line">            curt = temp;</div><div class="line">        &#125;</div><div class="line">        mid.next = prev;</div><div class="line">        <span class="comment">//对比两段元素是否一致</span></div><div class="line">        ListNode first = head;</div><div class="line">        ListNode second = mid.next;</div><div class="line">        <span class="keyword">while</span>(second != <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">if</span>(first.val != second.val)&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            &#125;</div><div class="line">            first = first.next;</div><div class="line">            second = second.next;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="160-Intersection-of-Two-Linked-Lists"><a href="#160-Intersection-of-Two-Linked-Lists" class="headerlink" title="160.Intersection of Two Linked Lists"></a><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/" target="_blank" rel="external">160.Intersection of Two Linked Lists</a></h3><h4 id="题目-14"><a href="#题目-14" class="headerlink" title="题目"></a>题目</h4><blockquote>
+<p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+<p>For example, the following two linked lists:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&gt; A:          a1 → a2</div><div class="line">&gt;                    ↘</div><div class="line">&gt;                      c1 → c2 → c3</div><div class="line">&gt;                    ↗            </div><div class="line">&gt; B:     b1 → b2 → b3</div><div class="line">&gt;</div><div class="line">&gt;</div></pre></td></tr></table></figure>
+</blockquote>
+<p>&gt;</p>
+<blockquote>
+<p>begin to intersect at node c1.</p>
+<p><strong>Notes:</strong></p>
+<ul>
+<li>If the two linked lists have no intersection at all, return <code>null</code>.</li>
+<li>The linked lists must retain their original structure after the function returns.</li>
+<li>You may assume there are no cycles anywhere in the entire linked structure.</li>
+<li>Your code should preferably run in O(n) time and use only O(1) memory.</li>
+</ul>
+</blockquote>
+<p>找到两个链表相交的地方</p>
+<h4 id="分析-15"><a href="#分析-15" class="headerlink" title="分析"></a>分析</h4><p>是个技巧题，想到了就能做出来，想不到就做不出来</p>
+<p><img src="http://omaby2s5z.bkt.clouddn.com/2017-12-22-20-02-17.png" alt=""> </p>
+<p>方法：</p>
+<p>两个指针分别遍历，一个先A后B，一个先B后A，两指针指向节点相等即为相交处</p>
+<h4 id="代码-13"><a href="#代码-13" class="headerlink" title="代码"></a>代码</h4><figure class="highlight java"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> ListNode <span class="title">getIntersectionNode</span><span class="params">(ListNode headA, ListNode headB)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span>(headA == <span class="keyword">null</span> || headB == <span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">        &#125;</div><div class="line">        ListNode n1 = headA;</div><div class="line">        ListNode n2 = headB;</div><div class="line">        <span class="comment">//记录是否遍历第二个链表</span></div><div class="line">        <span class="keyword">boolean</span> flag1 = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">boolean</span> flag2 = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>)&#123;</div><div class="line">            <span class="comment">//两个指针都遍历结束了，没有相交节点</span></div><div class="line">            <span class="keyword">if</span>(n1 == <span class="keyword">null</span> &amp;&amp; flag1)&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//n1遍历完一个数组</span></div><div class="line">            <span class="keyword">if</span>(n1 == <span class="keyword">null</span> &amp;&amp; !flag1)&#123;</div><div class="line">                 n1 = headB;</div><div class="line">                 flag1 = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="comment">//n2遍历完一个数组</span></div><div class="line">            <span class="keyword">if</span>(n2 == <span class="keyword">null</span> &amp;&amp; !flag2)&#123;</div><div class="line">                n2 = headA;</div><div class="line">                flag2 = <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">if</span> (n1 == n2)&#123;</div><div class="line">                <span class="keyword">return</span> n1;</div><div class="line">            &#125;</div><div class="line">            n1 = n1.next;</div><div class="line">            n2 = n2.next;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">findDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</div><div class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span> ; i &lt; nums.length;i++)&#123;</div><div class="line">            <span class="keyword">int</span> idx = Math.abs(nums[i]);</div><div class="line">            <span class="keyword">if</span>(nums[idx] &lt; <span class="number">0</span>)&#123;</div><div class="line">                <span class="keyword">return</span> idx;</div><div class="line">            &#125;</div><div class="line">            nums[idx] = -nums[idx];</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/10/DeepFM论文笔记/" rel="next" title="DeepFM论文笔记">
+                <i class="fa fa-chevron-left"></i> DeepFM论文笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/24/【九章算法基础班】数与数组/" rel="prev" title="【九章算法基础班】数与数组">
+                【九章算法基础班】数与数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基础"><span class="nav-number">1.</span> <span class="nav-text">基础</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关习题"><span class="nav-number">2.</span> <span class="nav-text">相关习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Remove-Duplicates-from-Sorted-List"><span class="nav-number">2.1.</span> <span class="nav-text">Remove Duplicates from Sorted List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">2.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析"><span class="nav-number">2.1.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remove-Duplicates-from-Sorted-List-II"><span class="nav-number">2.2.</span> <span class="nav-text">Remove Duplicates from Sorted List II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-1"><span class="nav-number">2.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-1"><span class="nav-number">2.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-1"><span class="nav-number">2.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reverse-Linked-List"><span class="nav-number">2.3.</span> <span class="nav-text">Reverse Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-2"><span class="nav-number">2.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-2"><span class="nav-number">2.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-2"><span class="nav-number">2.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reverse-Linked-List-II"><span class="nav-number">2.4.</span> <span class="nav-text">Reverse Linked List II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-3"><span class="nav-number">2.4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-3"><span class="nav-number">2.4.2.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Partition-List"><span class="nav-number">2.5.</span> <span class="nav-text">Partition List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-3"><span class="nav-number">2.5.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-4"><span class="nav-number">2.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-4"><span class="nav-number">2.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge-Two-Sorted-Lists"><span class="nav-number">2.6.</span> <span class="nav-text">Merge Two Sorted Lists</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-4"><span class="nav-number">2.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-5"><span class="nav-number">2.6.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-5"><span class="nav-number">2.6.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sort-List"><span class="nav-number">2.7.</span> <span class="nav-text">Sort List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-5"><span class="nav-number">2.7.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-6"><span class="nav-number">2.7.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-6"><span class="nav-number">2.7.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reorder-List"><span class="nav-number">2.8.</span> <span class="nav-text">Reorder List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-6"><span class="nav-number">2.8.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-7"><span class="nav-number">2.8.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-7"><span class="nav-number">2.8.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fast-slow-pointer"><span class="nav-number">3.</span> <span class="nav-text">Fast-slow pointer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Middle-of-Linked-List"><span class="nav-number">3.1.</span> <span class="nav-text">1. Middle of Linked List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Remove-Nth-Node-From-End-of-List"><span class="nav-number">3.2.</span> <span class="nav-text">2 .Remove Nth Node From End of List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-7"><span class="nav-number">3.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-8"><span class="nav-number">3.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-8"><span class="nav-number">3.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Linked-List-Cycle"><span class="nav-number">3.3.</span> <span class="nav-text">3. Linked List Cycle</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-8"><span class="nav-number">3.3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-9"><span class="nav-number">3.3.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-9"><span class="nav-number">3.3.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Linked-List-Cycle-II"><span class="nav-number">3.4.</span> <span class="nav-text">4. Linked List Cycle II</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-9"><span class="nav-number">3.4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-10"><span class="nav-number">3.4.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-10"><span class="nav-number">3.4.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Rotate-List"><span class="nav-number">3.5.</span> <span class="nav-text">5. Rotate List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-10"><span class="nav-number">3.5.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-11"><span class="nav-number">3.5.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-11"><span class="nav-number">3.5.3.</span> <span class="nav-text">代码</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Merge-k-Sorted-Lists"><span class="nav-number">3.6.</span> <span class="nav-text">Merge k Sorted Lists</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-11"><span class="nav-number">3.6.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-12"><span class="nav-number">3.6.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Copy-List-with-Random-Pointer"><span class="nav-number">3.7.</span> <span class="nav-text">Copy List with Random Pointer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-12"><span class="nav-number">3.7.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-13"><span class="nav-number">3.7.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-12"><span class="nav-number">3.7.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#leetcode-相关习题"><span class="nav-number">5.</span> <span class="nav-text">leetcode 相关习题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Palindrome-Linked-List"><span class="nav-number">5.1.</span> <span class="nav-text">Palindrome Linked List</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-13"><span class="nav-number">5.1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-14"><span class="nav-number">5.1.2.</span> <span class="nav-text">分析</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#160-Intersection-of-Two-Linked-Lists"><span class="nav-number">5.2.</span> <span class="nav-text">160.Intersection of Two Linked Lists</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#题目-14"><span class="nav-number">5.2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分析-15"><span class="nav-number">5.2.2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码-13"><span class="nav-number">5.2.3.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

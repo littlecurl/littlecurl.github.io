@@ -1,0 +1,1482 @@
+<!DOCTYPE html>
+
+
+
+
+<html class="theme-next pisces" lang="zh-Hans">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/小鸡.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文主要回顾和总结2017编程之美决赛中校园聊天机器人后端搜索引擎的实现。 1. 项目简介校园聊天机器人，针对用户的问题进行回答，当然，问题都是跟校园相关的一些问题。 收集校主页和论坛上的信息，招聘信息、征友信息、失物招领等信息，根据用户的需求返回合适的答案。 2. 爬虫北邮人论坛格式相对工整，并不需要进行DFS爬取。论坛某个页面如下：  论坛格式基本如下： 1  [标题，最新回复时刻]2  [标">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【2017编程之美】搜索引擎总结">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/【2017编程之美】搜索引擎总结/index.html">
+<meta property="og:site_name" content="Siyao&#39;s Blog">
+<meta property="og:description" content="本文主要回顾和总结2017编程之美决赛中校园聊天机器人后端搜索引擎的实现。 1. 项目简介校园聊天机器人，针对用户的问题进行回答，当然，问题都是跟校园相关的一些问题。 收集校主页和论坛上的信息，招聘信息、征友信息、失物招领等信息，根据用户的需求返回合适的答案。 2. 爬虫北邮人论坛格式相对工整，并不需要进行DFS爬取。论坛某个页面如下：  论坛格式基本如下： 1  [标题，最新回复时刻]2  [标">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-02-19-39-36.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-02-20-13-35.png">
+<meta property="og:image" content="http://img.blog.csdn.net/20170923100608912?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemVhbGZvcnk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170923100720285?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemVhbGZvcnk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://omaby2s5z.bkt.clouddn.com/2018-03-08-13-40-07.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-02-23-00-07.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-12-27.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-14-28.png">
+<meta property="og:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-43-00.png">
+<meta property="og:updated_time" content="2018-03-16T09:35:02.423Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="【2017编程之美】搜索引擎总结">
+<meta name="twitter:description" content="本文主要回顾和总结2017编程之美决赛中校园聊天机器人后端搜索引擎的实现。 1. 项目简介校园聊天机器人，针对用户的问题进行回答，当然，问题都是跟校园相关的一些问题。 收集校主页和论坛上的信息，招聘信息、征友信息、失物招领等信息，根据用户的需求返回合适的答案。 2. 爬虫北邮人论坛格式相对工整，并不需要进行DFS爬取。论坛某个页面如下：  论坛格式基本如下： 1  [标题，最新回复时刻]2  [标">
+<meta name="twitter:image" content="http://om1bxijvl.bkt.clouddn.com/2018-03-02-19-39-36.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Siyao'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/08/【2017编程之美】搜索引擎总结/"/>
+
+
+
+
+
+  <title>【2017编程之美】搜索引擎总结 | Siyao's Blog</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?22ca9e711cab30a2d33c6a2c25780e5f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Siyao's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/【2017编程之美】搜索引擎总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/小鸡.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Siyao's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">【2017编程之美】搜索引擎总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T11:24:00+08:00">
+                2018-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 浏览
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,454
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  19
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文主要回顾和总结2017编程之美决赛中校园聊天机器人后端搜索引擎的实现。</p>
+<h2 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h2><p>校园聊天机器人，针对用户的问题进行回答，当然，问题都是跟校园相关的一些问题。</p>
+<p>收集校主页和论坛上的信息，招聘信息、征友信息、失物招领等信息，根据用户的需求返回合适的答案。</p>
+<h2 id="2-爬虫"><a href="#2-爬虫" class="headerlink" title="2. 爬虫"></a>2. 爬虫</h2><p>北邮人论坛格式相对工整，并不需要进行DFS爬取。论坛某个页面如下：</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-03-02-19-39-36.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-02-19-39-36.png" alt="img"></a></p>
+<p>论坛格式基本如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">1  [标题，最新回复时刻]</div><div class="line">2  [标题，最新回复时刻]</div><div class="line">...</div><div class="line">10 [标题，最新回复时刻]</div><div class="line"></div><div class="line"></div><div class="line">              第k页</div></pre></td></tr></table></figure>
+<p>因此只需要按页遍历即可。</p>
+<h3 id="2-1-数据库设计"><a href="#2-1-数据库设计" class="headerlink" title="2.1 数据库设计"></a>2.1 数据库设计</h3><p>爬取的内容建立一张表放入MySQL。由于每个帖子都有自己的唯一性ID，因此可以将这个ID作为主键。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文章ID（主键）</th>
+<th>标题（已分词）</th>
+<th>最后更新时刻</th>
+<th>内容（已分词）</th>
+<th>链接</th>
+<th>已索引</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>758943</td>
+<td>社招/神马/搜索/北京/资深/广告/算法/研发/工程师</td>
+<td>20180302 165751</td>
+<td>基于/大规模/用户/行为/效果/目标/建立/优化/推荐/系统/基础/算法/策略 ….</td>
+<td><a href="https://bbs.byr.cn/#!article/JobInfo/758943" target="_blank" rel="external">https://bbs.byr.cn/#!article/JobInfo/758943</a></td>
+<td>是/否</td>
+</tr>
+<tr>
+<td></td>
+<td>…</td>
+<td>…</td>
+<td>…</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-2-实时爬虫"><a href="#2-2-实时爬虫" class="headerlink" title="2.2 实时爬虫"></a>2.2 实时爬虫</h3><p>由于北邮人论坛的【缘分天空】、【毕业生找工作】、【兼职实习信息】等板块很热火，几乎每小时都有新帖。因此可以不考虑资源浪费问题，直接采用定时爬虫进行信息更新和维护。</p>
+<p>实时爬虫的流程如下：</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-03-02-20-13-35.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-02-20-13-35.png" alt="img"></a></p>
+<p>对于每个页面，我们可以从页面目录快速获取【文章ID、标题、发帖时刻、回复量、最新回复时刻、文章链接】信息。因此当获取到本页面的10篇文章的ID和最新回复时刻TimeStamp后：</p>
+<ol>
+<li><p>看库中是否存在此ID</p>
+<ol>
+<li><p>如果存在：</p>
+<ol>
+<li><p>此帖在近期有回复，更新最新回复时刻TimeStamp</p>
+</li>
+<li><p>此帖在近期无回复，有两种可能：</p>
+<ol>
+<li>后面的帖子不再有新的回复，因此可以直接停止本版面的爬虫；</li>
+<li>爬取第1页时，本帖在第1页；爬取第2页时，本帖被顶到第2页；</li>
+</ol>
+<p>为了不让情况2误认为是近期无更新的贴，因此我们设置50次阈值。当连续50篇文章都没有新的更新时，停止爬虫。</p>
+</li>
+</ol>
+</li>
+<li><p>如果不存在，则爬取本页面并添加进数据库</p>
+</li>
+</ol>
+</li>
+</ol>
+<p>对于每个版块的每个页面，执行以上循环操作。每个页面包含10篇左右文章。由于每篇文章打开需要约1秒，因此一页需要10多秒。北邮人论坛设置反爬虫机制，每连续访问10次后就要休息10秒才可以继续爬。而【毕业生找工作】等热门版面每日的更新量达300+条。那么完成一次此版面的爬取需要10分钟。三个版面的爬取大约需要20分钟。这个时间太长了，不利于后续的实施构建索引。</p>
+<p>为了加速爬取速度，我们采用了多线程爬取技术。为了避免重复写入，因此每个线程只负责一个页面。当爬取完毕时，将数据扔到“待写入队列”里排队写入MySQL。</p>
+<h3 id="2-3-分词"><a href="#2-3-分词" class="headerlink" title="2.3 分词"></a>2.3 分词</h3><p>利用jieba分词模块，对爬取的文档进行分词，首先按是否为汉字、数字、英文字符及标点符号对新闻内容进行梳理，去除掉信息缺失的数据，然后用jieba分词对标题及内容进行分词，并去掉停用词、生僻字等，得到文章的分词内容【这一步骤在爬虫模块已完成】。另外对于北邮人常用的找工作模块，需自定义计算机类技术栈关键词，如Python、Java、计算广告、推荐系统等。</p>
+<p>分好词之后就可以存入数据库了。</p>
+<p>jieba分词用到了哪些算法，文档里面如下介绍：</p>
+<p>• 基于Trie树结构实现高效的词图扫描，生成句子中汉字所有可能成词情况所构成的有向无环图（DAG）<br>• 采用了<strong>动态规划查找最大概率路径</strong>, 找出基于词频的最大切分组合<br>• 对于未登录词，采用了基于汉字成词能力的<strong>HMM模型</strong>，使用了Viterbi算法（隐马尔科夫模型）</p>
+<p><strong>日后需要补习</strong></p>
+<h2 id="3-索引构建-amp-检索"><a href="#3-索引构建-amp-检索" class="headerlink" title="3. 索引构建&amp;检索"></a>3. 索引构建&amp;检索</h2><h3 id="3-1-向量空间模型"><a href="#3-1-向量空间模型" class="headerlink" title="3.1 向量空间模型"></a>3.1 向量空间模型</h3><p><strong>检索结果排序是搜索引擎最核心的部分，</strong>很大程度度上决定了搜索引擎的质量好坏及用户满意度。实际搜索结果排序的因子有很多，但最主要的两个因素是用户查询和网页内容的相关度，以及网页链接情况。这里我们主要总结网页内容和用户查询相关的内容。</p>
+<p>​       判断网页内容是否与用户査询相关，这依赖于搜索引擎所来用的检索模型。检索模型是搜索引擎的理论基础，为量化相关性提供了一种数学模型，是对查询词和文档之间进行相似度计算的框架和方法。其本质就是相关度建模。</p>
+<p><strong>常见检索模型：布尔模型，向量空间模型，概率模型，语言模型，机器学习排序算法</strong></p>
+<ol>
+<li><p>布尔模型</p>
+<p>苹果 AND 公司：表示搜索既包含“苹果”，又包含“公司”这两个词的文档。<br>苹果 OR 公司：表示搜索包含“苹果”，或包含“公司”这两个词中任意一个的文档。<br>特点：简单粗暴</p>
+</li>
+<li><p><strong>向量空间模型</strong></p>
+<p>苹果 AND 公司：表示搜索既包含“苹果”，又包含“公司”这两个词的文档。<br>苹果 OR 公司：表示搜索包含“苹果”，或包含“公司”这两个词中任意一个的文档。<br>特点：简单粗暴</p>
+<p>本文就是采用这样的方式</p>
+</li>
+<li><p>概率检索模型</p>
+<p>概率检索模型基于概率排序原理，是目前效果最好的模型之一，okapi BM25这一经典概率模型计算公式已经在商业搜索引擎的网页排序中广泛应用。</p>
+<p>I. 概率排序原理</p>
+<p>基本思想：给定一个用户查询，若搜索系统能在搜索结果排序时按照文档和用户查询的相关性由高到低排序，那么这个搜索系统的准确性是最优的。</p>
+<p>II. 实际实现</p>
+<ol>
+<li>根据用户的查询将文档集合划分为两个集合：相关文档子集和不相关文档子集。</li>
+<li>将相关性衡量转换为分类问题，对某个文档D来说，若其属于相关文档子集的概率大于属于不相关文档的概率，就认为它与查询相关。</li>
+</ol>
+<p>另P(R|D)代表给定一个文档D对应的相关性概率，而P(NR|D)代表该文档的不相关概率，若P(R|D)&gt;P(NR|D)我们就认为此文档与查询相关。</p>
+<p>根据贝叶斯定理（详见<a href="http://blog.csdn.net/zealfory/article/details/77853128" target="_blank" rel="external">贝叶斯公式推导及意义</a>）,最终等价于计算:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">P(R|D)/P(NR|D)</div></pre></td></tr></table></figure>
+<p>搜索系统无需分类，只需将文档按照上式大小降序排列即可。</p>
+<p>III. 估值公式<br>基于二元独立模型（BIM）的二元假设和词汇独立性假设，得到最终的相关性估算公式：</p>
+<p><img src="http://img.blog.csdn.net/20170923100608912?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemVhbGZvcnk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="估算公式"><br>其中pi代表第i个单词在相关文档集合中出现的概率，si代表第i个单词在不相关文档集合中出现的概率。</p>
+<p>取log便于计算：<br><img src="http://img.blog.csdn.net/20170923100720285?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvemVhbGZvcnk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"></p>
+</li>
+<li><p>统计语言模型</p>
+<p>基本思想：<br>​    其他的检索模型的思考路径是从<strong>查询</strong>到文档，即给定用户<strong>查询</strong>，如何找出相关的文档，该模型的思路正好想法，是由文档到<strong>查询</strong>这个方向，即为每个文档建立不同的语言模型，判断由文档生成用户<strong>查询</strong>的可能性有多大，然后按照这种生成概率由高到低排序，作为搜索结果。语言模型代表了单词或者单词序列在文档中的分布情况；</p>
+<p>举个例子：</p>
+<p>先引入一个概念：抽取概率<br>把一篇文档进行分词，统计其中每个词的出现频率进行计数，则一个词Word在文档Doc中的抽取概率为“Word词的计数/Doc中所有词的计数之和”。所谓抽取概率，就是在Doc中随机抽取一个词的话，Word被抽取到的概率。<br>假设用户搜索“野鸟装备 跑步”，野鸟装备在文档Doc1中的抽取概率1%，跑步的抽取概率为2%，则该次搜索中，Doc1的相关性得分为1%*2%。依此可以计算出所有文档的相关性得分，并按相关性得分对搜索结果进行排序。 </p>
+</li>
+<li><p>机器学习模型</p>
+<p>机器学习与前面的模型相比，有几个显著的不同：<br>1、这里一般使用有监督的机器学习，因此需要对训练结果有监督反馈，用户对搜索结果的隐性评价（即点击）可以看作是一种监督反馈。<br>2、传统搜索计算搜索结果相关性一般也就考虑关键词匹配、词频等少数几个维度的数据，使用前面提到的模型已经足够，只有当考察的数据维度比较多时，机器学习的优势才会体现出来。比如像百度、Google这种大型的商业搜索引擎，考察的数据维度要多很多，比如链入链出链接数、网站类型、网站权威度、用户地理位置、历史搜索习惯、设备类型等等，据说Google考察的数据维度多达几百个。<br>特点：复杂度高，适合大型商业搜索引擎。</p>
+<p><a href="http://blog.csdn.net/starzhou/article/details/51438140" target="_blank" rel="external">机器学习排序之Learning to Rank简单介绍</a></p>
+</li>
+</ol>
+<h3 id="3-2-TF-IDF"><a href="#3-2-TF-IDF" class="headerlink" title="3.2 TF-IDF"></a>3.2 TF-IDF</h3><p><img src="http://omaby2s5z.bkt.clouddn.com/2018-03-08-13-40-07.png" alt=""></p>
+<h3 id="3-3-倒排索引构建"><a href="#3-3-倒排索引构建" class="headerlink" title="3.3 倒排索引构建"></a>3.3 倒排索引构建</h3><p>对每个词来说更新“词-文章序号”的倒排列表。倒排列表的结构如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>词</th>
+<th>文档频率</th>
+<th>倒排记录表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>中国</td>
+<td>3</td>
+<td>1,3,4</td>
+</tr>
+<tr>
+<td>1</td>
+<td>招聘</td>
+<td>1</td>
+<td>4，</td>
+</tr>
+<tr>
+<td>2</td>
+<td>蜜蜂</td>
+<td>2</td>
+<td>1,2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="3-4-计算各文档的向量"><a href="#3-4-计算各文档的向量" class="headerlink" title="3.4 计算各文档的向量"></a>3.4 计算各文档的向量</h3><p>假如文档1包含的词有【中国，蜜蜂】，按照上字典序号对应的关系，词向量应该为[1,0,1][1,0,1] 。而用01表示词其实并不科学，这里每个词可以用TF-IDF来优化。那么词向量可能会变成[0.2,0,0.1][0.2,0,0.1]</p>
+<p>计算每个文档的词向量（下表不必存储）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>文档</th>
+<th>词</th>
+<th>词向量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>中国，蜜蜂</td>
+<td>[0.2,0,1][0.2,0,1]</td>
+</tr>
+<tr>
+<td>2</td>
+<td>蜜蜂</td>
+<td>[0,0,0.8][0,0,0.8]</td>
+</tr>
+<tr>
+<td>3</td>
+<td>中国</td>
+<td>[0.7,0,0][0.7,0,0]</td>
+</tr>
+<tr>
+<td>4</td>
+<td>中国，招聘</td>
+<td>[0.4,0.6,0][0.4,0.6,0]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>将词向量模型更新添加进倒排索引：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>文档频率</th>
+<th>倒排记录表[文章ID，权重]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中国</td>
+<td>3</td>
+<td>[1,0.2] , [3,0.7] , [4,0.4]</td>
+</tr>
+<tr>
+<td>招聘</td>
+<td>1</td>
+<td>[4,0.6]</td>
+</tr>
+<tr>
+<td>蜜蜂</td>
+<td>2</td>
+<td>[1,0.1], [2,0.8]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中每个文档中某个词的TF值只与该文档有关，但是IDF是与当前倒排表相关的，计算的时候这里需要主要 </p>
+<h3 id="3-5-检索"><a href="#3-5-检索" class="headerlink" title="3.5 检索"></a>3.5 检索</h3><p>当用户输入查询词时，例如查询【中国，招聘】这两个关键字时，由于关键字无权重，因此可以直接设查询向量qq为[1,1,0][1,1,0] 。按理来说应该直接对着【文档dd-词向量】表格直接依次计算余弦相似度q×dq×d，然后取相似度最高的前K个作为返回结果。但是这样太暴力了，也太慢了。</p>
+<p>机智的人类发现，q是一个01向量， q×dq×d 也就是对于q中那些为1的词项，计算在文档d中这些词的权重值和。</p>
+<p>因此我们利用倒排索引优化查询。步骤为：</p>
+<ol>
+<li>在词典中定位【中国，招聘】这两个词，返回其倒排记录表。【中国 –&gt; [1,0.2] , [3,0.7] , [4,0.4]】，【招聘 –&gt; [4,0.6]】</li>
+<li>文档4中，中国和招聘两个词的权重值和为1；而文档1的权重为0.2；文档3的权重为0.7</li>
+</ol>
+<h3 id="3-6-总结"><a href="#3-6-总结" class="headerlink" title="3.6 总结"></a>3.6 总结</h3><ol>
+<li><strong>索引构建/更新流程图</strong></li>
+</ol>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-03-02-23-00-07.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-02-23-00-07.png" alt="img"></a></p>
+<ol>
+<li><strong>倒排索引数据库设计</strong></li>
+</ol>
+<p>将爬好的数据进行实时权重向量计算，填入下表，即是倒排表</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>词</th>
+<th>文档频率</th>
+<th>倒排记录表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中国</td>
+<td>3</td>
+<td>[1,0.2] , [3,0.7] , [4,0.4]</td>
+</tr>
+<tr>
+<td>招聘</td>
+<td>1</td>
+<td>[4,0.6]</td>
+</tr>
+<tr>
+<td>蜜蜂</td>
+<td>2</td>
+<td>[1,0.1], [2,0.8]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>当时这个结构直接存储在了内存当中。但讲道理应该存储在MongoDB这一类KV数据库中。</p>
+<h2 id="4-旧数据删除"><a href="#4-旧数据删除" class="headerlink" title="4. 旧数据删除"></a>4. 旧数据删除</h2><p>​    后续如果数据量不断增大，可以考虑将一些陈旧的帖子删除，比如保留最近半年有过更新的帖子，不过这还要考虑机器的容量。</p>
+<p>本系统定义每天的凌晨4点进行旧数据清除工作。</p>
+<p>​    每个帖子是有有效期的。当某个帖子过了某个时间后信息量就会变得很少，不再有检索需求。因此需要将旧帖子删掉。由于机器硬盘限制，本系统设定当帖子的最后更新时刻与当前时刻超过10天时，此贴应该被从数据库与索引中删除。</p>
+<p>​    本系统定义每天的凌晨4点进行旧数据清除工作。</p>
+<h2 id="5-优化"><a href="#5-优化" class="headerlink" title="5. 优化"></a>5. 优化</h2><p>回头重新看这个问题时，我们发现如果有高并发等类似的请求时，系统还有很多地方需要优化：</p>
+<h3 id="5-1-检索模型角度"><a href="#5-1-检索模型角度" class="headerlink" title="5.1 检索模型角度"></a>5.1 检索模型角度</h3><p>可以结合其他模型，比如概率模型、语言模型等，如果有一定的用户量之后可以结合learn to rank模型</p>
+<h3 id="5-2-字典优化角度"><a href="#5-2-字典优化角度" class="headerlink" title="5.2 字典优化角度"></a>5.2 字典优化角度</h3><p>在实现字典时，通常会使用哈希表、树（二查查找树、字典树）等数据结构。</p>
+<p><strong>用二叉查找树实现字典</strong></p>
+<p>使用二叉查找树实现词典时， 要先将数据对（的列表） <strong>按照单词词典顺序排列</strong>。</p>
+<p>数据对 = [单词 + 该单词的倒排列表的引用（地址）]</p>
+<p>若用内存上的二叉查找树实现之前例子中的词典， 就会得到如下图所示的树形结构。 树中的各个结点是通过地址引用（指针） 连接起来的</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-12-27.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-12-27.png" alt="img"></a></p>
+<p>一般倒排列表都会很长，字典很大。因此会考虑将倒排列表存储到二级存储的连续区域中。</p>
+<p>在二级存储上实现词典时，也要先将数据对按照单词的词典顺序排列， 然后一个接一个地存储到存储器上。 但是， 如果只是单纯地一个接一个地存储， 就无法知道各数据对应该在哪里结束了， 因此在此之上还要维护一个列表， 用于存储从开头算起每个数据对的偏移量。 对应的数据结构如图所示。 在进行检索时， 可以对该偏移量的列表进行二分查找。</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-14-28.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-14-28.png" alt="img"></a></p>
+<p>如果词典能够完整地加载到内存， 那么所形成的二叉树的搜索效率将会非常高。 特别是当二叉树处于平衡状态时， 平均进行log2Nlog2N 次查找就能找到单词。<br>但是， 如果词典无法完整地加载到内存， 而必须存储到二级存储器上时， 二叉树就未必是高效的数据结构了。 HDD 或 SSD 等二级存储器一般被称作“块设备”， 由于它们是以块为单位进行输入输出的 ， 所以即使只是读取块中 1 个字节的数据， 也不得不对整个块进行输入输出操作。 例如， 假设我们用二叉查找树实现了含有 100 万个单词的词典， 那么进行二分查找的话， 平均需要 20 次查找， 因此在最坏的情况下就需要加载 20 个块。 也就是说， 假设二级存储的加载性能为 5ms/ 块， 那么在 1 次检索中， 仅花费在二级存储输入输出上的时间就高达100ms。<br>因此， 当要存储大型词典时， 往往要使用适合块设备的 B+ 树等树形数据结构。</p>
+<p><strong>用B+树实现字典</strong></p>
+<p>B+ 树是一种平衡的多叉树， 属于从 B 树派生出来的树形结构。 在 B+ 树中， 所有的记录都存储在树中的叶结点（Leaf Node） 上， 内部结点（Internal Node） 上只以关键字的顺序存储关键字</p>
+<p><a href="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-43-00.png" target="_blank" rel="external"><img src="http://om1bxijvl.bkt.clouddn.com/2018-03-03-13-43-00.png" alt="img"></a></p>
+<p><strong>B+树通常以文件系统中页尺寸的常数倍为单位管理各节点。这样有助于减少检索时对二级存储的输入输出次数。</strong></p>
+<h3 id="5-2-倒排索引构建-更新角度"><a href="#5-2-倒排索引构建-更新角度" class="headerlink" title="5.2 倒排索引构建/更新角度"></a>5.2 倒排索引构建/更新角度</h3><p>简单的文档列表直接存储在内存中。比如我们的项目搜索引擎的倒排索引就是放在内存中的，但是大多数情况倒排索引都是非常稀疏的表，因此用链表实现倒排索引非常好。</p>
+<p>而<strong>文档链表一般都很大，因此很多都存储在二级存储中</strong>。这样就有两种构建方法：基于排序的构建方法和基于合并的构建方法。</p>
+<p><strong>基于排序的索引构建法</strong></p>
+<ol>
+<li>对各文档中构成该文档的每个单词都建立一条【单词、文档编号、TF】的记录。然后将该记录写入二级存储上的文件末尾</li>
+<li>将文件各条记录按照字典顺序排列；单词字段相同的再按照文档编号顺序排列</li>
+<li>逐行读取排序后的文件，取出每个单词的文档编号列表；并用这些列表构建每个单词的倒排索引（这一步可以压缩倒排列表，此处省略）</li>
+</ol>
+<p><strong>基于合并的索引构建法</strong></p>
+<p>基于合并的索引构建法是一种先在内存上构建出倒排索引的片段，然后将这些片段导出到二级存储，最后将导出的多个倒排索引合并在一起。</p>
+<ol>
+<li>在内存上构建【单词-倒排】的kv映射表Map。</li>
+<li>如果某单词不在Map里，就要将该单词加入到Map中</li>
+<li>当Map过大，就将Map导入文件里</li>
+<li>重复1-3步骤，直到处理完所有文档。最后利用多路归并将将导出的各文件合并在一起。（这一步也可以压缩倒排，此处省略）</li>
+</ol>
+<p><strong>动态索引构建</strong></p>
+<p>之前说的索引构建方法都是只有构建完成后才可用于检索。这叫静态构建方法（Offline Index Construction）。</p>
+<p>还有一种动态构建方法（Online Index Construction / Dynamic Indexing）。这种方法可以<strong>一边更新索引，一边检索</strong>。其基本策略如下所示：</p>
+<ul>
+<li>将索引分成内存上的索引和磁盘上的索引分别管理</li>
+<li>添加文档后，优先更新内存上的索引</li>
+<li>当内存索引满时，将其整合到磁盘上的索引中</li>
+</ul>
+<h3 id="5-3-倒排索引压缩"><a href="#5-3-倒排索引压缩" class="headerlink" title="5.3 倒排索引压缩"></a>5.3 倒排索引压缩</h3><p>为什么要进行压缩？</p>
+<p>如果数据量很大，倒排索引庞大，在使用倒排索引进行检索的过程中，总检索时间中的大部分时间往往花费在了<strong>从二级存储读取倒排索引</strong>上。于是，就经常可以看到在存储倒排索引前，对其进行压缩以减少从二级存储读取的时间，进而使检索处理得以高速运转的对策。</p>
+<p>也就是说，我们可以根据如下原理，通过压缩倒排索引来加快检索处理的速度。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">从二级存储中读取（部分）经过压缩的倒排索引的时间＋还原倒排索引的时间</div><div class="line">＜从二级存储中读取（部分）尚未经过压缩的倒排索引的时间</div></pre></td></tr></table></figure>
+<p>倒排索引的压缩分为针对词典的压缩和针对倒排文件的压缩两种。<br>我们可以通过使用更少的信息量表示单词的集合来实现词典的压缩。例如，对于按照词典顺序排列的单词列表而言，通过避免重复存储相同的前缀，就可以减少存储词典时所需的必要存储空间。但是，在大多数情况下，由于词典的大小远远小于倒排文件的大小，所以一般认为压缩词典对于加快检索处理的速度并没有太大的贡献。</p>
+<p>而倒排文件的压缩，可以通过使用更少的信息量表示其构成要素来实现。构成要素就是指文档编号、单词在文档内的出现次数（TF，Term Frequency，词频）以及由单词在文档内的偏移量构成的整数数组。</p>
+<p><strong>使用可变长度的编码确实可以带来大幅度的压缩</strong>。</p>
+<p>待填坑==</p>
+<h2 id="6-参考文献"><a href="#6-参考文献" class="headerlink" title="6. 参考文献"></a>6. 参考文献</h2><ol>
+<li><a href="https://jiayi797.github.io/2018/03/02/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BE%8E%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E5%9B%9E%E9%A1%BE/" target="_blank" rel="external">自制搜索引擎</a></li>
+<li><a href="http://blog.csdn.net/guoziqing506/article/details/64122287" target="_blank" rel="external">B树与B+树</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2013/03/tf-idf.html" target="_blank" rel="external">TF-IDF与余弦相似性的应用（一）：自动提取关键词</a></li>
+<li><a href="http://blog.csdn.net/starzhou/article/details/51438140" target="_blank" rel="external">机器学习排序之Learning to Rank简单介绍</a></li>
+<li><a href="http://blog.csdn.net/hguisu/article/details/7981145" target="_blank" rel="external"> 搜索引擎的检索模型-查询与文档的相关度计算</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/08/【九章算法强化班】动态规划/" rel="next" title="【九章算法强化班】动态规划">
+                <i class="fa fa-chevron-left"></i> 【九章算法强化班】动态规划
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/08/【本站目录】/" rel="prev" title="【本站目录】">
+                【本站目录】 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/小鸡.png"
+                alt="Siyao" />
+            
+              <p class="site-author-name" itemprop="name">Siyao</p>
+              <p class="site-description motion-element" itemprop="description">siyao小朋友画圈圈的地方</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">120</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-项目简介"><span class="nav-number">1.</span> <span class="nav-text">1. 项目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-爬虫"><span class="nav-number">2.</span> <span class="nav-text">2. 爬虫</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-数据库设计"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数据库设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-实时爬虫"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 实时爬虫</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-分词"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 分词</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-索引构建-amp-检索"><span class="nav-number">3.</span> <span class="nav-text">3. 索引构建&检索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-向量空间模型"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 向量空间模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-TF-IDF"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 TF-IDF</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-倒排索引构建"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 倒排索引构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-计算各文档的向量"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 计算各文档的向量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-检索"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 检索</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-总结"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-旧数据删除"><span class="nav-number">4.</span> <span class="nav-text">4. 旧数据删除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-优化"><span class="nav-number">5.</span> <span class="nav-text">5. 优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-检索模型角度"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 检索模型角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-字典优化角度"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 字典优化角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-倒排索引构建-更新角度"><span class="nav-number">5.3.</span> <span class="nav-text">5.2 倒排索引构建/更新角度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-倒排索引压缩"><span class="nav-number">5.4.</span> <span class="nav-text">5.3 倒排索引压缩</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-参考文献"><span class="nav-number">6.</span> <span class="nav-text">6. 参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Siyao</span>
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a></div>
+
+
+
+
+
+ 
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">222.8k</span>
+  
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人次
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
